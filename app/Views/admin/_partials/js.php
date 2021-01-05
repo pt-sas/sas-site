@@ -41,5 +41,4 @@
 <script src="<?= base_url('assets/plugins/auto-numeric/autoNumeric.js') ?>"></script>
 
 <script src="<?= base_url('assets/cust/js/Process.js') ?>"></script>
-<script src="<?= base_url('assets/cust/js/Table.js') ?>"></script>
 <script src="<?= base_url('assets/cust/js/Product.js') ?>"></script>
