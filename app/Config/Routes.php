@@ -43,7 +43,12 @@ $routes->get('/store', 'Frontend/Store::index');
 $routes->get('/contact', 'Frontend/Contact::index');
 
 
+
+/**
+ * Routes admin dashboard
+ */
 $routes->get('/admin', 'Admin/Dashboard::index');
+// $routes->get('/menu', 'Admin/Menu::index');
 
 /**
  * --------------------------------------------------------------------

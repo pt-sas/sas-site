@@ -1,4 +1,6 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 class Validation
 {
@@ -33,4 +35,49 @@ class Validation
 	//--------------------------------------------------------------------
 	// Rules
 	//--------------------------------------------------------------------
+
+	public $product = [
+		'pro_code' => [
+			'label'		=> 'Product Code',
+			'rules' 	=> 'required|is_unique[md_product.code,md_product_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'pro_name' => [
+			'label'		=> 'Product Name',
+			'rules'		=> 'required|is_unique[md_product.name,md_product_id,{id}]',
+			'errors'	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'pro_qty' => [
+			'label'		=> 'Quantity',
+			'rules'		=> 'required'
+		],
+		'pro_group' => [
+			'label'		=> 'Product Group',
+			'rules'		=> 'required'
+		],
+		'pro_weight' => [
+			'label'		=> 'Weight',
+			'rules'		=> 'required'
+		],
+		'pro_height' => [
+			'label'		=> 'Height',
+			'rules'		=> 'required'
+		],
+		'pro_width' => [
+			'label'		=> 'Width',
+			'rules'		=> 'required'
+		],
+		'pro_depth' => [
+			'label'		=> 'Depth',
+			'rules'		=> 'required'
+		],
+		'pro_volume' => [
+			'label'		=> 'Volume',
+			'rules'		=> 'required'
+		],
+	];
 }
