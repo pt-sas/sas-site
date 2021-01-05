@@ -33,7 +33,12 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+
+/**
+ * Routes admin dashboard
+ */
 $routes->get('/admin', 'Admin/Dashboard::index');
+// $routes->get('/menu', 'Admin/Menu::index');
 
 /**
  * --------------------------------------------------------------------
