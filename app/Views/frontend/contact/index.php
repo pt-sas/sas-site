@@ -5,15 +5,15 @@
 <div id="content">
 	<div class="jumbotron jumbotron-fluid mb-0">
 		<div class="container text-center">
-			<h1 class="display-3">We’d love to hear from you</h1>
-			<p class="lead">Whether you have a question about features, trials, pricing, need a demo, or anything else, our team is ready to answer all your questions</p>
+			<h1 class="display-3">Get in touch</h1>
+			<p class="lead">Want to get in touch? We'd love to hear from you. Here's how you can reach us...</p>
 		</div>
 	</div>
-	<div class="bg-white py-5 mb-0" id="contact">
+	<div class="bg-white py-5" id="contact">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-7 text-left">
-					<h3 class="light mb-4">Contact Us</h3>
+					<h3 class="light section-heading">Contact Us</h3>
 					<div class="row">
 						<div class="col-md-12">
 							<p>Interested in any of our products? Talk to our experts today</p>
@@ -29,7 +29,7 @@
 				<div class="col-md-5">
 					<div class="card shadow border-0 rounded-0">
 						<div class="card-body">
-							<h3 class="light text-center mb-4">Get in touch with us</h3>
+							<h3 class="light section-heading-center">Get in touch with us</h3>
 							<div class="row">
 								<div class="col-md-12">
 									<form action="" method="post" role="form" class="contactForm">
@@ -70,56 +70,82 @@
 			</div>
 		</div>
 	</div>
-	<div class="bg-light py-5 mb-0">
+	<div class="bg-white py-5">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="light section-heading">Office locations</h1>
-					<div class="row">
-						<div class="col-md-4 my-3">
-							<div class="row">
-								<div class="col-md-12">
-									<h4>HQ - Sunter</h4>
-									<p>Jalan Indokarya III Blok F1-2, Sunter Podomoro, Tanjung Priok, RT.5/RW.4, Papanggo, Tj. Priok, Kota Jkt Utara, DKI Jakarta 14340</p>
-									<p>Reception/General enquiries: +62 (021) 65831188</p>
-								</div>
+					<h1 class="light section-heading-center">Visit our store</h1>
+					<div class="card bg-light">
+						<div class="row">
+							<div class="col-md-8">
+								<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15867.931746394173!2d106.86316608202183!3d-6.132994599181256!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x535bdc6ed9b316cd!2sPT%20Sahabat%20Abadi%20Sejahtera!5e0!3m2!1sid!2sid!4v1607501552834!5m2!1sid!2sid" width="100%" height="500" frameborder="0" style="border:0" use="allowfullscreen"></iframe>
+							</div>
+							<div class="col-md-4">
+								<h3>Head Quarter</h3>
+								<p>Jalan Indokarya III Blok F1-2, Sunter Podomoro, Tanjung Priok, RT.5/RW.4, Papanggo, Tj. Priok, Kota Jkt Utara, DKI Jakarta 14340</p>
+								
+								<h5><b>Phone / Fax</b></h5>
+								<p>+62 (021) 83708838</p>
+
+								<h5><b>News / Media</b></h5>
+								<p><a href="/news">Visit our Newsroom for contact info</a></p>
 							</div>
 						</div>
-						<div class="col-md-4 my-3">
-							<div class="row">
-								<div class="col-md-12">
-									<h4>Tebet</h4>
-									<p>Jalan Indokarya III Blok F1-2, Sunter Podomoro, Tanjung Priok, RT.5/RW.4, Papanggo, Tj. Priok, Kota Jkt Utara, DKI Jakarta 14340</p>
-									<p>Reception/General enquiries: +62 (021) 83708838</p>
-								</div>
-							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bg-light py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row my-4">
+						<div class="col-md-6">
+							<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15867.931746394173!2d106.86316608202183!3d-6.132994599181256!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x535bdc6ed9b316cd!2sPT%20Sahabat%20Abadi%20Sejahtera!5e0!3m2!1sid!2sid!4v1607501552834!5m2!1sid!2sid" width="100%" height="300" frameborder="0" style="border:0" use="allowfullscreen"></iframe>
 						</div>
-						<div class="col-md-4 my-3">
-							<div class="row">
-								<div class="col-md-12">
-									<h4>Glodok</h4>
-									<p>Jalan Indokarya III Blok F1-2, Sunter Podomoro, Tanjung Priok, RT.5/RW.4, Papanggo, Tj. Priok, Kota Jkt Utara, DKI Jakarta 14340</p>
-									<p>Reception/General enquiries: +62 (021) 6592247</p>
-								</div>
-							</div>
+						<div class="col-md-6">
+							<h3>Tebet (Store Location)</h3>
+							<p>Jalan Indokarya III Blok F1-2, Sunter Podomoro, Tanjung Priok, RT.5/RW.4, Papanggo, Tj. Priok, Kota Jkt Utara, DKI Jakarta 14340</p>
+							
+							<h5>Phone / Fax</h5>
+							<p>+62 (021) 83708838</p>
 						</div>
-						<div class="col-md-4 my-3">
-							<div class="row">
-								<div class="col-md-12">
-									<h4>Kenari</h4>
-									<p>Jalan Indokarya III Blok F1-2, Sunter Podomoro, Tanjung Priok, RT.5/RW.4, Papanggo, Tj. Priok, Kota Jkt Utara, DKI Jakarta 14340</p>
-									<p>Reception/General enquiries: +62 (021) 39845733</p>
-								</div>
-							</div>
+					</div>
+					<div class="row my-4">
+						<div class="col-md-6 order-sm-1 order-2">
+							<h3>Glodok (Store Location)</h3>
+							<p>Jalan Indokarya III Blok F1-2, Sunter Podomoro, Tanjung Priok, RT.5/RW.4, Papanggo, Tj. Priok, Kota Jkt Utara, DKI Jakarta 14340</p>
+							
+							<h5>Phone / Fax</h5>
+							<p>+62 (021) 6592247</p>
 						</div>
-						<div class="col-md-4 my-3">
-							<div class="row">
-								<div class="col-md-12">
-									<h4>Tangerang</h4>
-									<p>Jalan Indokarya III Blok F1-2, Sunter Podomoro, Tanjung Priok, RT.5/RW.4, Papanggo, Tj. Priok, Kota Jkt Utara, DKI Jakarta 14340</p>
-									<p>Reception/General enquiries: +62 (021) 65831188</p>
-								</div>
-							</div>
+						<div class="col-md-6 order-sm-2 order-1">
+							<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15867.931746394173!2d106.86316608202183!3d-6.132994599181256!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x535bdc6ed9b316cd!2sPT%20Sahabat%20Abadi%20Sejahtera!5e0!3m2!1sid!2sid!4v1607501552834!5m2!1sid!2sid" width="100%" height="300" frameborder="0" style="border:0" use="allowfullscreen"></iframe>
+						</div>
+					</div>
+					<div class="row my-4">
+						<div class="col-md-6">
+							<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15867.931746394173!2d106.86316608202183!3d-6.132994599181256!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x535bdc6ed9b316cd!2sPT%20Sahabat%20Abadi%20Sejahtera!5e0!3m2!1sid!2sid!4v1607501552834!5m2!1sid!2sid" width="100%" height="300" frameborder="0" style="border:0" use="allowfullscreen"></iframe>
+						</div>
+						<div class="col-md-6">
+							<h3>Kenari (Store Location)</h3>
+							<p>Jalan Indokarya III Blok F1-2, Sunter Podomoro, Tanjung Priok, RT.5/RW.4, Papanggo, Tj. Priok, Kota Jkt Utara, DKI Jakarta 14340</p>
+							
+							<h5>Phone / Fax</h5>
+							<p>+62 (021) 39845733</p>
+						</div>
+					</div>
+					<div class="row my-4">
+						<div class="col-md-6 order-sm-1 order-2">
+							<h3>Tangerang (Store Location)</h3>
+							<p>Jalan Indokarya III Blok F1-2, Sunter Podomoro, Tanjung Priok, RT.5/RW.4, Papanggo, Tj. Priok, Kota Jkt Utara, DKI Jakarta 14340</p>
+							
+							<h5>Phone / Fax</h5>
+							<p>+62 (021) 65831188</p>
+						</div>
+						<div class="col-md-6 order-sm-2 order-1">
+							<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15867.931746394173!2d106.86316608202183!3d-6.132994599181256!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x535bdc6ed9b316cd!2sPT%20Sahabat%20Abadi%20Sejahtera!5e0!3m2!1sid!2sid!4v1607501552834!5m2!1sid!2sid" width="100%" height="300" frameborder="0" style="border:0" use="allowfullscreen"></iframe>
 						</div>
 					</div>
 				</div>
