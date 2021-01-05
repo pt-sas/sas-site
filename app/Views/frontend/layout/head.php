@@ -1,0 +1,74 @@
+<meta charset="UTF-8">
+<title>Sahabat Abadi Sejahtera</title>
+<meta name="description" content="The small framework with powerful features">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="shortcut icon" type="image/png" href="/images/favicon.ico" />
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="<?php echo base_url('css/bootstrap.min.css') ?>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" crossorigin="anonymous" />
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+<!-- STYLES -->
+
+<style {csp-style-nonce}>
+    html {
+    scroll-behavior: smooth;
+    }
+    body {
+        margin-top:4.125rem;
+    }
+    
+    .light {
+        font-family: 'Open Sans', sans-serif;
+    }
+    .section-heading {
+        margin-bottom: 2rem;
+    }
+    .section-heading-center {
+        text-align:center;
+        margin-bottom: 2rem;
+    }
+    
+    .nav-item {
+        margin-left:1rem;
+    }
+
+    #contact input, #contact textarea, #contact .btn, #contact select {border-radius:0}
+
+    footer a, footer p, footer small, footer .fa {color: #777;}
+    
+    @media (max-width: 767px) {
+        .navbar-collapse {
+            position: fixed;
+            top: 4.125rem;
+            left: 0;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 15px;
+            width: 75%;
+            height: 100%;
+            background: #bccbcc;
+        }
+
+        .navbar-collapse.collapsing {
+            left: -75%;
+            transition: height 0s ease;
+        }
+
+        .navbar-collapse.show {
+            left: 0;
+            transition: left 300ms ease-in-out;
+        }
+
+        .navbar-toggler.collapsed ~ .navbar-collapse {
+            transition: left 500ms ease-in-out;
+        }
+    
+        .nav-item {
+            margin-left:0;
+        }
+    }
+</style>
