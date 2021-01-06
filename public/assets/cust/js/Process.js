@@ -46,9 +46,19 @@ _table = $('.tb_display').DataTable({
 });
 
 $('.new_form').click(function (e) {
+    let classList = $(e.target)
+        .closest('button')
+        .prop('classList');
+
     openModalForm();
     Scrollmodal();
-    Largemodal();
+
+    for (let i = 0; i < classList.length; i++) {
+        if (classList[i] === 'modal-lg')
+            Largemodal();
+        else if (classList[i] === 'modal-sm')
+            Smallmodal();
+    }
 
     const parent = modalForm.closest('.form');
     const ckbActive = parent.find('input[type="checkbox"].active');
