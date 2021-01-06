@@ -40,5 +40,4 @@
 <!-- AutoNumeric Rupiah -->
 <script src="<?= base_url('assets/plugins/auto-numeric/autoNumeric.js') ?>"></script>
 
-<script src="<?= base_url('assets/cust/js/Process.js') ?>"></script>
-<script src="<?= base_url('assets/cust/js/Product.js') ?>"></script>
+<script src="<?= base_url('assets/cust/js/Process.min.js') ?>"></script>
