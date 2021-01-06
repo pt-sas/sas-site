@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="float-left">
-                    <button type="button" class="btn bg-gradient-primary btn-sm new_form modal-sm" title="New Product"><i class=" fas fa-plus-circle"> New</i></button>
+                    <button type="button" class="btn bg-gradient-primary btn-sm new_form modal-lg" title="New Product"><i class=" fas fa-plus-circle"> New</i></button>
                 </div>
             </div>
             <div class="card-body">
