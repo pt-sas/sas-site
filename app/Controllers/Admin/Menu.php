@@ -9,6 +9,6 @@ class Menu extends BaseController
 
     public function index()
     {
-        return view('admin/menu2/v_menu');
+        return view('admin/menu/v_menu');
     }
 }
