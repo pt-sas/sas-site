@@ -113,14 +113,19 @@ _table.on('click', 'td:not(:last-child)', function (e) {
 
                 for (let i = 0; i < field.length; i++) {
                     if (field[i].name === fieldInput) {
-                        parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
+                        let className = field[i].className.split(/\s+/)[1];
+                        form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
 
-                        parent.find('select[name=' + field[i].name + ']').val(label).change();
+                        form.find('select[name=' + field[i].name + ']').val(label).change();
 
                         if (field[i].type === 'checkbox' && label === 'Y') {
                             form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', true);
+                            if (className === 'active')
+                                readonly(form, false);
                         } else {
                             form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', false);
+                            if (className === 'active')
+                                readonly(form, true);
                         }
                     }
                 }
@@ -241,6 +246,20 @@ function clearForm(parent) {
     for (let j = 0; j < errorText.length; j++) {
         if (errorText[j].id !== '')
             parent.find('small[id=' + errorText[j].id + ']').html('');
+    }
+}
+
+function readonly(parent, value) {
+    const field = parent.find('input, textarea, select');
+
+    for (let i = 0; i < field.length; i++) {
+        let className = field[i].className.split(/\s+/)[1];
+
+        parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', value);
+
+        if (field[i].type !== 'text' && className !== 'active') {
+            parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', value);
+        }
     }
 }
 
