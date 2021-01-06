@@ -99,6 +99,10 @@ class Product extends BaseController
         foreach ($list as $value) :
             $response =  [
                 [
+                    'field'        =>   'title',
+                    'label'        =>   $value['name']
+                ],
+                [
                     'field'        =>   'pro_isactive',
                     'label'        =>   $value['isactive']
                 ],
