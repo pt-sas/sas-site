@@ -10,11 +10,11 @@
 </div>
 <div class="bg-white py-5">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
+		<div class="row py-4">
+			<div class="col-md-7">
 				<h1 class="light section-heading-center">About Us</h1>
-				<div class="row justify-content-md-center">
-					<div class="col-md-6 text-center">
+				<div class="row">
+					<div class="col-md-12">
 						<p> 
 							Let’s face it. Most people hate the software they use at work.
 							Business software is clunky, expensive, hard to setup and frustrating to use. Countless hours are wasted trying to customize these solutions and they often require expensive professional services to get everything to work. In the end, the solution becomes so complex that businesses need to hire full-time employees to babysit the software.
@@ -24,16 +24,28 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-5">
+				<img class="w-100 h-100" src="/images/landing/first.svg" alt="">
+			</div>
 		</div>
-	</div>
-</div>
-<div class="bg-light py-5">
-	<div class="container">
-		<div class="row">
+		<div class="row py-4">
 			<div class="col-md-12">
-				<h1 class="light section-heading-center">Vision</h1>
-				<div class="row justify-content-md-center">
-					<div class="col-md-6 text-center">
+				<h1 class="light section-heading-center">Our Mission</h1>
+				<div class="row">
+					<div class="col-md-6">
+						<p>Members who are a team-player, full of enthusiasm and desire for continuous learning & improvements. If you want to be part of our fast-growing company, we’d love to hear from you.</p>
+					</div>
+					<div class="col-md-6">
+						<p>Members who are a team-player, full of enthusiasm and desire for continuous learning & improvements. If you want to be part of our fast-growing company, we’d love to hear from you.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row py-4">
+			<div class="col-md-12">
+				<h1 class="light section-heading-center">Our Vision</h1>
+				<div class="row">
+					<div class="col-md-8">
 						<p>Members who are a team-player, full of enthusiasm and desire for continuous learning & improvements. If you want to be part of our fast-growing company, we’d love to hear from you.</p>
 					</div>
 				</div>
@@ -43,11 +55,11 @@
 </div>
 <div class="bg-white py-5">
 	<div class="container">
-		<div class="row">
+		<div class="row py-4">
 			<div class="col-md-12">
-				<h1 class="light section-heading-center">Mission</h1>
-				<div class="row justify-content-md-center">
-					<div class="col-md-8 text-center">
+				<h1 class="light section-heading-center">Our History</h1>
+				<div class="row">
+					<div class="col-md-8">
 						<p>Members who are a team-player, full of enthusiasm and desire for continuous learning & improvements. If you want to be part of our fast-growing company, we’d love to hear from you.</p>
 					</div>
 				</div>
