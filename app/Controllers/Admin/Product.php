@@ -4,17 +4,17 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\Admin\M_product;
-// use App\Models\Admin\M_product_group;
+use App\Models\Admin\M_product_group;
 
 class Product extends BaseController
 {
     public function index()
     {
-        // $group = new M_product_group();
-        // $data = [
-        //     'pro_group' => $group->findAll()
-        // ];
-        return view('admin/product/v_product');
+        $group = new M_product_group();
+        $data = [
+            'pro_group' => $group->findAll()
+        ];
+        return view('admin/product/v_product', $data);
     }
 
     public function showAll()
