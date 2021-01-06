@@ -21,35 +21,6 @@ const modalDialog = $('.modal-dialog'),
     modalTitle = $('.modal-title'),
     modalBody = $('.modal-body');
 
-function openModalForm() {
-    return modalForm.modal({
-        backdrop: 'static',
-        keyboard: false
-    });
-}
-
-// add class scrollable in modal
-function Scrollmodal() {
-    return modalDialog.addClass('modal-dialog-scrollable');
-}
-
-// add class size modal large
-function Largemodal() {
-    return modalDialog.addClass('modal-lg');
-}
-
-// add class size modal small
-function Smallmodal() {
-    return modalDialog.addClass('modal-sm');
-}
-
-$(document).ready(function (e) {
-    $('.select2').select2({
-        placeholder: 'Select an option',
-        width: '100%'
-    });
-});
-
 _table = $('.tb_display').DataTable({
     'ajax': SITE_URL + SHOWALL,
     'processing': true,
@@ -275,3 +246,39 @@ function clearForm(parent) {
 function reloadTable() {
     _table.ajax.reload(null, false);
 }
+
+function openModalForm() {
+    return modalForm.modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+}
+
+// add class scrollable in modal
+function Scrollmodal() {
+    return modalDialog.addClass('modal-dialog-scrollable');
+}
+
+// add class size modal large
+function Largemodal() {
+    return modalDialog.addClass('modal-lg');
+}
+
+// add class size modal small
+function Smallmodal() {
+    return modalDialog.addClass('modal-sm');
+}
+
+$(document).ready(function (e) {
+    $('.select2').select2({
+        placeholder: 'Select an option',
+        width: '100%'
+    });
+
+    $('.number').on('keypress keyup blur', function (evt) {
+        $(this).val($(this).val().replace(/[^\d].+/, ""));
+        if ((evt.which < 48 || evt.which > 57)) {
+            evt.preventDefault();
+        }
+    });
+});
