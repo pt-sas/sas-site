@@ -5,7 +5,8 @@ var ORI_URL = window.location.origin,
     LAST_URL = SITE_URL.substr(SITE_URL.lastIndexOf('/') + 1), //the last url
     ADMIN_URL = ORI_URL + ADMIN;
 
-var ID;
+var ID,
+    setSave;
 
 // Method default controller
 const SHOWALL = '/showAll',
@@ -42,6 +43,19 @@ _table = $('.tb_display').DataTable({
     //     'rightColumns': 1,
     //     'heightMatch': 'auto'
     // }
+});
+
+$('.new_form').click(function (e) {
+    openModalForm();
+    Scrollmodal();
+    Largemodal();
+
+    const parent = modalForm.closest('.form');
+    const ckbActive = parent.find('input[type="checkbox"].active');
+
+    modalTitle.html('New ' + capitalize(LAST_URL));
+    ckbActive.prop('checked', true);
+    setSave = 'add';
 });
 
 /**
@@ -265,6 +279,11 @@ function readonly(parent, value) {
             parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', value);
         }
     }
+}
+
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 function reloadTable() {
