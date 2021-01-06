@@ -95,12 +95,14 @@ _table.on('click', 'td:not(:last-child)', function (e) {
     modalTitle.html(row[3]);
 
     ID = row[0];
-    let url = SITE_URL + SHOW + ID;
 
-    setSave = 'update';
     const parent = modalForm.closest('.form');
     const form = parent.find('form');
     const field = form.find('input, textarea, select');
+
+    setSave = 'update';
+
+    let url = SITE_URL + SHOW + ID;
 
     $.getJSON({
         url: url,
@@ -120,10 +122,12 @@ _table.on('click', 'td:not(:last-child)', function (e) {
 
                         if (field[i].type === 'checkbox' && label === 'Y') {
                             form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', true);
+
                             if (className === 'active')
                                 readonly(form, false);
                         } else {
                             form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', false);
+
                             if (className === 'active')
                                 readonly(form, true);
                         }
