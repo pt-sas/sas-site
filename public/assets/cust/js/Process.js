@@ -48,6 +48,13 @@ $(document).ready(function (e) {
         placeholder: 'Select an option',
         width: '100%'
     });
+
+    $('.number').on('keypress keyup blur', function (evt) {
+        $(this).val($(this).val().replace(/[^\d].+/, ""));
+        if ((evt.which < 48 || evt.which > 57)) {
+            evt.preventDefault();
+        }
+    });
 });
 
 _table = $('.tb_display').DataTable({
