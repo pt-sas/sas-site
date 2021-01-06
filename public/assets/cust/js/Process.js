@@ -111,14 +111,22 @@ $('.save_form').click(function (e) {
  */
 _table.on('click', 'td:not(:last-child)', function (e) {
     e.preventDefault();
-    const row = _table.row(this).data();
+    const row = $(e.target).closest('.card');
+
+    let classList = row.find('button')
+        .prop('classList');
 
     openModalForm();
     Scrollmodal();
-    Largemodal();
-    modalTitle.html(row[3]);
 
-    ID = row[0];
+    for (let i = 0; i < classList.length; i++) {
+        if (classList[i] === 'modal-lg')
+            Largemodal();
+        else if (classList[i] === 'modal-sm')
+            Smallmodal();
+    }
+
+    ID = _table.row(this).data()[0];
 
     const parent = modalForm.closest('.form');
     const form = parent.find('form');
@@ -136,6 +144,9 @@ _table.on('click', 'td:not(:last-child)', function (e) {
             for (let i = 0; i < result.length; i++) {
                 let fieldInput = result[i].field;
                 let label = result[i].label;
+
+                if (fieldInput === 'title')
+                    modalTitle.html(label);
 
                 for (let i = 0; i < field.length; i++) {
                     if (field[i].name === fieldInput) {
@@ -260,17 +271,26 @@ function errorForm(parent, data) {
 }
 
 function clearForm(parent) {
+    const select = parent.find('select');
+
     const errorInput = parent.find('input[type="text"], textarea');
     const errorText = parent.find('small');
 
     parent[0].reset();
 
+    // clear input type select
+    for (let k = 0; k < select.length; k++) {
+        parent.find('select[name=' + select[k].name + ']').val(null).change();
+    }
+
+    // clear attribute readonly on field and remove class invalid
     for (let i = 0; i < errorInput.length; i++) {
         parent.find('input:text[name=' + errorInput[i].name + '], textarea[name=' + errorInput[i].name + ']')
             .prop('readonly', false)
             .removeClass('is-invalid');
     }
 
+    // clear text error element small
     for (let j = 0; j < errorText.length; j++) {
         if (errorText[j].id !== '')
             parent.find('small[id=' + errorText[j].id + ']').html('');
