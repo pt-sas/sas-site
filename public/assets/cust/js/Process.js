@@ -114,12 +114,13 @@ _table.on('click', 'td:not(:last-child)', function (e) {
                 for (let i = 0; i < field.length; i++) {
                     if (field[i].name === fieldInput) {
                         parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
+
                         parent.find('select[name=' + field[i].name + ']').val(label).change();
-                        if (field[i].type !== 'text') {
-                            if (label == 'Y')
-                                form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', true);
-                            else
-                                form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', false);
+
+                        if (field[i].type === 'checkbox' && label === 'Y') {
+                            form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', true);
+                        } else {
+                            form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', false);
                         }
                     }
                 }
