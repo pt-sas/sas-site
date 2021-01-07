@@ -89,9 +89,12 @@
                                 <div class="form-group">
                                     <label for="pro_group">Product Group <span class="required">*</span></label>
                                     <select class="form-control select2" id="pro_group" name="pro_group">
-                                        <option value="1">Tos</option>
-                                        <option value="2">Test</option>
-                                        <option value="3">Tas</option>
+                                        <option value="">--Select Product Group</option>
+                                        <?php foreach ($pro_group as $value) :
+                                            $group_id = $value['md_productgroup_id'];
+                                            $group_name = $value['name']; ?>
+                                            <option value="<?= $group_id ?>"><?= $group_name ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                     <small class="form-text text-danger" id="error_pro_group"></small>
                                 </div>
@@ -120,28 +123,28 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="pro_height">Height <span class="required">*</span></label>
-                                    <input type="text" class="form-control" id="pro_height" name="pro_height">
+                                    <input type="text" class="form-control number" id="pro_height" name="pro_height">
                                     <small class="form-text text-danger" id="error_pro_height"></small>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="pro_width">Width <span class="required">*</span></label>
-                                    <input type="text" class="form-control" id="pro_width" name="pro_width">
+                                    <input type="text" class="form-control number" id="pro_width" name="pro_width">
                                     <small class="form-text text-danger" id="error_pro_width"></small>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="pro_depth">Depth <span class="required">*</span></label>
-                                    <input type="text" class="form-control" id="pro_depth" name="pro_depth">
+                                    <input type="text" class="form-control number" id="pro_depth" name="pro_depth">
                                     <small class="form-text text-danger" id="error_pro_depth"></small>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="pro_volume">Volume <span class="required">*</span></label>
-                                    <input type="text" class="form-control" id="pro_volume" name="pro_volume">
+                                    <input type="text" class="form-control number" id="pro_volume" name="pro_volume">
                                     <small class="form-text text-danger" id="error_pro_volume"></small>
                                 </div>
                             </div>

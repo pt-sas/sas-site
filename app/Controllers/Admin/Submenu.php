@@ -3,25 +3,25 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\Admin\M_menu;
+use App\Models\Admin\M_submenu;
 
-class Menu extends BaseController
+class Submenu extends BaseController
 {
     public function index()
     {
-        return view('admin/menu/v_menu');
+        return view('admin/submenu/v_submenu');
     }
 
     public function showAll()
     {
-        $menu = new M_menu();
-        $list = $menu->findAll();
+        $submenu = new M_submenu();
+        $list = $submenu->findAll();
         $data = [];
 
         $number = 0;
         foreach ($list as $value) :
             $row = [];
-            $ID = $value['menu_id'];
+            $ID = $value['sys_submenu_id'];
 
             $number++;
 
@@ -43,21 +43,21 @@ class Menu extends BaseController
     public function create()
     {
         $validation = \Config\Services::validation();
-        $menu = new M_menu();
+        $submenu = new M_submenu();
         $post = $this->request->getVar();
 
-        $active = isset($post['mnu_isactive']) ? 'Y' : 'N';
+        $active = isset($post['sub_isactive']) ? 'Y' : 'N';
 
         $data = [
             'isactive'              => $active,
-            'name'                  => $post['mnu_name'],
-            'status'                => $post['mnu_status']
+            'name'                  => $post['sub_name'],
+            'status'                => $post['sub_status']
         ];
 
-        if (!$validation->run($post, 'menu')) {
-            $response = $menu->formError();
+        if (!$validation->run($post, 'submenu')) {
+            $response = $submenu->formError();
         } else {
-            $result = $menu->save($data);
+            $result = $submenu->save($data);
             $response = [['success' => 'success', 'insert' => $result]];
         }
 
@@ -66,8 +66,8 @@ class Menu extends BaseController
 
     public function show($id)
     {
-        $menu = new M_menu();
-        $list = $menu->where('menu_id', $id)->findAll();
+        $submenu = new M_submenu();
+        $list = $submenu->where('sys_submenu_id', $id)->findAll();
 
         foreach ($list as $value) :
             $response =  [
@@ -76,15 +76,15 @@ class Menu extends BaseController
                     'label'        =>   $value['name']
                 ],
                 [
-                    'field'        =>   'mnu_isactive',
+                    'field'        =>   'sub_isactive',
                     'label'        =>   $value['isactive']
                 ],
                 [
-                    'field'        =>   'mnu_name',
+                    'field'        =>   'sub_name',
                     'label'        =>   $value['name']
                 ],
                 [
-                    'field'        =>   'mnu_status',
+                    'field'        =>   'sub_status',
                     'label'        =>   $value['status']
                 ]
             ];
@@ -96,22 +96,22 @@ class Menu extends BaseController
     public function edit()
     {
         $validation = \Config\Services::validation();
-        $menu = new M_menu();
+        $submenu = new M_submenu();
         $post = $this->request->getVar();
 
-        $active = isset($post['mnu_isactive']) ? 'Y' : 'N';
+        $active = isset($post['sub_isactive']) ? 'Y' : 'N';
 
         $data = [
-            'menu_id'               => $post['id'],
+            'sys_submenu_id'        => $post['id'],
             'isactive'              => $active,
-            'name'                  => $post['mnu_name'],
-            'status'                => $post['mnu_status']
+            'name'                  => $post['sub_name'],
+            'status'                => $post['sub_status']
         ];
 
-        if (!$validation->run($post, 'menu')) {
-            $response = $menu->formError();
+        if (!$validation->run($post, 'submenu')) {
+            $response = $submenu->formError();
         } else {
-            $result = $menu->save($data);
+            $result = $submenu->save($data);
             $response = [['success' => 'success', 'update' => $result]];
         }
         return json_encode($response);
@@ -119,8 +119,8 @@ class Menu extends BaseController
 
     public function destroy($id)
     {
-        $menu = new M_menu();
-        $result = $menu->delete($id);
+        $submenu = new M_submenu();
+        $result = $submenu->delete($id);
         $response = [['success' => 'success', 'delete' => $result]];
         return json_encode($response);
     }

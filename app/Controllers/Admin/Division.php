@@ -3,32 +3,33 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\Admin\M_menu;
+use App\Models\Admin\M_division;
 
-class Menu extends BaseController
+class Division extends BaseController
 {
     public function index()
     {
-        return view('admin/menu/v_menu');
+        return view('admin/division/v_division');
     }
 
     public function showAll()
     {
-        $menu = new M_menu();
-        $list = $menu->findAll();
+        $division = new M_division();
+        $list = $division->findAll();
         $data = [];
 
         $number = 0;
         foreach ($list as $value) :
             $row = [];
-            $ID = $value['menu_id'];
+            $ID = $value['md_division_id'];
 
             $number++;
 
             $row[] = $ID;
             $row[] = $number;
             $row[] = $value['name'];
-            $row[] = $value['status'];
+            $row[] = $value['description'];
+            $row[] = $value['pic'];
             $row[] = $value['isactive'];
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
@@ -43,21 +44,22 @@ class Menu extends BaseController
     public function create()
     {
         $validation = \Config\Services::validation();
-        $menu = new M_menu();
+        $division = new M_division();
         $post = $this->request->getVar();
 
-        $active = isset($post['mnu_isactive']) ? 'Y' : 'N';
+        $active = isset($post['div_isactive']) ? 'Y' : 'N';
 
         $data = [
             'isactive'              => $active,
-            'name'                  => $post['mnu_name'],
-            'status'                => $post['mnu_status']
+            'name'                  => $post['div_name'],
+            'description'           => $post['div_desc'],
+            'pic'                   => $post['div_pic']
         ];
 
-        if (!$validation->run($post, 'menu')) {
-            $response = $menu->formError();
+        if (!$validation->run($post, 'division')) {
+            $response = $division->formError();
         } else {
-            $result = $menu->save($data);
+            $result = $division->save($data);
             $response = [['success' => 'success', 'insert' => $result]];
         }
 
@@ -66,8 +68,8 @@ class Menu extends BaseController
 
     public function show($id)
     {
-        $menu = new M_menu();
-        $list = $menu->where('menu_id', $id)->findAll();
+        $division = new M_division();
+        $list = $division->where('md_division_id', $id)->findAll();
 
         foreach ($list as $value) :
             $response =  [
@@ -76,16 +78,20 @@ class Menu extends BaseController
                     'label'        =>   $value['name']
                 ],
                 [
-                    'field'        =>   'mnu_isactive',
+                    'field'        =>   'div_isactive',
                     'label'        =>   $value['isactive']
                 ],
                 [
-                    'field'        =>   'mnu_name',
+                    'field'        =>   'div_name',
                     'label'        =>   $value['name']
                 ],
                 [
-                    'field'        =>   'mnu_status',
-                    'label'        =>   $value['status']
+                    'field'        =>   'div_desc',
+                    'label'        =>   $value['description']
+                ],
+                [
+                    'field'        =>   'div_pic',
+                    'label'        =>   $value['pic']
                 ]
             ];
         endforeach;
@@ -96,22 +102,23 @@ class Menu extends BaseController
     public function edit()
     {
         $validation = \Config\Services::validation();
-        $menu = new M_menu();
+        $division = new M_division();
         $post = $this->request->getVar();
 
-        $active = isset($post['mnu_isactive']) ? 'Y' : 'N';
+        $active = isset($post['div_isactive']) ? 'Y' : 'N';
 
         $data = [
-            'menu_id'               => $post['id'],
+            'md_division_id'        => $post['id'],
             'isactive'              => $active,
-            'name'                  => $post['mnu_name'],
-            'status'                => $post['mnu_status']
+            'name'                  => $post['div_name'],
+            'description'           => $post['div_desc'],
+            'pic'                   => $post['div_pic']
         ];
 
-        if (!$validation->run($post, 'menu')) {
-            $response = $menu->formError();
+        if (!$validation->run($post, 'division')) {
+            $response = $division->formError();
         } else {
-            $result = $menu->save($data);
+            $result = $division->save($data);
             $response = [['success' => 'success', 'update' => $result]];
         }
         return json_encode($response);
@@ -119,8 +126,8 @@ class Menu extends BaseController
 
     public function destroy($id)
     {
-        $menu = new M_menu();
-        $result = $menu->delete($id);
+        $division = new M_division();
+        $result = $division->delete($id);
         $response = [['success' => 'success', 'delete' => $result]];
         return json_encode($response);
     }
