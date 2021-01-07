@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-bordered table-hover table-pointer tb_display" style="width: 100%">
+                <table class="table table-bordered table-hover table-pointer tb_display table-md" style="width: 100%">
                     <thead>
                         <tr>
                             <th>ID</th>
