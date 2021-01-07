@@ -6,40 +6,87 @@
 <link rel="shortcut icon" type="image/png" href="/images/favicon.ico" />
 
 <!-- Bootstrap -->
+<script src="<?php echo base_url('js/jquery-1.12.0.min.js') ?>"></script>
 <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.min.css') ?>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" crossorigin="anonymous" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 
 <!-- STYLES -->
 
 <style {csp-style-nonce}>
     html {
-    scroll-behavior: smooth;
+        scroll-behavior: smooth;
     }
     body {
         margin-top:4.125rem;
-    }
-    
-    .light {
         font-family: 'Open Sans', sans-serif;
     }
+    p {
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    .featurette-heading {
+        line-height: 2;
+    }
+
+
+    .section {
+        padding-top:3rem;
+        padding-bottom: 3rem;
+    }
+    .section-row {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+        padding-top:3rem;
+        padding-bottom: 3rem;
+    }
     .section-heading {
-        margin-bottom: 2rem;
+        padding-bottom: 2rem;
     }
     .section-heading-center {
         text-align:center;
-        margin-bottom: 2rem;
+        padding-bottom: 2rem;
     }
     
     .nav-item {
         margin-left:1rem;
     }
+    
+    .jumbotron {
+        margin-bottom: 0;
+    }
 
     #contact input, #contact textarea, #contact .btn, #contact select {border-radius:0}
 
     footer a, footer p, footer small, footer .fa {color: #777;}
+
+    .scroll-to-top {
+        position: fixed;
+        right: 1rem;
+        bottom: 1rem;
+        display: none;
+        width: 2.75rem;
+        height: 2.75rem;
+        text-align: center;
+        color: #fff;
+        background: #106eea;
+        line-height: 46px;
+    }
+    .scroll-to-top:focus, .scroll-to-top:hover {
+        color: white;
+    }
+    .scroll-to-top:hover {
+        background: #3284f1;
+    }
     
+
     @media (max-width: 767px) {
         .navbar-collapse {
             position: fixed;
