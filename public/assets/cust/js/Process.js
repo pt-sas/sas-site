@@ -5,7 +5,8 @@ var ORI_URL = window.location.origin,
     LAST_URL = SITE_URL.substr(SITE_URL.lastIndexOf('/') + 1), //the last url
     ADMIN_URL = ORI_URL + ADMIN;
 
-var ID;
+var ID,
+    setSave;
 
 // Method default controller
 const SHOWALL = '/showAll',
@@ -20,35 +21,6 @@ const modalForm = $('.modal_form');
 const modalDialog = $('.modal-dialog'),
     modalTitle = $('.modal-title'),
     modalBody = $('.modal-body');
-
-function openModalForm() {
-    return modalForm.modal({
-        backdrop: 'static',
-        keyboard: false
-    });
-}
-
-// add class scrollable in modal
-function Scrollmodal() {
-    return modalDialog.addClass('modal-dialog-scrollable');
-}
-
-// add class size modal large
-function Largemodal() {
-    return modalDialog.addClass('modal-lg');
-}
-
-// add class size modal small
-function Smallmodal() {
-    return modalDialog.addClass('modal-sm');
-}
-
-$(document).ready(function (e) {
-    $('.select2').select2({
-        placeholder: 'Select an option',
-        width: '100%'
-    });
-});
 
 _table = $('.tb_display').DataTable({
     'ajax': SITE_URL + SHOWALL,
@@ -71,6 +43,29 @@ _table = $('.tb_display').DataTable({
     //     'rightColumns': 1,
     //     'heightMatch': 'auto'
     // }
+});
+
+$('.new_form').click(function (e) {
+    let classList = $(e.target)
+        .closest('button')
+        .prop('classList');
+
+    openModalForm();
+    Scrollmodal();
+
+    for (let i = 0; i < classList.length; i++) {
+        if (classList[i] === 'modal-lg')
+            Largemodal();
+        else if (classList[i] === 'modal-sm')
+            Smallmodal();
+    }
+
+    const parent = modalForm.closest('.form');
+    const ckbActive = parent.find('input[type="checkbox"].active');
+
+    modalTitle.html('New ' + capitalize(LAST_URL));
+    ckbActive.prop('checked', true);
+    setSave = 'add';
 });
 
 /**
@@ -116,20 +111,30 @@ $('.save_form').click(function (e) {
  */
 _table.on('click', 'td:not(:last-child)', function (e) {
     e.preventDefault();
-    const row = _table.row(this).data();
+    const row = $(e.target).closest('.card');
+
+    let classList = row.find('button')
+        .prop('classList');
 
     openModalForm();
     Scrollmodal();
-    Largemodal();
-    modalTitle.html(row[3]);
 
-    ID = row[0];
-    let url = SITE_URL + SHOW + ID;
+    for (let i = 0; i < classList.length; i++) {
+        if (classList[i] === 'modal-lg')
+            Largemodal();
+        else if (classList[i] === 'modal-sm')
+            Smallmodal();
+    }
 
-    setSave = 'update';
+    ID = _table.row(this).data()[0];
+
     const parent = modalForm.closest('.form');
     const form = parent.find('form');
     const field = form.find('input, textarea, select');
+
+    setSave = 'update';
+
+    let url = SITE_URL + SHOW + ID;
 
     $.getJSON({
         url: url,
@@ -140,15 +145,26 @@ _table.on('click', 'td:not(:last-child)', function (e) {
                 let fieldInput = result[i].field;
                 let label = result[i].label;
 
+                if (fieldInput === 'title')
+                    modalTitle.html(label);
+
                 for (let i = 0; i < field.length; i++) {
                     if (field[i].name === fieldInput) {
-                        parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
-                        parent.find('select[name=' + field[i].name + ']').val(label).change();
-                        if (field[i].type !== 'text') {
-                            if (label == 'Y')
-                                form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', true);
-                            else
-                                form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', false);
+                        let className = field[i].className.split(/\s+/)[1];
+                        form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
+
+                        form.find('select[name=' + field[i].name + ']').val(label).change();
+
+                        if (field[i].type === 'checkbox' && label === 'Y') {
+                            form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', true);
+
+                            if (className === 'active')
+                                readonly(form, false);
+                        } else {
+                            form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', false);
+
+                            if (className === 'active')
+                                readonly(form, true);
                         }
                     }
                 }
@@ -255,23 +271,87 @@ function errorForm(parent, data) {
 }
 
 function clearForm(parent) {
+    const select = parent.find('select');
+
     const errorInput = parent.find('input[type="text"], textarea');
     const errorText = parent.find('small');
 
     parent[0].reset();
 
+    // clear input type select
+    for (let k = 0; k < select.length; k++) {
+        parent.find('select[name=' + select[k].name + ']').val(null).change();
+    }
+
+    // clear attribute readonly on field and remove class invalid
     for (let i = 0; i < errorInput.length; i++) {
         parent.find('input:text[name=' + errorInput[i].name + '], textarea[name=' + errorInput[i].name + ']')
             .prop('readonly', false)
             .removeClass('is-invalid');
     }
 
+    // clear text error element small
     for (let j = 0; j < errorText.length; j++) {
         if (errorText[j].id !== '')
             parent.find('small[id=' + errorText[j].id + ']').html('');
     }
 }
 
+function readonly(parent, value) {
+    const field = parent.find('input, textarea, select');
+
+    for (let i = 0; i < field.length; i++) {
+        let className = field[i].className.split(/\s+/)[1];
+
+        parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', value);
+
+        if (field[i].type !== 'text' && className !== 'active') {
+            parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', value);
+        }
+    }
+}
+
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 function reloadTable() {
     _table.ajax.reload(null, false);
 }
+
+function openModalForm() {
+    return modalForm.modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+}
+
+// add class scrollable in modal
+function Scrollmodal() {
+    return modalDialog.addClass('modal-dialog-scrollable');
+}
+
+// add class size modal large
+function Largemodal() {
+    return modalDialog.addClass('modal-lg');
+}
+
+// add class size modal small
+function Smallmodal() {
+    return modalDialog.addClass('modal-sm');
+}
+
+$(document).ready(function (e) {
+    $('.select2').select2({
+        placeholder: 'Select an option',
+        width: '100%'
+    });
+
+    $('.number').on('keypress keyup blur', function (evt) {
+        $(this).val($(this).val().replace(/[^\d].+/, ""));
+        if ((evt.which < 48 || evt.which > 57)) {
+            evt.preventDefault();
+        }
+    });
+});
