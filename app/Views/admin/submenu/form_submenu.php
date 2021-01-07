@@ -14,8 +14,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="sub_name">Menu <span class="required">*</span></label>
-                                    <input type="text" class="form-control" id="sub_name" name="sub_name" placeholder="Enter menu name">
+                                    <label for="sub_name">Name <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="sub_name" name="sub_name" placeholder="Enter submenu name">
                                     <small class="form-text text-danger" id="error_sub_name"></small>
                                 </div>
                             </div>

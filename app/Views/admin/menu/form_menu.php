@@ -14,7 +14,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="mnu_name">Menu <span class="required">*</span></label>
+                                    <label for="mnu_name">Name <span class="required">*</span></label>
                                     <input type="text" class="form-control" id="mnu_name" name="mnu_name" placeholder="Enter menu name">
                                     <small class="form-text text-danger" id="error_mnu_name"></small>
                                 </div>
