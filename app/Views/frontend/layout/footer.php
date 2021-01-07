@@ -50,7 +50,7 @@
                 <h6 class="text-uppercase mb-4">Quick Links</h6>
                 <ul class="list-unstyled small">
                     <li>
-                        <a href="/about-us">About Us</a>
+                        <a href="/product">Product</a>
                     </li>
                     <li>
                         <a href="/news">News</a>
@@ -62,7 +62,10 @@
                         <a href="/career">Career</a>
                     </li>
                     <li>
-                        <a href="/contact-us">Contact Us</a>
+                        <a href="/about">About</a>
+                    </li>
+                    <li>
+                        <a href="/contact">Contact</a>
                     </li>
                 </ul>
             </div>

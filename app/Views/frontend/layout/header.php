@@ -6,15 +6,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Product </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-cyan">
-                        <a class="dropdown-item" href="#">Philips</a>
-                        <a class="dropdown-item" href="#">Panasonic</a>
-                        <a class="dropdown-item" href="#">Legrand</a>
-                        <a class="dropdown-item" href="#">Schneider</a>
-                        <a class="dropdown-item" href="#">Supreme</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url ('product') ?>">Product</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url ('store') ?>">Store</a>
@@ -29,12 +22,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url ('career') ?>">Career</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Company</a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-cyan">
-                        <a class="dropdown-item" href="<?php echo base_url ('about-us') ?>">About Us</a>
-                        <a class="dropdown-item" href="<?php echo base_url ('our-location') ?>">Our Location</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url ('about') ?>">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url ('contact') ?>">Contact</a>

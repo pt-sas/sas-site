@@ -32,7 +32,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1 class="light section-heading-center">About this page</h1>
+				<h1 class="section-heading-center">About this page</h1>
 				<div class="row justify-content-md-center">
 					<div class="col-md-8 text-center">
 						<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
@@ -48,7 +48,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1 class="light section-heading-center">About this page</h1>
+				<h1 class="section-heading-center">About this page</h1>
 				<div class="row justify-content-md-center">
 					<div class="col-md-8 text-center">
 						<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
@@ -65,52 +65,49 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row justify-content-md-center">
-					<div class="col-md-3 d-flex flex-column">
-						<h2 class="light">Latest News</h2>
-						<a href="/news" class="mt-auto btn btn-outline-light w-50"><small>More News</small></a>
+					<div class="col-md-7 d-flex flex-column">
+						<h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+						<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
 					</div>
-					<div class="col-md-3 d-flex flex-column">
-						<h6>25 December 2020</h6>
-						<h4 class="light">Members who are a team-player, full of enthusiasm and desire for continuous learning.</h4>
-						<a href="" class="mt-auto"><small>Read More</small></a>
+					<div class="col-md-5 d-flex flex-column">
+						<img class="featurette-image img-fluid mx-auto" src="/images/landing/third.svg" alt="Generic placeholder image">
 					</div>
-					<div class="col-md-3 d-flex flex-column">
-						<h6>25 December 2020</h6>
-						<h4 class="light">Members who are a team-player, full of enthusiasm and desire for continuous learning & improvements.</h4>
-						<a href="" class="mt-auto"><small>Read More</small></a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="row justify-content-md-center">
+					<div class="col-md-5 d-flex flex-column">
+						<img class="featurette-image img-fluid mx-auto" src="/images/landing/third.svg" alt="Generic placeholder image">
 					</div>
-					<div class="col-md-3 d-flex flex-column">
-						<h6>25 December 2020</h6>
-						<h4 class="light">Members who are a team-player, full of enthusiasm and desire for improvements.</h4>
-						<a href="" class="mt-auto"><small>Read More</small></a>
+					<div class="col-md-7 d-flex flex-column">
+						<h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+						<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="bg-light py-5">
+<div class="bg-light section">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<h1 class="light section-heading-center">Our Principal</h1>
-				<div class="row align-items-center">
-					<div class="col-md-2 offset-md-1">
-						<img src="/images/principal/philips.svg" class="mx-auto d-block"  style="width:100%" alt="Philips">
-					</div>
-					<div class="col-md-2">
-						<img src="/images/principal/panasonic.svg" class="mx-auto d-block"  style="width:100%" alt="Panasonic">
-					</div>
-					<div class="col-md-2">
-						<img src="/images/principal/legrand.svg" class="mx-auto d-block"  style="width:100%" alt="Legrand">
-					</div>
-					<div class="col-md-2">
-						<img src="/images/principal/schneider.svg" class="mx-auto d-block"  style="width:100%" alt="Schneider">
-					</div>
-					<div class="col-md-2">
-						<img src="/images/principal/supreme.svg" class="mx-auto d-block"  style="width:100%" alt="Supreme">
-					</div>
-				</div>
+		<h1 class="section-heading-center">Our Principal</h1>
+		<div class="row align-items-center">
+			<div class="col-md-2 offset-md-1">
+				<img src="/images/principal/philips.svg" class="mx-auto d-block"  style="width:100%" alt="Philips">
+			</div>
+			<div class="col-md-2">
+				<img src="/images/principal/panasonic.svg" class="mx-auto d-block"  style="width:100%" alt="Panasonic">
+			</div>
+			<div class="col-md-2">
+				<img src="/images/principal/legrand.svg" class="mx-auto d-block"  style="width:100%" alt="Legrand">
+			</div>
+			<div class="col-md-2">
+				<img src="/images/principal/schneider.svg" class="mx-auto d-block"  style="width:100%" alt="Schneider">
+			</div>
+			<div class="col-md-2">
+				<img src="/images/principal/supreme.svg" class="mx-auto d-block"  style="width:100%" alt="Supreme">
 			</div>
 		</div>
 	</div>
