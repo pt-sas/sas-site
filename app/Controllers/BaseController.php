@@ -30,6 +30,26 @@ class BaseController extends Controller
 	protected $helpers = [];
 
 	/**
+	 * Type modal class
+	 * @large : modal-lg
+	 * @small : modal-sm
+	 * @default : null
+	 */
+	protected $modal_type;
+
+	/**
+	 * Type form class
+	 * @modal : new_form
+	 * @page : 
+	 */
+	protected $form_type;
+
+	/**
+	 * Title button
+	 */
+	protected $new_title;
+
+	/**
 	 * Constructor.
 	 */
 	public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
