@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="float-left">
-                    <button type="button" class="btn bg-gradient-primary btn-sm new_form" title="New Uom"><i class=" fas fa-plus-circle"> New</i></button>
+                    <?= $button; ?>
                 </div>
             </div>
             <div class="card-body">
