@@ -9,7 +9,15 @@ class Division extends BaseController
 {
     public function index()
     {
-        return view('admin/division/v_division');
+        $this->new_title = 'New Division';
+        $this->form_type = 'new_form';
+
+        $data = [
+            'button'    => '<button type="button" class="btn bg-gradient-primary btn-sm ' . $this->form_type . ' ' . $this->modal_type . '" title="' . $this->new_title . '">
+                <i class="fas fa-plus-circle"> New</i>
+            </button>'
+        ];
+        return view('admin/division/v_division', $data);
     }
 
     public function showAll()

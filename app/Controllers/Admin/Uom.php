@@ -9,7 +9,15 @@ class Uom extends BaseController
 {
     public function index()
     {
-        return view('admin/uom/v_uom');
+        $this->new_title = 'New Uom';
+        $this->form_type = 'new_form';
+
+        $data = [
+            'button'    => '<button type="button" class="btn bg-gradient-primary btn-sm ' . $this->form_type . ' ' . $this->modal_type . '" title="' . $this->new_title . '">
+                <i class="fas fa-plus-circle"> New</i>
+            </button>'
+        ];
+        return view('admin/uom/v_uom', $data);
     }
 
     public function showAll()
