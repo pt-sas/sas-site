@@ -95,12 +95,21 @@ $('.save_form').click(function (e) {
         data: formData,
         dataType: 'JSON',
         success: function (result) {
-            if (result[0].error) {
-                errorForm(form, result);
-            } else {
+            if (result[0].success == true) {
+                Toast.fire({
+                    type: 'success',
+                    title: result[0].message
+                });
                 clearForm(form);
                 modalForm.modal('hide');
                 reloadTable();
+            } else if (result[0].error == true) {
+                errorForm(form, result);
+            } else {
+                Toast.fire({
+                    type: 'error',
+                    title: result[0].message
+                });
             }
         }
     });
@@ -353,5 +362,12 @@ $(document).ready(function (e) {
         if ((evt.which < 48 || evt.which > 57)) {
             evt.preventDefault();
         }
+    });
+
+    Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 4000
     });
 });
