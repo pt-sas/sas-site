@@ -212,7 +212,7 @@ _table.on('click', 'td:not(:last-child)', function (e) {
                 let label = result[i].label;
 
                 for (let i = 0; i < formList.length; i++) {
-                    if (formList[i].toLowerCase() === 'show' && fieldInput === 'title') {
+                    if (formList[i].toLowerCase() === 'modal_form' && fieldInput === 'title') {
                         modalTitle.html(capitalize(label));
                     } else if (fieldInput === 'title') {
                         cardTitle.html(capitalize(label));
