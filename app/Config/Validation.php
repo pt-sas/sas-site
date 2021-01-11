@@ -78,6 +78,10 @@ class Validation
 		'pro_volume' => [
 			'label'		=> 'Volume',
 			'rules'		=> 'required'
+		],
+		'pro_group' => [
+			'label'		=> 'Product Group',
+			'rules'		=> 'required'
 		]
 	];
 
@@ -177,5 +181,20 @@ class Validation
 				'is_unique' => 'This {field} already exists.'
 			]
 		]
+	];
+
+	public $group = [
+		'gro_name' => [
+			'label'		=> 'Name',
+			'rules' 	=> 'required|is_unique[md_productgroup.name,md_productgroup_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'gro_principal' => [
+			'label'		=> 'Principal',
+			'rules' 	=> 'required'
+		]
+
 	];
 }
