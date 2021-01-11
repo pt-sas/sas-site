@@ -18,7 +18,7 @@ class Product extends BaseController
             'button'    => '<button type="button" class="btn bg-gradient-primary btn-sm ' . $this->form_type . ' ' . $this->modal_type . '" title="' . $this->new_title . '">
                 <i class="fas fa-plus-circle"> New</i>
             </button>',
-            'pro_group' => $group->findAll()
+            'pro_group' => $group->where('isactive', 'Y')->findAll()
         ];
         return view('admin/product/v_product', $data);
     }

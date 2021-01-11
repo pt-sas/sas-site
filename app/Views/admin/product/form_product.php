@@ -85,7 +85,7 @@
                             <div class="form-group">
                                 <label for="pro_group">Product Group <span class="required">*</span></label>
                                 <select class="form-control select2" id="pro_group" name="pro_group">
-                                    <option value="">--Select Product Group</option>
+                                    <option value=""></option>
                                     <?php foreach ($pro_group as $value) :
                                         $group_id = $value['md_productgroup_id'];
                                         $group_name = $value['name']; ?>
