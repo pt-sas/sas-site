@@ -37,7 +37,7 @@ class Uom extends BaseController
             $row[] = $number;
             $row[] = $value['name'];
             $row[] = $value['description'];
-            $row[] = $value['isactive'];
+            $row[] = active($value['isactive']);
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
             		</center>';
@@ -56,19 +56,22 @@ class Uom extends BaseController
 
         $active = isset($post['uom_isactive']) ? 'Y' : 'N';
 
-        $data = [
-            'isactive'              => $active,
-            'name'                  => $post['uom_name'],
-            'description'           => $post['uom_desc']
-        ];
+        try {
+            $data = [
+                'isactive'              => $active,
+                'name'                  => $post['uom_name'],
+                'description'           => $post['uom_desc']
+            ];
 
-        if (!$validation->run($post, 'uom')) {
-            $response = $uom->formError();
-        } else {
-            $result = $uom->save($data);
-            $response = [['success' => 'success', 'insert' => $result]];
+            if (!$validation->run($post, 'uom')) {
+                $response = $uom->formError();
+            } else {
+                $result = $uom->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
-
         return json_encode($response);
     }
 
@@ -109,18 +112,22 @@ class Uom extends BaseController
 
         $active = isset($post['uom_isactive']) ? 'Y' : 'N';
 
-        $data = [
-            'md_uom_id'             => $post['id'],
-            'isactive'              => $active,
-            'name'                  => $post['uom_name'],
-            'description'           => $post['uom_desc']
-        ];
+        try {
+            $data = [
+                'md_uom_id'             => $post['id'],
+                'isactive'              => $active,
+                'name'                  => $post['uom_name'],
+                'description'           => $post['uom_desc']
+            ];
 
-        if (!$validation->run($post, 'uom')) {
-            $response = $uom->formError();
-        } else {
-            $result = $uom->save($data);
-            $response = [['success' => 'success', 'update' => $result]];
+            if (!$validation->run($post, 'uom')) {
+                $response = $uom->formError();
+            } else {
+                $result = $uom->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
         return json_encode($response);
     }
@@ -128,8 +135,13 @@ class Uom extends BaseController
     public function destroy($id)
     {
         $uom = new M_uom();
-        $result = $uom->delete($id);
-        $response = [['success' => 'success', 'delete' => $result]];
+
+        try {
+            $result = $uom->delete($id);
+            $response = message('success', true, $result);
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
+        }
         return json_encode($response);
     }
 }

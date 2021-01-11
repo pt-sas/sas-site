@@ -37,7 +37,7 @@ class Submenu extends BaseController
             $row[] = $number;
             $row[] = $value['name'];
             $row[] = $value['status'];
-            $row[] = $value['isactive'];
+            $row[] = active($value['isactive']);
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
             		</center>';
@@ -56,19 +56,22 @@ class Submenu extends BaseController
 
         $active = isset($post['sub_isactive']) ? 'Y' : 'N';
 
-        $data = [
-            'isactive'              => $active,
-            'name'                  => $post['sub_name'],
-            'status'                => $post['sub_status']
-        ];
+        try {
+            $data = [
+                'isactive'              => $active,
+                'name'                  => $post['sub_name'],
+                'status'                => $post['sub_status']
+            ];
 
-        if (!$validation->run($post, 'submenu')) {
-            $response = $submenu->formError();
-        } else {
-            $result = $submenu->save($data);
-            $response = [['success' => 'success', 'insert' => $result]];
+            if (!$validation->run($post, 'submenu')) {
+                $response = $submenu->formError();
+            } else {
+                $result = $submenu->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
-
         return json_encode($response);
     }
 
@@ -109,18 +112,22 @@ class Submenu extends BaseController
 
         $active = isset($post['sub_isactive']) ? 'Y' : 'N';
 
-        $data = [
-            'sys_submenu_id'        => $post['id'],
-            'isactive'              => $active,
-            'name'                  => $post['sub_name'],
-            'status'                => $post['sub_status']
-        ];
+        try {
+            $data = [
+                'sys_submenu_id'        => $post['id'],
+                'isactive'              => $active,
+                'name'                  => $post['sub_name'],
+                'status'                => $post['sub_status']
+            ];
 
-        if (!$validation->run($post, 'submenu')) {
-            $response = $submenu->formError();
-        } else {
-            $result = $submenu->save($data);
-            $response = [['success' => 'success', 'update' => $result]];
+            if (!$validation->run($post, 'submenu')) {
+                $response = $submenu->formError();
+            } else {
+                $result = $submenu->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
         return json_encode($response);
     }
@@ -128,8 +135,13 @@ class Submenu extends BaseController
     public function destroy($id)
     {
         $submenu = new M_submenu();
-        $result = $submenu->delete($id);
-        $response = [['success' => 'success', 'delete' => $result]];
+
+        try {
+            $result = $submenu->delete($id);
+            $response = message('success', true, $result);
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
+        }
         return json_encode($response);
     }
 }

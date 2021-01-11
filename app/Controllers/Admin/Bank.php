@@ -37,7 +37,7 @@ class Bank extends BaseController
             $row[] = $number;
             $row[] = $value['name'];
             $row[] = $value['description'];
-            $row[] = $value['isactive'];
+            $row[] = active($value['isactive']);
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
             		</center>';
@@ -56,19 +56,22 @@ class Bank extends BaseController
 
         $active = isset($post['bnk_isactive']) ? 'Y' : 'N';
 
-        $data = [
-            'isactive'              => $active,
-            'name'                  => $post['bnk_name'],
-            'description'           => $post['bnk_desc']
-        ];
+        try {
+            $data = [
+                'isactive'              => $active,
+                'name'                  => $post['bnk_name'],
+                'description'           => $post['bnk_desc']
+            ];
 
-        if (!$validation->run($post, 'bank')) {
-            $response = $bank->formError();
-        } else {
-            $result = $bank->save($data);
-            $response = [['success' => 'success', 'insert' => $result]];
+            if (!$validation->run($post, 'bank')) {
+                $response = $bank->formError();
+            } else {
+                $result = $bank->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
-
         return json_encode($response);
     }
 
@@ -109,18 +112,22 @@ class Bank extends BaseController
 
         $active = isset($post['bnk_isactive']) ? 'Y' : 'N';
 
-        $data = [
-            'md_bank_id'            => $post['id'],
-            'isactive'              => $active,
-            'name'                  => $post['bnk_name'],
-            'description'           => $post['bnk_desc']
-        ];
+        try {
+            $data = [
+                'md_bank_id'            => $post['id'],
+                'isactive'              => $active,
+                'name'                  => $post['bnk_name'],
+                'description'           => $post['bnk_desc']
+            ];
 
-        if (!$validation->run($post, 'bank')) {
-            $response = $bank->formError();
-        } else {
-            $result = $bank->save($data);
-            $response = [['success' => 'success', 'update' => $result]];
+            if (!$validation->run($post, 'bank')) {
+                $response = $bank->formError();
+            } else {
+                $result = $bank->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
         return json_encode($response);
     }
@@ -128,8 +135,13 @@ class Bank extends BaseController
     public function destroy($id)
     {
         $bank = new M_bank();
-        $result = $bank->delete($id);
-        $response = [['success' => 'success', 'delete' => $result]];
+
+        try {
+            $result = $bank->delete($id);
+            $response = message('success', true, $result);
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
+        }
         return json_encode($response);
     }
 }

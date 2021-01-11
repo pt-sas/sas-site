@@ -38,7 +38,7 @@ class Division extends BaseController
             $row[] = $value['name'];
             $row[] = $value['description'];
             $row[] = $value['pic'];
-            $row[] = $value['isactive'];
+            $row[] = active($value['isactive']);
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
             		</center>';
@@ -57,20 +57,23 @@ class Division extends BaseController
 
         $active = isset($post['div_isactive']) ? 'Y' : 'N';
 
-        $data = [
-            'isactive'              => $active,
-            'name'                  => $post['div_name'],
-            'description'           => $post['div_desc'],
-            'pic'                   => $post['div_pic']
-        ];
+        try {
+            $data = [
+                'isactive'              => $active,
+                'name'                  => $post['div_name'],
+                'description'           => $post['div_desc'],
+                'pic'                   => $post['div_pic']
+            ];
 
-        if (!$validation->run($post, 'division')) {
-            $response = $division->formError();
-        } else {
-            $result = $division->save($data);
-            $response = [['success' => 'success', 'insert' => $result]];
+            if (!$validation->run($post, 'division')) {
+                $response = $division->formError();
+            } else {
+                $result = $division->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
-
         return json_encode($response);
     }
 
@@ -115,19 +118,23 @@ class Division extends BaseController
 
         $active = isset($post['div_isactive']) ? 'Y' : 'N';
 
-        $data = [
-            'md_division_id'        => $post['id'],
-            'isactive'              => $active,
-            'name'                  => $post['div_name'],
-            'description'           => $post['div_desc'],
-            'pic'                   => $post['div_pic']
-        ];
+        try {
+            $data = [
+                'md_division_id'        => $post['id'],
+                'isactive'              => $active,
+                'name'                  => $post['div_name'],
+                'description'           => $post['div_desc'],
+                'pic'                   => $post['div_pic']
+            ];
 
-        if (!$validation->run($post, 'division')) {
-            $response = $division->formError();
-        } else {
-            $result = $division->save($data);
-            $response = [['success' => 'success', 'update' => $result]];
+            if (!$validation->run($post, 'division')) {
+                $response = $division->formError();
+            } else {
+                $result = $division->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
         return json_encode($response);
     }
@@ -135,8 +142,13 @@ class Division extends BaseController
     public function destroy($id)
     {
         $division = new M_division();
-        $result = $division->delete($id);
-        $response = [['success' => 'success', 'delete' => $result]];
+
+        try {
+            $result = $division->delete($id);
+            $response = message('success', true, $result);
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
+        }
         return json_encode($response);
     }
 }

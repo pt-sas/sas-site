@@ -4,7 +4,7 @@
 <?= $this->include('admin/product/form_product'); ?>
 <div class="row">
     <div class="col-12">
-        <div class="card">
+        <div class="card main_page">
             <div class="card-header">
                 <div class="float-left">
                     <?= $button; ?>

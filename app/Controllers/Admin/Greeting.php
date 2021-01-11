@@ -37,7 +37,7 @@ class Greeting extends BaseController
             $row[] = $number;
             $row[] = $value['name'];
             $row[] = $value['description'];
-            $row[] = $value['isactive'];
+            $row[] = active($value['isactive']);
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
             		</center>';
@@ -56,19 +56,22 @@ class Greeting extends BaseController
 
         $active = isset($post['gre_isactive']) ? 'Y' : 'N';
 
-        $data = [
-            'isactive'              => $active,
-            'name'                  => $post['gre_name'],
-            'description'           => $post['gre_desc']
-        ];
+        try {
+            $data = [
+                'isactive'              => $active,
+                'name'                  => $post['gre_name'],
+                'description'           => $post['gre_desc']
+            ];
 
-        if (!$validation->run($post, 'greeting')) {
-            $response = $greeting->formError();
-        } else {
-            $result = $greeting->save($data);
-            $response = [['success' => 'success', 'insert' => $result]];
+            if (!$validation->run($post, 'greeting')) {
+                $response = $greeting->formError();
+            } else {
+                $result = $greeting->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
-
         return json_encode($response);
     }
 
@@ -109,18 +112,22 @@ class Greeting extends BaseController
 
         $active = isset($post['gre_isactive']) ? 'Y' : 'N';
 
-        $data = [
-            'md_greeting_id'                => $post['id'],
-            'isactive'              => $active,
-            'name'                  => $post['gre_name'],
-            'description'           => $post['gre_desc']
-        ];
+        try {
+            $data = [
+                'md_greeting_id'        => $post['id'],
+                'isactive'              => $active,
+                'name'                  => $post['gre_name'],
+                'description'           => $post['gre_desc']
+            ];
 
-        if (!$validation->run($post, 'greeting')) {
-            $response = $greeting->formError();
-        } else {
-            $result = $greeting->save($data);
-            $response = [['success' => 'success', 'update' => $result]];
+            if (!$validation->run($post, 'greeting')) {
+                $response = $greeting->formError();
+            } else {
+                $result = $greeting->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
         return json_encode($response);
     }
@@ -128,8 +135,13 @@ class Greeting extends BaseController
     public function destroy($id)
     {
         $greeting = new M_greeting();
-        $result = $greeting->delete($id);
-        $response = [['success' => 'success', 'delete' => $result]];
+
+        try {
+            $result = $greeting->delete($id);
+            $response = message('success', true, $result);
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
+        }
         return json_encode($response);
     }
 }

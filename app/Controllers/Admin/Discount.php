@@ -3,13 +3,13 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\Admin\M_menu;
+use App\Models\Admin\M_discount;
 
-class Menu extends BaseController
+class Discount extends BaseController
 {
     public function index()
     {
-        $this->new_title = 'New Menu';
+        $this->new_title = 'New Discount';
         $this->form_type = 'new_form';
 
         $data = [
@@ -17,27 +17,27 @@ class Menu extends BaseController
                 <i class="fas fa-plus-circle"> New</i>
             </button>'
         ];
-        return view('admin/menu/v_menu', $data);
+        return view('admin/discount/v_discount', $data);
     }
 
     public function showAll()
     {
-        $menu = new M_menu();
-        $list = $menu->findAll();
+        $discount = new M_discount();
+        $list = $discount->findAll();
         $data = [];
 
         $number = 0;
         foreach ($list as $value) :
             $row = [];
-            $ID = $value['menu_id'];
+            $ID = $value['md_discount_id'];
 
             $number++;
 
             $row[] = $ID;
             $row[] = $number;
             $row[] = $value['name'];
-            $row[] = $value['status'];
-            $row[] = active($value['isactive']);
+            $row[] = $value['description'];
+            $row[] = $value['isactive'];
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
             		</center>';
@@ -51,22 +51,22 @@ class Menu extends BaseController
     public function create()
     {
         $validation = \Config\Services::validation();
-        $menu = new M_menu();
+        $discount = new M_discount();
         $post = $this->request->getVar();
 
-        $active = isset($post['mnu_isactive']) ? 'Y' : 'N';
+        $active = isset($post['dis_isactive']) ? 'Y' : 'N';
 
         try {
             $data = [
                 'isactive'              => $active,
-                'name'                  => $post['mnu_name'],
-                'status'                => $post['mnu_status']
+                'name'                  => $post['dis_name'],
+                'description'           => $post['dis_desc']
             ];
 
-            if (!$validation->run($post, 'menu')) {
-                $response = $menu->formError();
+            if (!$validation->run($post, 'discount')) {
+                $response = $discount->formError();
             } else {
-                $result = $menu->save($data);
+                $result = $discount->save($data);
                 $response = message('success', true, $result);
             }
         } catch (\Exception $e) {
@@ -77,8 +77,8 @@ class Menu extends BaseController
 
     public function show($id)
     {
-        $menu = new M_menu();
-        $list = $menu->where('menu_id', $id)->findAll();
+        $discount = new M_discount();
+        $list = $discount->where('md_bankdiscount_id', $id)->findAll();
 
         foreach ($list as $value) :
             $response =  [
@@ -87,16 +87,16 @@ class Menu extends BaseController
                     'label'        =>   $value['name']
                 ],
                 [
-                    'field'        =>   'mnu_isactive',
+                    'field'        =>   'dis_isactive',
                     'label'        =>   $value['isactive']
                 ],
                 [
-                    'field'        =>   'mnu_name',
+                    'field'        =>   'dis_name',
                     'label'        =>   $value['name']
                 ],
                 [
-                    'field'        =>   'mnu_status',
-                    'label'        =>   $value['status']
+                    'field'        =>   'dis_desc',
+                    'label'        =>   $value['description']
                 ]
             ];
         endforeach;
@@ -107,23 +107,24 @@ class Menu extends BaseController
     public function edit()
     {
         $validation = \Config\Services::validation();
-        $menu = new M_menu();
+        $discount = new M_discount();
         $post = $this->request->getVar();
 
-        $active = isset($post['mnu_isactive']) ? 'Y' : 'N';
+        $active = isset($post['dis_isactive']) ? 'Y' : 'N';
 
         try {
             $data = [
-                'menu_id'               => $post['id'],
+                'md_discount_id'        => $post['id'],
                 'isactive'              => $active,
-                'name'                  => $post['mnu_name'],
-                'status'                => $post['mnu_status']
+                'name'                  => $post['dis_name'],
+                'description'           => $post['dis_desc'],
+                'isdefault'             => $default,
             ];
 
-            if (!$validation->run($post, 'menu')) {
-                $response = $menu->formError();
+            if (!$validation->run($post, 'discount')) {
+                $response = $discount->formError();
             } else {
-                $result = $menu->save($data);
+                $result = $discount->save($data);
                 $response = message('success', true, $result);
             }
         } catch (\Exception $e) {
@@ -134,10 +135,10 @@ class Menu extends BaseController
 
     public function destroy($id)
     {
-        $menu = new M_menu();
+        $discount = new M_discount();
 
         try {
-            $result = $menu->delete($id);
+            $result = $discount->delete($id);
             $response = message('success', true, $result);
         } catch (\Exception $e) {
             $response = message('error', false, $e->getMessage());
