@@ -258,3 +258,8 @@ button.margin-right {
 .dataTables_scrollHeadInner .table-md {
     width: 100% !important;
 }
+
+/* Hidden card view page */
+.form_page {
+    display:none
+}

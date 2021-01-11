@@ -11,7 +11,13 @@ class Product extends BaseController
     public function index()
     {
         $group = new M_product_group();
+        $this->new_title = 'New Product';
+        $this->form_type = 'new_form';
+
         $data = [
+            'button'    => '<button type="button" class="btn bg-gradient-primary btn-sm ' . $this->form_type . ' ' . $this->modal_type . '" title="' . $this->new_title . '">
+                <i class="fas fa-plus-circle"> New</i>
+            </button>',
             'pro_group' => $group->findAll()
         ];
         return view('admin/product/v_product', $data);
@@ -34,15 +40,15 @@ class Product extends BaseController
             $row[] = $number;
             $row[] = $value['code'];
             $row[] = $value['name'];
-            $row[] = $value['code'];
-            $row[] = $value['qty'];
+            $row[] = $value['md_productgroup_id'];
             $row[] = $value['qty'];
             $row[] = $value['width'];
             $row[] = $value['height'];
+            $row[] = $value['weight'];
             $row[] = $value['depth'];
             $row[] = $value['volume'];
-            $row[] = $value['code'];
-            $row[] = $value['code'];
+            $row[] = $value['md_uom_id'];
+            $row[] = active($value['isactive']);
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
             		</center>';
@@ -59,35 +65,40 @@ class Product extends BaseController
         $product = new M_product();
         $post = $this->request->getVar();
 
+        $group = isset($post['pro_group']) ? $post['pro_group'] : '';
+
         $active = isset($post['pro_isactive']) ? 'Y' : 'N';
         $visible = isset($post['pro_visible']) ? 'Y' : 'N';
 
-        $data = [
-            'isactive'              => $active,
-            // 'm_product_id'          => $post['pro_ref_product'],
-            // 'md_principal_id'       => $post['pro_principal'],
-            // 'md_pricelist_id'       => $post['pro_pricelist'],
-            'md_productgroup_id'    => $post['pro_group'],
-            // 'md_uom_id'             => $post['pro_uom'],
-            'code'                  => $post['pro_code'],
-            'name'                  => $post['pro_name'],
-            'description'           => $post['pro_desc'],
-            'weight'                => $post['pro_weight'],
-            'width'                 => $post['pro_width'],
-            'height'                => $post['pro_height'],
-            'depth'                 => $post['pro_depth'],
-            'volume'                => $post['pro_volume'],
-            'qty'                   => $post['pro_qty'],
-            'visible'               => $visible
-        ];
+        try {
+            $data = [
+                'isactive'              => $active,
+                // 'm_product_id'          => $post['pro_ref_product'],
+                // 'md_principal_id'       => $post['pro_principal'],
+                // 'md_pricelist_id'       => $post['pro_pricelist'],
+                'md_productgroup_id'    => $group,
+                // 'md_uom_id'             => $post['pro_uom'],
+                'code'                  => $post['pro_code'],
+                'name'                  => $post['pro_name'],
+                'description'           => $post['pro_desc'],
+                'weight'                => $post['pro_weight'],
+                'width'                 => $post['pro_width'],
+                'height'                => $post['pro_height'],
+                'depth'                 => $post['pro_depth'],
+                'volume'                => $post['pro_volume'],
+                'qty'                   => $post['pro_qty'],
+                'visible'               => $visible
+            ];
 
-        if (!$validation->run($post, 'product')) {
-            $response = $product->formError();
-        } else {
-            $result = $product->save($data);
-            $response = [['success' => 'success', 'insert' => $result]];
+            if (!$validation->run($post, 'product')) {
+                $response = $product->formError();
+            } else {
+                $result = $product->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
-
         return json_encode($response);
     }
 
@@ -169,34 +180,41 @@ class Product extends BaseController
         $validation = \Config\Services::validation();
         $product = new M_product();
         $post = $this->request->getVar();
+
+        $group = isset($post['pro_group']) ? $post['pro_group'] : '';
+
         $active = isset($post['pro_isactive']) ? 'Y' : 'N';
         $visible = isset($post['pro_visible']) ? 'Y' : 'N';
 
-        $data = [
-            'md_product_id'         => $post['id'],
-            'isactive'              => $active,
-            // 'm_product_id'          => $post['pro_ref_product'],
-            // 'md_principal_id'       => $post['pro_principal'],
-            // 'md_pricelist_id'       => $post['pro_pricelist'],
-            'md_productgroup_id'    => $post['pro_group'],
-            // 'md_uom_id'             => $post['pro_uom'],
-            'code'                  => $post['pro_code'],
-            'name'                  => $post['pro_name'],
-            'description'           => $post['pro_desc'],
-            'weight'                => $post['pro_weight'],
-            'width'                 => $post['pro_width'],
-            'height'                => $post['pro_height'],
-            'depth'                 => $post['pro_depth'],
-            'volume'                => $post['pro_volume'],
-            'qty'                   => $post['pro_qty'],
-            'visible'               => $visible
-        ];
+        try {
+            $data = [
+                'md_product_id'         => $post['id'],
+                'isactive'              => $active,
+                // 'm_product_id'          => $post['pro_ref_product'],
+                // 'md_principal_id'       => $post['pro_principal'],
+                // 'md_pricelist_id'       => $post['pro_pricelist'],
+                'md_productgroup_id'    => $group,
+                // 'md_uom_id'             => $post['pro_uom'],
+                'code'                  => $post['pro_code'],
+                'name'                  => $post['pro_name'],
+                'description'           => $post['pro_desc'],
+                'weight'                => $post['pro_weight'],
+                'width'                 => $post['pro_width'],
+                'height'                => $post['pro_height'],
+                'depth'                 => $post['pro_depth'],
+                'volume'                => $post['pro_volume'],
+                'qty'                   => $post['pro_qty'],
+                'visible'               => $visible
+            ];
 
-        if (!$validation->run($post, 'product')) {
-            $response = $product->formError();
-        } else {
-            $result = $product->save($data);
-            $response = [['success' => 'success', 'update' => $result]];
+            if (!$validation->run($post, 'product')) {
+                $response = $product->formError();
+            } else {
+                $result = $product->save($data);
+                $response = message('success', true, $result);
+            }
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
         }
         return json_encode($response);
     }
@@ -204,8 +222,13 @@ class Product extends BaseController
     public function destroy($id)
     {
         $product = new M_product();
-        $result = $product->delete($id);
-        $response = [['success' => 'success', 'delete' => $result]];
+
+        try {
+            $result = $product->delete($id);
+            $response = message('success', true, $result);
+        } catch (\Exception $e) {
+            $response = message('error', false, $e->getMessage());
+        }
         return json_encode($response);
     }
 }

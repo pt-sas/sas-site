@@ -158,4 +158,14 @@ class Validation
 			]
 		]
 	];
+
+	public $account = [
+		'acc_name' => [
+			'label'		=> 'Name',
+			'rules' 	=> 'required|is_unique[md_bankaccount.name,md_bankaccount_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		]
+	];
 }

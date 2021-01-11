@@ -1,7 +1,7 @@
 <?= $this->extend('admin/overview'); ?>
 
 <?= $this->section('content'); ?>
-<?= $this->include('admin/bank/form_bank'); ?>
+<?= $this->include('admin/account/form_account'); ?>
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -16,8 +16,12 @@
                         <tr>
                             <th>ID</th>
                             <th>#</th>
+                            <th>Name</th>
+                            <th>Account No</th>
                             <th>Bank</th>
+                            <th>Branch</th>
                             <th>Description</th>
+                            <th>Default</th>
                             <th>Active</th>
                             <th></th>
                         </tr>

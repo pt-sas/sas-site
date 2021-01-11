@@ -3,13 +3,13 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\Admin\M_principal;
+use App\Models\Admin\M_account;
 
-class Principal extends BaseController
+class Account extends BaseController
 {
     public function index()
     {
-        $this->new_title = 'New Principal';
+        $this->new_title = 'New Bank Account';
         $this->form_type = 'new_form';
 
         $data = [
@@ -17,26 +17,30 @@ class Principal extends BaseController
                 <i class="fas fa-plus-circle"> New</i>
             </button>'
         ];
-        return view('admin/principal/v_principal', $data);
+        return view('admin/account/v_account', $data);
     }
 
     public function showAll()
     {
-        $principal = new M_principal();
-        $list = $principal->findAll();
+        $account = new M_account();
+        $list = $account->findAll();
         $data = [];
 
         $number = 0;
         foreach ($list as $value) :
             $row = [];
-            $ID = $value['md_principal_id'];
+            $ID = $value['md_bankaccount_id'];
 
             $number++;
 
             $row[] = $ID;
             $row[] = $number;
             $row[] = $value['name'];
+            $row[] = $value['md_bank_id'];
+            $row[] = $value['accountno'];
+            $row[] = $value['branch'];
             $row[] = $value['description'];
+            $row[] = status($value['isdefault']);
             $row[] = active($value['isactive']);
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
@@ -51,22 +55,29 @@ class Principal extends BaseController
     public function create()
     {
         $validation = \Config\Services::validation();
-        $principal = new M_principal();
+        $account = new M_account();
         $post = $this->request->getVar();
 
-        $active = isset($post['pri_isactive']) ? 'Y' : 'N';
+        $bank = isset($post['acc_bank']) ? $post['acc_bank'] : '';
+
+        $active = isset($post['acc_isactive']) ? 'Y' : 'N';
+        $default = isset($post['acc_isdefault']) ? 'Y' : 'N';
 
         try {
             $data = [
                 'isactive'              => $active,
-                'name'                  => $post['pri_name'],
-                'description'           => $post['pri_desc']
+                'name'                  => $post['acc_name'],
+                'md_bank_id'            => $bank,
+                'accountno'             => $post['acc_accountno'],
+                'branch'                => $post['acc_branch'],
+                'description'           => $post['acc_desc'],
+                'isdefault'             => $default,
             ];
 
-            if (!$validation->run($post, 'principal')) {
-                $response = $principal->formError();
+            if (!$validation->run($post, 'account')) {
+                $response = $account->formError();
             } else {
-                $result = $principal->save($data);
+                $result = $account->save($data);
                 $response = message('success', true, $result);
             }
         } catch (\Exception $e) {
@@ -77,8 +88,8 @@ class Principal extends BaseController
 
     public function show($id)
     {
-        $principal = new M_principal();
-        $list = $principal->where('md_principal_id', $id)->findAll();
+        $account = new M_account();
+        $list = $account->where('md_bankaccount_id', $id)->findAll();
 
         foreach ($list as $value) :
             $response =  [
@@ -87,16 +98,32 @@ class Principal extends BaseController
                     'label'        =>   $value['name']
                 ],
                 [
-                    'field'        =>   'pri_isactive',
+                    'field'        =>   'acc_isactive',
                     'label'        =>   $value['isactive']
                 ],
                 [
-                    'field'        =>   'pri_name',
+                    'field'        =>   'acc_name',
                     'label'        =>   $value['name']
                 ],
                 [
-                    'field'        =>   'pri_desc',
+                    'field'        =>   'acc_bank',
+                    'label'        =>   $value['md_bank_id']
+                ],
+                [
+                    'field'        =>   'acc_accountno',
+                    'label'        =>   $value['accountno']
+                ],
+                [
+                    'field'        =>   'acc_branch',
+                    'label'        =>   $value['branch']
+                ],
+                [
+                    'field'        =>   'acc_desc',
                     'label'        =>   $value['description']
+                ],
+                [
+                    'field'        =>   'acc_isdefault',
+                    'label'        =>   $value['isdefault']
                 ]
             ];
         endforeach;
@@ -107,23 +134,30 @@ class Principal extends BaseController
     public function edit()
     {
         $validation = \Config\Services::validation();
-        $principal = new M_principal();
+        $account = new M_account();
         $post = $this->request->getVar();
 
-        $active = isset($post['pri_isactive']) ? 'Y' : 'N';
+        $bank = isset($post['acc_bank']) ? $post['acc_bank'] : '';
+
+        $active = isset($post['acc_isactive']) ? 'Y' : 'N';
+        $default = isset($post['acc_isdefault']) ? 'Y' : 'N';
 
         try {
             $data = [
-                'md_principal_id'       => $post['id'],
+                'md_bankaccount_id'     => $post['id'],
                 'isactive'              => $active,
-                'name'                  => $post['pri_name'],
-                'description'           => $post['pri_desc']
+                'name'                  => $post['acc_name'],
+                'md_bank_id'            => $bank,
+                'accountno'             => $post['acc_accountno'],
+                'branch'                => $post['acc_branch'],
+                'description'           => $post['acc_desc'],
+                'isdefault'             => $default,
             ];
 
-            if (!$validation->run($post, 'principal')) {
-                $response = $principal->formError();
+            if (!$validation->run($post, 'account')) {
+                $response = $account->formError();
             } else {
-                $result = $principal->save($data);
+                $result = $account->save($data);
                 $response = message('success', true, $result);
             }
         } catch (\Exception $e) {
@@ -134,10 +168,10 @@ class Principal extends BaseController
 
     public function destroy($id)
     {
-        $principal = new M_principal();
+        $account = new M_account();
 
         try {
-            $result = $principal->delete($id);
+            $result = $account->delete($id);
             $response = message('success', true, $result);
         } catch (\Exception $e) {
             $response = message('error', false, $e->getMessage());

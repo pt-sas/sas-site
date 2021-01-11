@@ -27,7 +27,27 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = [];
+	protected $helpers = ['action_helper'];
+
+	/**
+	 * Type modal class
+	 * @large : modal-lg
+	 * @small : modal-sm
+	 * @default : null
+	 */
+	protected $modal_type;
+
+	/**
+	 * Type form class
+	 * @modal : new_form
+	 * @page : 
+	 */
+	protected $form_type;
+
+	/**
+	 * Title button
+	 */
+	protected $new_title;
 
 	/**
 	 * Constructor.

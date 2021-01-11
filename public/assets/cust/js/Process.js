@@ -15,6 +15,11 @@ const SHOWALL = '/showAll',
     EDIT = '/edit',
     DELETE = '/destroy/';
 
+// view page class on div
+const mainPage = $('.main_page'),
+    formPage = $('.form_page');
+
+const cardTitle = $('.card-title');
 // Modal
 const modalForm = $('.modal_form');
 
@@ -45,25 +50,41 @@ _table = $('.tb_display').DataTable({
     // }
 });
 
+/**
+ * Button new data
+ */
 $('.new_form').click(function (e) {
-    let classList = $(e.target)
-        .closest('button')
-        .prop('classList');
+    const parent = $(e.target).closest('.row');
+    const cardList = parent.find('.card').prop('classList');
+    const buttonList = parent.find('button').prop('classList');
 
-    openModalForm();
-    Scrollmodal();
+    let form, ckbActive;
 
-    for (let i = 0; i < classList.length; i++) {
-        if (classList[i] === 'modal-lg')
-            Largemodal();
-        else if (classList[i] === 'modal-sm')
-            Smallmodal();
+    for (let i = 0; i < cardList.length; i++) {
+        if (cardList[i].toLowerCase() === 'main_page') {
+            mainPage.hide();
+            formPage.css('display', 'block');
+
+            form = formPage.closest('.form');
+            ckbActive = form.find('input[type="checkbox"].active');
+            cardTitle.html('New ' + capitalize(LAST_URL));
+
+        } else {
+            openModalForm();
+            Scrollmodal();
+            for (let i = 0; i < buttonList.length; i++) {
+                if (buttonList[i] === 'modal-lg')
+                    Largemodal();
+                else if (buttonList[i] === 'modal-sm')
+                    Smallmodal();
+            }
+            form = modalForm.closest('.form');
+            ckbActive = form.find('input[type="checkbox"].active');
+            modalTitle.html('New ' + capitalize(LAST_URL));
+
+        }
     }
 
-    const parent = modalForm.closest('.form');
-    const ckbActive = parent.find('input[type="checkbox"].active');
-
-    modalTitle.html('New ' + capitalize(LAST_URL));
     ckbActive.prop('checked', true);
     setSave = 'add';
 });
@@ -72,14 +93,18 @@ $('.new_form').click(function (e) {
  * Save 
  */
 $('.save_form').click(function (e) {
-    let formData;
-    let url;
-
     const parent = $(e.target).closest('.form');
     const form = parent.find('form');
+    const classList = parent.prop('classList');
+
+    let formData, url;
+
+    const field = form.find('input[type="checkbox"], select');
 
     //remove attribute disabled when field disabled
-    form.find('input[type="checkbox"], select').removeAttr('disabled');
+    for (let i = 0; i < field.length; i++) {
+        form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+    }
 
     if (setSave === 'add') {
         formData = form.serialize();
@@ -95,15 +120,46 @@ $('.save_form').click(function (e) {
         data: formData,
         dataType: 'JSON',
         success: function (result) {
-            if (result[0].error) {
-                errorForm(form, result);
-            } else {
-                clearForm(form);
-                modalForm.modal('hide');
-                reloadTable();
+            for (let i = 0; i < classList.length; i++) {
+                if (result[0].success == true) {
+                    Toast.fire({
+                        type: 'success',
+                        title: result[0].message
+                    });
+                    clearForm(form);
+
+                    if (classList[i].toLowerCase() !== 'modal_form') {
+                        mainPage.show();
+                        formPage.css('display', 'none');
+                    } else {
+                        modalForm.modal('hide');
+                    }
+
+                    reloadTable();
+
+                } else if (result[0].error == true) {
+                    errorForm(form, result);
+
+                } else {
+                    Toast.fire({
+                        type: 'error',
+                        title: result[0].message
+                    });
+                }
             }
         }
     });
+
+    for (let i = 0; i < field.length; i++) {
+        let classList = field[i].className.split(/\s+/)[1];
+        if (classList !== 'active') {
+            if ($('.active').is(':checked')) {
+                form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+            } else {
+                form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
+            }
+        }
+    }
 });
 
 /**
@@ -111,30 +167,40 @@ $('.save_form').click(function (e) {
  */
 _table.on('click', 'td:not(:last-child)', function (e) {
     e.preventDefault();
-    const row = $(e.target).closest('.card');
+    const card = $(e.target).closest('.card');
+    const cardList = card.prop('classList');
+    const buttonList = card.find('button').prop('classList');
 
-    let classList = row.find('button')
-        .prop('classList');
-
-    openModalForm();
-    Scrollmodal();
-
-    for (let i = 0; i < classList.length; i++) {
-        if (classList[i] === 'modal-lg')
-            Largemodal();
-        else if (classList[i] === 'modal-sm')
-            Smallmodal();
-    }
+    let form, formList;
 
     ID = _table.row(this).data()[0];
 
-    const parent = modalForm.closest('.form');
-    const form = parent.find('form');
+    for (let i = 0; i < cardList.length; i++) {
+        if (cardList[i].toLowerCase() === 'main_page') {
+            mainPage.hide();
+            formPage.css('display', 'block');
+
+            form = formPage.closest('.form');
+            formList = form.prop('classList');
+        } else {
+            openModalForm();
+            Scrollmodal();
+            for (let i = 0; i < buttonList.length; i++) {
+                if (buttonList[i] === 'modal-lg')
+                    Largemodal();
+                else if (buttonList[i] === 'modal-sm')
+                    Smallmodal();
+            }
+            form = modalForm.closest('.form');
+            formList = form.prop('classList');
+        }
+    }
+
     const field = form.find('input, textarea, select');
 
-    setSave = 'update';
-
     let url = SITE_URL + SHOW + ID;
+
+    setSave = 'update';
 
     $.getJSON({
         url: url,
@@ -145,8 +211,13 @@ _table.on('click', 'td:not(:last-child)', function (e) {
                 let fieldInput = result[i].field;
                 let label = result[i].label;
 
-                if (fieldInput === 'title')
-                    modalTitle.html(label);
+                for (let i = 0; i < formList.length; i++) {
+                    if (formList[i].toLowerCase() === 'show' && fieldInput === 'title') {
+                        modalTitle.html(capitalize(label));
+                    } else if (fieldInput === 'title') {
+                        cardTitle.html(capitalize(label));
+                    }
+                }
 
                 for (let i = 0; i < field.length; i++) {
                     if (field[i].name === fieldInput) {
@@ -161,7 +232,7 @@ _table.on('click', 'td:not(:last-child)', function (e) {
                             if (className === 'active')
                                 readonly(form, false);
                         } else {
-                            form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', false);
+                            form.find('input:checkbox[name=' + field[i].name + ']').removeAttr('checked');
 
                             if (className === 'active')
                                 readonly(form, true);
@@ -173,6 +244,9 @@ _table.on('click', 'td:not(:last-child)', function (e) {
     });
 });
 
+/**
+ * Button delete data
+ */
 function Destroy(id) {
     let url = SITE_URL + DELETE + id;
     Swal.fire({
@@ -195,8 +269,28 @@ function Destroy(id) {
     });
 }
 
+/**
+ * Button close form
+ */
 $(document).on('click', '.x_form, .close_form', function (e) {
-    const parent = $(e.target).closest('.form');
+    const target = $(e.target);
+    let parent;
+
+    if (target.attr('data-dismiss') !== 'modal') {
+        parent = target.closest('.row');
+        const cardList = parent.find('.card').prop('classList');
+
+        for (let i = 0; i < cardList.length; i++) {
+            if (cardList[i].toLowerCase() === 'form_page') {
+                mainPage.show();
+                formPage.css('display', 'none');
+            }
+        }
+
+    } else {
+        parent = target.closest('.form');
+    }
+
     const form = parent.find('form');
     clearForm(form);
 });
@@ -208,15 +302,17 @@ $('.active').change(function (e) {
     if ($(this).is(':checked'))
         for (let i = 0; i < field.length; i++) {
             let className = field[i].className.split(/\s+/)[1];
-            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', false);
+            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').removeAttr('readonly');
+
             if (field[i].type !== 'text' && className !== 'active') {
-                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', false);
+                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
             }
         }
     else
         for (let i = 0; i < field.length; i++) {
             let className = field[i].className.split(/\s+/)[1];
             parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', true);
+
             if (field[i].type !== 'text' && className !== 'active') {
                 parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
             }
@@ -271,23 +367,24 @@ function errorForm(parent, data) {
 }
 
 function clearForm(parent) {
-    const select = parent.find('select');
-
-    const errorInput = parent.find('input[type="text"], textarea');
+    const field = parent.find('input, textarea, select');
     const errorText = parent.find('small');
 
+    // clear data on the form
     parent[0].reset();
 
-    // clear input type select
-    for (let k = 0; k < select.length; k++) {
-        parent.find('select[name=' + select[k].name + ']').val(null).change();
-    }
-
-    // clear attribute readonly on field and remove class invalid
-    for (let i = 0; i < errorInput.length; i++) {
-        parent.find('input:text[name=' + errorInput[i].name + '], textarea[name=' + errorInput[i].name + ']')
-            .prop('readonly', false)
+    // clear data, attribute readonly, attribute disabled on the field and remove class invalid
+    for (let i = 0; i < field.length; i++) {
+        parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
+            .removeAttr('readonly')
             .removeClass('is-invalid');
+
+        parent.find('input:checkbox[name=' + field[i].name + ']')
+            .removeAttr('disabled');
+
+        parent.find('select[name=' + field[i].name + ']')
+            .removeAttr('disabled')
+            .val(null).change();
     }
 
     // clear text error element small
@@ -353,5 +450,12 @@ $(document).ready(function (e) {
         if ((evt.which < 48 || evt.which > 57)) {
             evt.preventDefault();
         }
+    });
+
+    Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 4000
     });
 });
