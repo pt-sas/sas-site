@@ -84,7 +84,7 @@ class Validation
 	public $menu = [
 		'mnu_name' => [
 			'label'		=> 'Name',
-			'rules' 	=> 'required|is_unique[sys_menu.name,menu_id,{id}]',
+			'rules' 	=> 'required|is_unique[sys_menu.name,sys_menu_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]

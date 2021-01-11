@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class M_menu extends Model
 {
     protected $table      = 'sys_menu';
-    protected $primaryKey = 'menu_id';
+    protected $primaryKey = 'sys_menu_id';
     protected $allowedFields = [
         'name',
         'status',

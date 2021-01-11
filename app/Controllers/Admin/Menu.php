@@ -29,7 +29,7 @@ class Menu extends BaseController
         $number = 0;
         foreach ($list as $value) :
             $row = [];
-            $ID = $value['menu_id'];
+            $ID = $value['sys_menu_id'];
 
             $number++;
 
@@ -78,7 +78,7 @@ class Menu extends BaseController
     public function show($id)
     {
         $menu = new M_menu();
-        $list = $menu->where('menu_id', $id)->findAll();
+        $list = $menu->where('sys_menu_id', $id)->findAll();
 
         foreach ($list as $value) :
             $response =  [
@@ -114,7 +114,7 @@ class Menu extends BaseController
 
         try {
             $data = [
-                'menu_id'               => $post['id'],
+                'sys_menu_id'           => $post['id'],
                 'isactive'              => $active,
                 'name'                  => $post['mnu_name'],
                 'status'                => $post['mnu_status']
