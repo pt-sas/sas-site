@@ -168,4 +168,14 @@ class Validation
 			]
 		]
 	];
+
+	public $discount = [
+		'dis_name' => [
+			'label'		=> 'Name',
+			'rules' 	=> 'required|is_unique[md_discountlist.name,md_discountlist_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		]
+	];
 }

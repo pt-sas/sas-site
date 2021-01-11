@@ -6,8 +6,8 @@ use CodeIgniter\Model;
 
 class M_discount extends Model
 {
-    protected $table      = 'md_discount';
-    protected $primaryKey = 'md_discount_id';
+    protected $table      = 'md_discountlist';
+    protected $primaryKey = 'md_discountlist_id';
     protected $allowedFields = [
         'name',
         'description',
