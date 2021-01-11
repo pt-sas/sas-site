@@ -57,8 +57,10 @@ $('.new_form').click(function (e) {
     const parent = $(e.target).closest('.row');
     const cardList = parent.find('.card').prop('classList');
     const buttonList = parent.find('button').prop('classList');
+    const button = $(e.target).closest('button');
 
-    let form, ckbActive;
+    let form, ckbActive,
+        title = button.prop('title');
 
     for (let i = 0; i < cardList.length; i++) {
         if (cardList[i].toLowerCase() === 'main_page') {
@@ -67,7 +69,7 @@ $('.new_form').click(function (e) {
 
             form = formPage.closest('.form');
             ckbActive = form.find('input[type="checkbox"].active');
-            cardTitle.html('New ' + capitalize(LAST_URL));
+            cardTitle.html(capitalize(title));
 
         } else {
             openModalForm();
@@ -80,7 +82,7 @@ $('.new_form').click(function (e) {
             }
             form = modalForm.closest('.form');
             ckbActive = form.find('input[type="checkbox"].active');
-            modalTitle.html('New ' + capitalize(LAST_URL));
+            modalTitle.html(capitalize(title));
 
         }
     }
