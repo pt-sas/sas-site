@@ -35,4 +35,7 @@
                                 ?>">
 <!-- Bootstrap Toggle -->
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"> -->
+<!-- Maps Leaflet -->
+<link rel="stylesheet" href="<?= base_url('assets/plugins/leaflet/leaflet.css') ?>">
+
 <link rel="stylesheet" href="<?= base_url('assets/cust/css/custom.css') ?>">

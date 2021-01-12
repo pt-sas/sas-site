@@ -39,5 +39,7 @@
 <!-- <script src="<?//= base_url('assets/plugins/bootstrap4-toggle/js/bootstrap4-toggle.min.js') ?>"></script> -->
 <!-- AutoNumeric Rupiah -->
 <script src="<?= base_url('assets/plugins/auto-numeric/autoNumeric.js') ?>"></script>
+<!-- Leaflet -->
+<script src="<?= base_url('assets/plugins/leaflet/leaflet.js') ?>"></script>
 
 <script src="<?= base_url('assets/cust/js/Process.min.js') ?>"></script>
