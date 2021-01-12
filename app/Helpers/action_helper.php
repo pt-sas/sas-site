@@ -37,3 +37,8 @@ function status($string)
     return $string === 'Y' ? '<center><span class="badge badge-success">Yes</span></center>' :
         '<center><span class="badge badge-danger">No</span></center>';
 }
+
+function statusMenu($string)
+{
+    return $string === 'F' ? 'Front End' : 'Back End';
+}
