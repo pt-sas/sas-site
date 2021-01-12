@@ -27,9 +27,29 @@
                                         <option value="F">Front End</option>
                                         <option value="B">Back End</option>
                                     </select>
-                                    <small id="error_mnu_status" class="form-text text-danger"></small>
+                                    <small class="form-text text-danger" id="error_mnu_status"></small>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="mnu_icon">Icon </label>
+                                    <input type="text" class="form-control" id="mnu_icon" name="mnu_icon" placeholder="fas fa-icon">
+                                </div>
+                            </div>   
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="mnu_sequence">Sequence <span class="required">*</span></label>
+                                    <input type="text" class="form-control number" id="mnu_sequence" name="mnu_sequence">
+                                    <small class="form-text text-danger" id="error_mnu_sequence"></small>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="mnu_url">Url <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="mnu_url" name="mnu_url">
+                                    <small class="form-text text-danger" id="error_mnu_url"></small>
+                                </div>
+                            </div>                           
                             <div class="col-md-6">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input active" id="mnu_isactive" name="mnu_isactive">

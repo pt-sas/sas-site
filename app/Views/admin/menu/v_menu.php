@@ -18,6 +18,9 @@
                             <th>#</th>
                             <th>Menu</th>
                             <th>Status</th>
+                            <th>Icon</th>
+                            <th>Url</th>
+                            <th>Sequence</th>
                             <th>Active</th>
                             <th></th>
                         </tr>
