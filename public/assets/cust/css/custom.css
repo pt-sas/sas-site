@@ -263,3 +263,9 @@ button.margin-right {
 .form_page {
     display:none
 }
+
+/* maps */
+#maps {
+    width: relative; 
+    height: 350px;
+}
