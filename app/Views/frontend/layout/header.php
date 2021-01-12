@@ -1,10 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white shadow-bottom">
     <div class="container">
+        
         <a class="navbar-brand" href="<?php echo base_url () ?>"><img src="/images/logo.png" height="40" alt="Sahabat Abadi Sejahtera"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="offcanvas">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+        <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url ('product') ?>">Product</a>
@@ -29,8 +31,11 @@
                     <a class="nav-link" href="<?php echo base_url ('contact') ?>">Contact</a>
                 </li>
             </ul>
+        </div>
+
+        <!-- <div class="collapse navbar-collapse" id="navbarCollapse">
             
-            <!-- <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Company</a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
@@ -63,7 +68,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url ('contact') ?>">Contact</a>
                 </li>
-            </ul> -->
-        </div>
+            </ul>
+        </div> -->
     </div>
 </nav>
