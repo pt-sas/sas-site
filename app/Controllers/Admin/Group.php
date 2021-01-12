@@ -3,40 +3,45 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\Admin\M_menu;
+use App\Models\Admin\M_product_group;
+use App\Models\Admin\M_principal;
 
-class Menu extends BaseController
+class Group extends BaseController
 {
     public function index()
     {
-        $this->new_title = 'New Menu';
+        $principal = new M_principal();
+
+        $this->new_title = 'New Product Group';
         $this->form_type = 'new_form';
 
         $data = [
             'button'    => '<button type="button" class="btn bg-gradient-primary btn-sm ' . $this->form_type . ' ' . $this->modal_type . '" title="' . $this->new_title . '">
                 <i class="fas fa-plus-circle"> New</i>
-            </button>'
+            </button>',
+            'principal' => $principal->where('isactive', 'Y')->findAll()
         ];
-        return view('admin/menu/v_menu', $data);
+        return view('admin/product_group/v_product_group', $data);
     }
 
     public function showAll()
     {
-        $menu = new M_menu();
-        $list = $menu->findAll();
+        $group = new M_product_group();
+        $list = $group->findAll();
         $data = [];
 
         $number = 0;
         foreach ($list as $value) :
             $row = [];
-            $ID = $value['sys_menu_id'];
+            $ID = $value['md_productgroup_id'];
 
             $number++;
 
             $row[] = $ID;
             $row[] = $number;
             $row[] = $value['name'];
-            $row[] = $value['status'];
+            $row[] = $value['md_principal_id'];
+            $row[] = $value['description'];
             $row[] = active($value['isactive']);
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
@@ -51,22 +56,25 @@ class Menu extends BaseController
     public function create()
     {
         $validation = \Config\Services::validation();
-        $menu = new M_menu();
+        $group = new M_product_group();
         $post = $this->request->getVar();
 
-        $active = isset($post['mnu_isactive']) ? 'Y' : 'N';
+        $principal = isset($post['gro_principal']) ? $post['gro_principal'] : '';
+
+        $active = isset($post['gro_isactive']) ? 'Y' : 'N';
 
         try {
             $data = [
                 'isactive'              => $active,
-                'name'                  => $post['mnu_name'],
-                'status'                => $post['mnu_status']
+                'name'                  => $post['gro_name'],
+                'description'           => $post['gro_desc'],
+                'md_principal_id'       => $principal
             ];
 
-            if (!$validation->run($post, 'menu')) {
-                $response = $menu->formError();
+            if (!$validation->run($post, 'group')) {
+                $response = $group->formError();
             } else {
-                $result = $menu->save($data);
+                $result = $group->save($data);
                 $response = message('success', true, $result);
             }
         } catch (\Exception $e) {
@@ -77,8 +85,8 @@ class Menu extends BaseController
 
     public function show($id)
     {
-        $menu = new M_menu();
-        $list = $menu->where('sys_menu_id', $id)->findAll();
+        $group = new M_product_group();
+        $list = $group->where('md_productgroup_id', $id)->findAll();
 
         foreach ($list as $value) :
             $response =  [
@@ -87,16 +95,20 @@ class Menu extends BaseController
                     'label'        =>   $value['name']
                 ],
                 [
-                    'field'        =>   'mnu_isactive',
+                    'field'        =>   'gro_isactive',
                     'label'        =>   $value['isactive']
                 ],
                 [
-                    'field'        =>   'mnu_name',
+                    'field'        =>   'gro_name',
                     'label'        =>   $value['name']
                 ],
                 [
-                    'field'        =>   'mnu_status',
-                    'label'        =>   $value['status']
+                    'field'        =>   'gro_desc',
+                    'label'        =>   $value['description']
+                ],
+                [
+                    'field'        =>   'gro_principal',
+                    'label'        =>   $value['md_principal_id']
                 ]
             ];
         endforeach;
@@ -107,23 +119,26 @@ class Menu extends BaseController
     public function edit()
     {
         $validation = \Config\Services::validation();
-        $menu = new M_menu();
+        $group = new M_product_group();
         $post = $this->request->getVar();
 
-        $active = isset($post['mnu_isactive']) ? 'Y' : 'N';
+        $principal = isset($post['gro_principal']) ? $post['gro_principal'] : '';
+
+        $active = isset($post['gro_isactive']) ? 'Y' : 'N';
 
         try {
             $data = [
-                'sys_menu_id'           => $post['id'],
+                'md_productgroup_id'    => $post['id'],
                 'isactive'              => $active,
-                'name'                  => $post['mnu_name'],
-                'status'                => $post['mnu_status']
+                'name'                  => $post['gro_name'],
+                'description'           => $post['gro_desc'],
+                'md_principal_id'       => $principal
             ];
 
-            if (!$validation->run($post, 'menu')) {
-                $response = $menu->formError();
+            if (!$validation->run($post, 'group')) {
+                $response = $group->formError();
             } else {
-                $result = $menu->save($data);
+                $result = $group->save($data);
                 $response = message('success', true, $result);
             }
         } catch (\Exception $e) {
@@ -134,10 +149,10 @@ class Menu extends BaseController
 
     public function destroy($id)
     {
-        $menu = new M_menu();
+        $group = new M_product_group();
 
         try {
-            $result = $menu->delete($id);
+            $result = $group->delete($id);
             $response = message('success', true, $result);
         } catch (\Exception $e) {
             $response = message('error', false, $e->getMessage());

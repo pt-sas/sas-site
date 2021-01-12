@@ -29,7 +29,7 @@ class Discount extends BaseController
         $number = 0;
         foreach ($list as $value) :
             $row = [];
-            $ID = $value['md_discount_id'];
+            $ID = $value['md_discountlist_id'];
 
             $number++;
 
@@ -37,7 +37,7 @@ class Discount extends BaseController
             $row[] = $number;
             $row[] = $value['name'];
             $row[] = $value['description'];
-            $row[] = $value['isactive'];
+            $row[] = active($value['isactive']);
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
             		</center>';
@@ -78,7 +78,7 @@ class Discount extends BaseController
     public function show($id)
     {
         $discount = new M_discount();
-        $list = $discount->where('md_bankdiscount_id', $id)->findAll();
+        $list = $discount->where('md_discountlist_id', $id)->findAll();
 
         foreach ($list as $value) :
             $response =  [
@@ -114,11 +114,10 @@ class Discount extends BaseController
 
         try {
             $data = [
-                'md_discount_id'        => $post['id'],
+                'md_discountlist_id'    => $post['id'],
                 'isactive'              => $active,
                 'name'                  => $post['dis_name'],
-                'description'           => $post['dis_desc'],
-                'isdefault'             => $default,
+                'description'           => $post['dis_desc']
             ];
 
             if (!$validation->run($post, 'discount')) {

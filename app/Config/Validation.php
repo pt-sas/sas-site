@@ -78,13 +78,17 @@ class Validation
 		'pro_volume' => [
 			'label'		=> 'Volume',
 			'rules'		=> 'required'
+		],
+		'pro_group' => [
+			'label'		=> 'Product Group',
+			'rules'		=> 'required'
 		]
 	];
 
 	public $menu = [
 		'mnu_name' => [
 			'label'		=> 'Name',
-			'rules' 	=> 'required|is_unique[sys_menu.name,menu_id,{id}]',
+			'rules' 	=> 'required|is_unique[sys_menu.name,sys_menu_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]
@@ -167,5 +171,30 @@ class Validation
 				'is_unique' => 'This {field} already exists.'
 			]
 		]
+	];
+
+	public $discount = [
+		'dis_name' => [
+			'label'		=> 'Name',
+			'rules' 	=> 'required|is_unique[md_discountlist.name,md_discountlist_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		]
+	];
+
+	public $group = [
+		'gro_name' => [
+			'label'		=> 'Name',
+			'rules' 	=> 'required|is_unique[md_productgroup.name,md_productgroup_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'gro_principal' => [
+			'label'		=> 'Principal',
+			'rules' 	=> 'required'
+		]
+
 	];
 }
