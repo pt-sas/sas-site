@@ -7,7 +7,11 @@ class News extends BaseController
 {
 	public function index()
 	{
-		return view('frontend/media/news');
+		return view('frontend/media/news/index');
+	}
+	public function read()
+	{
+		return view('frontend/media/news/detail');
 	}
 
 	//--------------------------------------------------------------------

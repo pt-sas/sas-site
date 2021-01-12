@@ -2,11 +2,10 @@
 
 <!-- CONTENT -->
 <?= $this->section('content') ?>
-<div class="jumbotron jumbotron-fluid">
-	<div class="container text-center">
-		<h1 class="display-3">Get in touch</h1>
-		<p class="lead">Want to get in touch? We'd love to hear from you. Here's how you can reach us...</p>
-	</div>
+
+
+<div class="position-relative overflow-hidden">
+	<iframe width="100%" height="500px" frameborder="0" scrolling="no" allowfullscreen src="//umap.openstreetmap.fr/en/map/sahabat-abadi-sejahtera_545732?scaleControl=false&miniMap=false&scrollWheelZoom=true&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=false&onLoadPanel=undefined&captionBar=false"></iframe>
 </div>
 <div class="bg-white section" id="contact">
 	<div class="container">
@@ -42,6 +41,7 @@
 									</div>
 									<div class="form-floating">
 										<select class="form-select" style="width:100%" id="enquiry">
+											<option value="0" selected disabled>- Type of Query -</option>
 											<option value="1">General Enquiry</option>
 											<option value="2">Sales Enquiry</option>
 											<option value="3">Technical Support</option>
@@ -68,10 +68,5 @@
 			</div>
 		</div>
 	</div>
-</div>
-
-<div class="bg-white row-fluid">
-	<h1 class="section-heading-center">Visit Our Store</h1>
-	<iframe width="100%" height="700px" allowfullscreen src="//umap.openstreetmap.fr/en/map/sahabat-abadi-sejahtera_545119?scaleControl=false&miniMap=false&scrollWheelZoom=false&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=true&embedControl=null&datalayersControl=true&onLoadPanel=undefined&captionBar=false"></iframe>
 </div>
 <?= $this->endSection() ?>
