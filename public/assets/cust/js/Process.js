@@ -20,8 +20,10 @@ const mainPage = $('.main_page'),
     formPage = $('.form_page');
 
 const cardTitle = $('.card-title');
+
 // Modal
-const modalForm = $('.modal_form');
+const modalForm = $('.modal_form'),
+    modalMap = $('.modal_map');
 
 const modalDialog = $('.modal-dialog'),
     modalTitle = $('.modal-title'),
@@ -461,3 +463,49 @@ $(document).ready(function (e) {
         timer: 4000
     });
 });
+
+function Openmap(id) {
+    modalMap.modal('show');
+    
+    var container = L.DomUtil.get('maps');
+    
+    if(container != null) {
+        let url = SITE_URL + SHOW + id;
+
+        $.getJSON(url, function(result) {
+            var location;
+            var longitude;
+            var latitude;
+
+            for (let i = 0; i < result.length; i++) {
+                if (result[i].field == 'loc_name') {
+                    location = result[i].label;
+                }
+
+                if (result[i].field == 'loc_long') {
+                    longitude = result[i].label;
+                }
+
+                if (result[i].field == 'loc_lat') {
+                    latitude = result[i].label;
+                }
+            }
+
+                modalTitle.html(location);
+                container._leaflet_id = null;
+
+                var map = L.map('maps').setView({ lat : latitude, lon : longitude }, 50);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+                }).addTo(map);
+        
+                L.marker({lat : latitude, lon : longitude}).bindPopup('Location: '+ location).addTo(map);
+        
+                $('.modal_map').on('shown.bs.modal', function() {
+                    map.invalidateSize();
+                });
+        });        
+    }    
+}
