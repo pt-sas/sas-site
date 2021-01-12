@@ -85,7 +85,6 @@ class Product extends BaseController
                 'height'                => $post['pro_height'],
                 'depth'                 => $post['pro_depth'],
                 'volume'                => $post['pro_volume'],
-                'qty'                   => $post['pro_qty'],
                 'visible'               => $visible
             ];
 
@@ -127,10 +126,6 @@ class Product extends BaseController
                 [
                     'field'        =>   'pro_desc',
                     'label'        =>   $value['description']
-                ],
-                [
-                    'field'        =>   'pro_qty',
-                    'label'        =>   $value['qty']
                 ],
                 [
                     'field'        =>   'pro_uom',
@@ -202,7 +197,6 @@ class Product extends BaseController
                 'height'                => $post['pro_height'],
                 'depth'                 => $post['pro_depth'],
                 'volume'                => $post['pro_volume'],
-                'qty'                   => $post['pro_qty'],
                 'visible'               => $visible
             ];
 

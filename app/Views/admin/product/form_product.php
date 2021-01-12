@@ -70,13 +70,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="pro_qty">Quantity <span class="required">*</span></label>
-                                <input type="text" class="form-control number" id="pro_qty" name="pro_qty">
-                                <small class="form-text text-danger" id="error_pro_qty"></small>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label for="pro_uom">UOM</label>
                                 <select class="form-control select2" id="pro_uom" name="pro_uom"></select>
                             </div>
