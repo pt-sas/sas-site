@@ -96,6 +96,14 @@ class Validation
 		'mnu_status' => [
 			'label'		=> 'Status',
 			'rules'		=> 'required'
+		],
+		'mnu_url' => [
+			'label'		=> 'Url',
+			'rules'		=> 'required'
+		],
+		'mnu_sequence' => [
+			'label'		=> 'Sequence',
+			'rules'		=> 'required'
 		]
 	];
 

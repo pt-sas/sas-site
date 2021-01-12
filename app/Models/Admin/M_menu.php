@@ -11,7 +11,10 @@ class M_menu extends Model
     protected $allowedFields = [
         'name',
         'status',
-        'isactive'
+        'isactive',
+        'url',
+        'sequence',
+        'icon'
     ];
     protected $useTimestamps = true;
 
@@ -34,6 +37,16 @@ class M_menu extends Model
                 'error'        =>   'error_mnu_status',
                 'field'        =>   'mnu_status',
                 'label'        =>   $validation->getError('mnu_status')
+            ],
+            [
+                'error'        =>   'error_mnu_url',
+                'field'        =>   'mnu_url',
+                'label'        =>   $validation->getError('mnu_url')
+            ],
+            [
+                'error'        =>   'error_mnu_sequence',
+                'field'        =>   'mnu_sequence',
+                'label'        =>   $validation->getError('mnu_sequence')
             ]
         ];
     }

@@ -36,7 +36,10 @@ class Menu extends BaseController
             $row[] = $ID;
             $row[] = $number;
             $row[] = $value['name'];
-            $row[] = $value['status'];
+            $row[] = statusMenu($value['status']);
+            $row[] = $value['icon'];
+            $row[] = $value['url'];
+            $row[] = $value['sequence'];
             $row[] = active($value['isactive']);
             $row[] = '<center>
             			<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
@@ -60,7 +63,10 @@ class Menu extends BaseController
             $data = [
                 'isactive'              => $active,
                 'name'                  => $post['mnu_name'],
-                'status'                => $post['mnu_status']
+                'status'                => $post['mnu_status'],
+                'url'                   => $post['mnu_url'],
+                'sequence'              => $post['mnu_sequence'],
+                'icon'                  => $post['mnu_icon']
             ];
 
             if (!$validation->run($post, 'menu')) {
@@ -97,6 +103,18 @@ class Menu extends BaseController
                 [
                     'field'        =>   'mnu_status',
                     'label'        =>   $value['status']
+                ],
+                [
+                    'field'        =>   'mnu_url',
+                    'label'        =>   $value['url']
+                ],
+                [
+                    'field'        =>   'mnu_sequence',
+                    'label'        =>   $value['sequence']
+                ],
+                [
+                    'field'        =>   'mnu_icon',
+                    'label'        =>   $value['icon']
                 ]
             ];
         endforeach;
@@ -117,7 +135,10 @@ class Menu extends BaseController
                 'sys_menu_id'           => $post['id'],
                 'isactive'              => $active,
                 'name'                  => $post['mnu_name'],
-                'status'                => $post['mnu_status']
+                'status'                => $post['mnu_status'],
+                'url'                   => $post['mnu_url'],
+                'sequence'              => $post['mnu_sequence'],
+                'icon'                  => $post['mnu_icon']
             ];
 
             if (!$validation->run($post, 'menu')) {
