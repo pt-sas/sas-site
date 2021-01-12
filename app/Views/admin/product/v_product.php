@@ -19,7 +19,6 @@
                             <th>Code Product</th>
                             <th>Product</th>
                             <th>Product Category</th>
-                            <th>Qty</th>
                             <th>Width</th>
                             <th>Height</th>
                             <th>Weight</th>

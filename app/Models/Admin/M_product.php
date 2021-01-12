@@ -17,7 +17,6 @@ class M_product extends Model
         'height',
         'depth',
         'volume',
-        'qty',
         'visible',
         'isactive',
         'm_product_id',

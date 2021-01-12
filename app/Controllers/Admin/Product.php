@@ -41,7 +41,6 @@ class Product extends BaseController
             $row[] = $value['code'];
             $row[] = $value['name'];
             $row[] = $value['md_productgroup_id'];
-            $row[] = $value['qty'];
             $row[] = $value['width'];
             $row[] = $value['height'];
             $row[] = $value['weight'];
