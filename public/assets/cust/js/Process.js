@@ -167,7 +167,7 @@ $('.save_form').click(function (e) {
 /**
  * Show data form
  */
-_table.on('click', 'td:not(:last-child)', function (e) {
+_table.on('click', 'td:not(:has(a))', function (e) {
     e.preventDefault();
     const card = $(e.target).closest('.card');
     const cardList = card.prop('classList');
