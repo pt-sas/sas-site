@@ -203,6 +203,15 @@ class Validation
 			'label'		=> 'Principal',
 			'rules' 	=> 'required'
 		]
+	];
 
+	public $location = [
+		'loc_name' => [
+			'label'		=> 'Name',
+			'rules' 	=> 'required|is_unique[md_location.name,md_location_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		]
 	];
 }
