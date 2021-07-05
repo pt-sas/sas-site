@@ -1,0 +1,32 @@
+/* VENDORS COMPONENTS */
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../node_modules/slick-carousel/slick/slick.scss";
+@import "../bower_components/font-awesome/scss/font-awesome.scss";
+@import "../bower_components/slick-carousel/slick/slick.scss";
+
+/* CUSTOM SITE HELPERS */
+@import "helpers/variables";
+@import "helpers/mixins";
+
+/* BASE STYLESHEET AND RESETTER */
+@import "base/reset";
+@import "base/typhography";
+
+/* CUSTOM SITE COMPONENTS */
+@import "components/component";
+@import "components/input";
+@import "components/button";
+
+/* MAIN SITE REGIONS */
+@import "layout/header";
+@import "layout/footer";
+@import "layout/content";
+@import "layout/sidebar";
+
+/* PAGES */
+@import "pages/home";
+@import "pages/about";
+@import "pages/news";
+@import "pages/career";
+@import "pages/contact";
+@import "pages/product";
