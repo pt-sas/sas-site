@@ -43,31 +43,34 @@
   <!-- form contact -->
   <div class="half-half-wrap pb-0">
     <div class="container">
-      <div class="row">
+      <div class="row form form_page">
         <div class="col-md-4">
           <h4 class="left-title">How we can help you?</h4>
         </div>
         <div class="col-md-8">
-          <form action="" class="form-contact">
+          <form method="post" action="<?php echo base_url('/MainController/create') ?>" class="form-contact form-horizontal form_open" id="form_contact">
+            <?= csrf_field(); ?>
             <p class="desc">Fill out the form and we'll be in touch soon!</p>
             <div class="row">
               <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Name">
+                <input type="text" class="form-control" placeholder="Name" name="mailbox_name" id="mailbox_name">
               </div>
               <div class="col-md-6">
-                <input type="email" class="form-control" placeholder="Email address">
+                <input type="email" class="form-control" placeholder="Email address" name="mailbox_email" id="mailbox_email">
               </div>
               <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Subject">
+                <input type="text" class="form-control" placeholder="Phone number" name="mailbox_phone" id="mailbox_phone">
               </div>
-              <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Inquiry">
+              <div class="col-md-6">
+                <select class="form-control" name="mailbox_inquiry" id="mailbox_inquiry">
+                  <option value="General">General Inquiry</option>
+                </select>
               </div>
-              <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Phone number">
+              <div class="col-md-12">
+                <input type="text" class="form-control" placeholder="Subject" name="mailbox_subject" id="mailbox_subject">
               </div>
             </div>
-            <textarea name="" class="form-control" id="" rows="5" placeholder="Message"></textarea>
+            <textarea class="form-control" rows="5" placeholder="Message" name="mailbox_message" id="mailbox_message"></textarea>
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="customCheck1">
               <label class="custom-control-label" for="customCheck1">
@@ -75,7 +78,7 @@
               </label>
             </div>
             <div class="clearfix"></div>
-            <button type="submit" class="btn btn-primary mt-3">Send</button>
+            <button type="submit" class="btn btn-primary mt-3 save_form">Send</button>
           </form>
         </div>
       </div>

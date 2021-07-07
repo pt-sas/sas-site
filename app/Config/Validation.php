@@ -41,267 +41,96 @@ class Validation
 	// Rules
 	//--------------------------------------------------------------------
 
-	public $company = [
-		'company_name' => [
-			'label'		=> 'company name',
-			'rules' 	=> 'required|max_length[100]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		],
-		'company_address' => [
-			'label'		=> 'company address',
-			'rules'		=> 'required'
-		],
-		'company_phone' => [
-			'label'		=> 'company phone',
-			'rules'		=> 'required'
-		],
-		'company_hrd' => [
-			'label'		=> 'head of HRD',
-			'rules'		=> 'required'
-		],
-		'company_hrdmail' => [
-			'label'		=> 'HRD e-mail',
-			'rules'		=> 'required'
-		],
-		'company_bpjslimit' => [
-			'label'		=> 'BPJS limit',
-			'rules'		=> 'required'
-		],
-		'company_pensionlimit' => [
-			'label'		=> 'company pension limit',
-			'rules'		=> 'required'
-		],
-		'company_cutoff' => [
-			'label'		=> 'cut off',
-			'rules'		=> 'required'
-		],
-		'company_pensionage' => [
-			'label'		=> 'pension age',
-			'rules'		=> 'required'
-		],
-		'company_positioncostlimit' => [
-			'label'		=> 'position cost limit',
-			'rules'		=> 'required'
-		],
-		'company_class1limit' => [
-			'label'		=> 'BPJS class 1 limit',
-			'rules'		=> 'required'
-		],
-		'company_class2limit' => [
-			'label'		=> 'BPJS class 2 limit',
-			'rules'		=> 'required'
-		],
-		'company_overtime' => [
-			'label'		=> 'overtime limit',
-			'rules'		=> 'required'
-		]
-	];
-
-	public $workingdays = [
-		'workingdays_name' => [
-			'label'		=> 'workingdays name',
-			'rules' 	=> 'required|max_length[20]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		],
-		'workingdays_timein' => [
-			'label'		=> 'workingdays timein',
-			'rules'		=> 'required'
-		],
-		'workingdays_timeout' => [
-			'label'		=> 'workingdays timeout',
-			'rules'		=> 'required'
-		],
-		'workingdays_description' => [
-			'label'		=> 'workingdays description',
-			'rules'		=> 'max_length[100]',
-			'errors'	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		]
-	];
-
-	public $holiday = [
-		'holiday_date' => [
-			'label'		=> 'holiday date',
-			'rules' 	=> 'required|max_length[20]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		],
-		'holiday_description' => [
-			'label'		=> 'holiday description',
-			'rules'		=> 'max_length[100]',
-			'errors'	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		]
-	];
-
-	public $leavetype = [
-		'leavetype_name' => [
-			'label'		=> 'leavetype name',
-			'rules' 	=> 'required|max_length[50]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		],
-		'leavetype_description' => [
-			'label'		=> 'leavetype description',
-			'rules'		=> 'max_length[100]',
-			'errors'	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		]
-	];
-
-	public $massleave = [
-		'massleave_date' => [
-			'label'		=> 'massleave date',
-			'rules' 	=> 'required|max_length[20]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		],
-		'massleave_description' => [
-			'label'		=> 'massleave description',
-			'rules'		=> 'max_length[100]',
-			'errors'	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		]
-	];
-
-	public $region = [
-		'region_name' => [
-			'label'		=> 'region name',
-			'rules' 	=> 'required|max_length[50]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		],
-		'region_description' => [
-			'label'		=> 'region description',
-			'rules'		=> 'max_length[100]',
-			'errors'	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		]
-	];
-
-	public $branch = [
-		'region_id' => [
-			'label'		=> 'region',
+	public $mailbox = [
+		'mailbox_name' => [
+			'label'		=> 'overview',
 			'rules' 	=> 'required'
 		],
-		'branch_name' => [
-			'label'		=> 'branch name',
-			'rules' 	=> 'required|max_length[50]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
+		'mailbox_email' => [
+			'label'		=> 'vision',
+			'rules'		=> 'required'
 		],
-		'branch_address' => [
-			'label'		=> 'address',
-			'rules'		=> 'max_length[200]',
-			'errors'	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
+		'mailbox_subject' => [
+			'label'		=> 'mission',
+			'rules'		=> 'required'
 		],
-		'branch_phone' => [
-			'label'		=> 'phone number',
-			'rules' 	=> 'max_length[20]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
+		'mailbox_inquiry' => [
+			'label'		=> 'objectives',
+			'rules'		=> 'required'
+		],
+		'mailbox_phone' => [
+			'label'		=> 'vision',
+			'rules'		=> 'required'
+		],
+		'mailbox_message' => [
+			'label'		=> 'mission',
+			'rules'		=> 'required'
 		]
 	];
 
-	public $division = [
-		'division_name' => [
-			'label'		=> 'division name',
-			'rules' 	=> 'required|max_length[50]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
+	public $about = [
+		'about_overview' => [
+			'label'		=> 'overview',
+			'rules' 	=> 'required'
 		],
-		'division_description' => [
-			'label'		=> 'division description',
-			'rules'		=> 'max_length[100]',
-			'errors'	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
+		'about_vision' => [
+			'label'		=> 'vision',
+			'rules'		=> 'required'
+		],
+		'about_mision' => [
+			'label'		=> 'mission',
+			'rules'		=> 'required'
+		],
+		'about_objectives' => [
+			'label'		=> 'objectives',
+			'rules'		=> 'required'
 		]
 	];
 
-	public $religion = [
-		'religion_name' => [
-			'label'		=> 'religion name',
-			'rules' 	=> 'required|max_length[20]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
+	public $location = [
+		'location_name' => [
+			'label'		=> 'name',
+			'rules' 	=> 'required'
 		],
-		'religion_description' => [
-			'label'		=> 'religion description',
-			'rules'		=> 'max_length[100]',
-			'errors'	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		]
-	];
-
-	public $bloodtype = [
-		'bloodtype_name' => [
-			'label'		=> 'bloodtype name',
-			'rules' 	=> 'required|max_length[20]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
+		'location_location' => [
+			'label'		=> 'location',
+			'rules' 	=> 'required'
 		],
-		'bloodtype_description' => [
-			'label'		=> 'bloodtype description',
-			'rules'		=> 'max_length[100]',
-			'errors'	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		]
-	];
-
-	public $position = [
-		'position_name' => [
-			'label'		=> 'position name',
-			'rules' 	=> 'required|max_length[50]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
+		'location_address1' => [
+			'label'		=> 'address 1',
+			'rules'		=> 'required'
 		],
-		'position_description' => [
-			'label'		=> 'position description',
-			'rules'		=> 'max_length[100]',
-			'errors'	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
-		]
-	];
-
-	public $employeestatus = [
-		'employeestatus_name' => [
-			'label'		=> 'employeestatus name',
-			'rules' 	=> 'required|max_length[20]',
-			'errors' 	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
+		'location_subdistrict' => [
+			'label'		=> 'subdistrict',
+			'rules' 	=> 'required'
 		],
-		'employeestatus_description' => [
-			'label'		=> 'employeestatus description',
-			'rules'		=> 'max_length[100]',
-			'errors'	=> [
-				'max_length' => 'Your {field} is too long.'
-			]
+		'location_district' => [
+			'label'		=> 'district',
+			'rules' 	=> 'required'
+		],
+		'location_city' => [
+			'label'		=> 'city',
+			'rules'		=> 'required'
+		],
+		'location_province' => [
+			'label'		=> 'province',
+			'rules'		=> 'required'
+		],
+		'location_phone' => [
+			'label'		=> 'phone',
+			'rules'		=> 'required'
+		],
+		'location_postal' => [
+			'label'		=> 'postal',
+			'rules'		=> 'required'
+		],
+		'location_longitude' => [
+			'label'		=> 'longitude',
+			'rules'		=> 'required'
+		],
+		'location_lattitude' => [
+			'label'		=> 'lattitude',
+			'rules'		=> 'required'
 		]
 	];
 }

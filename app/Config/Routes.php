@@ -32,6 +32,8 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+//Frontend
 $routes->get('/', 'MainController::index');
 
 $routes->get('/product', 'MainController::product');
@@ -46,6 +48,15 @@ $routes->get('/news/(:any)', 'MainController::newsdetail/$1');
 $routes->get('/career', 'MainController::career');
 
 $routes->get('/contact', 'MainController::contact');
+$routes->get('/create', 'MainController::create');
+
+
+
+//Backend
+$routes->group('backend', function ($routes){
+	$routes->add('/backend', 'Backend/Dashboard::index');
+});
+
 
 /*
  * --------------------------------------------------------------------

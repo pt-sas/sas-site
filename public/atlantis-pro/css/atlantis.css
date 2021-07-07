@@ -12536,8 +12536,8 @@ div.table-responsive > div.dataTables_wrapper > div.row {
   font-family: "summernote";
   font-style: normal;
   font-weight: normal;
-  src: url("https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/fonts/summernote/summernote.eot?e557617934c52ea068954af79ed7c221");
-  src: url("https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/fonts/summernote/summernote.eot?#iefix") format("embedded-opentype"), url("https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/fonts/summernote/summernote.woff?e557617934c52ea068954af79ed7c221") format("woff"), url("https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/fonts/summernote/summernote.ttf?e557617934c52ea068954af79ed7c221") format("truetype"); }
+  src: url("/atlantis-pro/fonts/summernote/summernote.eot");
+  src: url("/atlantis-pro/fonts/summernote/summernote.eot") format("embedded-opentype"), url("/atlantis-pro/fonts/summernote/summernote.woff") format("woff"), url("/atlantis-pro/fonts/summernote/summernote.ttf") format("truetype"); }
 [class^="note-icon-"]:before, [class*=" note-icon-"]:before {
   display: inline-block;
   font: normal normal normal 14px summernote;

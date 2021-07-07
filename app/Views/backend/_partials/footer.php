@@ -10,7 +10,7 @@
       </ul>
     </nav>
     <div class="copyright ml-auto">
-      2021, made with <i class="fa fa-heart heart text-danger"></i> by <a href="http://www.themekita.com/">Anhar</a>
+      Copyright © <?php echo date("Y") ?>, made with <i class="fa fa-heart heart text-danger"></i> by <a href="http://www.themekita.com/">Anhar</a>
     </div>
   </div>
 </footer>
