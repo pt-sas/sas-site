@@ -3,30 +3,18 @@
 <?= $this->section('content'); ?>
 
 <?= $this->include('backend/location/form_location'); ?>
-<div class="row main_page">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <div class="d-flex align-items-center">
-                    <h4 class="card-title"><?= $title; ?></h4>
-                    <?= $button; ?>
-								</div>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered table-hover table-pointer tb_display table-md" style="width: 100%">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Active</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
+<div class="card-body card-main">
+    <table class="table table-bordered table-hover table-pointer tb_display table-md" style="width: 100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>No</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+    </table>
 </div>
 <?= $this->endSection() ?>

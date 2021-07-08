@@ -88,47 +88,47 @@ class Validation
 	];
 
 	public $location = [
-		'location_name' => [
+		'name' => [
 			'label'		=> 'name',
 			'rules' 	=> 'required'
 		],
-		'location_location' => [
+		'location' => [
 			'label'		=> 'location',
 			'rules' 	=> 'required'
 		],
-		'location_address1' => [
+		'address1' => [
 			'label'		=> 'address 1',
 			'rules'		=> 'required'
 		],
-		'location_subdistrict' => [
+		'subdistrict' => [
 			'label'		=> 'subdistrict',
 			'rules' 	=> 'required'
 		],
-		'location_district' => [
+		'district' => [
 			'label'		=> 'district',
 			'rules' 	=> 'required'
 		],
-		'location_city' => [
+		'city' => [
 			'label'		=> 'city',
 			'rules'		=> 'required'
 		],
-		'location_province' => [
+		'province' => [
 			'label'		=> 'province',
 			'rules'		=> 'required'
 		],
-		'location_phone' => [
+		'phone' => [
 			'label'		=> 'phone',
 			'rules'		=> 'required'
 		],
-		'location_postal' => [
+		'postal' => [
 			'label'		=> 'postal',
 			'rules'		=> 'required'
 		],
-		'location_longitude' => [
+		'longitude' => [
 			'label'		=> 'longitude',
 			'rules'		=> 'required'
 		],
-		'location_lattitude' => [
+		'lattitude' => [
 			'label'		=> 'lattitude',
 			'rules'		=> 'required'
 		]
