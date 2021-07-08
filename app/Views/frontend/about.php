@@ -19,8 +19,7 @@
           </div>
         </div>
         <div class="col-md-7">
-          <p>Founded in 1987, we trace back our roots to Philips Lighting professional and automotive products. Since then, we continue to grow together with leading brands in the electrical industry to expand our reach and service coverage throughout Indonesia.</p>
-          <p>We believe in integrity, commitment and professionalism as our fundamental pillars and defining qualities.</p>
+          <?= $about['tb_cp_overview'] ?>
         </div>
       </div>
     </div>
@@ -34,21 +33,21 @@
           <div class="item-visi">
             <img src="<?= base_url('adw/assets/images/eye.png') ?>" alt="">
             <h6>Our Vision</h6>
-            <p>Innovate and modernize our distribution strategies to reach and serve customers by continuously enhancing human capital and laying the foundations for a digital infrastructure.</p>
+            <?= $about['tb_cp_vision'] ?>
           </div>
         </div>
         <div class="col-md-4">
           <div class="item-visi">
             <img src="<?= base_url('adw/assets/images/target.png') ?>" alt="">
             <h6>Our Mission</h6>
-            <p>Became the leading distribution company within the electrical industry, providing customers with optimal solutions relevant in the current digital era.</p>
+            <?= $about['tb_cp_mision'] ?>
           </div>
         </div>
         <div class="col-md-4">
           <div class="item-visi">
             <img src="<?= base_url('adw/assets/images/task.png') ?>" alt="">
             <h6>Our Objective</h6>
-            <p>We aim for the highest quality results and honoring our commitment to satisfy customers, shareholders, and employees.</p>
+            <?= $about['tb_cp_objectives'] ?>
           </div>
         </div>
       </div>
@@ -104,108 +103,33 @@
         <div class="col-md-12">
           <h6 class="map-title">Our location</h6>
           <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link active" id="sunter-tab" data-toggle="tab" href="#sunter" role="tab" aria-controls="sunter" aria-selected="true">Sunter Office</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="tebet-tab" data-toggle="tab" href="#tebet" role="tab" aria-controls="tebet" aria-selected="false">Tebet Stockist</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="glodok-tab" data-toggle="tab" href="#glodok" role="tab" aria-controls="glodok" aria-selected="false">Glodok Stockist</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="kenari-tab" data-toggle="tab" href="#kenari" role="tab" aria-controls="kenari" aria-selected="false">Kenari Stockist</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="tangerang-tab" data-toggle="tab" href="#tangerang" role="tab" aria-controls="tangerang" aria-selected="false">Tangerang Stockist</a>
-            </li>
+            <?php foreach($location as $row): ?>
+              <li class="nav-item">
+                  <a class="nav-link" id="<?= $row['name'];?>-tab" data-toggle="tab" href="#<?= $row['location'];?>" role="tab" aria-controls="<?= $row['name'];?>" aria-selected="true"><?= $row['name'];?></a>
+              </li>
+      			<?php endforeach;?>
           </ul>
           <div class="map-contain">
             <div id="map" class="map"></div>
-            <div class="map-address tab-pane fade show active" id="sunter" role="tabpanel" aria-labelledby="sunter-tab">
-              <h4>Sunter Office</h4>
-              <p>
-                Jalan Indokarya III Blok F1-2, Tanjung Priok, Kota Jakarta Utara, DKI Jakarta 14340
-              </p>
-              <a href="">Get direction</a>
-              <div class="clearfix"></div>
-              <div class="half-wrap">
-                <h6>Phone Number</h6>
-                <p>+62 21 6583 1188</p>
-              </div>
-              <div class="half-wrap">
-                <h6>Email</h6>
-                <p>info@sahabatabadi.com</p>
-              </div>
-            </div>
 
-            <div class="map-address tab-pane fade" id="tebet" role="tabpanel" aria-labelledby="tebet-tab">
-              <h4>Tebet Stockist</h4>
+      			<?php foreach($location as $row): ?>
+            <div class="map-address tab-pane fade show active" id="<?= $row['location'];?>" role="tabpanel" aria-labelledby="<?= $row['name'];?>-tab">
+              <h4><?= $row['name'];?></h4>
               <p>
-                Ruko Crown Palace Blok D 16-17, Tebet, Kota Jakarta Selatan, DKI Jakarta 12870
+                <?= $row['address1'];?>
               </p>
               <a href="">Get direction</a>
               <div class="clearfix"></div>
               <div class="half-wrap">
                 <h6>Phone Number</h6>
-                <p>+62 21 837 08838</p>
+                <p><?= $row['phone'];?></p>
               </div>
               <div class="half-wrap">
                 <h6>Email</h6>
                 <p>info@sahabatabadi.com</p>
               </div>
             </div>
-
-            <div class="map-address tab-pane fade" id="glodok" role="tabpanel" aria-labelledby="glodok-tab">
-              <h4>Glodok Stockist</h4>
-              <p>
-                Ruko Glodok Plaza, Blok F No. 21-22,  Taman Sari, Kota Jakarta Barat, DKI Jakarta 11110
-              </p>
-              <a href="">Get direction</a>
-              <div class="clearfix"></div>
-              <div class="half-wrap">
-                <h6>Phone Number</h6>
-                <p>+62 21 659 2247</p>
-              </div>
-              <div class="half-wrap">
-                <h6>Email</h6>
-                <p>info@sahabatabadi.com</p>
-              </div>
-            </div>
-
-            <div class="map-address tab-pane fade" id="kenari" role="tabpanel" aria-labelledby="kenari-tab">
-              <h4>Kenari Stockist</h4>
-              <p>
-                Plaza Kenari Mas, Jl. Kramat Raya No.101,  Senen, Kota Jakarta Pusat, DKI Jakarta 10440
-              </p>
-              <a href="">Get direction</a>
-              <div class="clearfix"></div>
-              <div class="half-wrap">
-                <h6>Phone Number</h6>
-                <p>+62 21 398 45733</p>
-              </div>
-              <div class="half-wrap">
-                <h6>Email</h6>
-                <p>info@sahabatabadi.com</p>
-              </div>
-            </div>
-
-            <div class="map-address tab-pane fade" id="tangerang" role="tabpanel" aria-labelledby="tangerang-tab">
-              <h4>Tangerang Stockist</h4>
-              <p>
-                Jalan Indokarya III Blok F1-2,  Tanjung Priok, Kota Jakarta Utara, DKI Jakarta 14340
-              </p>
-              <a href="">Get direction</a>
-              <div class="clearfix"></div>
-              <div class="half-wrap">
-                <h6>Phone Number</h6>
-                <p>+62 21 2230 1188</p>
-              </div>
-              <div class="half-wrap">
-                <h6>Email</h6>
-                <p>info@sahabatabadi.com</p>
-              </div>
-            </div>
+      			<?php endforeach;?>
           </div>
         </div>
       </div>

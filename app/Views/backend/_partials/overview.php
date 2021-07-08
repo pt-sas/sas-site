@@ -10,12 +10,20 @@
       <?= $this->include('backend/_partials/sidebar') ?>
 
       <div class="main-panel">
-        <div class="container">
-          <div class="page-inner">
-            <?= $this->include('backend/_partials/breadcrumb') ?>
-            <?= $this->renderSection('content') ?>
+        <?php if($title == 'Mailbox') : ?>
+    			<div class="container container-full">
+    				<div class="page-inner page-inner-fill">
+              <?= $this->renderSection('content') ?>
+            </div>
           </div>
-  			</div>
+        <?php else : ?>
+          <div class="container">
+            <div class="page-inner">
+              <?= $this->include('backend/_partials/breadcrumb') ?>
+              <?= $this->renderSection('content') ?>
+            </div>
+    			</div>
+        <?php endif ; ?>
         <?= $this->include('backend/_partials/footer') ?>
       </div>
 

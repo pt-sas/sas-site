@@ -101,13 +101,12 @@ $('.save_form').click(function (e) {
 
     let formData, url;
 
-    const field = form.find('input[type="checkbox"], select');
+    const field = form.find('input[type="checkbox"], select, input[type="radio"]');
 
     //remove attribute disabled when field disabled
     for (let i = 0; i < field.length; i++) {
-        form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+        form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').removeAttr('disabled');
     }
-
     if (setSave === 'add') {
         formData = form.serialize();
         url = SITE_URL + CREATE;
@@ -116,11 +115,18 @@ $('.save_form').click(function (e) {
         url = SITE_URL + EDIT;
     }
 
+    for (let i = 0; i < field.length; i++) {
+        if (field[i].type == 'radio') {
+            if (field[i].checked) {
+                formData += '&' + field[i].name + '=' + field[i].value;
+            }
+        }
+    }
+
     $.ajax({
         url: url,
         type: 'POST',
         data: formData,
-        // dataType: 'JSON',
         cache: false,
         dataType: 'JSON',
         beforeSend: function () {
@@ -137,9 +143,10 @@ $('.save_form').click(function (e) {
         },
         success: function (result) {
             if (result[0].success == true) {
-                Toast.fire({
+                Swal.fire({
+                    title: 'Save changes!',
                     type: 'success',
-                    title: result[0].message
+                    timer: 1000,
                 });
 
                 clearForm(e)
@@ -162,9 +169,10 @@ $('.save_form').click(function (e) {
                 hideLoadingForm(form.attr('id'));
 
             } else {
-                Toast.fire({
+                Swal.fire({
+                    title: result[0].message,
                     type: 'error',
-                    title: result[0].message
+                    timer: 2000
                 });
             }
         }
@@ -273,6 +281,12 @@ _table.on('click', 'td:not(:last-child)', function (e) {
                             if (className === 'active')
                                 readonly(form, true);
                         }
+
+                        if (field[i].type == 'radio') {
+                            if (field[i].value == label) {
+                                field[i].checked = true;
+                            }
+                        }
                     }
                 }
             }
@@ -290,12 +304,20 @@ function Destroy(id) {
         text: "Are you sure you wish to delete the selected data ? ",
         type: 'warning',
         showCancelButton: true,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ok',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Okay',
         cancelButtonText: 'Close',
+        reverseButtons: true
     }).then((data) => {
         if (data.value) //value is true
+
             $.post(url, function (result) {
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Your data has been deleted.',
+                    type: 'success',
+                    timer: 1000,
+                })
                 reloadTable()
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -335,16 +357,16 @@ $('input.active:checkbox').change(function (e) {
             parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').removeAttr('readonly');
 
             if (field[i].type !== 'text' && className !== 'active') {
-                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').removeAttr('disabled');
             }
         }
     else
         for (let i = 0; i < field.length; i++) {
             let className = field[i].className.split(/\s+/)[1];
-            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', true);
+            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').prop('readonly', true);
 
             if (field[i].type !== 'text' && className !== 'active') {
-                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
+                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').prop('disabled', true);
             }
         }
 });
@@ -388,10 +410,10 @@ function errorForm(parent, data) {
 
         if (labelMsg !== '') {
             parent.find('small[id=' + textName + ']').html(labelMsg);
-            parent.find('input:text[name=' + inputName + '], select[name=' + inputName + '], textarea[name=' + inputName + ']').parent('div').addClass('has-error has-feedback');
+            parent.find('input:text[name=' + inputName + '], select[name=' + inputName + '], textarea[name=' + inputName + ']').parent('div').addClass('has-error');
         } else {
             parent.find('small[id=' + textName + ']').html('');
-            parent.find('input:text[name=' + inputName + '], select[name=' + inputName + '], textarea[name=' + inputName + ']').parent('div').removeClass('has-error has-feedback');
+            parent.find('input:text[name=' + inputName + '], select[name=' + inputName + '], textarea[name=' + inputName + ']').parent('div').removeClass('has-error');
         }
     }
 }
@@ -415,11 +437,9 @@ function clearForm(evt) {
             for (let k = 0; k < field.length; k++) {
                 let option = $(field[k]).find('option:selected');
 
-                form.find('input:hidden[name=' + field[k].name + ']').val('');
-
                 form.find('input[name=' + field[k].name + '], textarea[name=' + field[k].name + ']')
                     .removeAttr('readonly')
-                    .parent('div').removeClass('has-error has-feedback');
+                    .parent('div').removeClass('has-error');
 
                 form.find('input:checkbox[name=' + field[k].name + ']')
                     .removeAttr('disabled');
@@ -453,11 +473,9 @@ function clearForm(evt) {
             for (let k = 0; k < field.length; k++) {
                 let option = $(field[k]).find('option:selected');
 
-                form.find('input:hidden[name=' + field[k].name + ']').val('');
-
                 form.find('input[name=' + field[k].name + '], textarea[name=' + field[k].name + ']')
                     .removeAttr('readonly')
-                    .parent('div').removeClass('has-error has-feedback');
+                    .parent('div').removeClass('has-error');
 
                 form.find('input:checkbox[name=' + field[k].name + ']')
                     .removeAttr('disabled');
@@ -491,7 +509,7 @@ function readonly(parent, value) {
         parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', value);
 
         if (field[i].type !== 'text' && className !== 'active') {
-            parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', value);
+            parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').prop('disabled', value);
         }
     }
 }
@@ -577,48 +595,59 @@ function hideLoadingForm(selectorID) {
 
 $(document).ready(function (evt) {
     const form = $('.form');
-    const formList = form.prop('classList');
 
-    $.each(formList, function (idx, elem) {
-        if (elem !== 'form_page') {
+    if (form.length > 0) {
+        const formList = form.prop('classList');
+
+        if (!arrContains('form_page', formList)) {
             let hidden_ID = form.find('input.id:hidden');
             ID = hidden_ID.val();
-        }
-    });
 
-    const field = form.find('input, textarea, select');
+            const field = form.find('input, textarea, select');
 
-    let url = SITE_URL + SHOW + ID;
+            let url = SITE_URL + SHOW + ID;
 
-    setSave = 'update';
+            setSave = 'update';
 
-    $.getJSON({
-        url: url,
-        type: 'GET',
-        dataType: 'JSON',
-        success: function (result) {
-            cardTitle.html(capitalize(LAST_URL));
+            $.ajax({
+                url: url,
+                type: 'GET',
+                async: false,
+                cache: false,
+                dataType: 'JSON',
+                beforeSend: function () {
+                    $('.save_form').attr('disabled', true);
+                    loadingForm(form.find('form').attr('id'), 'facebook');
+                },
+                complete: function () {
+                    $('.save_form').removeAttr('disabled');
+                    hideLoadingForm(form.find('form').attr('id'));
+                },
+                success: function (result) {
+                    cardTitle.html(capitalize(LAST_URL));
 
-            for (let i = 0; i < result.length; i++) {
-                let fieldInput = result[i].field;
-                let label = result[i].label;
+                    for (let i = 0; i < result.length; i++) {
+                        let fieldInput = result[i].field;
+                        let label = result[i].label;
 
-                for (let i = 0; i < formList.length; i++) {
-                    if (formList[i].toLowerCase() === 'show' && fieldInput === 'title') {
-                        modalTitle.html(capitalize(label));
-                    } else if (fieldInput === 'title') {
-                        cardTitle.html(capitalize(label));
+                        for (let i = 0; i < formList.length; i++) {
+                            if (formList[i].toLowerCase() === 'show' && fieldInput === 'title') {
+                                modalTitle.html(capitalize(label));
+                            } else if (fieldInput === 'title') {
+                                cardTitle.html(capitalize(label));
+                            }
+                        }
+
+                        for (let i = 0; i < field.length; i++) {
+                            if (field[i].name === fieldInput) {
+                                form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
+
+                                form.find('select[name=' + field[i].name + ']').val(label).change();
+                            }
+                        }
                     }
                 }
-
-                for (let i = 0; i < field.length; i++) {
-                    if (field[i].name === fieldInput) {
-                        form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
-
-                        form.find('select[name=' + field[i].name + ']').val(label).change();
-                    }
-                }
-            }
+            });
         }
-    });
+    }
 });

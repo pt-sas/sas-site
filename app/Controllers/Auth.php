@@ -6,11 +6,26 @@ class Auth extends BaseController
 {
 	public function login()
 	{
-		echo view('backend/auth/login');
+		$this->new_title = 'Login';
+
+		$data = [
+			'title'    	=>'' . $this->new_title . '',
+		];
+		echo view('backend/auth/login', $data);
 	}
 
 	public function register()
 	{
-		echo view('backend/auth/register');
+		$this->new_title = 'Login';
+
+		$data = [
+			'title'    	=>'' . $this->new_title . '',
+		];
+		echo view('backend/auth/register', $data);
+	}
+
+	public function logout()
+	{
+		return redirect()->to(base_url('auth/login'));
 	}
 }
