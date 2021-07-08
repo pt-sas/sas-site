@@ -260,6 +260,6 @@ button.margin-right {
 }
 
 /* Hidden card view page */
-.form_page {
+.card-form, .card-button {
     display:none
 }

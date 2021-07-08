@@ -1,3 +1,9 @@
+/**
+ * Proses for execute form master data dynamic element HTML
+ * 
+ * @author Oki Permana
+ * @version 1.0
+ */
 const ADMIN = '/backend/';
 
 var ORI_URL = window.location.origin,
@@ -17,11 +23,11 @@ const SHOWALL = '/showAll',
     DELETE = '/destroy/';
 
 // view page class on div
-const mainPage = $('.main_page'),
-    formPage = $('.form_page'),
-    companyPage = $('.company_page');
+let cardMain = $('.card-main'),
+    cardForm = $('.card-form'),
+    cardBtn = $('.card-button'),
+    cardTitle = $('.card-title');
 
-const cardTitle = $('.card-title');
 // Modal
 const modalForm = $('.modal_form');
 
@@ -52,61 +58,27 @@ _table = $('.tb_display').DataTable({
     // }
 });
 
-/**
- * Button new data
- */
-$('.new_form').click(function (e) {
-    const parent = $(e.target).closest('.row');
-    const parentList = parent.prop('classList');
-    const buttonList = parent.find('button').prop('classList');
-
-    let form, ckbActive;
-
-    for (let i = 0; i < parentList.length; i++) {
-        if (parentList[i].toLowerCase() === 'main_page') {
-            mainPage.hide();
-            formPage.css('display', 'block');
-
-            form = formPage.closest('.form');
-            ckbActive = form.find('input[type="checkbox"].active');
-            cardTitle.html('New ' + capitalize(LAST_URL));
-
-        } else {
-            openModalForm();
-            Scrollmodal();
-            for (let i = 0; i < buttonList.length; i++) {
-                if (buttonList[i] === 'modal-lg')
-                    Largemodal();
-                else if (buttonList[i] === 'modal-sm')
-                    Smallmodal();
-            }
-            form = modalForm.closest('.form');
-            ckbActive = form.find('input[type="checkbox"].active');
-            modalTitle.html('New ' + capitalize(LAST_URL));
-
-        }
-    }
-
-    ckbActive.prop('checked', true);
-    setSave = 'add';
-});
+function reloadTable() {
+    _table.ajax.reload(null, false);
+}
 
 /**
  * Save
  */
-$('.save_form').click(function (e) {
-    const parent = $(e.target).closest('.form');
+$('.save_form').click(function (evt) {
+    const parent = $(evt.target).closest('.row');
     const form = parent.find('form');
-    const classList = parent.prop('classList');
+    cardForm = parent.find('.card-form');
 
     let formData, url;
 
-    const field = form.find('input[type="checkbox"], select, input[type="radio"]');
+    const field = form.find('input[type="checkbox"], select');
 
     //remove attribute disabled when field disabled
     for (let i = 0; i < field.length; i++) {
-        form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').removeAttr('disabled');
+        form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
     }
+
     if (setSave === 'add') {
         formData = form.serialize();
         url = SITE_URL + CREATE;
@@ -127,102 +99,118 @@ $('.save_form').click(function (e) {
         url: url,
         type: 'POST',
         data: formData,
+        async: false,
         cache: false,
         dataType: 'JSON',
         beforeSend: function () {
-            $('.save_form').attr('disabled', true);
-            $('.x_form').attr('disabled', true);
-            $('.close_form').attr('disabled', true);
-            loadingForm(form.attr('id'), 'facebook');
+            $('.save_form').prop('disabled', true);
+            $('.x_form').prop('disabled', true);
+            $('.close_form').prop('disabled', true);
+            loadingForm(form.prop('id'), 'facebook');
         },
         complete: function () {
             $('.save_form').removeAttr('disabled');
             $('.x_form').removeAttr('disabled');
             $('.close_form').removeAttr('disabled');
-            hideLoadingForm(form.attr('id'));
+            hideLoadingForm(form.prop('id'));
         },
         success: function (result) {
-            if (result[0].success == true) {
-                Swal.fire({
-                    title: 'Save changes!',
+            if (result[0].success) {
+                Toast.fire({
                     type: 'success',
-                    timer: 1000,
+                    title: result[0].message
                 });
 
-                clearForm(e)
+                clearForm(evt);
 
-                for (let i = 0; i < classList.length; i++) {
-                    if (classList[i].toLowerCase() === 'form_page' || classList[i].toLowerCase() === 'modal_form') {
-                        if (classList[i].toLowerCase() !== 'modal_form') {
-                            mainPage.show();
-                            formPage.css('display', 'none');
-                        } else {
-                            modalForm.modal('hide');
+                if (!cardForm.prop('classList').contains('modal')) {
+                    cardMain.css('display', 'block');
+                    cardForm.css('display', 'none');
+                    cardBtn.css('display', 'block');
+                    const cardHeader = parent.find('.card-header');
+                    const btnList = cardHeader.find('button');
+
+                    $.each(btnList, function () {
+                        const btnClass = this.classList;
+                        if (btnClass.contains('new_form')) {
+                            $(this).show();
                         }
-
-                        reloadTable();
-                        // cardTitle.html(capitalize(LAST_URL));
-                    }
+                    });
+                } else {
+                    modalForm.modal('hide');
                 }
-            } else if (result[0].error == true) {
+
+                reloadTable();
+
+            } else if (result[0].error) {
                 errorForm(form, result);
-                hideLoadingForm(form.attr('id'));
+                hideLoadingForm(form.prop('id'));
 
             } else {
-                Swal.fire({
-                    title: result[0].message,
+                Toast.fire({
                     type: 'error',
-                    timer: 2000
+                    title: result[0].message
                 });
             }
+        },
+        error: function (jqXHR, exception) {
+            showError(jqXHR, exception);
         }
     });
 
+    // logic after insert / update data to set attribute based on field isactive condition
     for (let i = 0; i < field.length; i++) {
-        let classList = field[i].className.split(/\s+/)[1];
-        if (classList !== 'active') {
-            if ($('.active').is(':checked')) {
-                form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
-            } else {
+        let className = field[i].className.split(/\s+/);
+
+        if (form.find('input.active').is(':checked')) {
+            form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+        } else {
+            if (!className.includes('active')) {
                 form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
             }
         }
     }
 });
 
-
 /**
- * Show data form
+ * Button edit data
+ * Show data on the form
+ * @param {*} id data
  */
-_table.on('click', 'td:not(:last-child)', function (e) {
-    e.preventDefault();
-    const card = $(e.target).closest('.card');
-    const rowList = card.closest('.row').prop('classList');
-    const buttonList = card.find('button').prop('classList');
+function Edit(id) {
+    ID = id;
 
     let form, formList;
 
-    ID = _table.row(this).data()[0];
+    if (cardMain.length > 0) {
+        cardMain.css('display', 'none');
+        cardForm.css('display', 'block');
 
-    for (let i = 0; i < rowList.length; i++) {
-        if (rowList[i].toLowerCase() === 'main_page') {
-            mainPage.hide();
-            formPage.css('display', 'block');
+        if (!cardForm.prop('classList').contains('modal')) {
+            cardBtn.css('display', 'block');
+            const card = cardForm.closest('.card');
+            const btnList = card.find('.card-header').find('button');
 
-            form = formPage.closest('.form');
-            formList = form.prop('classList');
+            $.each(btnList, function () {
+                const btnClass = this.classList;
+                if (btnClass.contains('new_form')) {
+                    $(this).hide();
+                }
+            });
+
+            formList = cardForm.prop('classList');
+            form = cardForm.find('form');
         } else {
-            openModalForm();
-            Scrollmodal();
-            for (let i = 0; i < buttonList.length; i++) {
-                if (buttonList[i] === 'modal-lg')
-                    Largemodal();
-                else if (buttonList[i] === 'modal-sm')
-                    Smallmodal();
-            }
-            form = modalForm.closest('.form');
-            formList = form.prop('classList');
+            cardMain.css('display', 'block');
+            cardForm.css('display', 'none');
+            formList = cardForm.prop('classList');
+            form = cardForm.find('form');
         }
+    } else {
+        openModalForm();
+        Scrollmodal();
+        form = modalForm.find('form');
+        formList = cardForm.prop('classList');
     }
 
     const field = form.find('input, textarea, select');
@@ -241,26 +229,23 @@ _table.on('click', 'td:not(:last-child)', function (e) {
             $('.save_form').attr('disabled', true);
             $('.x_form').attr('disabled', true);
             $('.close_form').attr('disabled', true);
-            loadingForm(form.find('form').prop('id'), 'facebook');
+            loadingForm(form.prop('id'), 'facebook');
         },
         complete: function () {
             $('.save_form').removeAttr('disabled');
             $('.x_form').removeAttr('disabled');
             $('.close_form').removeAttr('disabled');
-            hideLoadingForm(form.find('form').prop('id'));
+            hideLoadingForm(form.prop('id'));
         },
         success: function (result) {
-            cardTitle.html(capitalize(LAST_URL));
             for (let i = 0; i < result.length; i++) {
                 let fieldInput = result[i].field;
                 let label = result[i].label;
 
-                for (let i = 0; i < formList.length; i++) {
-                    if (formList[i].toLowerCase() === 'show' && fieldInput === 'title') {
-                        modalTitle.html(capitalize(label));
-                    } else if (fieldInput === 'title') {
-                        cardTitle.html(capitalize(label));
-                    }
+                if (formList.contains('modal') && fieldInput === 'title') {
+                    modalTitle.html(capitalize(label));
+                } else if (fieldInput === 'title') {
+                    cardTitle.html(capitalize(label));
                 }
 
                 for (let i = 0; i < field.length; i++) {
@@ -290,9 +275,12 @@ _table.on('click', 'td:not(:last-child)', function (e) {
                     }
                 }
             }
+        },
+        error: function (jqXHR, exception) {
+            showError(jqXHR, exception);
         }
     });
-});
+}
 
 /**
  * Button delete data
@@ -329,17 +317,21 @@ function Destroy(id) {
 
 /**
  * Button close form
+ * @x_form button only in modal
+ * @close_form button in card-action
  */
 $(document).on('click', '.x_form, .close_form', function (evt) {
     if ($(evt.currentTarget).attr('data-dismiss') !== 'modal') {
         const parent = $(evt.target).closest('.row');
-        const rowList = parent.prop('classList');
+        cardMain.css('display', 'block');
+        cardForm.css('display', 'none');
+        cardBtn.css('display', 'none');
 
-        for (let i = 0; i < rowList.length; i++) {
-            if (rowList[i].toLowerCase() === 'form_page') {
-                mainPage.show();
-                formPage.css('display', 'none');
-            }
+        const cardHeader = parent.find('.card-header');
+        const btnList = cardHeader.find('button').prop('classList');
+
+        if (btnList.contains('new_form')) {
+            cardHeader.find('button').show();
         }
     }
 
@@ -347,30 +339,77 @@ $(document).on('click', '.x_form, .close_form', function (evt) {
     cardTitle.html(capitalize(LAST_URL));
 });
 
-$('input.active:checkbox').change(function (e) {
-    const parent = $(e.target).closest('.form_open');
-    const field = parent.find('input, textarea, select');
+/**
+ * Button new data
+ */
+$('.new_form').click(function (evt) {
+    const parent = $(evt.target).closest('.row');
+    const main = parent.find('.card-main');
 
-    if ($(this).is(':checked'))
-        for (let i = 0; i < field.length; i++) {
-            let className = field[i].className.split(/\s+/)[1];
-            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').removeAttr('readonly');
+    let form;
 
-            if (field[i].type !== 'text' && className !== 'active') {
-                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').removeAttr('disabled');
-            }
+    if (main.length > 0) {
+        cardMain.css('display', 'none');
+        cardForm.css('display', 'block');
+
+        if (!cardForm.prop('classList').contains('modal')) {
+            cardBtn.css('display', 'block');
+            cardTitle.html('New ' + capitalize(LAST_URL));
+
+            $(this).hide();
+            form = cardForm;
+            form.find('input[type="checkbox"].active').prop('checked', true);
+        } else {
+            cardMain.css('display', 'block');
+            cardForm.css('display', 'none');
         }
-    else
-        for (let i = 0; i < field.length; i++) {
-            let className = field[i].className.split(/\s+/)[1];
-            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').prop('readonly', true);
+    } else {
+        openModalForm();
+        Scrollmodal();
+        form = modalForm.find('form');
+        modalTitle.html('New1 ' + capitalize(LAST_URL));
+        form.find('input[type="checkbox"].active').prop('checked', true);
+    }
 
-            if (field[i].type !== 'text' && className !== 'active') {
-                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').prop('disabled', true);
-            }
-        }
+    setSave = 'add';
 });
 
+/**
+ * Process for aktif nonaktif field in the form using checkbox class active
+ */
+$('input.active:checkbox').change(function (evt) {
+    const parent = $(this).closest('form');
+    const field = parent.find('input, textarea, select');
+
+    let className;
+
+    if ($(this).is(':checked')) {
+        for (let i = 0; i < field.length; i++) {
+            className = field[i].className.split(/\s+/);
+            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').removeAttr('readonly');
+
+            if (field[i].type !== 'text' && !className.includes('active')) {
+                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+            }
+        }
+    } else {
+        for (let i = 0; i < field.length; i++) {
+            className = field[i].className.split(/\s+/);
+            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', true);
+
+            if (field[i].type !== 'text' && !className.includes('active')) {
+                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
+            }
+        }
+    }
+});
+
+/**
+ * Function to search exist value data
+ * @param {*} value to search exist value
+ * @param {*} arr array data
+ * @returns 
+ */
 function arrContains(value, arr) {
     var result = null;
 
@@ -384,6 +423,11 @@ function arrContains(value, arr) {
     return result;
 }
 
+/**
+ * Function to show Error Validation on the field
+ * @param {*} parent selector html
+ * @param {*} data from database
+ */
 function errorForm(parent, data) {
     const errorInput = parent.find('input[type="text"], select, textarea');
     const errorText = parent.find('small');
@@ -418,88 +462,54 @@ function errorForm(parent, data) {
     }
 }
 
+/**
+ * Function to clear value and attribute on the field
+ * @param {*} evt selector html
+ */
 function clearForm(evt) {
-    let closeList = $(evt.currentTarget).attr('class').split(/\s+/);
-    const parent = $(evt.target).closest('.form');
+    const parent = $(evt.target).closest('.row');
     const form = parent.find('form');
     const field = form.find('input, textarea, select');
     const errorText = form.find('small');
 
-    for (let i = 0; i < closeList.length; i++) {
-        if (closeList[i].toLowerCase() === 'x_form' | closeList[i].toLowerCase() === 'close_form') {
+    // clear field data on the form
+    form[0].reset();
 
-            // clear data on the form
-            for (let j = 0; j < form.length; j++) {
-                form[j].reset();
-            }
+    // clear data, attribute readonly, attribute disabled on the field and remove class invalid
+    for (let i = 0; i < field.length; i++) {
+        let option = $(field[i]).find('option:selected');
 
-            // clear data, attribute readonly, attribute disabled on the field and remove class invalid
-            for (let k = 0; k < field.length; k++) {
-                let option = $(field[k]).find('option:selected');
+        form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
+            .removeAttr('readonly')
+            .parent('div').removeClass('has-error has-feedback');
 
-                form.find('input[name=' + field[k].name + '], textarea[name=' + field[k].name + ']')
-                    .removeAttr('readonly')
-                    .parent('div').removeClass('has-error');
+        form.find('input:checkbox[name=' + field[i].name + ']')
+            .removeAttr('disabled');
 
-                form.find('input:checkbox[name=' + field[k].name + ']')
-                    .removeAttr('disabled');
-
-                //logic clear data dropdown if not selected from the beginning
-                if (option.length > 0 & option.val() !== '') {
-                    form.find('select[name=' + field[k].name + ']')
-                        .removeAttr('disabled')
-                        .val(option.val()).change();
-                } else {
-                    form.find('select[name=' + field[k].name + ']')
-                        .removeAttr('disabled')
-                        .val(null).change();
-                }
-            }
-
-            // clear text error element small
-            for (let l = 0; l < errorText.length; l++) {
-                if (errorText[l].id !== '')
-                    form.find('small[id=' + errorText[l].id + ']').html('');
-            }
-
+        //logic clear data dropdown if not selected from the beginning
+        if (option.length > 0 & option.val() !== '') {
+            form.find('select[name=' + field[i].name + ']')
+                .removeAttr('disabled')
+                .val(option.val()).change();
         } else {
-            for (let j = i; j < parent.length; j++) {
-                let classList = parent[i].className.split(/\s+/);
-                if (classList.includes('form_page') || classList.includes('modal_form')) {
-                    form[0].reset();
-                }
-            }
-
-            for (let k = 0; k < field.length; k++) {
-                let option = $(field[k]).find('option:selected');
-
-                form.find('input[name=' + field[k].name + '], textarea[name=' + field[k].name + ']')
-                    .removeAttr('readonly')
-                    .parent('div').removeClass('has-error');
-
-                form.find('input:checkbox[name=' + field[k].name + ']')
-                    .removeAttr('disabled');
-
-                //logic clear data dropdown if not selected from the beginning
-                if (option.length > 0 & option.val() !== '') {
-                    form.find('select[name=' + field[k].name + ']')
-                        .removeAttr('disabled')
-                        .val(option.val()).change();
-                } else {
-                    form.find('select[name=' + field[k].name + ']')
-                        .removeAttr('disabled')
-                        .val(null).change();
-                }
-            }
-
-            for (let l = 0; l < errorText.length; l++) {
-                if (errorText[l].id !== '')
-                    form.find('small[id=' + errorText[l].id + ']').html('');
-            }
+            form.find('select[name=' + field[i].name + ']')
+                .removeAttr('disabled')
+                .val(null).change();
         }
+    }
+
+    // clear text error element small
+    for (let l = 0; l < errorText.length; l++) {
+        if (errorText[l].id !== '')
+            form.find('small[id=' + errorText[l].id + ']').html('');
     }
 }
 
+/**
+ * Function to set field condition readonly true/false
+ * @param {*} parent selector html
+ * @param {*} value based on passing data (true/false)
+ */
 function readonly(parent, value) {
     const field = parent.find('input, textarea, select');
 
@@ -514,15 +524,76 @@ function readonly(parent, value) {
     }
 }
 
+/**
+ * Function to show error logic when process ajax
+ * @param {*} xhr 
+ * @param {*} exception 
+ */
+function showError(xhr, exception) {
+    let msg = '';
+
+    if (xhr.status === 0)
+        msg = 'Not connect.\n Verify Network.';
+    else if (xhr.status == 404)
+        msg = 'Requested page not found. [404]';
+    else if (xhr.status == 500)
+        msg = 'Internal Server Error [500].';
+    else if (exception === 'parsererror')
+        msg = 'Requested JSON parse failed.';
+    else if (exception === 'timeout')
+        msg = 'Time out error.';
+    else if (exception === 'abort')
+        msg = 'Ajax request aborted.';
+    else
+        msg = 'Uncaught Error.\n' + xhr.responseText;
+
+    Toast.fire({
+        type: 'error',
+        title: msg
+    });
+}
+
+/**
+ * Function to show wait Loading
+ * @param {*} selectorID form html
+ * @param {*} effect 
+ */
+function loadingForm(selectorID, effect) {
+    $('#' + selectorID + '').waitMe({
+        effect: effect,
+        text: 'Please wait...',
+        bg: 'rgba(255,255,255,0.7)',
+        color: '#000',
+        maxSize: '',
+        waitTime: -1,
+        textPos: 'vertical',
+        fontSize: '100%',
+        source: '',
+        onClose: function () {}
+    });
+}
+
+/**
+ * Function to hide wait Loading
+ * @param {*} selectorID form html
+ */
+function hideLoadingForm(selectorID) {
+    $('#' + selectorID + '').waitMe('hide');
+}
+
+/**
+ * Function to set text to Capitalize
+ * @param {*} s string value
+ * @returns 
+ */
 const capitalize = (s) => {
     if (typeof s !== 'string') return ''
     return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-function reloadTable() {
-    _table.ajax.reload(null, false);
-}
-
+/**
+ * Funtion to show modal form
+ */
 function openModalForm() {
     return modalForm.modal({
         backdrop: 'static',
@@ -530,19 +601,11 @@ function openModalForm() {
     });
 }
 
-// add class scrollable in modal
+/**
+ * Return call class scrollable in modal
+ */
 function Scrollmodal() {
     return modalDialog.addClass('modal-dialog-scrollable');
-}
-
-// add class size modal large
-function Largemodal() {
-    return modalDialog.addClass('modal-lg');
-}
-
-// add class size modal small
-function Smallmodal() {
-    return modalDialog.addClass('modal-sm');
 }
 
 $(document).ready(function (e) {
@@ -564,34 +627,15 @@ $(document).ready(function (e) {
         showConfirmButton: false,
         timer: 4000
     });
-});
 
-$('.datepicker').datetimepicker({
-    format: 'DD/MM/YYYY',
-});
-
-$('.timepicker').datetimepicker({
-    format: 'H:mm:ss',
-});
-
-function loadingForm(selectorID, effect) {
-    $('#' + selectorID + '').waitMe({
-        effect: effect,
-        text: 'Please wait...',
-        bg: 'rgba(255,255,255,0.7)',
-        color: '#000',
-        maxSize: '',
-        waitTime: -1,
-        textPos: 'vertical',
-        fontSize: '100%',
-        source: '',
-        onClose: function () {}
+    $('.datepicker').datetimepicker({
+        format: 'DD/MM/YYYY',
     });
-}
 
-function hideLoadingForm(selectorID) {
-    $('#' + selectorID + '').waitMe('hide');
-}
+    $('.timepicker').datetimepicker({
+        format: 'H:mm:ss',
+    });
+});
 
 $(document).ready(function (evt) {
     const form = $('.form');
