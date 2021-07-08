@@ -11,7 +11,6 @@
         <h3 class="d-none">PT. Sahabat Abadi Sejahtera</h3>
         <h2 class="slogan">Beyond Authorized Distributor</h2>
         <p>Bring together a human approach with advanced technology to create an efficient and effective office space.</p>
-
         <lottie-player src="<?= base_url('adw/assets/animation-file/Electricity_Animations.json') ?>"  background="transparent"  speed="1"  style="width: 100%; height: auto;" loop autoplay></lottie-player>
         <a href="javascript:void(0);" class="scroll-down">Scroll Down <img src="<?= base_url('adw/assets/images/chevrons-down.png') ?>" alt=""></a>
       </div>
