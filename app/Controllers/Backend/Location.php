@@ -23,7 +23,7 @@ class Location extends BaseController
 										 </button>',
 			'location' 	=> $location->findAll()
 		];
-		echo view('backend/location/v_location', $data);
+		return $this->template->render('backend/location/v_location', $data);
 	}
 
 	public function showAll()
