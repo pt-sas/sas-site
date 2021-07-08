@@ -38,14 +38,20 @@ function status($string)
         '<center><span class="badge badge-danger">No</span></center>';
 }
 
-function truncate($string,$length=50,$append="...") {
-  $string = trim($string);
+function truncate($string, $length = 50, $append = "...")
+{
+    $string = trim($string);
 
-  if(strlen($string) > $length) {
-    $string = wordwrap($string, $length);
-    $string = explode("\n", $string, 2);
-    $string = $string[0] . $append;
-  }
+    if (strlen($string) > $length) {
+        $string = wordwrap($string, $length);
+        $string = explode("\n", $string, 2);
+        $string = $string[0] . $append;
+    }
 
-  return $string;
+    return $string;
+}
+
+function setCheckbox($string)
+{
+    return $string ? 'Y' : 'N';
 }
