@@ -12,7 +12,8 @@ class M_Principal extends Model
         'name',
         'description',
         'logo',
-        'url'
+        'url',
+        'isactive'
     ];
     protected $useTimestamps = true;
     protected $returnType = 'App\Entities\Principal';

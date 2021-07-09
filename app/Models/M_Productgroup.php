@@ -11,7 +11,8 @@ class M_Productgroup extends Model
     protected $allowedFields = [
         'name',
         'description',
-        'md_principal_id'
+        'md_principal_id',
+        'isactive'
     ];
     protected $useTimestamps = true;
     protected $returnType = 'App\Entities\Productgroup';

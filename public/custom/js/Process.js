@@ -1,6 +1,6 @@
 /**
  * Proses for execute form master data dynamic element HTML
- * 
+ *
  * @author Oki Permana
  * @version 1.0
  */
@@ -408,7 +408,7 @@ $('input.active:checkbox').change(function (evt) {
  * Function to search exist value data
  * @param {*} value to search exist value
  * @param {*} arr array data
- * @returns 
+ * @returns
  */
 function arrContains(value, arr) {
     var result = null;
@@ -526,8 +526,8 @@ function readonly(parent, value) {
 
 /**
  * Function to show error logic when process ajax
- * @param {*} xhr 
- * @param {*} exception 
+ * @param {*} xhr
+ * @param {*} exception
  */
 function showError(xhr, exception) {
     let msg = '';
@@ -556,7 +556,7 @@ function showError(xhr, exception) {
 /**
  * Function to show wait Loading
  * @param {*} selectorID form html
- * @param {*} effect 
+ * @param {*} effect
  */
 function loadingForm(selectorID, effect) {
     $('#' + selectorID + '').waitMe({
@@ -584,7 +584,7 @@ function hideLoadingForm(selectorID) {
 /**
  * Function to set text to Capitalize
  * @param {*} s string value
- * @returns 
+ * @returns
  */
 const capitalize = (s) => {
     if (typeof s !== 'string') return ''
@@ -629,6 +629,7 @@ $(document).ready(function (e) {
     });
 
     $('.datepicker').datetimepicker({
+        // format: 'YYYY-MM-DD',
         format: 'DD/MM/YYYY',
     });
 

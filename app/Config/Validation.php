@@ -153,9 +153,33 @@ class Validation
 	];
 
 	public $job = [
-		'name' => [
-			'label'		=> 'division name',
+		'md_location_id' => [
+			'label'		=> 'location',
 			'rules' 	=> 'required'
-		]
+		],
+		'md_division_id' => [
+			'label'		=> 'division',
+			'rules' 	=> 'required'
+		],
+		'position' => [
+			'label'		=> 'job position',
+			'rules' 	=> 'required'
+		],
+		'description' => [
+			'label'		=> 'job description',
+			'rules' 	=> 'required'
+		],
+		'requirement' => [
+			'label'		=> 'job requirement',
+			'rules' 	=> 'required'
+		],
+		'posted_date' => [
+			'label'		=> 'posted date',
+			'rules' 	=> 'required'
+		],
+		'expired_date' => [
+			'label'		=> 'expired date',
+			'rules' 	=> 'required'
+		],
 	];
 }

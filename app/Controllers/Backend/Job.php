@@ -3,18 +3,20 @@
 namespace App\Controllers\Backend;
 
 use App\Controllers\BaseController;
-use App\Models\M_Principal;
-use App\Models\M_Productgroup;
+use App\Models\M_Location;
+use App\Models\M_Division;
+use App\Models\M_Job;
 
-class Productgroup extends BaseController
+class Job extends BaseController
 {
-	protected $table = 'md_productgroup';
+	protected $table = 'trx_job';
 
 	public function index()
 	{
-		$principal = new M_Principal();
+		$location = new M_Location();
+		$division = new M_Division();
 
-		$this->new_title = 'Product Group';
+		$this->new_title = 'Job';
 		$this->form_type = 'new_form';
 
 		$data = [
@@ -22,28 +24,31 @@ class Productgroup extends BaseController
 			'button'    => '<button type="button" class="btn btn-primary btn-sm btn-round ml-auto ' . $this->form_type . ' ' . $this->modal_type . '" title="' . $this->new_title . '">
 												<i class="fa fa-plus fa-fw"></i> ' . $this->new_title . '
 										 </button>',
-			'principal'	=> $principal->where('isactive','Y')->findAll()
+			'location'	=> $location->where('isactive','Y')->findAll(),
+			'division'	=> $division->where('isactive','Y')->findAll()
 		];
-		return $this->template->render('backend/productgroup/v_productgroup', $data);
+		return $this->template->render('backend/job/v_job', $data);
 	}
 
 	public function showAll()
 	{
-		$productgroup = new M_Productgroup();
-		$list = $productgroup->findAll();
+		$job = new M_Job();
+		$list = $job->showAll();
 		$data = [];
 
 		$number = 0;
 		foreach ($list as $value) :
 			$row = [];
-			$ID = $value->md_productgroup_id;
+			$ID = $value->trx_job_id;
 
 			$number++;
 
 			$row[] = $ID;
 			$row[] = $number;
-			$row[] = $value->name;
-			$row[] = $value->md_principal_id;
+			$row[] = $value->division_name;
+			$row[] = $value->position;
+			$row[] = $value->posted_date;
+			$row[] = $value->expired_date;
 			$row[] = active($value->isactive);
 			$row[] = '<center>
 						<a class="btn" onclick="Edit(' . "'" . $ID . "'" . ')" title="Edit"><i class="far fa-edit text-info"></i></a>
@@ -59,19 +64,19 @@ class Productgroup extends BaseController
 	public function create()
 	{
 		$validation = \Config\Services::validation();
-		$eProductgroup = new \App\Entities\Productgroup();
+		$eJob = new \App\Entities\Job();
 
-		$productgroup = new M_Productgroup();
+		$job = new M_Job();
 		$post = $this->request->getVar();
 
 		try {
-			$eProductgroup->fill($post);
-			$eProductgroup->isactive = setCheckbox(isset($post['isactive']));
+			$eJob->fill($post);
+			$eJob->isactive = setCheckbox(isset($post['isactive']));
 
-			if (!$validation->run($post, 'productgroup')) {
+			if (!$validation->run($post, 'job')) {
 				$response =	$this->field->errorValidation($this->table);
 			} else {
-				$result = $productgroup->save($eProductgroup);
+				$result = $job->save($eJob);
 				$response = message('success', true, $result);
 			}
 		} catch (\Exception $e) {
@@ -82,8 +87,8 @@ class Productgroup extends BaseController
 
 	public function show($id)
 	{
-		$productgroup = new M_Productgroup();
-		$list = $productgroup->where('md_productgroup_id', $id)->findAll();
+		$job = new M_Job();
+		$list = $job->where('trx_job_id', $id)->findAll();
 		$reponse = $this->field->store($this->table, $list);
 		return json_encode($reponse);
 	}
@@ -91,20 +96,20 @@ class Productgroup extends BaseController
 	public function edit()
 	{
 		$validation = \Config\Services::validation();
-		$eProductgroup = new \App\Entities\Productgroup();
+		$eJob = new \App\Entities\Job();
 
-		$productgroup = new M_Productgroup();
+		$job = new M_Job();
 		$post = $this->request->getVar();
 
 		try {
-			$eProductgroup->fill($post);
-			$eProductgroup->md_productgroup_id = $post['id'];
-			$eProductgroup->isactive = setCheckbox(isset($post['isactive']));
+			$eJob->fill($post);
+			$eJob->trx_job_id = $post['id'];
+			$eJob->isactive = setCheckbox(isset($post['isactive']));
 
-			if (!$validation->run($post, 'productgroup')) {
+			if (!$validation->run($post, 'job')) {
 				$response =	$this->field->errorValidation($this->table);
 			} else {
-				$result = $productgroup->save($eProductgroup);
+				$result = $job->save($eJob);
 				$response = message('success', true, $result);
 			}
 		} catch (\Exception $e) {
@@ -115,10 +120,10 @@ class Productgroup extends BaseController
 
 	public function destroy($id)
 	{
-		$productgroup = new M_Productgroup();
+		$job = new M_Job();
 
 		try {
-			$result = $productgroup->delete($id);
+			$result = $job->delete($id);
 			$response = message('success', true, $result);
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
