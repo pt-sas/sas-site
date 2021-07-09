@@ -151,4 +151,11 @@ class Validation
 			'rules' 	=> 'required'
 		]
 	];
+
+	public $job = [
+		'name' => [
+			'label'		=> 'division name',
+			'rules' 	=> 'required'
+		]
+	];
 }
