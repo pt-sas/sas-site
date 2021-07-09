@@ -140,6 +140,8 @@ $('.save_form').click(function (evt) {
                     modalForm.modal('hide');
                 }
 
+                cardTitle.html(capitalize(LAST_URL));
+
                 reloadTable();
 
             } else if (result[0].error) {
