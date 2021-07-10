@@ -182,4 +182,62 @@ class Validation
 			'rules' 	=> 'required'
 		],
 	];
+
+	public $news = [
+		// 'md_image_id' => [
+		// 	'label'		=> 'location',
+		// 	'rules' 	=> 'required'
+		// ],
+		'title' => [
+			'label'		=> 'division',
+			'rules' 	=> 'required'
+		],
+		'content' => [
+			'label'		=> 'job position',
+			'rules' 	=> 'required'
+		],
+		'news_date' => [
+			'label'		=> 'job description',
+			'rules' 	=> 'required'
+		],
+		'start_date' => [
+			'label'		=> 'job requirement',
+			'rules' 	=> 'required'
+		],
+		'end_date' => [
+			'label'		=> 'posted date',
+			'rules' 	=> 'required'
+		],
+		'slug' => [
+			'label'		=> 'expired date',
+			'rules' 	=> 'required'
+		],
+	];
+
+	public $promo = [
+		// 'md_image_id' => [
+		// 	'label'		=> 'location',
+		// 	'rules' 	=> 'required'
+		// ],
+		'title' => [
+			'label'		=> 'division',
+			'rules' 	=> 'required'
+		],
+		'content' => [
+			'label'		=> 'job position',
+			'rules' 	=> 'required'
+		],
+		'start_date' => [
+			'label'		=> 'job requirement',
+			'rules' 	=> 'required'
+		],
+		'end_date' => [
+			'label'		=> 'posted date',
+			'rules' 	=> 'required'
+		],
+		'slug' => [
+			'label'		=> 'expired date',
+			'rules' 	=> 'required'
+		],
+	];
 }

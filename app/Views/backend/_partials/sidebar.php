@@ -45,10 +45,27 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url ('/backend/mailbox') ?>">
-            <i class="fas fa-envelope"></i>
-            <p>Mailbox</p>
+          <a href="<?= base_url ('/backend/media') ?>">
+            <i class="fas fa-images"></i>
+            <p>Media</p>
           </a>
+        </li>
+        <li class="nav-item">
+          <a data-toggle="collapse" href="#collapseNews">
+              <i class="fas fa-newspaper"></i>
+              <p>News & Promo</p>
+              <span class="caret"></span>
+          </a>
+          <div class="collapse" id="collapseNews">
+              <ul class="nav nav-collapse">
+                  <li>
+                      <a href="<?= base_url ('/backend/news') ?>"><span class="sub-item">News</span></a>
+                  </li>
+                  <li>
+                      <a href="<?= base_url ('/backend/promo') ?>"><span class="sub-item">Promotion</span></a>
+                  </li>
+              </ul>
+          </div>
         </li>
         <li class="nav-item">
           <a data-toggle="collapse" href="#collapseCareer">
@@ -66,6 +83,12 @@
               </li>
             </ul>
           </div>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url ('/backend/mailbox') ?>">
+            <i class="fas fa-envelope"></i>
+            <p>Mailbox</p>
+          </a>
         </li>
 
 

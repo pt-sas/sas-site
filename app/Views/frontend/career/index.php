@@ -20,7 +20,8 @@
         </div>
         <div class="col-md-7">
           <h4>Why work with us</h4>
-          <p>PT. Sahabat Abadi Sejahtera has been a leading and largest Philips Lighting stockiest for many years and has built a strong and reliable business relationship in the community through its consistent performance and has earned excellent reputation for its prompt settlement of business transactions.Being specialized with a focused marketing philosophy, excellent services and extensive distribution network in the region, PT. Sahabat Abadi Sejahtera is definitely the right business partner for Philips Lighting.</p>
+          <p>PT Sahabat Abadi Sejahtera has been a leading and largest Philips Lighting stockiest for many years and has built a strong and reliable business relationship in the community through its consistent performance and has earned excellent reputation for its prompt settlement of business transactions.
+            Being specialized with a focused marketing philosophy, excellent services and extensive distribution network in the region, PT Sahabat Abadi Sejahtera is definitely the right business partner for Philips Lighting.</p>
         </div>
       </div>
     </div>
@@ -94,12 +95,12 @@
               <h5><?= $row->position;?></h5>
               <h6><?= $row->division_name;?></h6>
             </div>
-            <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_location_id="<?= $row->location_name ?>" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>">
+            <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_location_id="<?= $row->location_name ?>" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>">
               Detail
             </a>
             <span class="location">
               <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
-              <?= $row->location_name;?>
+              <?= $row->city;?>
             </span>
           </div>
           <?php endforeach;?>
@@ -130,7 +131,7 @@
   <div class="row">
     <div class="col-md-12">
       <footer>
-        <p>© Copyright 2021 PT. Sahabat Abadi Sejahtera - All rights reserved.</p>
+        <p>© Copyright 2021 PT Sahabat Abadi Sejahtera - All rights reserved.</p>
         <a href="" class="foot-socmed"><i class="fa fa-facebook-f"></i></a>
         <a href="" class="foot-socmed"><i class="fa fa-twitter"></i></a>
         <a href="" class="foot-socmed"><i class="fa fa-instagram"></i></a>
@@ -150,7 +151,7 @@
         <h5>
           <span><large name="division"></large></span>
           <span><large name="posted_date"></large> </span>
-          <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> <large name="location"></large></span>
+          <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> <large name="city"></large></span>
         </h5>
         <h6 class="title-list">What you will do</h6>
         <div name="description">
@@ -169,7 +170,7 @@
 <script>
 $(document).on('click', '.view_details', function(e){
   e.preventDefault();
-  var location      = $(this).data('md_location_id');
+  var city          = $(this).data('city');
   var division      = $(this).data('md_division_id');
   var position      = $(this).data('position');
   var description   = $(this).data('description');
@@ -178,7 +179,7 @@ $(document).on('click', '.view_details', function(e){
   var expired_date  = $(this).data('expired_date');
 
   $('#modalJobs').modal('show');
-  $('[name="location"]').text(location);
+  $('[name="city"]').text(city);
   $('[name="division"]').text(division);
   $('[name="position"]').text(position);
   $('[name="posted_date"]').text(posted_date);

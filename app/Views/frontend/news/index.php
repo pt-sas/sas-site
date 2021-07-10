@@ -15,27 +15,15 @@
         <div class="col-md-12">
           <h5 class="sec-title">News</h5>
         </div>
-        <div class="col-md-4">
-          <a href="<?= base_url('/news/1') ?>" class="item-news">
-            <div class="image" style="background-image: url('<?= base_url('adw/assets/images/news1.png') ?>');"></div>
-            <h5>Judul artikel disini dengan maksimal 3 baris agar terlihat rapih untuk dilihat</h5>
-            <span>5 FEB 2020</span>
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a href="<?= base_url('/news/1') ?>" class="item-news">
-            <div class="image" style="background-image: url('<?= base_url('adw/assets/images/news2.png') ?>');"></div>
-            <h5>Judul artikel disini dengan maksimal 3 baris agar terlihat rapih untuk dilihat</h5>
-            <span>5 FEB 2020</span>
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a href="<?= base_url('/news/1') ?>" class="item-news">
-            <div class="image" style="background-image: url('<?= base_url('adw/assets/images/news3.png') ?>');"></div>
-            <h5>Judul artikel disini dengan maksimal 3 baris agar terlihat rapih untuk dilihat</h5>
-            <span>5 FEB 2020</span>
-          </a>
-        </div>
+        <?php foreach($news as $row): ?>
+          <div class="col-md-4">
+            <a href="<?= base_url('/news/'.$row->slug.'') ?>" class="item-news">
+              <div class="image" style="background-image: url('<?= base_url('adw/assets/images/news1.png') ?>');"></div>
+              <h5><?= $row->title;?></h5>
+              <span><?= $row->news_date;?></span>
+            </a>
+          </div>
+        <?php endforeach;?>
       </div>
     </div>
   </div>
@@ -47,42 +35,19 @@
         <div class="col-md-12">
           <h5 class="sec-title">Promo</h5>
         </div>
-        <div class="col-md-4">
-          <a href="<?= base_url('/news/1') ?>" class="item-promo">
-            <div class="image" style="background-image: url('<?= base_url('adw/assets/images/gal1.png') ?>');">
-              <div class="periode">
-                <span>Periode Promo</span>
-                <p>19 Apr - 30 Jun 2021</p>
+        <?php foreach($promo as $row): ?>
+          <div class="col-md-4">
+            <a href="<?= base_url('/promo/'.$row->slug.'') ?>" class="item-promo">
+              <div class="image" style="background-image: url('<?= base_url('adw/assets/images/gal1.png') ?>');">
+                <div class="periode">
+                  <span>Periode Promo</span>
+                  <p><?= $row->start_date;?> - <?= $row->end_date;?></p>
+                </div>
               </div>
-            </div>
-            <h6>Judul promo disini dengan maksimal
-              2 baris agar terlihat rapih</h6>
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a href="<?= base_url('/news/1') ?>" class="item-promo">
-            <div class="image" style="background-image: url('<?= base_url('adw/assets/images/gal2.png') ?>');">
-              <div class="periode">
-                <span>Periode Promo</span>
-                <p>19 Apr - 30 Jun 2021</p>
-              </div>
-            </div>
-            <h6>Judul promo disini dengan maksimal
-              2 baris agar terlihat rapih</h6>
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a href="<?= base_url('/news/1') ?>" class="item-promo">
-            <div class="image" style="background-image: url('<?= base_url('adw/assets/images/gal3.png') ?>');">
-              <div class="periode">
-                <span>Periode Promo</span>
-                <p>19 Apr - 30 Jun 2021</p>
-              </div>
-            </div>
-            <h6>Judul promo disini dengan maksimal
-              2 baris agar terlihat rapih</h6>
-          </a>
-        </div>
+              <h6><?= $row->title;?></h6>
+            </a>
+          </div>
+        <?php endforeach;?>
       </div>
     </div>
   </div>
