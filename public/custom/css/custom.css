@@ -1,6 +1,4 @@
 .uploadfoto {
-    /* float: left; */
-    /* margin-right: 50px; */
     margin-left: auto;
     margin-right: auto;
     width: 8em;
@@ -8,8 +6,8 @@
 
 .form-upload-foto {
     border: 1px dashed #ced4da;
-    width: 125px;
-    height: 125px;
+    width: 40%;
+    height: 110px;
     position: relative;
     background: #fff;
     line-height: 1.5;
@@ -44,9 +42,8 @@
 }
 
 .form-result {
-    /* border: 1px dashed #ced4da; */
-    width: 125px;
-    height: 125px;
+    width: 40%;
+    height: 110px;
     position: relative;
     background: #fff;
     line-height: 1.5;
@@ -54,10 +51,10 @@
 }
 
 .form-result img {
+    position: relative;
     vertical-align: middle;
     max-width: 100%;
     max-height: 100%;
-    position: absolute;
     top: 20%;
     left: 20%;
     transform: translate(-20%, -20%);
@@ -65,7 +62,7 @@
 
 .close-img {
     position: absolute;
-    margin-left: 95%;
+    margin-left: 85%;
     margin-top: -20px;
     font-size: 1.5rem;
     font-weight: 700;
@@ -83,6 +80,10 @@
 .close-img:not(:disabled):not(.disabled):hover,
 .close-img:not(:disabled):not(.disabled):focus {
     opacity: .75;
+}
+
+.close-img:hover {
+    cursor: pointer;
 }
 
 button.close-img {
