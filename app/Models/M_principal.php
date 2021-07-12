@@ -11,7 +11,7 @@ class M_Principal extends Model
 	protected $allowedFields = [
 		'name',
 		'description',
-		'logo',
+		'md_image_id',
 		'url',
 		'isactive'
 	];
