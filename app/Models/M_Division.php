@@ -10,7 +10,8 @@ class M_Division extends Model
     protected $primaryKey = 'md_division_id';
     protected $allowedFields = [
         'name',
-        'description'
+        'description',
+        'isactive'
     ];
     protected $useTimestamps = true;
     protected $returnType = 'App\Entities\Division';

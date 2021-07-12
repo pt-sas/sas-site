@@ -4,6 +4,10 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\M_About;
 use App\Models\M_Location;
+
+use App\Models\M_Division;
+use App\Models\M_Job;
+
 use App\Models\M_Mailbox;
 
 class MainController extends BaseController
@@ -59,6 +63,14 @@ class MainController extends BaseController
 
 	public function career()
 	{
+		$division	= new M_Division();
+		$job 			= new M_Job();
+
+		$data = [
+			'division' 		=> $division->where('isactive','Y')->findAll(),
+			'job' 				=> $job->where('isactive','Y')->showAll(),
+			'page_title'	=> 'About Us - Sahabat Abadi Sejahtera'
+		];
 		$data['page_title'] = 'Career - Sahabat Abadi Sejahtera';
 		return view('frontend/career/index', $data);
 	}

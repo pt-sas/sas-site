@@ -81,62 +81,28 @@
             <input type="search" class="form-control search" placeholder="Search">
             <select name="" id="" class="form-control">
               <option value="">All Division</option>
-              <option value="">Marketing & Communication</option>
+              <?php foreach ($division as $value) : ?>
+                  <option value="<?= $value->md_division_id ?>"><?= $value->name ?></option>
+              <?php endforeach; ?>
             </select>
             <button class="btn btn-primary">Search</button>
           </div>
+
+          <?php foreach($job as $row): ?>
           <div class="item-jobs">
             <div class="left-part">
-              <h5>Campaign Executive</h5>
-              <h6>Marketing & Communication</h6>
+              <h5><?= $row->position;?></h5>
+              <h6><?= $row->division_name;?></h6>
             </div>
-            <a href="javascript:void(0);" class="btn btn-outline-black" data-toggle="modal" data-target="#modalJobs">
+            <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_location_id="<?= $row->location_name ?>" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>">
               Detail
             </a>
             <span class="location">
               <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
-              Jakarta
+              <?= $row->location_name;?>
             </span>
           </div>
-          <div class="item-jobs">
-            <div class="left-part">
-              <h5>Campaign Executive</h5>
-              <h6>Marketing & Communication</h6>
-            </div>
-            <a href="javascript:void(0);" class="btn btn-outline-black" data-toggle="modal" data-target="#modalJobs">
-              Detail
-            </a>
-            <span class="location">
-              <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
-              Jakarta
-            </span>
-          </div>
-          <div class="item-jobs">
-            <div class="left-part">
-              <h5>Campaign Executive</h5>
-              <h6>Marketing & Communication</h6>
-            </div>
-            <a href="javascript:void(0);" class="btn btn-outline-black" data-toggle="modal" data-target="#modalJobs">
-              Detail
-            </a>
-            <span class="location">
-              <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
-              Jakarta
-            </span>
-          </div>
-          <div class="item-jobs">
-            <div class="left-part">
-              <h5>Campaign Executive</h5>
-              <h6>Marketing & Communication</h6>
-            </div>
-            <a href="javascript:void(0);" class="btn btn-outline-black" data-toggle="modal" data-target="#modalJobs">
-              Detail
-            </a>
-            <span class="location">
-              <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
-              Jakarta
-            </span>
-          </div>
+          <?php endforeach;?>
         </div>
       </div>
     </div>
@@ -180,37 +146,44 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <img src="<?= base_url('adw/assets/images/close.png') ?>" alt="">
         </button>
-        <h4>Campaign Executive</h4>
+        <h4 name="position"></h4>
         <h5>
-          <span>Marketing & Communication</span>
-          <span>1 April 2020 </span>
-          <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> Jakarta</span>
+          <span><large name="division"></large></span>
+          <span><large name="posted_date"></large> </span>
+          <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> <large name="location"></large></span>
         </h5>
         <h6 class="title-list">What you will do</h6>
-        <ul>
-          <li>execute campaign output using the assigned tools to bring the campaign execution to live.</li>
-          <li>ensure available documents as reference point for various stakeholders.</li>
-          <li>ensure a streamlined and efficient processes and possible improvement areas.</li>
-          <li>Develop smart, actionable recommendations and reports that support business growth.</li>
-          <li>Provide custom analyses requested.</li>
-          <li>Able to lead small projects (with supervision/guidance)</li>
-          <li>Work with various stakeholders</li>
-          <li>Address business problems assigned to insights.</li>
-          <li>Execute and continuously optimize campaign governance for owned-media</li>
-          <li>Typically, individual contributors</li>
-        </ul>
-        <h6 class="title-list">What you will need</h6>
-        <ul>
-          <li>Min. 1-2 years of similar experiences, exp in doing campaign management is a plus point </li>
-          <li>Detailed oriented</li>
-          <li>Good communication and interpersonal skill</li>
-          <li>Meticulous, structured and excellent at executing things</li>
-          <li>Type of person that can cope and perform well-provided checklist/items in hands to be closed or implemented.</li>
-        </ul>
+        <div name="description">
 
+        </div>
+        <h6 class="title-list">What you will need</h6>
+        <div name="requirement">
+
+        </div>
         <button class="btn btn-primary">Apply Now</button>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+$(document).on('click', '.view_details', function(e){
+  e.preventDefault();
+  var location      = $(this).data('md_location_id');
+  var division      = $(this).data('md_division_id');
+  var position      = $(this).data('position');
+  var description   = $(this).data('description');
+  var requirement   = $(this).data('requirement');
+  var posted_date   = $(this).data('posted_date');
+  var expired_date  = $(this).data('expired_date');
+
+  $('#modalJobs').modal('show');
+  $('[name="location"]').text(location);
+  $('[name="division"]').text(division);
+  $('[name="position"]').text(position);
+  $('[name="posted_date"]').text(posted_date);
+  $('[name="description"]').html(description);
+  $('[name="requirement"]').html(requirement);
+});
+</script>
 <?= $this->endSection() ?>
