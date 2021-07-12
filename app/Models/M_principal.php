@@ -6,23 +6,23 @@ use CodeIgniter\Model;
 
 class M_Principal extends Model
 {
-    protected $table      = 'md_principal';
-    protected $primaryKey = 'md_principal_id';
-    protected $allowedFields = [
-        'name',
-        'description',
-        'logo',
-        'url',
-        'isactive'
-    ];
-    protected $useTimestamps = true;
-    protected $returnType = 'App\Entities\Principal';
+	protected $table      = 'md_principal';
+	protected $primaryKey = 'md_principal_id';
+	protected $allowedFields = [
+		'name',
+		'description',
+		'logo',
+		'url',
+		'isactive'
+	];
+	protected $useTimestamps = true;
+	protected $returnType = 'App\Entities\Principal';
 
-    public function detail($field, $where = null)
-    {
-        $db = \Config\Database::connect();
-        if (!empty($where)) {
-            return $db->query("SELECT
+	public function detail($field, $where = null)
+	{
+		$db = \Config\Database::connect();
+		if (!empty($where)) {
+			return $db->query("SELECT
 						mdp.md_principal_id,
 						mdp.isactive,
 						mdp.name,
@@ -34,8 +34,8 @@ class M_Principal extends Model
 						FROM $this->table mdp
 						LEFT JOIN Md_Image mdi ON mdp.Md_Image_ID = mdi.Md_Image_ID
 						WHERE $field = $where");
-        } else {
-            return $where;
-        }
-    }
+		} else {
+			return $where;
+		}
+	}
 }
