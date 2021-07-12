@@ -5,6 +5,9 @@ use App\Controllers\BaseController;
 use App\Models\M_About;
 use App\Models\M_Location;
 
+use App\Models\M_News;
+use App\Models\M_Promo;
+
 use App\Models\M_Division;
 use App\Models\M_Job;
 
@@ -52,7 +55,14 @@ class MainController extends BaseController
 
 	public function news()
 	{
-		$data['page_title'] = 'News & Promo - Sahabat Abadi Sejahtera';
+		$news		= new M_News();
+		$promo	= new M_Promo();
+
+		$data = [
+			'news' 				=> $news->where('isactive','Y')->findAll(),
+			'promo' 			=> $promo->where('isactive','Y')->findAll(),
+			'page_title'	=> 'News & Promo - Sahabat Abadi Sejahtera'
+		];
 		return view('frontend/news/index', $data);
 	}
 	public function newsdetail($id)
@@ -71,7 +81,6 @@ class MainController extends BaseController
 			'job' 				=> $job->where('isactive','Y')->showAll(),
 			'page_title'	=> 'About Us - Sahabat Abadi Sejahtera'
 		];
-		$data['page_title'] = 'Career - Sahabat Abadi Sejahtera';
 		return view('frontend/career/index', $data);
 	}
 

@@ -112,7 +112,7 @@
           <div class="map-contain">
             <div id="map" class="map"></div>
 
-      			<?php foreach($location as $row): ?>
+      			<?php foreach($location as $count => $row): ?>
             <div role="tabpanel" id="<?= $row->location;?>" <?php if ($count == 0) { echo 'class="map-address tab-pane fade show active"'; } else { echo 'class="map-address tab-pane fade"'; }?>>
               <h4><?= $row->name;?></h4>
               <p>
