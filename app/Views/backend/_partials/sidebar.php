@@ -39,10 +39,33 @@
           </div>
         </li>
         <li class="nav-item">
+          <a href="<?= base_url ('/backend/productgroup') ?>">
+            <i class="fas fa-object-ungroup"></i>
+            <p>Product Group</p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="<?= base_url ('/backend/mailbox') ?>">
             <i class="fas fa-envelope"></i>
             <p>Mailbox</p>
           </a>
+        </li>
+        <li class="nav-item">
+          <a data-toggle="collapse" href="#collapseCareer">
+            <i class="fas fa-briefcase"></i>
+            <p>Career</p>
+            <span class="caret"></span>
+          </a>
+          <div class="collapse" id="collapseCareer">
+            <ul class="nav nav-collapse">
+              <li>
+                <a href="<?= base_url ('/backend/division') ?>"><span class="sub-item">Division</span></a>
+              </li>
+              <li>
+                <a href="<?= base_url ('/backend/job') ?>"><span class="sub-item">Job</span></a>
+              </li>
+            </ul>
+          </div>
         </li>
 
 

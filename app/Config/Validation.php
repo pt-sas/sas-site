@@ -133,4 +133,29 @@ class Validation
 			'rules'		=> 'required'
 		]
 	];
+
+	public $productgroup = [
+		'md_principal_id' => [
+			'label'		=> 'principal',
+			'rules' 	=> 'required'
+		],
+		'name' => [
+			'label'		=> 'product group name',
+			'rules'		=> 'required'
+		]
+	];
+
+	public $division = [
+		'name' => [
+			'label'		=> 'division name',
+			'rules' 	=> 'required'
+		]
+	];
+
+	public $job = [
+		'name' => [
+			'label'		=> 'division name',
+			'rules' 	=> 'required'
+		]
+	];
 }
