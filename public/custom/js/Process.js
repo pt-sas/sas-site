@@ -13,7 +13,8 @@ var ORI_URL = window.location.origin,
 
 var ID,
     _table,
-    setSave;
+    setSave,
+    setUpload;
 
 // Method default controller
 const SHOWALL = '/showAll',
@@ -70,9 +71,10 @@ $('.save_form').click(function (evt) {
     const form = parent.find('form');
     cardForm = parent.find('.card-form');
 
-    let formData, url;
+    let formData = new FormData(form[0]);
+    let url;
 
-    const field = form.find('input[type="checkbox"], select');
+    const field = form.find('input[type="checkbox"], select, input[type="radio"], input[type="file"]');
 
     //remove attribute disabled when field disabled
     for (let i = 0; i < field.length; i++) {
@@ -80,17 +82,28 @@ $('.save_form').click(function (evt) {
     }
 
     if (setSave === 'add') {
-        formData = form.serialize();
         url = SITE_URL + CREATE;
     } else {
-        formData = form.serialize() + '&id=' + ID;
+        formData.append('id', ID);
         url = SITE_URL + EDIT;
     }
 
     for (let i = 0; i < field.length; i++) {
         if (field[i].type == 'radio') {
             if (field[i].checked) {
-                formData += '&' + field[i].name + '=' + field[i].value;
+                formData.append(field[i].name, field[i].value);
+            }
+        }
+
+        if (field[i].type == 'file') {
+
+            // Check setUpload condition add new image
+            if (setUpload === 'add' || setSave === 'add') {
+                formData.append(field[i].name, field[i].files[0]);
+            } else {
+                let source = form.find('.img-result').attr('src');
+                let imgSrc = source.substr(source.lastIndexOf('/') + 1);
+                formData.append(field[i].name, imgSrc);
             }
         }
     }
@@ -99,6 +112,8 @@ $('.save_form').click(function (evt) {
         url: url,
         type: 'POST',
         data: formData,
+        processData: false,
+        contentType: false,
         async: false,
         cache: false,
         dataType: 'JSON',
@@ -139,6 +154,8 @@ $('.save_form').click(function (evt) {
                 } else {
                     modalForm.modal('hide');
                 }
+
+                cardTitle.html(capitalize(LAST_URL));
 
                 reloadTable();
 
@@ -222,7 +239,7 @@ function Edit(id) {
     $.ajax({
         url: url,
         type: 'GET',
-        async: false,
+        // async: false,
         cache: false,
         dataType: 'JSON',
         beforeSend: function () {
@@ -250,27 +267,36 @@ function Edit(id) {
 
                 for (let i = 0; i < field.length; i++) {
                     if (field[i].name === fieldInput) {
-                        let className = field[i].className.split(/\s+/)[1];
+                        let className = field[i].className.split(/\s+/);
+
                         form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
 
                         form.find('select[name=' + field[i].name + ']').val(label).change();
 
+                        // Set condition value checked for field type Checkbox based on database
                         if (field[i].type === 'checkbox' && label === 'Y') {
                             form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', true);
 
-                            if (className === 'active')
+                            if (className.includes('active'))
                                 readonly(form, false);
                         } else {
                             form.find('input:checkbox[name=' + field[i].name + ']').removeAttr('checked');
 
-                            if (className === 'active')
+                            if (className.includes('active'))
                                 readonly(form, true);
                         }
 
+                        // Set value checked for field type Radio Button
                         if (field[i].type == 'radio') {
                             if (field[i].value == label) {
                                 field[i].checked = true;
                             }
+                        }
+
+                        if (field[i].type === 'file' && label !== null) {
+                            previewImage(form.find('input:file')[0], '', label);
+                        } else if (field[i].type === 'file' && label === null) {
+                            previewImage(form.find('input:file')[0], '', label);
                         }
                     }
                 }
@@ -390,6 +416,11 @@ $('input.active:checkbox').change(function (evt) {
 
             if (field[i].type !== 'text' && !className.includes('active')) {
                 parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+
+                if (field[i].type === 'file') {
+                    parent.find('input[name=' + field[i].name + ']').removeAttr('disabled');
+                    parent.find('button.close-img').removeAttr('disabled');
+                }
             }
         }
     } else {
@@ -399,8 +430,30 @@ $('input.active:checkbox').change(function (evt) {
 
             if (field[i].type !== 'text' && !className.includes('active')) {
                 parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
+
+                if (field[i].type === 'file') {
+                    parent.find('input[name=' + field[i].name + ']').prop('disabled', true);
+                    parent.find('button.close-img').prop('disabled', true);
+                }
             }
         }
+    }
+});
+
+$('.close-img').click(function (evt) {
+    const parent = $(evt.currentTarget).closest('div');
+    const formGroup = parent.closest('.form-group');
+    const formUpload = formGroup.find('.form-upload');
+
+    let className = parent.find('label').prop('className');
+    parent.find('img').attr('src');
+
+    if (className.includes('form-result')) {
+
+        formUpload.find('label').css('display', 'block');
+        parent.find('label').css('display', 'none');
+        formUpload.find('input:file').val('');
+        parent.find('img').attr('src', 0)
     }
 });
 
@@ -496,6 +549,10 @@ function clearForm(evt) {
                 .removeAttr('disabled')
                 .val(null).change();
         }
+
+        if (field[i].type === 'file') {
+            $('.close-img').click();
+        }
     }
 
     // clear text error element small
@@ -521,6 +578,64 @@ function readonly(parent, value) {
         if (field[i].type !== 'text' && className !== 'active') {
             parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').prop('disabled', value);
         }
+    }
+}
+
+/**
+ * 
+ * @param {*} input selector element html
+ * @param {*} id 
+ * @param {*} src source image
+ */
+function previewImage(input, id, src) {
+    let labelUpload = input.closest('label');
+    id = id || '.img-result';
+
+    if (input.files && input.files[0]) {
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            loadingForm(labelUpload.id, 'pulse');
+            $('.save_form').attr('disabled', true);
+            $('.x_form').attr('disabled', true);
+            $('.close_form').attr('disabled', true);
+
+            setTimeout(function () {
+                $(id)
+                    .attr('src', e.target.result)
+                    .width('auto')
+                    .height(150);
+
+                $('.form-upload-foto').css('display', 'none');
+                $('.form-result').css('display', 'block');
+
+                hideLoadingForm(labelUpload.id);
+
+                $('.save_form').removeAttr('disabled');
+                $('.x_form').removeAttr('disabled');
+                $('.close_form').removeAttr('disabled');
+
+                setUpload = 'add';
+            }, 2500);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    } else if (src !== null) {
+        $(id)
+            .attr('src', ORI_URL + '/' + src)
+            .width('auto')
+            .height(150);
+        $('.form-upload-foto').css('display', 'none');
+        $('.form-result').css('display', 'block');
+        setUpload = 'update';
+    } else {
+        $(id)
+            .attr('src', src)
+            .width('auto')
+            .height(150);
+        $('.form-upload-foto').css('display', 'block');
+        $('.form-result').css('display', 'none');
+        setUpload = 'add';
     }
 }
 

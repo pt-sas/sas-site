@@ -19,9 +19,8 @@ class Field
     }
 
     // Retrieve field and data from database
-    public function store($table, $data)
+    public function store($table, $data, $query = null)
     {
-        $fields = $this->db->getFieldNames($table);
         $result = [];
 
         $result[] = [
@@ -29,15 +28,27 @@ class Field
             'label' => $data[0]->name
         ];
 
-        foreach ($fields as $field) :
-            foreach ($data as $row) :
-                $result[] = [
-                    'field' =>  $field,
-                    'label' =>  $row->$field
-                ];
+        if (empty($query)) {
+            $fields = $this->db->getFieldNames($table);
+            foreach ($fields as $field) :
+                foreach ($data as $row) :
+                    $result[] = [
+                        'field' =>  $field,
+                        'label' =>  $row->$field
+                    ];
+                endforeach;
             endforeach;
-        endforeach;
-
+        } else {
+            $fields = $query->getFieldNames();
+            foreach ($fields as $field) :
+                foreach ($data as $row) :
+                    $result[] = [
+                        'field' =>  $field,
+                        'label' =>  $row->$field
+                    ];
+                endforeach;
+            endforeach;
+        }
         return $result;
     }
 

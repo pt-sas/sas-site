@@ -133,7 +133,7 @@ class Validation
 			'rules'		=> 'required'
 		]
 	];
-
+  
 	public $productgroup = [
 		'md_principal_id' => [
 			'label'		=> 'principal',
@@ -240,4 +240,20 @@ class Validation
 			'rules' 	=> 'required'
 		],
 	];
+  
+  public $principal = [
+		'name' => [
+			'rules' 	=>	'required|is_unique[md_principal.name,md_principal,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'url' => [
+			'rules'		=>	'required|valid_url'
+		],
+		'md_image_id' => [
+			'label'		=>	'image',
+			'rules'		=>	'uploaded[md_image_id]|max_size[md_image_id, 1024]|is_image[md_image_id]|mime_in[md_image_id,image/jpg,image/jpeg,image/png]'
+		]
+   ];
 }
