@@ -103,26 +103,26 @@
         <div class="col-md-12">
           <h6 class="map-title">Our location</h6>
           <ul class="nav">
-            <?php foreach($location as $row): ?>
+            <?php foreach($location as $count => $row): ?>
               <li class="nav-item">
-                  <a class="nav-link" id="<?= $row['name'];?>-tab" data-toggle="tab" href="#<?= $row['location'];?>" role="tab" aria-controls="<?= $row['name'];?>" aria-selected="true"><?= $row['name'];?></a>
+                  <a href="#<?= $row->location;?>" <?php if ($count == 0) { echo 'class="nav-link active"'; } else { echo 'class="nav-link"'; }?> aria-controls="tab-<?= $row->md_location_id;?>" role="tab" data-toggle="tab"><?= $row->name;?></a>
               </li>
       			<?php endforeach;?>
           </ul>
           <div class="map-contain">
             <div id="map" class="map"></div>
 
-      			<?php foreach($location as $row): ?>
-            <div class="map-address tab-pane fade show active" id="<?= $row['location'];?>" role="tabpanel" aria-labelledby="<?= $row['name'];?>-tab">
-              <h4><?= $row['name'];?></h4>
+      			<?php foreach($location as $count => $row): ?>
+            <div role="tabpanel" id="<?= $row->location;?>" <?php if ($count == 0) { echo 'class="map-address tab-pane fade show active"'; } else { echo 'class="map-address tab-pane fade"'; }?>>
+              <h4><?= $row->name;?></h4>
               <p>
-                <?= $row['address1'];?>
+                <?= $row->address1;?>
               </p>
               <a href="">Get direction</a>
               <div class="clearfix"></div>
               <div class="half-wrap">
                 <h6>Phone Number</h6>
-                <p><?= $row['phone'];?></p>
+                <p><?= $row->phone;?></p>
               </div>
               <div class="half-wrap">
                 <h6>Email</h6>

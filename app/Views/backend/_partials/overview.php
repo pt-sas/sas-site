@@ -28,7 +28,7 @@
                     <div class="d-flex align-items-center">
                       <h4 class="card-title"><?= $title; ?></h4>
                       <button type="button" class="btn btn-primary btn-sm btn-round ml-auto new_form" title="Location">
-                        <i class="fa fa-plus fa-fw"></i> Location
+                        <i class="fa fa-plus fa-fw"></i> <?= $title; ?>
                       </button>
                     </div>
                   </div>
