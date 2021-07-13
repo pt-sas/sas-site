@@ -124,6 +124,10 @@ class Principal extends BaseController
 		$file = $this->request->getFile('md_image_id');
 		$imgName = $file->getName();
 
+		// Renaming file before upload
+		$temp = explode(".", $imgName);
+		$newfilename = round(microtime(true)) . '.' . end($temp);
+
 		$validation->setRules([
 			'name'	=> [
 				'rules' => 'required'
@@ -131,37 +135,25 @@ class Principal extends BaseController
 			'url'	=> 'required|valid_url'
 		]);
 
+		// $result[] = [$imgName, $post];
+		// return json_encode($result);
+
 		// Check if upload new image
 		if (!empty($imgName)) {
-			// Renaming file before upload
-			$temp = explode(".", $imgName);
-			$newfilename = round(microtime(true)) . '.' . end($temp);
-
 			$post['md_image_id'] = $newfilename;
-
-			// Remove old image path directory
-			unlink($this->path_folder . $row->image);
-
-			// Delete old image data
-			$delete = $image->delete($row->image_id);
-
-			if ($delete) {
-				// Insert new data image
-				$image_id = $image->insert_image($newfilename, $this->path_folder);
-
-				// Move to folder
-				$file->move($this->path_folder, $newfilename);
-			}
 
 			$validation->setRules([
 				'md_image_id' => [
 					'label'		=>	'image',
-					'rules'		=>	'max_size[md_image_id, 1024]'
+					'rules'		=>	'max_size[md_image_id, 1024]|is_image[md_image_id]'
+					// 'rules'		=>	'uploaded[md_image_id]|max_size[md_image_id, 1024]|is_image[md_image_id]|mime_in[md_image_id,image/jpg,image/jpeg,image/png]'
 				]
 			]);
 		} else {
 			// Check empty image post
-			if (empty($post['md_image_id'])) {
+			if (!empty($post['md_image_id'])) {
+				$image_id = $row->image_id;
+			} else {
 				$validation->setRules([
 					'md_image_id' => [
 						'label'		=>	'image',
@@ -169,8 +161,6 @@ class Principal extends BaseController
 					]
 				]);
 				$image_id = $post['md_image_id'];
-			} else {
-				$image_id = $row->image_id;
 			}
 		}
 
@@ -186,6 +176,22 @@ class Principal extends BaseController
 			if (!$validation->withRequest($this->request)->run()) {
 				$response = $this->field->errorValidation($this->table);
 			} else {
+				if (!empty($imgName)) {
+					// Remove old image path directory
+					unlink($this->path_folder . $row->image);
+
+					// Delete old image data
+					$delete = $image->delete($row->image_id);
+
+					if ($delete) {
+						// Insert new data image
+						$image_id = $image->insert_image($newfilename, $this->path_folder);
+
+						// Move to folder
+						$file->move($this->path_folder, $newfilename);
+					}
+				}
+
 				$result = $principal->save($ePrincipal);
 				$response = message('success', true, $result);
 			}
