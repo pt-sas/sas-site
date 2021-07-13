@@ -13,8 +13,7 @@ var ORI_URL = window.location.origin,
 
 var ID,
     _table,
-    setSave,
-    setUpload;
+    setSave;
 
 // Method default controller
 const SHOWALL = '/showAll',
@@ -96,9 +95,8 @@ $('.save_form').click(function (evt) {
         }
 
         if (field[i].type == 'file') {
-
-            // Check setUpload condition add new image
-            if (setUpload === 'add' || setSave === 'add') {
+            // Check condition upload add new image or not upload
+            if (field[i].files.length > 0) {
                 formData.append(field[i].name, field[i].files[0]);
             } else {
                 let source = form.find('.img-result').attr('src');
@@ -130,6 +128,8 @@ $('.save_form').click(function (evt) {
             hideLoadingForm(form.prop('id'));
         },
         success: function (result) {
+            // console.log(result)
+            // hideLoadingForm(form.prop('id'));
             if (result[0].success) {
                 Toast.fire({
                     type: 'success',
@@ -446,14 +446,12 @@ $('.close-img').click(function (evt) {
     const formUpload = formGroup.find('.form-upload');
 
     let className = parent.find('label').prop('className');
-    parent.find('img').attr('src');
 
     if (className.includes('form-result')) {
-
         formUpload.find('label').css('display', 'block');
         parent.find('label').css('display', 'none');
         formUpload.find('input:file').val('');
-        parent.find('img').attr('src', 0)
+        parent.find('img').attr('src', '')
     }
 });
 
@@ -614,8 +612,6 @@ function previewImage(input, id, src) {
                 $('.save_form').removeAttr('disabled');
                 $('.x_form').removeAttr('disabled');
                 $('.close_form').removeAttr('disabled');
-
-                setUpload = 'add';
             }, 2500);
         };
 
@@ -627,7 +623,6 @@ function previewImage(input, id, src) {
             .height(150);
         $('.form-upload-foto').css('display', 'none');
         $('.form-result').css('display', 'block');
-        setUpload = 'update';
     } else {
         $(id)
             .attr('src', src)
@@ -635,7 +630,6 @@ function previewImage(input, id, src) {
             .height(150);
         $('.form-upload-foto').css('display', 'block');
         $('.form-result').css('display', 'none');
-        setUpload = 'add';
     }
 }
 
