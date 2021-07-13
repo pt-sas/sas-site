@@ -15,7 +15,7 @@
     <a href="javascript:void(0);" class="search">
       <img src="<?= base_url('adw/assets/images/search-header.png') ?>" alt="">
     </a>
-    <a href="" class="shop">
+    <a href="javascript:void(0);" onclick="window.open('https://www.tokopedia.com/ptsahabat', '_blank')" class="shop">
       SHOP
       <img src="<?= base_url('adw/assets/images/shopping-bag.svg') ?>" alt="">
     </a>

@@ -3,7 +3,7 @@
 	<?php if($title != 'Dashboard') :?>
 		<ul class="breadcrumbs">
 			<li class="nav-home">
-				<a href="<?= base_url('') ?>">
+				<a href="<?= base_url('/backend') ?>">
 					<i class="flaticon-home"></i>
 				</a>
 			</li>

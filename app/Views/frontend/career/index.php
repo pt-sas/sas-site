@@ -95,12 +95,12 @@
               <h5><?= $row->position;?></h5>
               <h6><?= $row->division_name;?></h6>
             </div>
-            <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_location_id="<?= $row->location_name ?>" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>">
+            <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>">
               Detail
             </a>
             <span class="location">
               <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
-              <?= $row->city;?>
+              DKI Jakarta
             </span>
           </div>
           <?php endforeach;?>
@@ -151,7 +151,7 @@
         <h5>
           <span><large name="division"></large></span>
           <span><large name="posted_date"></large> </span>
-          <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> <large name="city"></large></span>
+          <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
         </h5>
         <h6 class="title-list">What you will do</h6>
         <div name="description">
@@ -170,7 +170,6 @@
 <script>
 $(document).on('click', '.view_details', function(e){
   e.preventDefault();
-  var city          = $(this).data('city');
   var division      = $(this).data('md_division_id');
   var position      = $(this).data('position');
   var description   = $(this).data('description');
@@ -179,7 +178,6 @@ $(document).on('click', '.view_details', function(e){
   var expired_date  = $(this).data('expired_date');
 
   $('#modalJobs').modal('show');
-  $('[name="city"]').text(city);
   $('[name="division"]').text(division);
   $('[name="position"]').text(position);
   $('[name="posted_date"]').text(posted_date);
