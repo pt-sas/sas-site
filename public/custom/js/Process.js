@@ -13,7 +13,8 @@ var ORI_URL = window.location.origin,
 
 var ID,
     _table,
-    setSave;
+    setSave,
+    source_img = '';
 
 // Method default controller
 const SHOWALL = '/showAll',
@@ -99,8 +100,17 @@ $('.save_form').click(function (evt) {
             if (field[i].files.length > 0) {
                 formData.append(field[i].name, field[i].files[0]);
             } else {
+                form.find('.img-result').attr('src', source_img);
+
                 let source = form.find('.img-result').attr('src');
-                let imgSrc = source.substr(source.lastIndexOf('/') + 1);
+                let imgSrc;
+
+                if (source !== '') {
+                    imgSrc = source.substr(source.lastIndexOf('/') + 1);
+                } else {
+                    imgSrc = source;
+                }
+
                 formData.append(field[i].name, imgSrc);
             }
         }
@@ -128,8 +138,6 @@ $('.save_form').click(function (evt) {
             hideLoadingForm(form.prop('id'));
         },
         success: function (result) {
-            // console.log(result)
-            // hideLoadingForm(form.prop('id'));
             if (result[0].success) {
                 Toast.fire({
                     type: 'success',
@@ -451,7 +459,8 @@ $('.close-img').click(function (evt) {
         formUpload.find('label').css('display', 'block');
         parent.find('label').css('display', 'none');
         formUpload.find('input:file').val('');
-        parent.find('img').attr('src', '')
+        parent.find('img').attr('src', '');
+        source_img = parent.find('img').attr('src');
     }
 });
 
@@ -623,6 +632,7 @@ function previewImage(input, id, src) {
             .height(150);
         $('.form-upload-foto').css('display', 'none');
         $('.form-result').css('display', 'block');
+        source_img = src;
     } else {
         $(id)
             .attr('src', src)
@@ -630,6 +640,7 @@ function previewImage(input, id, src) {
             .height(150);
         $('.form-upload-foto').css('display', 'block');
         $('.form-result').css('display', 'none');
+        source_img = src;
     }
 }
 
