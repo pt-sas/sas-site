@@ -165,10 +165,6 @@ class Principal extends BaseController
 			$ePrincipal->md_principal_id = $post['id'];
 			$ePrincipal->isactive = setCheckbox(isset($post['isactive']));
 
-			if (isset($image_id)) {
-				$ePrincipal->md_image_id = $image_id;
-			}
-
 			if (!$validation->withRequest($this->request)->run()) {
 				$response = $this->field->errorValidation($this->table);
 			} else {
@@ -186,6 +182,10 @@ class Principal extends BaseController
 						// Move to folder
 						$file->move($this->path_folder, $newfilename);
 					}
+				}
+
+				if (isset($image_id)) {
+					$ePrincipal->md_image_id = $image_id;
 				}
 
 				$result = $principal->save($ePrincipal);
