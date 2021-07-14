@@ -135,9 +135,6 @@ class Principal extends BaseController
 			'url'	=> 'required|valid_url'
 		]);
 
-		// $result[] = [$imgName, $post];
-		// return json_encode($result);
-
 		// Check if upload new image
 		if (!empty($imgName)) {
 			$post['md_image_id'] = $newfilename;
@@ -146,7 +143,6 @@ class Principal extends BaseController
 				'md_image_id' => [
 					'label'		=>	'image',
 					'rules'		=>	'max_size[md_image_id, 1024]|is_image[md_image_id]'
-					// 'rules'		=>	'uploaded[md_image_id]|max_size[md_image_id, 1024]|is_image[md_image_id]|mime_in[md_image_id,image/jpg,image/jpeg,image/png]'
 				]
 			]);
 		} else {
@@ -205,13 +201,30 @@ class Principal extends BaseController
 	public function destroy($id)
 	{
 		$principal = new M_principal();
+		$image = new M_image();
+
+		$image_id = 0;
+
+		$row = $principal->detail('md_principal_id', $id)->getRow();
+
+		if (!empty($row->image_id)) {
+			$image_id = $row->image_id;
+		}
 
 		try {
+			// Remove image path directory
+			$unlink = unlink($this->path_folder . $row->image);
+
+			if ($unlink) {
+				$image->delete($image_id);
+			}
+
 			$result = $principal->delete($id);
 			$response = message('success', true, $result);
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
 		}
+
 		return json_encode($response);
 	}
 }
