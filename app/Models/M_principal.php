@@ -38,4 +38,14 @@ class M_Principal extends Model
 			return $where;
 		}
 	}
+
+	public function showAll()
+	{
+		$db = \Config\Database::connect();
+		$builder = $db->table('md_principal');
+		$builder->select('md_principal.name as principal_name, md_principal.url, image_url');
+		$builder->join('md_image', 'md_image.md_image_id = md_principal.md_image_id');
+		$query = $builder->get()->getResult();
+		return $query;
+	}
 }

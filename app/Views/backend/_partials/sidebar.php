@@ -39,16 +39,24 @@
           </div>
         </li>
         <li class="nav-item">
-          <a href="<?= base_url ('/backend/productgroup') ?>">
-            <i class="fas fa-object-ungroup"></i>
-            <p>Product Group</p>
+          <a data-toggle="collapse" href="#collapseProduct">
+              <i class="fas fa-object-ungroup"></i>
+              <p>Product</p>
+              <span class="caret"></span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a href="<?= base_url ('/backend/media') ?>">
-            <i class="fas fa-images"></i>
-            <p>Media</p>
-          </a>
+          <div class="collapse" id="collapseProduct">
+              <ul class="nav nav-collapse">
+                  <li>
+                      <a href="<?= base_url ('/backend/principal') ?>"><span class="sub-item">Principal</span></a>
+                  </li>
+                  <li>
+                      <a href="<?= base_url ('/backend/productgroup') ?>"><span class="sub-item">Product Group</span></a>
+                  </li>
+                  <li>
+                      <a href="<?= base_url ('/backend/product') ?>"><span class="sub-item">Product</span></a>
+                  </li>
+              </ul>
+          </div>
         </li>
         <li class="nav-item">
           <a data-toggle="collapse" href="#collapseNews">
@@ -83,6 +91,12 @@
               </li>
             </ul>
           </div>
+        </li>
+        <li class="nav-item">
+          <a href="<?= base_url ('/backend/media') ?>">
+            <i class="fas fa-images"></i>
+            <p>Media</p>
+          </a>
         </li>
         <li class="nav-item">
           <a href="<?= base_url ('/backend/mailbox') ?>">

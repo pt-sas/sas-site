@@ -4,7 +4,7 @@ namespace App\Libraries;
 
 /**
  * Class to represent Field Name and Retrieve data from database based on column
- * 
+ *
  * @author Oki Permana
  */
 class Field
@@ -22,11 +22,19 @@ class Field
     public function store($table, $data, $query = null)
     {
         $result = [];
+        $db = \Config\Database::connect();
 
-        $result[] = [
-            'field' => 'title',
-            'label' => $data[0]->name
-        ];
+        if($db->fieldExists('title', $table)) {
+          $result[] = [
+              'field' => 'title',
+              'label' => $data[0]->title
+          ];
+        } else {
+          $result[] = [
+              'field' => 'title',
+              'label' => $data[0]->name
+          ];
+        }
 
         if (empty($query)) {
             $fields = $this->db->getFieldNames($table);

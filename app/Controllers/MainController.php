@@ -5,6 +5,8 @@ use App\Controllers\BaseController;
 use App\Models\M_About;
 use App\Models\M_Location;
 
+use App\Models\M_Principal;
+
 use App\Models\M_News;
 use App\Models\M_Promo;
 
@@ -20,23 +22,28 @@ class MainController extends BaseController
 
 	public function index()
 	{
-		$data['page_title'] = 'Home - Sahabat Abadi Sejahtera';
+		$data['page_title'] = 'Home - PT Sahabat Abadi Sejahtera';
 		return view('frontend/index', $data);
 	}
 
 	public function product()
 	{
-		$data['page_title'] = 'Product - Sahabat Abadi Sejahtera';
+		$principal = new M_Principal();
+
+		$data = [
+			'principal' 	=> $principal->where('isactive','Y')->showAll(),
+			'page_title'	=> 'Product - PT Sahabat Abadi Sejahtera'
+		];
 		return view('frontend/product/index', $data);
 	}
 	public function productdetail($id)
 	{
-		$data['page_title'] = 'View Product - Sahabat Abadi Sejahtera';
+		$data['page_title'] = 'View Product - PT Sahabat Abadi Sejahtera';
 		return view('frontend/product/detail', $data);
 	}
 	public function productcompare()
 	{
-		$data['page_title'] = 'Compare Product - Sahabat Abadi Sejahtera';
+		$data['page_title'] = 'Compare Product - PT Sahabat Abadi Sejahtera';
 		return view('frontend/product/compare', $data);
 	}
 
@@ -48,7 +55,7 @@ class MainController extends BaseController
 		$data = [
 			'about' 			=> $about->first(),
 			'location' 		=> $location->findAll(),
-			'page_title'	=> 'About Us - Sahabat Abadi Sejahtera'
+			'page_title'	=> 'About Us - PT Sahabat Abadi Sejahtera'
 		];
 		return view('frontend/about', $data);
 	}
@@ -59,16 +66,31 @@ class MainController extends BaseController
 		$promo	= new M_Promo();
 
 		$data = [
-			'news' 				=> $news->where('isactive','Y')->findAll(),
-			'promo' 			=> $promo->where('isactive','Y')->findAll(),
-			'page_title'	=> 'News & Promo - Sahabat Abadi Sejahtera'
+			'news' 				=> $news->where('isactive','Y')->showAll(),
+			'promo' 			=> $promo->where('isactive','Y')->showAll(),
+			'page_title'	=> 'News & Promo - PT Sahabat Abadi Sejahtera'
 		];
 		return view('frontend/news/index', $data);
 	}
-	public function newsdetail($id)
+	public function newsdetail($slug)
 	{
-		$data['page_title'] = 'View News - Sahabat Abadi Sejahtera';
-		return view('frontend/news/detail', $data);
+		$news		= new M_News();
+
+		$data = [
+			'news' 				=> $news->getDetail($slug),
+			'page_title'	=> 'News & Promo - PT Sahabat Abadi Sejahtera'
+		];
+		return view('frontend/news/newsdetail', $data);
+	}
+	public function promodetail($slug)
+	{
+		$promo		= new M_Promo();
+
+		$data = [
+			'promo' 			=> $promo->getDetail($slug),
+			'page_title'	=> 'News & Promo - PT Sahabat Abadi Sejahtera'
+		];
+		return view('frontend/news/promodetail', $data);
 	}
 
 	public function career()
@@ -79,14 +101,14 @@ class MainController extends BaseController
 		$data = [
 			'division' 		=> $division->where('isactive','Y')->findAll(),
 			'job' 				=> $job->where('isactive','Y')->showAll(),
-			'page_title'	=> 'About Us - Sahabat Abadi Sejahtera'
+			'page_title'	=> 'About Us - PT Sahabat Abadi Sejahtera'
 		];
 		return view('frontend/career/index', $data);
 	}
 
 	public function contact()
 	{
-		$data['page_title'] = 'Contact Us - Sahabat Abadi Sejahtera';
+		$data['page_title'] = 'Contact Us - PT Sahabat Abadi Sejahtera';
 		return view('frontend/contact', $data);
 	}
 

@@ -1,7 +1,7 @@
 <!-- sidebar -->
 <aside class="menu-sidebar">
   <a href="javascript:void(0);" class="close-btn"><img src="<?= base_url('adw/assets/images/close-white.png') ?>" alt=""></a>
-  <a href="" class="shop"><img src="<?= base_url('adw/assets/images/shopping-b-bag.svg') ?>" alt=""> Shop</a>
+  <a href="javascript:void(0);" onclick="window.open('https://www.tokopedia.com/ptsahabat', '_blank')" class="shop"><img src="<?= base_url('adw/assets/images/shopping-b-bag.svg') ?>" alt=""> Shop</a>
 
   <div class="clearfix"></div>
   <ul class="menu">

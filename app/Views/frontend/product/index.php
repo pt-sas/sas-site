@@ -12,31 +12,13 @@
   <div class="product-cat">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-md-4">
-          <a href="<?= base_url('/product/1') ?>" class="item-product-cat">
-            <img src="<?= base_url('adw/assets/images/partner-b1.png') ?>" alt="" class="img-fluid">
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a href="<?= base_url('/product/1') ?>" class="item-product-cat">
-            <img src="<?= base_url('adw/assets/images/partner-b2.png') ?>" alt="" class="img-fluid">
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a href="<?= base_url('/product/1') ?>" class="item-product-cat">
-            <img src="<?= base_url('adw/assets/images/partner-b3.png') ?>" alt="" class="img-fluid">
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a href="<?= base_url('/product/1') ?>" class="item-product-cat">
-            <img src="<?= base_url('adw/assets/images/partner-b4.png') ?>" alt="" class="img-fluid">
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a href="<?= base_url('/product/1') ?>" class="item-product-cat">
-            <img src="<?= base_url('adw/assets/images/partner-b5.png') ?>" alt="" class="img-fluid">
-          </a>
-        </div>
+        <?php foreach($principal as $row): ?>
+          <div class="col-md-4">
+            <a href="<?= base_url('/product/'.$row->url.'') ?>" class="item-product-cat">
+              <img src="<?= base_url($row->image_url) ?>" alt="" class="img-fluid">
+            </a>
+          </div>
+        <?php endforeach;?>
       </div>
     </div>
   </div>

@@ -4,10 +4,12 @@ namespace App\Controllers\Backend;
 
 use App\Controllers\BaseController;
 use App\Models\M_Promo;
+use App\Models\M_image;
 
 class Promo extends BaseController
 {
 	protected $table = 'trx_promo';
+	protected $path_folder = 'custom/image/news/';
 
 	public function index()
 	{
@@ -59,7 +61,19 @@ class Promo extends BaseController
 		$ePromo = new \App\Entities\Promo();
 
 		$promo = new M_Promo();
+		$image = new M_image();
+
 		$post = $this->request->getVar();
+
+		$file = $this->request->getFile('md_image_id');
+		$imgName = $file->getName();
+
+		// Renaming file before upload
+		$temp = explode(".", $imgName);
+		$newfilename = round(microtime(true)) . '.' . end($temp);
+
+		// Mapping to property
+		$post['md_image_id'] = $newfilename;
 
 		try {
 			$ePromo->fill($post);
@@ -68,7 +82,16 @@ class Promo extends BaseController
 			if (!$validation->run($post, 'promo')) {
 				$response =	$this->field->errorValidation($this->table);
 			} else {
+				$image_id = $image->insert_image($newfilename, $this->path_folder);
+
+				if (isset($image_id)) {
+					$ePromo->md_image_id = $image_id;
+				}
 				$result = $promo->save($ePromo);
+
+				// Move to folder
+				$file->move($this->path_folder, $newfilename);
+
 				$response = message('success', true, $result);
 			}
 		} catch (\Exception $e) {
@@ -80,8 +103,8 @@ class Promo extends BaseController
 	public function show($id)
 	{
 		$promo = new M_Promo();
-		$list = $promo->where('trx_promo_id', $id)->findAll();
-		$reponse = $this->field->store($this->table, $list);
+		$list = $promo->detail('trx_promo_id', $id);
+		$reponse = $this->field->store($this->table, $list->getResult(), $list);
 		return json_encode($reponse);
 	}
 
@@ -89,24 +112,104 @@ class Promo extends BaseController
 	{
 		$validation = \Config\Services::validation();
 		$ePromo = new \App\Entities\Promo();
-
 		$promo = new M_Promo();
+		$image = new M_image();
+
+		$image_id = 0;
+
 		$post = $this->request->getVar();
+		$row = $promo->detail('trx_promo_id', $post['id'])->getRow();
+
+		$file = $this->request->getFile('md_image_id');
+		$imgName = $file->getName();
+
+		// Renaming file before upload
+		$temp = explode(".", $imgName);
+		$newfilename = round(microtime(true)) . '.' . end($temp);
+
+		$validation->setRules([
+			'title' => [
+				'label'		=> 'promo title',
+				'rules' 	=> 'required'
+			],
+			'content' => [
+				'label'		=> 'promo content',
+				'rules' 	=> 'required'
+			],
+			'start_date' => [
+				'label'		=> 'start date',
+				'rules' 	=> 'required'
+			],
+			'end_date' => [
+				'label'		=> 'end date',
+				'rules' 	=> 'required'
+			],
+			'slug' => [
+				'label'		=> 'slug',
+				'rules' 	=> 'required'
+			],
+		]);
+
+		// Check if upload new image
+		if (!empty($imgName)) {
+			$post['md_image_id'] = $newfilename;
+
+			$validation->setRules([
+				'md_image_id' => [
+					'label'		=>	'image',
+					'rules'		=>	'max_size[md_image_id, 1024]|is_image[md_image_id]'
+					// 'rules'		=>	'uploaded[md_image_id]|max_size[md_image_id, 1024]|is_image[md_image_id]|mime_in[md_image_id,image/jpg,image/jpeg,image/png]'
+				]
+			]);
+		} else {
+			// Check empty image post
+			if (!empty($post['md_image_id'])) {
+				$image_id = $row->image_id;
+			} else {
+				$validation->setRules([
+					'md_image_id' => [
+						'label'		=>	'image',
+						'rules'		=>	'uploaded[md_image_id]|max_size[md_image_id, 1024]|is_image[md_image_id]|mime_in[md_image_id,image/jpg,image/jpeg,image/png]'
+					]
+				]);
+				$image_id = $post['md_image_id'];
+			}
+		}
 
 		try {
 			$ePromo->fill($post);
 			$ePromo->trx_promo_id = $post['id'];
 			$ePromo->isactive = setCheckbox(isset($post['isactive']));
 
-			if (!$validation->run($post, 'promo')) {
+			if (isset($image_id)) {
+				$ePromo->md_image_id = $image_id;
+			}
+
+			if (!$validation->withRequest($this->request)->run()) {
 				$response =	$this->field->errorValidation($this->table);
 			} else {
+				if (!empty($imgName)) {
+					// Remove old image path directory
+					unlink($this->path_folder . $row->image);
+
+					// Delete old image data
+					$delete = $image->delete($row->image_id);
+
+					if ($delete) {
+						// Insert new data image
+						$image_id = $image->insert_image($newfilename, $this->path_folder);
+
+						// Move to folder
+						$file->move($this->path_folder, $newfilename);
+					}
+				}
 				$result = $promo->save($ePromo);
 				$response = message('success', true, $result);
 			}
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
 		}
+
 		return json_encode($response);
 	}
 

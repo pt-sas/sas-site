@@ -43,11 +43,23 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="md_image_id">Picture</label>
-                    <div class="input-file input-file-image">
-                        <img class="img-upload-preview" width="120" height="120" src="http://placehold.it/100x100" alt="preview">
-                        <input type="file" class="form-control form-control-file" id="md_image_id" name="md_image_id" accept="image/*">
-                        <label for="uploadImg" class=" label-input-file btn btn-primary">Upload a Image</label>
+                    <label>Image <span class="required">*</span></label>
+                    <div class="form-upload-result">
+                        <label class="col-md-6 form-result" id="logo-result">
+                            <button type="button" class="close-img" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <img class="img-result" />
+                        </label>
+                    </div>
+                    <div class="form-upload">
+                        <label class="col-md-6 form-upload-foto" id="logo-upload">
+                            <input type="file" id="md_image_id" name="md_image_id" onchange="previewImage(this)" accept="image/jpeg, image/png"></input>
+                            <img class="img-upload" src="<?= base_url('custom/image/cameraroll.png') ?>" />
+                        </label>
+                        <small class="form-upload-text text-muted">
+                            File type (JPG, PNG), the maximum file size is <strong> 1 Mb</strong>
+                        </small>
                         <small class="form-text text-danger" id="error_md_image_id"></small>
                     </div>
                 </div>

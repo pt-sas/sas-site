@@ -53,13 +53,13 @@
             <p class="desc">Fill out the form and we'll be in touch soon!</p>
             <div class="row">
               <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Name" name="mailbox_name" id="mailbox_name">
+                <input type="text" class="form-control" placeholder="Name" name="mailbox_name" id="mailbox_name" autocomplete="off" required>
               </div>
               <div class="col-md-6">
-                <input type="email" class="form-control" placeholder="Email address" name="mailbox_email" id="mailbox_email">
+                <input type="email" class="form-control" placeholder="Email address" name="mailbox_email" id="mailbox_email" autocomplete="off" required>
               </div>
               <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Phone number" name="mailbox_phone" id="mailbox_phone">
+                <input type="text" class="form-control" placeholder="Phone number" name="mailbox_phone" id="mailbox_phone" autocomplete="off" required>
               </div>
               <div class="col-md-6">
                 <select class="form-control" name="mailbox_inquiry" id="mailbox_inquiry">
@@ -67,12 +67,12 @@
                 </select>
               </div>
               <div class="col-md-12">
-                <input type="text" class="form-control" placeholder="Subject" name="mailbox_subject" id="mailbox_subject">
+                <input type="text" class="form-control" placeholder="Subject" name="mailbox_subject" id="mailbox_subject" autocomplete="off" required>
               </div>
             </div>
-            <textarea class="form-control" rows="5" placeholder="Message" name="mailbox_message" id="mailbox_message"></textarea>
+            <textarea class="form-control" rows="5" placeholder="Message" name="mailbox_message" id="mailbox_message" required></textarea>
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheck1">
+              <input type="checkbox" class="custom-control-input" id="customCheck1" required>
               <label class="custom-control-label" for="customCheck1">
                 I accept the terms & conditions and I understand that my data will be hold securely in accordance with the privacy policy.
               </label>

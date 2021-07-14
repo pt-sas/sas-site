@@ -1,5 +1,5 @@
 <div class="card-body card-form">
-    <form class="form-horizontal form_open" id="form_news">
+    <form class="form-horizontal" id="form_news">
         <?= csrf_field(); ?>
         <div class="row">
             <div class="col-md-8">
@@ -16,32 +16,12 @@
                     <small class="form-text text-danger" id="error_content"></small>
                 </div>
             </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="news_date">News Date <span class="required">*</span></label>
-                            <input type="text" class="form-control datepicker" id="news_date" name="news_date">
-                            <small class="form-text text-danger" id="error_news_date"></small>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="start_date">Posted Date <span class="required">*</span></label>
-                            <input type="text" class="form-control datepicker" id="start_date" name="start_date">
-                            <small class="form-text text-danger" id="error_start_date"></small>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="end_date">End Date <span class="required">*</span></label>
-                            <input type="text" class="form-control datepicker" id="end_date" name="end_date">
-                            <small class="form-text text-danger" id="error_end_date"></small>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-md-6">
+                <div class="form-group">
+                    <label for="news_date">News Date <span class="required">*</span></label>
+                    <input type="text" class="form-control datepicker" id="news_date" name="news_date">
+                    <small class="form-text text-danger" id="error_news_date"></small>
+                </div>
                 <div class="form-group">
                     <label for="slug">Slug <span class="required">*</span></label>
                     <input type="text" class="form-control" id="slug" name="slug">
@@ -50,11 +30,23 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="md_image_id">Picture</label>
-                    <div class="input-file input-file-image">
-                        <img class="img-upload-preview" width="120" height="120" src="http://placehold.it/100x100" alt="preview">
-                        <input type="file" class="form-control form-control-file" id="md_image_id" name="md_image_id" accept="image/*">
-                        <label for="uploadImg" class=" label-input-file btn btn-primary">Upload a Image</label>
+                    <label>Image <span class="required">*</span></label>
+                    <div class="form-upload-result">
+                        <label class="col-md-6 form-result" id="logo-result">
+                            <button type="button" class="close-img" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <img class="img-result" />
+                        </label>
+                    </div>
+                    <div class="form-upload">
+                        <label class="col-md-6 form-upload-foto" id="logo-upload">
+                            <input type="file" id="md_image_id" name="md_image_id" onchange="previewImage(this)" accept="image/jpeg, image/png"></input>
+                            <img class="img-upload" src="<?= base_url('custom/image/cameraroll.png') ?>" />
+                        </label>
+                        <small class="form-upload-text text-muted">
+                            File type (JPG, PNG), the maximum file size is <strong> 1 Mb</strong>
+                        </small>
                         <small class="form-text text-danger" id="error_md_image_id"></small>
                     </div>
                 </div>

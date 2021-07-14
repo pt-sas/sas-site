@@ -18,9 +18,9 @@
         <?php foreach($news as $row): ?>
           <div class="col-md-4">
             <a href="<?= base_url('/news/'.$row->slug.'') ?>" class="item-news">
-              <div class="image" style="background-image: url('<?= base_url('adw/assets/images/news1.png') ?>');"></div>
+              <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');"></div>
               <h5><?= $row->title;?></h5>
-              <span><?= $row->news_date;?></span>
+              <span><?= date("d F Y", strtotime($row->news_date)) ?></span>
             </a>
           </div>
         <?php endforeach;?>
@@ -38,10 +38,10 @@
         <?php foreach($promo as $row): ?>
           <div class="col-md-4">
             <a href="<?= base_url('/promo/'.$row->slug.'') ?>" class="item-promo">
-              <div class="image" style="background-image: url('<?= base_url('adw/assets/images/gal1.png') ?>');">
+              <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');">
                 <div class="periode">
                   <span>Periode Promo</span>
-                  <p><?= $row->start_date;?> - <?= $row->end_date;?></p>
+                  <p><?= date("d F Y", strtotime($row->start_date)) ?> - <?= date("d F Y", strtotime($row->end_date)) ?></p>
                 </div>
               </div>
               <h6><?= $row->title;?></h6>

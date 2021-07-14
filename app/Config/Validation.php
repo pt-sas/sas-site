@@ -133,17 +133,6 @@ class Validation
 			'rules'		=> 'required'
 		]
 	];
-  
-	public $productgroup = [
-		'md_principal_id' => [
-			'label'		=> 'principal',
-			'rules' 	=> 'required'
-		],
-		'name' => [
-			'label'		=> 'product group name',
-			'rules'		=> 'required'
-		]
-	];
 
 	public $division = [
 		'name' => [
@@ -184,63 +173,66 @@ class Validation
 	];
 
 	public $news = [
-		// 'md_image_id' => [
-		// 	'label'		=> 'location',
-		// 	'rules' 	=> 'required'
-		// ],
 		'title' => [
-			'label'		=> 'division',
+			'label'		=> 'news title',
 			'rules' 	=> 'required'
 		],
 		'content' => [
-			'label'		=> 'job position',
+			'label'		=> 'news content',
 			'rules' 	=> 'required'
 		],
 		'news_date' => [
-			'label'		=> 'job description',
-			'rules' 	=> 'required'
-		],
-		'start_date' => [
-			'label'		=> 'job requirement',
-			'rules' 	=> 'required'
-		],
-		'end_date' => [
 			'label'		=> 'posted date',
 			'rules' 	=> 'required'
 		],
 		'slug' => [
-			'label'		=> 'expired date',
+			'label'		=> 'slug',
 			'rules' 	=> 'required'
 		],
+		'md_image_id' => [
+			'label'		=>	'image',
+			'rules'		=>	'uploaded[md_image_id]|max_size[md_image_id, 1024]|is_image[md_image_id]|mime_in[md_image_id,image/jpg,image/jpeg,image/png]'
+		]
 	];
 
 	public $promo = [
-		// 'md_image_id' => [
-		// 	'label'		=> 'location',
-		// 	'rules' 	=> 'required'
-		// ],
 		'title' => [
-			'label'		=> 'division',
+			'label'		=> 'promo title',
 			'rules' 	=> 'required'
 		],
 		'content' => [
-			'label'		=> 'job position',
+			'label'		=> 'promo content',
 			'rules' 	=> 'required'
 		],
 		'start_date' => [
-			'label'		=> 'job requirement',
+			'label'		=> 'start date',
 			'rules' 	=> 'required'
 		],
 		'end_date' => [
-			'label'		=> 'posted date',
+			'label'		=> 'end date',
 			'rules' 	=> 'required'
 		],
 		'slug' => [
-			'label'		=> 'expired date',
+			'label'		=> 'slug',
 			'rules' 	=> 'required'
 		],
+		'md_image_id' => [
+			'label'		=>	'image',
+			'rules'		=>	'uploaded[md_image_id]|max_size[md_image_id, 1024]|is_image[md_image_id]|mime_in[md_image_id,image/jpg,image/jpeg,image/png]'
+		]
 	];
-  
+
+	public $productgroup = [
+		'md_principal_id' => [
+			'label'		=> 'principal',
+			'rules' 	=> 'required'
+		],
+		'name' => [
+			'label'		=> 'product group name',
+			'rules'		=> 'required'
+		]
+	];
+
   public $principal = [
 		'name' => [
 			'rules' 	=>	'required|is_unique[md_principal.name,md_principal,{id}]',

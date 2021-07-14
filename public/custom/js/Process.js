@@ -580,9 +580,9 @@ function readonly(parent, value) {
 }
 
 /**
- * 
+ *
  * @param {*} input selector element html
- * @param {*} id 
+ * @param {*} id
  * @param {*} src source image
  */
 function previewImage(input, id, src) {
@@ -738,8 +738,7 @@ $(document).ready(function (e) {
     });
 
     $('.datepicker').datetimepicker({
-        // format: 'YYYY-MM-DD',
-        format: 'DD/MM/YYYY',
+        format: 'YYYY-MM-DD',
     });
 
     $('.timepicker').datetimepicker({
