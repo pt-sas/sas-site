@@ -78,7 +78,9 @@ $('.save_form').click(function (evt) {
 
     //remove attribute disabled when field disabled
     for (let i = 0; i < field.length; i++) {
-        form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+        if (field[i].name !== '') {
+            form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+        }
     }
 
     if (setSave === 'add') {
@@ -89,29 +91,31 @@ $('.save_form').click(function (evt) {
     }
 
     for (let i = 0; i < field.length; i++) {
-        if (field[i].type == 'radio') {
-            if (field[i].checked) {
-                formData.append(field[i].name, field[i].value);
-            }
-        }
-
-        if (field[i].type == 'file') {
-            // Check condition upload add new image or not upload
-            if (field[i].files.length > 0) {
-                formData.append(field[i].name, field[i].files[0]);
-            } else {
-                form.find('.img-result').attr('src', source_img);
-
-                let source = form.find('.img-result').attr('src');
-                let imgSrc;
-
-                if (source !== '') {
-                    imgSrc = source.substr(source.lastIndexOf('/') + 1);
-                } else {
-                    imgSrc = source;
+        if (field[i].name !== '') {
+            if (field[i].type == 'radio') {
+                if (field[i].checked) {
+                    formData.append(field[i].name, field[i].value);
                 }
+            }
 
-                formData.append(field[i].name, imgSrc);
+            if (field[i].type == 'file' && field[i].className.includes('control-upload-image')) {
+                // Check condition upload add new image or not upload
+                if (field[i].files.length > 0) {
+                    formData.append(field[i].name, field[i].files[0]);
+                } else {
+                    form.find('.img-result').attr('src', source_img);
+
+                    let source = form.find('.img-result').attr('src');
+                    let imgSrc;
+
+                    if (source !== '') {
+                        imgSrc = source.substr(source.lastIndexOf('/') + 1);
+                    } else {
+                        imgSrc = source;
+                    }
+
+                    formData.append(field[i].name, imgSrc);
+                }
             }
         }
     }
@@ -185,13 +189,15 @@ $('.save_form').click(function (evt) {
 
     // logic after insert / update data to set attribute based on field isactive condition
     for (let i = 0; i < field.length; i++) {
-        let className = field[i].className.split(/\s+/);
+        if (field[i].name !== '') {
+            let className = field[i].className.split(/\s+/);
 
-        if (form.find('input.active').is(':checked')) {
-            form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
-        } else {
-            if (!className.includes('active')) {
-                form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
+            if (form.find('input.active').is(':checked')) {
+                form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+            } else {
+                if (!className.includes('active')) {
+                    form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
+                }
             }
         }
     }
@@ -239,6 +245,7 @@ function Edit(id) {
     }
 
     const field = form.find('input, textarea, select');
+    const summernote = form.find('textarea.summernote');
 
     let url = SITE_URL + SHOW + ID;
 
@@ -274,10 +281,14 @@ function Edit(id) {
                 }
 
                 for (let i = 0; i < field.length; i++) {
-                    if (field[i].name === fieldInput) {
+                    if (field[i].name !== '' && field[i].name === fieldInput) {
                         let className = field[i].className.split(/\s+/);
 
                         form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
+
+                        if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0) {
+                            $('[name =' + field[i].name + ']').summernote('code', label);
+                        }
 
                         form.find('select[name=' + field[i].name + ']').val(label).change();
 
@@ -309,6 +320,10 @@ function Edit(id) {
                     }
                 }
             }
+
+            $('html, body').animate({
+                scrollTop: $('.row').offset().top
+            }, 500);
         },
         error: function (jqXHR, exception) {
             showError(jqXHR, exception);
@@ -371,6 +386,10 @@ $(document).on('click', '.x_form, .close_form', function (evt) {
 
     clearForm(evt);
     cardTitle.html(capitalize(LAST_URL));
+
+    $('html, body').animate({
+        scrollTop: $('.row').offset().top
+    }, 500);
 });
 
 /**
@@ -414,34 +433,45 @@ $('.new_form').click(function (evt) {
 $('input.active:checkbox').change(function (evt) {
     const parent = $(this).closest('form');
     const field = parent.find('input, textarea, select');
-
     let className;
 
     if ($(this).is(':checked')) {
         for (let i = 0; i < field.length; i++) {
-            className = field[i].className.split(/\s+/);
-            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').removeAttr('readonly');
+            if (field[i].name !== '') {
+                className = field[i].className.split(/\s+/);
+                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').removeAttr('readonly');
 
-            if (field[i].type !== 'text' && !className.includes('active')) {
-                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+                if (field[i].type !== 'text' && !className.includes('active')) {
+                    parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
 
-                if (field[i].type === 'file') {
-                    parent.find('input[name=' + field[i].name + ']').removeAttr('disabled');
-                    parent.find('button.close-img').removeAttr('disabled');
+                    if (field[i].type === 'file') {
+                        parent.find('input[name=' + field[i].name + ']').removeAttr('disabled');
+                        parent.find('button.close-img').removeAttr('disabled');
+                    }
+                }
+
+                if (parent.find('textarea.summernote[name=' + field[i].name + ']').length > 0) {
+                    $('[name =' + field[i].name + ']').summernote('enable');
                 }
             }
         }
     } else {
         for (let i = 0; i < field.length; i++) {
-            className = field[i].className.split(/\s+/);
-            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', true);
+            if (field[i].name !== '') {
+                className = field[i].className.split(/\s+/);
+                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', true);
 
-            if (field[i].type !== 'text' && !className.includes('active')) {
-                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
+                if (field[i].type !== 'text' && !className.includes('active')) {
+                    parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
 
-                if (field[i].type === 'file') {
-                    parent.find('input[name=' + field[i].name + ']').prop('disabled', true);
-                    parent.find('button.close-img').prop('disabled', true);
+                    if (field[i].type === 'file') {
+                        parent.find('input[name=' + field[i].name + ']').prop('disabled', true);
+                        parent.find('button.close-img').prop('disabled', true);
+                    }
+                }
+
+                if (parent.find('textarea.summernote[name=' + field[i].name + ']').length > 0) {
+                    $('[name =' + field[i].name + ']').summernote('disable');
                 }
             }
         }
@@ -537,28 +567,34 @@ function clearForm(evt) {
 
     // clear data, attribute readonly, attribute disabled on the field and remove class invalid
     for (let i = 0; i < field.length; i++) {
-        let option = $(field[i]).find('option:selected');
+        if (field[i].name !== '') {
+            let option = $(field[i]).find('option:selected');
 
-        form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
-            .removeAttr('readonly')
-            .parent('div').removeClass('has-error has-feedback');
+            form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
+                .removeAttr('readonly')
+                .parent('div').removeClass('has-error has-feedback');
 
-        form.find('input:checkbox[name=' + field[i].name + ']')
-            .removeAttr('disabled');
+            form.find('input:checkbox[name=' + field[i].name + ']')
+                .removeAttr('disabled');
 
-        //logic clear data dropdown if not selected from the beginning
-        if (option.length > 0 & option.val() !== '') {
-            form.find('select[name=' + field[i].name + ']')
-                .removeAttr('disabled')
-                .val(option.val()).change();
-        } else {
-            form.find('select[name=' + field[i].name + ']')
-                .removeAttr('disabled')
-                .val(null).change();
-        }
+            //logic clear data dropdown if not selected from the beginning
+            if (option.length > 0 & option.val() !== '') {
+                form.find('select[name=' + field[i].name + ']')
+                    .removeAttr('disabled')
+                    .val(option.val()).change();
+            } else {
+                form.find('select[name=' + field[i].name + ']')
+                    .removeAttr('disabled')
+                    .val(null).change();
+            }
 
-        if (field[i].type === 'file') {
-            $('.close-img').click();
+            if (field[i].type === 'file') {
+                $('.close-img').click();
+            }
+
+            if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0) {
+                $('[name =' + field[i].name + ']').summernote('reset');
+            }
         }
     }
 
@@ -578,12 +614,22 @@ function readonly(parent, value) {
     const field = parent.find('input, textarea, select');
 
     for (let i = 0; i < field.length; i++) {
-        let className = field[i].className.split(/\s+/)[1];
+        if (field[i].name !== '') {
+            let className = field[i].className.split(/\s+/)[1];
 
-        parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', value);
+            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', value);
 
-        if (field[i].type !== 'text' && className !== 'active') {
-            parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').prop('disabled', value);
+            if (field[i].type !== 'text' && className !== 'active') {
+                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').prop('disabled', value);
+            }
+
+            if (parent.find('textarea.summernote[name=' + field[i].name + ']').length > 0) {
+                if (value) {
+                    $('[name =' + field[i].name + ']').summernote('disable');
+                } else {
+                    $('[name =' + field[i].name + ']').summernote('enable');
+                }
+            }
         }
     }
 }
@@ -755,6 +801,24 @@ $(document).ready(function (e) {
 
     $('.timepicker').datetimepicker({
         format: 'H:mm:ss',
+    });
+
+    $('.summernote').summernote({
+        fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Times New Roman'],
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            // ['insert', ['link', 'picture']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        placeholder: 'write here...'
     });
 });
 

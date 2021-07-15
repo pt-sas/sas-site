@@ -8,6 +8,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use App\Libraries\Template;
 use App\Libraries\Field;
+use App\Libraries\Picture;
 
 /**
  * Class BaseController
@@ -36,6 +37,7 @@ class BaseController extends Controller
 	protected $new_title;
 	protected $template;
 	protected $field;
+	protected $picture;
 
 	/**
 	 * Constructor.
@@ -55,5 +57,6 @@ class BaseController extends Controller
 		// E.g.: $this->session = \Config\Services::session();
 		$this->template = new Template();
 		$this->field = new Field();
+		$this->picture = new Picture();
 	}
 }

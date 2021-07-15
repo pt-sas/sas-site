@@ -41,9 +41,9 @@ class Principal extends BaseController
 
 			$row[] = $ID;
 			$row[] = $number;
+			$row[] = $this->picture->render($this->table, $this->path_folder, 'md_image_id', $value->md_image_id);
 			$row[] = $value->name;
 			$row[] = $value->description;
-			$row[] = $value->url;
 			$row[] = $value->url;
 			$row[] = active($value->isactive);
 			$row[] = '<center>
@@ -65,13 +65,18 @@ class Principal extends BaseController
 		$image = new M_Image();
 
 		$post = $this->request->getVar();
-
 		$file = $this->request->getFile('md_image_id');
-		$imgName = $file->getName();
 
-		// Renaming file before upload
-		$temp = explode(".", $imgName);
-		$newfilename = round(microtime(true)) . '.' . end($temp);
+		$imgName = '';
+		$newfilename = '';
+
+		if (!empty($file)) {
+			$imgName = $file->getName();
+
+			// Renaming file before upload
+			$temp = explode(".", $imgName);
+			$newfilename = round(microtime(true)) . '.' . end($temp);
+		}
 
 		// Mapping to property
 		$post['md_image_id'] = $newfilename;
@@ -117,16 +122,21 @@ class Principal extends BaseController
 		$image = new M_Image();
 
 		$image_id = 0;
+		$imgName = '';
+		$newfilename = '';
 
 		$post = $this->request->getVar();
 		$row = $principal->detail('md_principal_id', $post['id'])->getRow();
 
 		$file = $this->request->getFile('md_image_id');
-		$imgName = $file->getName();
 
-		// Renaming file before upload
-		$temp = explode(".", $imgName);
-		$newfilename = round(microtime(true)) . '.' . end($temp);
+		if (!empty($file)) {
+			$imgName = $file->getName();
+
+			// Renaming file before upload
+			$temp = explode(".", $imgName);
+			$newfilename = round(microtime(true)) . '.' . end($temp);
+		}
 
 		$validation->setRules([
 			'name'	=> [

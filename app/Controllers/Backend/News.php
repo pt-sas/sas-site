@@ -4,7 +4,7 @@ namespace App\Controllers\Backend;
 
 use App\Controllers\BaseController;
 use App\Models\M_News;
-use App\Models\M_image;
+use App\Models\M_Image;
 
 class News extends BaseController
 {
@@ -41,6 +41,7 @@ class News extends BaseController
 			$row[] = $ID;
 			$row[] = $number;
 			$row[] = $value->title;
+			$row[] = $this->picture->render($this->table, $this->path_folder, 'md_image_id', $value->md_image_id);
 			$row[] = $value->news_date;
 			$row[] = active($value->isactive);
 			$row[] = '<center>
@@ -60,23 +61,30 @@ class News extends BaseController
 		$eNews = new \App\Entities\News();
 
 		$news = new M_News();
-		$image = new M_image();
+		$image = new M_Image();
 
 		$post = $this->request->getVar();
-
 		$file = $this->request->getFile('md_image_id');
-		$imgName = $file->getName();
+		$imgName = '';
+		$newfilename = '';
 
-		// Renaming file before upload
-		$temp = explode(".", $imgName);
-		$newfilename = round(microtime(true)) . '.' . end($temp);
+		if (!empty($file)) {
+			$imgName = $file->getName();
+
+			// Renaming file before upload
+			$temp = explode(".", $imgName);
+			$newfilename = round(microtime(true)) . '.' . end($temp);
+		}
 
 		// Mapping to property
 		$post['md_image_id'] = $newfilename;
 
+		$slug = url_title($post['title'], '-', true);
+
 		try {
 			$eNews->fill($post);
 			$eNews->isactive = setCheckbox(isset($post['isactive']));
+			$eNews->slug = $slug;
 
 			if (!$validation->run($post, 'news')) {
 				$response =	$this->field->errorValidation($this->table);
@@ -86,16 +94,17 @@ class News extends BaseController
 				if (isset($image_id)) {
 					$eNews->md_image_id = $image_id;
 				}
+
 				$result = $news->save($eNews);
 
 				// Move to folder
 				$file->move($this->path_folder, $newfilename);
-
 				$response = message('success', true, $result);
 			}
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
 		}
+
 		return json_encode($response);
 	}
 
@@ -112,7 +121,7 @@ class News extends BaseController
 		$validation = \Config\Services::validation();
 		$eNews = new \App\Entities\News();
 		$news = new M_News();
-		$image = new M_image();
+		$image = new M_Image();
 
 		$image_id = 0;
 
@@ -120,11 +129,16 @@ class News extends BaseController
 		$row = $news->detail('trx_news_id', $post['id'])->getRow();
 
 		$file = $this->request->getFile('md_image_id');
-		$imgName = $file->getName();
+		$imgName = '';
+		$newfilename = '';
 
-		// Renaming file before upload
-		$temp = explode(".", $imgName);
-		$newfilename = round(microtime(true)) . '.' . end($temp);
+		if (!empty($file)) {
+			$imgName = $file->getName();
+
+			// Renaming file before upload
+			$temp = explode(".", $imgName);
+			$newfilename = round(microtime(true)) . '.' . end($temp);
+		}
 
 		$validation->setRules([
 			'title' => [
@@ -138,11 +152,7 @@ class News extends BaseController
 			'news_date' => [
 				'label'		=> 'posted date',
 				'rules' 	=> 'required'
-			],
-			'slug' => [
-				'label'		=> 'slug',
-				'rules' 	=> 'required'
-			],
+			]
 		]);
 
 		// Check if upload new image
@@ -153,7 +163,6 @@ class News extends BaseController
 				'md_image_id' => [
 					'label'		=>	'image',
 					'rules'		=>	'max_size[md_image_id, 1024]|is_image[md_image_id]'
-					// 'rules'		=>	'uploaded[md_image_id]|max_size[md_image_id, 1024]|is_image[md_image_id]|mime_in[md_image_id,image/jpg,image/jpeg,image/png]'
 				]
 			]);
 		} else {
@@ -171,14 +180,13 @@ class News extends BaseController
 			}
 		}
 
+		$slug = url_title($post['title'], '-', true);
+
 		try {
 			$eNews->fill($post);
 			$eNews->trx_news_id = $post['id'];
 			$eNews->isactive = setCheckbox(isset($post['isactive']));
-
-			if (isset($image_id)) {
-				$eNews->md_image_id = $image_id;
-			}
+			$eNews->slug = $slug;
 
 			if (!$validation->withRequest($this->request)->run()) {
 				$response =	$this->field->errorValidation($this->table);
@@ -198,6 +206,11 @@ class News extends BaseController
 						$file->move($this->path_folder, $newfilename);
 					}
 				}
+
+				if (isset($image_id)) {
+					$eNews->md_image_id = $image_id;
+				}
+
 				$result = $news->save($eNews);
 				$response = message('success', true, $result);
 			}
@@ -211,8 +224,23 @@ class News extends BaseController
 	public function destroy($id)
 	{
 		$news = new M_News();
+		$image = new M_Image();
+
+		$image_id = 0;
+
+		$row = $principal->detail('trx_news_id', $id)->getRow();
+
+		if (!empty($row->image_id)) {
+			$image_id = $row->image_id;
+		}
 
 		try {
+			// Remove image path directory
+			$unlink = unlink($this->path_folder . $row->image);
+
+			if ($unlink) {
+				$image->delete($image_id);
+			}
 			$result = $news->delete($id);
 			$response = message('success', true, $result);
 		} catch (\Exception $e) {
