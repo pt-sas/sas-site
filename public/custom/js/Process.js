@@ -626,8 +626,9 @@ function previewImage(input, id, src) {
 
         reader.readAsDataURL(input.files[0]);
     } else if (src !== null) {
+        src = ORI_URL + '/' + src;
         $(id)
-            .attr('src', ORI_URL + '/' + src)
+            .attr('src', src)
             .width('auto')
             .height(150);
         $('.form-upload-foto').css('display', 'none');
