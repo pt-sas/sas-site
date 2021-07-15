@@ -58,12 +58,3 @@
 
 
 <script src="<?= base_url('custom/js/Process.js') ?>"></script>
-
-
-<script>
-  $('.summernote').summernote({
-    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
-    tabsize: 2,
-    height: 150
-  });
-</script>
