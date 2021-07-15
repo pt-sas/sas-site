@@ -22,20 +22,33 @@ class Field
     public function store($table, $data, $query = null)
     {
         $result = [];
-        $db = \Config\Database::connect();
 
-        if($db->fieldExists('title', $table)) {
-          $result[] = [
-              'field' => 'title',
-              'label' => $data[0]->title
-          ];
+        if ($this->db->fieldExists('name', $table)) {
+            $result[] = [
+                'field' => 'title',
+                'label' => $data[0]->name
+            ];
+        } else if ($this->db->fieldExists('title', $table)) {
+            $result[] = [
+                'field' => 'title',
+                'label' => $data[0]->title
+            ];
+        } else if ($this->db->fieldExists('value', $table)) {
+            $result[] = [
+                'field' => 'title',
+                'label' => $data[0]->value
+            ];
         } else {
-          $result[] = [
-              'field' => 'title',
-              'label' => $data[0]->name
-          ];
+            $result[] = [
+                'field' => 'title',
+                'label' => 'Title not found'
+            ];
         }
 
+        /**
+         * Check generating data using query or modeling data
+         * #empty query using modeling data
+         */
         if (empty($query)) {
             $fields = $this->db->getFieldNames($table);
             foreach ($fields as $field) :
@@ -57,6 +70,7 @@ class Field
                 endforeach;
             endforeach;
         }
+
         return $result;
     }
 
