@@ -46,13 +46,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="slug">Slug <span class="required">*</span></label>
-                    <input type="text" class="form-control" id="slug" name="slug">
-                    <small class="form-text text-danger" id="error_slug"></small>
-                </div>
-            </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
