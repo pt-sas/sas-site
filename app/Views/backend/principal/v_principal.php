@@ -9,9 +9,9 @@
             <tr>
                 <th>ID</th>
                 <th>No</th>
+                <th>Image</th>
                 <th>Principal</th>
                 <th>Description</th>
-                <th>Image</th>
                 <th>Url</th>
                 <th>Active</th>
                 <th>Actions</th>
