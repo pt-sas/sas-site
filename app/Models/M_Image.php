@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class M_image extends Model
+class M_Image extends Model
 {
 	protected $table                = 'md_image';
 	protected $primaryKey           = 'md_image_id';

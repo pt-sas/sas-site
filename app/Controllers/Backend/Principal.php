@@ -3,8 +3,8 @@
 namespace App\Controllers\Backend;
 
 use App\Controllers\BaseController;
-use App\Models\M_principal;
-use App\Models\M_image;
+use App\Models\M_Principal;
+use App\Models\M_Image;
 
 class Principal extends BaseController
 {
@@ -28,7 +28,7 @@ class Principal extends BaseController
 
 	public function showAll()
 	{
-		$principal = new M_principal();
+		$principal = new M_Principal();
 		$list = $principal->findAll();
 		$data = [];
 
@@ -61,8 +61,8 @@ class Principal extends BaseController
 	{
 		$validation = \Config\Services::validation();
 		$ePrincipal = new \App\Entities\Principal();
-		$principal = new M_principal();
-		$image = new M_image();
+		$principal = new M_Principal();
+		$image = new M_Image();
 
 		$post = $this->request->getVar();
 
@@ -103,7 +103,7 @@ class Principal extends BaseController
 
 	public function show($id)
 	{
-		$principal = new M_principal();
+		$principal = new M_Principal();
 		$list = $principal->detail('md_principal_id', $id);
 		$response = $this->field->store($this->table, $list->getResult(), $list);
 		return json_encode($response);
@@ -113,8 +113,8 @@ class Principal extends BaseController
 	{
 		$validation = \Config\Services::validation();
 		$ePrincipal = new \App\Entities\Principal();
-		$principal = new M_principal();
-		$image = new M_image();
+		$principal = new M_Principal();
+		$image = new M_Image();
 
 		$image_id = 0;
 
@@ -200,8 +200,8 @@ class Principal extends BaseController
 
 	public function destroy($id)
 	{
-		$principal = new M_principal();
-		$image = new M_image();
+		$principal = new M_Principal();
+		$image = new M_Image();
 
 		$image_id = 0;
 

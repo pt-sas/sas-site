@@ -31,7 +31,7 @@
                     </div>
                     <div class="form-upload">
                         <label class="col-md-6 form-upload-foto" id="logo-upload">
-                            <input type="file" id="md_image_id" name="md_image_id" onchange="previewImage(this)" accept="image/jpeg, image/png"></input>
+                            <input type="file" class="control-upload-image" id="md_image_id" name="md_image_id" onchange="previewImage(this)" accept="image/jpeg, image/png"></input>
                             <img class="img-upload" src="<?= base_url('custom/image/cameraroll.png') ?>" />
                         </label>
                         <small class="form-upload-text text-muted">
