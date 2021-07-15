@@ -79,9 +79,12 @@ class News extends BaseController
 		// Mapping to property
 		$post['md_image_id'] = $newfilename;
 
+		$slug = url_title($post['title'], '-', true);
+
 		try {
 			$eNews->fill($post);
 			$eNews->isactive = setCheckbox(isset($post['isactive']));
+			$eNews->slug = $slug;
 
 			if (!$validation->run($post, 'news')) {
 				$response =	$this->field->errorValidation($this->table);
@@ -149,11 +152,7 @@ class News extends BaseController
 			'news_date' => [
 				'label'		=> 'posted date',
 				'rules' 	=> 'required'
-			],
-			'slug' => [
-				'label'		=> 'slug',
-				'rules' 	=> 'required'
-			],
+			]
 		]);
 
 		// Check if upload new image
@@ -181,10 +180,13 @@ class News extends BaseController
 			}
 		}
 
+		$slug = url_title($post['title'], '-', true);
+
 		try {
 			$eNews->fill($post);
 			$eNews->trx_news_id = $post['id'];
 			$eNews->isactive = setCheckbox(isset($post['isactive']));
+			$eNews->slug = $slug;
 
 			if (!$validation->withRequest($this->request)->run()) {
 				$response =	$this->field->errorValidation($this->table);
