@@ -39,13 +39,13 @@
                             <small class="form-text text-danger" id="error_subdistrict"></small>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <div class="form-group">
                             <label for="district">District<span class="required">*</span></label>
                             <input type="text" class="form-control" id="district" name="district">
                             <small class="form-text text-danger" id="error_district"></small>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-md-6">
