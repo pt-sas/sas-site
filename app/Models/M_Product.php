@@ -58,7 +58,7 @@ class M_Product extends Model
   		$builder = $db->table('md_product');
   		$builder->select('md_product.*');
       $builder->join('md_principal', 'md_principal.md_principal_id = md_product.md_principal_id');
-      $builder->where('url', $url);
+      $builder->where('md_principal.url', $url);
   		$query = $builder->get()->getResult();
   		return $query;
   	}
