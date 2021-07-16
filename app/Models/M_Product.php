@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class M_News extends Model
+class M_Product extends Model
 {
-    protected $table      = 'trx_news';
-    protected $primaryKey = 'trx_news_id';
+    protected $table      = 'md_product';
+    protected $primaryKey = 'md_product_id';
     protected $allowedFields = [
         'md_image_id',
         'title',
@@ -17,14 +17,14 @@ class M_News extends Model
         'isactive'
     ];
     protected $useTimestamps = true;
-    protected $returnType = 'App\Entities\News';
+    protected $returnType = 'App\Entities\Product';
 
   	public function detail($field, $where = null)
   	{
   		$db = \Config\Database::connect();
   		if (!empty($where)) {
   			return $db->query("SELECT
-  						mdp.trx_news_id ,
+  						mdp.md_product_id ,
   						mdp.isactive,
   						mdp.title,
   						mdp.content,
@@ -46,22 +46,9 @@ class M_News extends Model
   	public function showAll()
   	{
   		$db = \Config\Database::connect();
-  		$builder = $db->table('trx_news');
+  		$builder = $db->table('md_product');
   		$builder->select('title, news_date, content, slug, image_url');
-  		$builder->join('md_image', 'md_image.md_image_id = trx_news.md_image_id');
-  		$query = $builder->get()->getResult();
-  		return $query;
-  	}
-
-    //Untuk Homepage
-  	public function show3()
-  	{
-  		$db = \Config\Database::connect();
-  		$builder = $db->table('trx_news');
-  		$builder->select('title, news_date, content, slug, image_url');
-  		$builder->join('md_image', 'md_image.md_image_id = trx_news.md_image_id');
-      $builder->limit(3);
-      $builder->orderby('news_date','desc');
+  		$builder->join('md_image', 'md_image.md_image_id = md_product.md_image_id');
   		$query = $builder->get()->getResult();
   		return $query;
   	}
@@ -69,9 +56,9 @@ class M_News extends Model
   	public function getDetail($slug)
   	{
   		$db = \Config\Database::connect();
-  		$builder = $db->table('trx_news');
+  		$builder = $db->table('md_product');
   		$builder->select('title, news_date, content, image_url');
-  		$builder->join('md_image', 'md_image.md_image_id = trx_news.md_image_id');
+  		$builder->join('md_image', 'md_image.md_image_id = md_product.md_image_id');
       $builder->where('slug',$slug);
   		$query = $builder->get()->getRow();
   		return $query;

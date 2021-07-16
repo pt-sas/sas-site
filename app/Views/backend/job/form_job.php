@@ -40,14 +40,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="description">Description <span class="required">*</span></label>
-                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                    <textarea class="form-control summernote" id="description" name="description" rows="3"></textarea>
                     <small class="form-text text-danger" id="error_description"></small>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="requirement">Requirement <span class="required">*</span></label>
-                    <textarea class="form-control" id="requirement" name="requirement" rows="3"></textarea>
+                    <textarea class="form-control summernote" id="requirement" name="requirement" rows="3"></textarea>
                     <small class="form-text text-danger" id="error_requirement"></small>
                 </div>
             </div>

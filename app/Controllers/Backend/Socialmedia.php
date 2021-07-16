@@ -3,15 +3,15 @@
 namespace App\Controllers\Backend;
 
 use App\Controllers\BaseController;
-use App\Models\M_Division;
+use App\Models\M_Socialmedia;
 
-class Division extends BaseController
+class Socialmedia extends BaseController
 {
-	protected $table = 'md_division';
+	protected $table = 'md_socialmedia';
 
 	public function index()
 	{
-		$this->new_title = 'Division';
+		$this->new_title = 'Social Media';
 		$this->form_type = 'new_form';
 
 		$data = [
@@ -20,19 +20,19 @@ class Division extends BaseController
 												<i class="fa fa-plus fa-fw"></i> ' . $this->new_title . '
 										 </button>'
 		];
-		return $this->template->render('backend/division/v_division', $data);
+		return $this->template->render('backend/socialmedia/v_socialmedia', $data);
 	}
 
 	public function showAll()
 	{
-		$division = new M_Division();
-		$list = $division->findAll();
+		$socialmedia = new M_Socialmedia();
+		$list = $socialmedia->findAll();
 		$data = [];
 
 		$number = 0;
 		foreach ($list as $value) :
 			$row = [];
-			$ID = $value->md_division_id;
+			$ID = $value->md_socialmedia_id;
 
 			$number++;
 
@@ -55,19 +55,19 @@ class Division extends BaseController
 	public function create()
 	{
 		$validation = \Config\Services::validation();
-		$eDivision = new \App\Entities\Division();
+		$eSocialmedia = new \App\Entities\Socialmedia();
 
-		$division = new M_Division();
+		$socialmedia = new M_Socialmedia();
 		$post = $this->request->getVar();
 
 		try {
-			$eDivision->fill($post);
-			$eDivision->isactive = setCheckbox(isset($post['isactive']));
+			$eSocialmedia->fill($post);
+			$eSocialmedia->isactive = setCheckbox(isset($post['isactive']));
 
-			if (!$validation->run($post, 'division')) {
+			if (!$validation->run($post, 'socialmedia')) {
 				$response =	$this->field->errorValidation($this->table);
 			} else {
-				$result = $division->save($eDivision);
+				$result = $socialmedia->save($eSocialmedia);
 				$response = message('success', true, $result);
 			}
 		} catch (\Exception $e) {
@@ -78,8 +78,8 @@ class Division extends BaseController
 
 	public function show($id)
 	{
-		$division = new M_Division();
-		$list = $division->where('md_division_id', $id)->findAll();
+		$socialmedia = new M_Socialmedia();
+		$list = $socialmedia->where('md_socialmedia_id', $id)->findAll();
 		$reponse = $this->field->store($this->table, $list);
 		return json_encode($reponse);
 	}
@@ -87,20 +87,20 @@ class Division extends BaseController
 	public function edit()
 	{
 		$validation = \Config\Services::validation();
-		$eDivision = new \App\Entities\Division();
+		$eSocialmedia = new \App\Entities\Socialmedia();
 
-		$division = new M_Division();
+		$socialmedia = new M_Socialmedia();
 		$post = $this->request->getVar();
 
 		try {
-			$eDivision->fill($post);
-			$eDivision->md_division_id = $post['id'];
-			$eDivision->isactive = setCheckbox(isset($post['isactive']));
+			$eSocialmedia->fill($post);
+			$eSocialmedia->md_socialmedia_id = $post['id'];
+			$eSocialmedia->isactive = setCheckbox(isset($post['isactive']));
 
-			if (!$validation->run($post, 'division')) {
+			if (!$validation->run($post, 'socialmedia')) {
 				$response =	$this->field->errorValidation($this->table);
 			} else {
-				$result = $division->save($eDivision);
+				$result = $socialmedia->save($eSocialmedia);
 				$response = message('success', true, $result);
 			}
 		} catch (\Exception $e) {
@@ -111,10 +111,10 @@ class Division extends BaseController
 
 	public function destroy($id)
 	{
-		$division = new M_Division();
+		$socialmedia = new M_Socialmedia();
 
 		try {
-			$result = $division->delete($id);
+			$result = $socialmedia->delete($id);
 			$response = message('success', true, $result);
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
