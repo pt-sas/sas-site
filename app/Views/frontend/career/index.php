@@ -87,6 +87,7 @@
                                   ?>"><? //= $value->name 
                                       ?></option>
               <?php endforeach; ?> -->
+              <option value=""> </option>
               <option value="el">Entry-level </option>
               <option value="ml">Mid-level </option>
               <option value="sl">Senior-level </option>
