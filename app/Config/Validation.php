@@ -104,10 +104,6 @@ class Validation
 			'label'		=> 'subdistrict',
 			'rules' 	=> 'required'
 		],
-		'district' => [
-			'label'		=> 'district',
-			'rules' 	=> 'required'
-		],
 		'city' => [
 			'label'		=> 'city',
 			'rules'		=> 'required'
