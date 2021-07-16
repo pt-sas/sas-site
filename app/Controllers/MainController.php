@@ -6,6 +6,8 @@ use App\Models\M_About;
 use App\Models\M_Location;
 
 use App\Models\M_Principal;
+use App\Models\M_Productgroup;
+use App\Models\M_Product;
 
 use App\Models\M_News;
 use App\Models\M_Promo;
@@ -41,9 +43,18 @@ class MainController extends BaseController
 		];
 		return view('frontend/product/index', $data);
 	}
-	public function productdetail($id)
+	public function productdetail($url)
 	{
-		$data['page_title'] = 'View Product - PT Sahabat Abadi Sejahtera';
+		$principal 		= new M_Principal();
+		$productgroup = new M_Productgroup();
+		$product 			= new M_Product();
+
+		$data = [
+			'principal' 		=> $principal->where('url',$url)->first(),
+			'productgroup'	=> $productgroup->getDetail($url),
+			'product' 			=> $product->getDetail($url),
+			'page_title'		=> 'View Product - PT Sahabat Abadi Sejahtera'
+		];
 		return view('frontend/product/detail', $data);
 	}
 	public function productcompare()
@@ -158,5 +169,12 @@ class MainController extends BaseController
 				$response = message('error', false, $e->getMessage());
 		}
 		return json_encode($response);
+	}
+
+  function filterProductgroup(){
+		$product = new M_Product();
+		$id = $this->request->getVar('md_productgroup_id');
+		$data = $product->getProductgroup($id);
+		echo json_encode($data);
 	}
 }

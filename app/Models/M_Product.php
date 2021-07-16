@@ -47,20 +47,33 @@ class M_Product extends Model
   	{
   		$db = \Config\Database::connect();
   		$builder = $db->table('md_product');
-  		$builder->select('title, news_date, content, slug, image_url');
-  		$builder->join('md_image', 'md_image.md_image_id = md_product.md_image_id');
+  		$builder->select('md_product.*');
   		$query = $builder->get()->getResult();
   		return $query;
   	}
 
-  	public function getDetail($slug)
+  	public function getDetail($url)
   	{
   		$db = \Config\Database::connect();
   		$builder = $db->table('md_product');
-  		$builder->select('title, news_date, content, image_url');
-  		$builder->join('md_image', 'md_image.md_image_id = md_product.md_image_id');
-      $builder->where('slug',$slug);
-  		$query = $builder->get()->getRow();
+  		$builder->select('md_product.*');
+      $builder->join('md_principal', 'md_principal.md_principal_id = md_product.md_principal_id');
+      $builder->where('url',$url);
+  		$query = $builder->get()->getResult();
   		return $query;
   	}
+
+    public function getProductgroup($id)
+  	{
+  		$db = \Config\Database::connect();
+  		$builder = $db->table('md_product');
+  		if($id != ''){
+        $builder->select('*');
+    		$builder->where('md_productgroup_id',$id);
+      } else {
+        $builder->select('*');
+      }
+      $query = $builder->get()->getResult();
+  		return $query;
+    }
 }
