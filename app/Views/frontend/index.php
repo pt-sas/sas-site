@@ -102,35 +102,24 @@
           <p>Updates article all about lighting and electical equipment</p>
         </div>
       </div>
-      <div class="col-md-4">
-        <a href="news-detail.html" class="item-news">
-          <div class="image" style="background-image: url('<?= base_url('adw/assets/images/news1.png') ?>');"></div>
-          <h5>Judul artikel disini dengan maksimal 3 baris agar terlihat rapih untuk dilihat</h5>
-          <span>5 FEB 2020</span>
-        </a>
-      </div>
-      <div class="col-md-4">
-        <a href="news-detail.html" class="item-news">
-          <div class="image" style="background-image: url('<?= base_url('adw/assets/images/news2.png') ?>');"></div>
-          <h5>Judul artikel disini dengan maksimal 3 baris agar terlihat rapih untuk dilihat</h5>
-          <span>5 FEB 2020</span>
-        </a>
-      </div>
-      <div class="col-md-4">
-        <a href="news-detail.html" class="item-news">
-          <div class="image" style="background-image: url('<?= base_url('adw/assets/images/news3.png') ?>');"></div>
-          <h5>Judul artikel disini dengan maksimal 3 baris agar terlihat rapih untuk dilihat</h5>
-          <span>5 FEB 2020</span>
-        </a>
-      </div>
+      <?php foreach($news as $row): ?>
+        <div class="col-md-4">
+          <a href="<?= base_url('/news/'.$row->slug.'') ?>" class="item-news">
+            <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');"></div>
+            <h5><?= $row->title;?></h5>
+            <span><?= date("d F Y", strtotime($row->news_date)) ?></span>
+          </a>
+        </div>
+      <?php endforeach;?>
     </div>
     <div class="row">
       <div class="col-md-12">
         <footer>
-          <p>© Copyright 2021 PT. Sahabat Abadi Sejahtera - All rights reserved.</p>
-          <a href="" class="foot-socmed"><i class="fa fa-facebook-f"></i></a>
-          <a href="" class="foot-socmed"><i class="fa fa-twitter"></i></a>
-          <a href="" class="foot-socmed"><i class="fa fa-instagram"></i></a>
+          <p>© Copyright 2021 PT Sahabat Abadi Sejahtera - All rights reserved.</p>
+          <a href="javascript:void(0);" onclick="window.open('https://www.facebook.com/pages/PT.%20Sahabat%20Abadi%20Sejahtera/268648619839788/', '_blank')" class="foot-socmed"><i class="fa fa-facebook-f"></i></a>
+          <a href="javascript:void(0);" onclick="window.open('https://www.youtube.com/channel/UCeB2XhHrFdFD3P1cw3Q9swg', '_blank')" class="foot-socmed"><i class="fa fa-youtube"></i></a>
+          <a href="javascript:void(0);" onclick="window.open('https://www.linkedin.com/company/sahabat-abadi-sejahtera', '_blank')" class="foot-socmed"><i class="fa fa-linkedin"></i></a>
+          <a href="javascript:void(0);" onclick="window.open('https://www.instagram.com/explore/locations/317814588/ptsahabat-abadi-sejahtera-philips-indonesia-sunter', '_blank')" class="foot-socmed"><i class="fa fa-instagram"></i></a>
         </footer>
       </div>
     </div>

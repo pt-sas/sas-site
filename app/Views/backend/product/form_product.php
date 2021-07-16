@@ -1,8 +1,8 @@
 <div class="card-body card-form">
-    <form class="form-horizontal" id="form_promo">
+    <form class="form-horizontal" id="form_news">
         <?= csrf_field(); ?>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label for="title">Title <span class="required">*</span></label>
                     <input type="text" class="form-control" id="title" name="title">
@@ -17,28 +17,17 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="start_date">Posted Date <span class="required">*</span></label>
-                            <input type="text" class="form-control datepicker" id="start_date" name="start_date">
-                            <small class="form-text text-danger" id="error_start_date"></small>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="end_date">End Date <span class="required">*</span></label>
-                            <input type="text" class="form-control datepicker" id="end_date" name="end_date">
-                            <small class="form-text text-danger" id="error_end_date"></small>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="news_date">News Date <span class="required">*</span></label>
+                    <input type="text" class="form-control datepicker" id="news_date" name="news_date">
+                    <small class="form-text text-danger" id="error_news_date"></small>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Image <span class="required">*</span></label>
                     <div class="form-upload-result">
-                        <label class="col-md-6 form-result" id="logo-result">
+                        <label class="col-md-6 form-result" id="news-result">
                             <button type="button" class="close-img" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -46,7 +35,7 @@
                         </label>
                     </div>
                     <div class="form-upload">
-                        <label class="col-md-6 form-upload-foto" id="logo-upload">
+                        <label class="col-md-6 form-upload-foto" id="news-upload">
                             <input type="file" class="control-upload-image" id="md_image_id" name="md_image_id" onchange="previewImage(this)" accept="image/jpeg, image/png"></input>
                             <img class="img-upload" src="<?= base_url('custom/image/cameraroll.png') ?>" />
                         </label>

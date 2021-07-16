@@ -9,7 +9,7 @@ use App\Models\M_image;
 class Promo extends BaseController
 {
 	protected $table = 'trx_promo';
-	protected $path_folder = 'custom/image/news/';
+	protected $path_folder = 'custom/image/promo/';
 
 	public function index()
 	{
@@ -64,20 +64,27 @@ class Promo extends BaseController
 		$image = new M_image();
 
 		$post = $this->request->getVar();
-
 		$file = $this->request->getFile('md_image_id');
-		$imgName = $file->getName();
+		$imgName = '';
+		$newfilename = '';
 
-		// Renaming file before upload
-		$temp = explode(".", $imgName);
-		$newfilename = round(microtime(true)) . '.' . end($temp);
+		if (!empty($file)) {
+			$imgName = $file->getName();
+
+			// Renaming file before upload
+			$temp = explode(".", $imgName);
+			$newfilename = round(microtime(true)) . '.' . end($temp);
+		}
 
 		// Mapping to property
 		$post['md_image_id'] = $newfilename;
 
+		$slug = url_title($post['title'], '-', true);
+
 		try {
 			$ePromo->fill($post);
 			$ePromo->isactive = setCheckbox(isset($post['isactive']));
+			$ePromo->slug = $slug;
 
 			if (!$validation->run($post, 'promo')) {
 				$response =	$this->field->errorValidation($this->table);
@@ -97,6 +104,7 @@ class Promo extends BaseController
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
 		}
+
 		return json_encode($response);
 	}
 
@@ -121,11 +129,16 @@ class Promo extends BaseController
 		$row = $promo->detail('trx_promo_id', $post['id'])->getRow();
 
 		$file = $this->request->getFile('md_image_id');
-		$imgName = $file->getName();
+		$imgName = '';
+		$newfilename = '';
 
-		// Renaming file before upload
-		$temp = explode(".", $imgName);
-		$newfilename = round(microtime(true)) . '.' . end($temp);
+		if (!empty($file)) {
+			$imgName = $file->getName();
+
+			// Renaming file before upload
+			$temp = explode(".", $imgName);
+			$newfilename = round(microtime(true)) . '.' . end($temp);
+		}
 
 		$validation->setRules([
 			'title' => [
@@ -143,11 +156,7 @@ class Promo extends BaseController
 			'end_date' => [
 				'label'		=> 'end date',
 				'rules' 	=> 'required'
-			],
-			'slug' => [
-				'label'		=> 'slug',
-				'rules' 	=> 'required'
-			],
+			]
 		]);
 
 		// Check if upload new image
@@ -158,7 +167,6 @@ class Promo extends BaseController
 				'md_image_id' => [
 					'label'		=>	'image',
 					'rules'		=>	'max_size[md_image_id, 1024]|is_image[md_image_id]'
-					// 'rules'		=>	'uploaded[md_image_id]|max_size[md_image_id, 1024]|is_image[md_image_id]|mime_in[md_image_id,image/jpg,image/jpeg,image/png]'
 				]
 			]);
 		} else {
@@ -176,14 +184,13 @@ class Promo extends BaseController
 			}
 		}
 
+		$slug = url_title($post['title'], '-', true);
+
 		try {
 			$ePromo->fill($post);
 			$ePromo->trx_promo_id = $post['id'];
 			$ePromo->isactive = setCheckbox(isset($post['isactive']));
-
-			if (isset($image_id)) {
-				$ePromo->md_image_id = $image_id;
-			}
+			$ePromo->slug = $slug;
 
 			if (!$validation->withRequest($this->request)->run()) {
 				$response =	$this->field->errorValidation($this->table);
@@ -203,6 +210,11 @@ class Promo extends BaseController
 						$file->move($this->path_folder, $newfilename);
 					}
 				}
+
+				if (isset($image_id)) {
+					$ePromo->md_image_id = $image_id;
+				}
+
 				$result = $promo->save($ePromo);
 				$response = message('success', true, $result);
 			}
@@ -216,8 +228,23 @@ class Promo extends BaseController
 	public function destroy($id)
 	{
 		$promo = new M_Promo();
+		$image = new M_Image();
+
+		$image_id = 0;
+
+		$row = $promo->detail('trx_promo_id', $id)->getRow();
+
+		if (!empty($row->image_id)) {
+			$image_id = $row->image_id;
+		}
 
 		try {
+			// Remove image path directory
+			$unlink = unlink($this->path_folder . $row->image);
+
+			if ($unlink) {
+				$image->delete($image_id);
+			}
 			$result = $promo->delete($id);
 			$response = message('success', true, $result);
 		} catch (\Exception $e) {

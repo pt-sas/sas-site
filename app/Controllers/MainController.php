@@ -22,7 +22,12 @@ class MainController extends BaseController
 
 	public function index()
 	{
-		$data['page_title'] = 'Home - PT Sahabat Abadi Sejahtera';
+		$news		= new M_News();
+
+		$data = [
+			'news' 				=> $news->where('isactive','Y')->show3(),
+			'page_title'	=> 'Home - PT Sahabat Abadi Sejahtera'
+		];
 		return view('frontend/index', $data);
 	}
 
