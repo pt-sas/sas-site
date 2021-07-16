@@ -81,29 +81,34 @@
           <div class="filter-jobs">
             <input type="search" class="form-control search" placeholder="Search">
             <select name="" id="" class="form-control">
-              <option value="">All Division</option>
+              <!-- <option value="">All Division</option>
               <?php foreach ($division as $value) : ?>
-                  <option value="<?= $value->md_division_id ?>"><?= $value->name ?></option>
-              <?php endforeach; ?>
+                  <option value="<? //= $value->md_division_id 
+                                  ?>"><? //= $value->name 
+                                      ?></option>
+              <?php endforeach; ?> -->
+              <option value="el">Entry-level </option>
+              <option value="ml">Mid-level </option>
+              <option value="sl">Senior-level </option>
             </select>
             <button class="btn btn-primary">Search</button>
           </div>
 
-          <?php foreach($job as $row): ?>
-          <div class="item-jobs">
-            <div class="left-part">
-              <h5><?= $row->position;?></h5>
-              <h6><?= $row->division_name;?></h6>
+          <?php foreach ($job as $row) : ?>
+            <div class="item-jobs">
+              <div class="left-part">
+                <h5><?= $row->position; ?></h5>
+                <h6><?= $row->division_name; ?></h6>
+              </div>
+              <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>">
+                Detail
+              </a>
+              <span class="location">
+                <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
+                DKI Jakarta
+              </span>
             </div>
-            <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>">
-              Detail
-            </a>
-            <span class="location">
-              <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
-              DKI Jakarta
-            </span>
-          </div>
-          <?php endforeach;?>
+          <?php endforeach; ?>
         </div>
       </div>
     </div>
@@ -150,8 +155,12 @@
         </button>
         <h4 name="position"></h4>
         <h5>
-          <span><large name="division"></large></span>
-          <span><large name="posted_date"></large> </span>
+          <span>
+            <large name="division"></large>
+          </span>
+          <span>
+            <large name="posted_date"></large>
+          </span>
           <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
         </h5>
         <h6 class="title-list">What you will do</h6>
@@ -169,21 +178,21 @@
 </div>
 
 <script>
-$(document).on('click', '.view_details', function(e){
-  e.preventDefault();
-  var division      = $(this).data('md_division_id');
-  var position      = $(this).data('position');
-  var description   = $(this).data('description');
-  var requirement   = $(this).data('requirement');
-  var posted_date   = $(this).data('posted_date');
-  var expired_date  = $(this).data('expired_date');
+  $(document).on('click', '.view_details', function(e) {
+    e.preventDefault();
+    var division = $(this).data('md_division_id');
+    var position = $(this).data('position');
+    var description = $(this).data('description');
+    var requirement = $(this).data('requirement');
+    var posted_date = $(this).data('posted_date');
+    var expired_date = $(this).data('expired_date');
 
-  $('#modalJobs').modal('show');
-  $('[name="division"]').text(division);
-  $('[name="position"]').text(position);
-  $('[name="posted_date"]').text(posted_date);
-  $('[name="description"]').html(description);
-  $('[name="requirement"]').html(requirement);
-});
+    $('#modalJobs').modal('show');
+    $('[name="division"]').text(division);
+    $('[name="position"]').text(position);
+    $('[name="posted_date"]').text(posted_date);
+    $('[name="description"]').html(description);
+    $('[name="requirement"]').html(requirement);
+  });
 </script>
 <?= $this->endSection() ?>
