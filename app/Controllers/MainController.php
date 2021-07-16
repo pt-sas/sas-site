@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
@@ -17,7 +18,8 @@ use App\Models\M_Mailbox;
 
 class MainController extends BaseController
 {
-	public function __construct() {
+	public function __construct()
+	{
 	}
 
 	public function index()
@@ -25,7 +27,7 @@ class MainController extends BaseController
 		$news		= new M_News();
 
 		$data = [
-			'news' 				=> $news->where('isactive','Y')->show3(),
+			'news' 				=> $news->where('isactive', 'Y')->show3(),
 			'page_title'	=> 'Home - PT Sahabat Abadi Sejahtera'
 		];
 		return view('frontend/index', $data);
@@ -36,7 +38,7 @@ class MainController extends BaseController
 		$principal = new M_Principal();
 
 		$data = [
-			'principal' 	=> $principal->where('isactive','Y')->showAll(),
+			'principal' 	=> $principal->where('isactive', 'Y')->showAll(),
 			'page_title'	=> 'Product - PT Sahabat Abadi Sejahtera'
 		];
 		return view('frontend/product/index', $data);
@@ -71,8 +73,8 @@ class MainController extends BaseController
 		$promo	= new M_Promo();
 
 		$data = [
-			'news' 				=> $news->where('isactive','Y')->showAll(),
-			'promo' 			=> $promo->where('isactive','Y')->showAll(),
+			'news' 				=> $news->where('isactive', 'Y')->showAll(),
+			'promo' 			=> $promo->where('isactive', 'Y')->showAll(),
 			'page_title'	=> 'News & Promo - PT Sahabat Abadi Sejahtera'
 		];
 		return view('frontend/news/index', $data);
@@ -104,8 +106,8 @@ class MainController extends BaseController
 		$job 			= new M_Job();
 
 		$data = [
-			'division' 		=> $division->where('isactive','Y')->findAll(),
-			'job' 				=> $job->where('isactive','Y')->showAll(),
+			'division' 		=> $division->where('isactive', 'Y')->findAll(),
+			'job' 				=> $job->where('isactive', 'Y')->showAll(),
 			'page_title'	=> 'About Us - PT Sahabat Abadi Sejahtera'
 		];
 		return view('frontend/career/index', $data);
@@ -120,43 +122,45 @@ class MainController extends BaseController
 	//--------------------------------------------------------------------
 
 
-	public function create() {
+	public function create()
+	{
 		$validation = \Config\Services::validation();
 		$mailbox = new M_Mailbox();
 		$post = $this->request->getVar();
 
 		try {
-				$data = [
-						'name' 		=> $post['mailbox_name'],
-						'email' 	=> $post['mailbox_email'],
-						'subject' => $post['mailbox_subject'],
-						'inquiry' => $post['mailbox_inquiry'],
-						'phone' 	=> $post['mailbox_phone'],
-						'message' => $post['mailbox_message']
-				];
+			$data = [
+				'name' 		=> $post['mailbox_name'],
+				'email' 	=> $post['mailbox_email'],
+				'subject' => $post['mailbox_subject'],
+				'inquiry' => $post['mailbox_inquiry'],
+				'phone' 	=> $post['mailbox_phone'],
+				'message' => $post['mailbox_message']
+			];
 
-				if (!$validation->run($post, 'mailbox')) {
-						$response = $mailbox->formError();
+			if (!$validation->run($post, 'mailbox')) {
+				$response = $mailbox->formError();
+			} else {
+				$result = $mailbox->save($data);
+				$response = message('success', true, $result);
+
+				$email = \Config\Services::email();
+				$email->setTo('info@sahabatabadi.com');
+				$email->setFrom($post['mailbox_email'], $post['mailbox_name']);
+				$email->setSubject($post['mailbox_subject']);
+				$email->setMessage($post['mailbox_message']);
+
+				if ($email->send()) {
+					echo 'Email successfully sent';
 				} else {
-						$result = $mailbox->save($data);
-						$response = message('success', true, $result);
-
-						$email = \Config\Services::email();
-						$email->setTo('info@sahabatabadi.com');
-						$email->setFrom($post['mailbox_email'], $post['mailbox_name']);
-						$email->setSubject($post['mailbox_subject']);
-						$email->setMessage($post['mailbox_message']);
-
-						if ($email->send()) {
-							echo 'Email successfully sent';
-						} else {
-							$data = $email->printDebugger(['headers']);
-							print_r($data);
-						}
+					$data = $email->printDebugger(['headers']);
+					print_r($data);
 				}
+			}
 		} catch (\Exception $e) {
-				$response = message('error', false, $e->getMessage());
+			$response = message('error', false, $e->getMessage());
 		}
-		return json_encode($response);
+		// return json_encode($response);
+		return redirect()->back();
 	}
 }
