@@ -673,10 +673,23 @@ function previewImage(input, id, src) {
         reader.readAsDataURL(input.files[0]);
     } else if (src !== null) {
         src = ORI_URL + '/' + src;
-        $(id)
-            .attr('src', src)
-            .width('auto')
-            .height(150);
+        $.ajax({
+            url: src,
+            type: 'HEAD',
+            error: function () {
+                $(id)
+                    .attr('src', 'https://via.placeholder.com/100/808080/ffffff?text=Not+found')
+                    .width('auto')
+                    .height(150);
+            },
+            success: function () {
+                $(id)
+                    .attr('src', src)
+                    .width('auto')
+                    .height(150);
+            }
+        });
+
         $('.form-upload-foto').css('display', 'none');
         $('.form-result').css('display', 'block');
         source_img = src;
