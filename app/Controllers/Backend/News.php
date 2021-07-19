@@ -41,7 +41,7 @@ class News extends BaseController
 			$row[] = $ID;
 			$row[] = $number;
 			$row[] = $value->title;
-			$row[] = $this->picture->render($this->table, $this->path_folder, 'md_image_id', $value->md_image_id);
+			$row[] = $this->picture->render($this->path_folder, $value->md_image_id);
 			$row[] = $value->news_date;
 			$row[] = active($value->isactive);
 			$row[] = '<center>
