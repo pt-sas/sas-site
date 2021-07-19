@@ -41,7 +41,7 @@ class Principal extends BaseController
 
 			$row[] = $ID;
 			$row[] = $number;
-			$row[] = $this->picture->render($this->table, $this->path_folder, 'md_image_id', $value->md_image_id);
+			$row[] = $this->picture->render($this->path_folder, $value->md_image_id);
 			$row[] = $value->name;
 			$row[] = $value->description;
 			$row[] = $value->url;
