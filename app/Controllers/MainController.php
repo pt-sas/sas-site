@@ -52,7 +52,7 @@ class MainController extends BaseController
 		$product 			= new M_Product();
 
 		$data = [
-			'principal' 		=> $principal->where('url',$url)->first(),
+			'principal' 		=> $principal->where('url', $url)->first(),
 			'productgroup'	=> $productgroup->getDetail($url),
 			'product' 			=> $product->getDetail($url),
 			'page_title'		=> 'View Product - PT Sahabat Abadi Sejahtera'
@@ -135,47 +135,84 @@ class MainController extends BaseController
 
 	public function create()
 	{
+		// $validation = \Config\Services::validation();
+		// $mailbox = new M_Mailbox();
+		// $post = $this->request->getVar();
+
+		// try {
+		// 	$data = [
+		// 		'name' 		=> $post['mailbox_name'],
+		// 		'email' 	=> $post['mailbox_email'],
+		// 		'subject' => $post['mailbox_subject'],
+		// 		'inquiry' => $post['mailbox_inquiry'],
+		// 		'phone' 	=> $post['mailbox_phone'],
+		// 		'message' => $post['mailbox_message']
+		// 	];
+
+		// 	if (!$validation->run($post, 'mailbox')) {
+		// 		$response = $mailbox->formError();
+		// 	} else {
+		// 		$result = $mailbox->save($data);
+		// 		$response = message('success', true, $result);
+
+		// 		$email = \Config\Services::email();
+		// 		$email->setTo('info@sahabatabadi.com');
+		// 		$email->setFrom($post['mailbox_email'], $post['mailbox_name']);
+		// 		$email->setSubject($post['mailbox_subject']);
+		// 		$email->setMessage($post['mailbox_message']);
+
+		// 		if ($email->send()) {
+		// 			echo 'Email successfully sent';
+		// 		} else {
+		// 			$data = $email->printDebugger(['headers']);
+		// 			print_r($data);
+		// 		}
+		// 	}
+		// } catch (\Exception $e) {
+		// 	$response = message('error', false, $e->getMessage());
+		// }
+		// // return json_encode($response);
+		// return redirect()->back();
+
+		$email = \Config\Services::email();
 		$validation = \Config\Services::validation();
+		$eMailbox = new \App\Entities\Mailbox();
 		$mailbox = new M_Mailbox();
+
 		$post = $this->request->getVar();
 
 		try {
-			$data = [
-				'name' 		=> $post['mailbox_name'],
-				'email' 	=> $post['mailbox_email'],
-				'subject' => $post['mailbox_subject'],
-				'inquiry' => $post['mailbox_inquiry'],
-				'phone' 	=> $post['mailbox_phone'],
-				'message' => $post['mailbox_message']
-			];
+			$eMailbox->fill($post);
 
 			if (!$validation->run($post, 'mailbox')) {
-				$response = $mailbox->formError();
+				$response =	$this->field->errorValidation('trx_contact');
 			} else {
-				$result = $mailbox->save($data);
-				$response = message('success', true, $result);
+				$insert = $mailbox->save($eMailbox);
 
-				$email = \Config\Services::email();
-				$email->setTo('info@sahabatabadi.com');
-				$email->setFrom($post['mailbox_email'], $post['mailbox_name']);
-				$email->setSubject($post['mailbox_subject']);
-				$email->setMessage($post['mailbox_message']);
+				if ($insert) {
+					$email->setTo('info@sahabatabadi.com');
+					$email->setFrom($post['email'], $post['name']);
+					$email->setSubject($post['subject']);
+					$email->setMessage($post['message']);
 
-				if ($email->send()) {
-					echo 'Email successfully sent';
-				} else {
-					$data = $email->printDebugger(['headers']);
-					print_r($data);
+					if ($email->send()) {
+						$result = 'Email successfully sent';
+					} else {
+						$result = $email->printDebugger(['headers']);
+					}
 				}
+
+				$response = message('success', true, $result);
 			}
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
 		}
-		// return json_encode($response);
-		return redirect()->back();
+
+		return json_encode($response);
 	}
 
-  function filterProductgroup(){
+	function filterProductgroup()
+	{
 		$product = new M_Product();
 		$id = $this->request->getVar('md_productgroup_id');
 		$data = $product->getProductgroup($id);
