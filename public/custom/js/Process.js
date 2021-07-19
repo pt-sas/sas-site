@@ -13,8 +13,7 @@ var ORI_URL = window.location.origin,
 
 var ID,
     _table,
-    setSave,
-    source_img = '';
+    setSave;
 
 // Method default controller
 const SHOWALL = '/showAll',
@@ -103,8 +102,6 @@ $('.save_form').click(function (evt) {
                 if (field[i].files.length > 0) {
                     formData.append(field[i].name, field[i].files[0]);
                 } else {
-                    form.find('.img-result').attr('src', source_img);
-
                     let source = form.find('.img-result').attr('src');
                     let imgSrc;
 
@@ -153,7 +150,7 @@ $('.save_form').click(function (evt) {
                 if (!cardForm.prop('classList').contains('modal')) {
                     cardMain.css('display', 'block');
                     cardForm.css('display', 'none');
-                    cardBtn.css('display', 'block');
+                    cardBtn.css('display', 'none');
                     const cardHeader = parent.find('.card-header');
                     const btnList = cardHeader.find('button');
 
@@ -490,7 +487,6 @@ $('.close-img').click(function (evt) {
         parent.find('label').css('display', 'none');
         formUpload.find('input:file').val('');
         parent.find('img').attr('src', '');
-        source_img = parent.find('img').attr('src');
     }
 });
 
@@ -678,29 +674,28 @@ function previewImage(input, id, src) {
             type: 'HEAD',
             error: function () {
                 $(id)
-                    .attr('src', 'https://via.placeholder.com/100/808080/ffffff?text=Not+found')
+                    .attr('src', '')
                     .width('auto')
                     .height(150);
+                $('.form-upload-foto').css('display', 'block');
+                $('.form-result').css('display', 'none');
             },
             success: function () {
                 $(id)
                     .attr('src', src)
                     .width('auto')
                     .height(150);
+                $('.form-upload-foto').css('display', 'none');
+                $('.form-result').css('display', 'block');
             }
         });
-
-        $('.form-upload-foto').css('display', 'none');
-        $('.form-result').css('display', 'block');
-        source_img = src;
     } else {
         $(id)
-            .attr('src', src)
+            .attr('src', '')
             .width('auto')
             .height(150);
         $('.form-upload-foto').css('display', 'block');
         $('.form-result').css('display', 'none');
-        source_img = src;
     }
 }
 
