@@ -42,27 +42,27 @@ class Validation
 	//--------------------------------------------------------------------
 
 	public $mailbox = [
-		'mailbox_name' => [
+		'name' => [
 			'label'		=> 'overview',
 			'rules' 	=> 'required'
 		],
-		'mailbox_email' => [
+		'email' => [
 			'label'		=> 'vision',
 			'rules'		=> 'required'
 		],
-		'mailbox_subject' => [
+		'subject' => [
 			'label'		=> 'mission',
 			'rules'		=> 'required'
 		],
-		'mailbox_inquiry' => [
+		'inquiry' => [
 			'label'		=> 'objectives',
 			'rules'		=> 'required'
 		],
-		'mailbox_phone' => [
+		'phone' => [
 			'label'		=> 'vision',
 			'rules'		=> 'required'
 		],
-		'mailbox_message' => [
+		'message' => [
 			'label'		=> 'mission',
 			'rules'		=> 'required'
 		]
@@ -166,15 +166,16 @@ class Validation
 			'label'		=> 'expired date',
 			'rules' 	=> 'required'
 		],
+		'url' => [
+			'rules' 	=> 'required'
+		],
 	];
 
 	public $news = [
 		'title' => [
-			'label'		=> 'news title',
 			'rules' 	=> 'required'
 		],
 		'content' => [
-			'label'		=> 'news content',
 			'rules' 	=> 'required'
 		],
 		'news_date' => [
@@ -189,11 +190,9 @@ class Validation
 
 	public $promo = [
 		'title' => [
-			'label'		=> 'promo title',
 			'rules' 	=> 'required'
 		],
 		'content' => [
-			'label'		=> 'promo content',
 			'rules' 	=> 'required'
 		],
 		'start_date' => [

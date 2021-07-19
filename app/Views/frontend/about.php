@@ -58,36 +58,36 @@
   <div class="flow bordered-top">
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="item-flow">
             <h6>
               Company Founded Appointed as
               Philips Authorized Distributor
             </h6>
             <h3>1987</h3>
-            <img src="<?= base_url('adw/assets/images/point.png') ?>" alt="">
+            <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:70px;" alt="">
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5 offset-md-1">
           <div class="item-flow">
             <h6>
               Appointed as Supreme Authorized Distributor
-              Appointed as Schneider Authorized Distributor
+              and Schneider Authorized Distributor
             </h6>
             <h3>2017</h3>
-            <img src="<?= base_url('adw/assets/images/point.png') ?>" alt="">
+            <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:90px;" alt="">
           </div>
         </div>
         <div class="col-md-12 text-center">
           <img src="<?= base_url('adw/assets/images/flow.png') ?>" alt="" class="img-fluid img-flow">
         </div>
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-5 offset-md-2">
           <div class="item-flow upside">
-            <img src="<?= base_url('adw/assets/images/point.png') ?>" alt="" class="rotate">
+            <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:90px;" alt="" class="rotate">
             <h3 class="d-none d-md-block">2009</h3>
             <h6>
               Appointed as Legrand Authorized Distributor
-              Appointed as Panasonic Authorized Distributor
+              and Panasonic Authorized Distributor
             </h6>
             <h3 class="d-block d-md-none">2009</h3>
           </div>

@@ -49,6 +49,8 @@ class M_News extends Model
 		$builder = $db->table('trx_news');
 		$builder->select('title, news_date, content, slug, image_url');
 		$builder->join('md_image', 'md_image.md_image_id = trx_news.md_image_id');
+		$builder->where('trx_news.isactive', 'Y');
+		$builder->orderby('news_date', 'desc');
 		$query = $builder->get()->getResult();
 		return $query;
 	}
@@ -61,6 +63,7 @@ class M_News extends Model
 		$builder->select('title, news_date, content, slug, image_url');
 		$builder->join('md_image', 'md_image.md_image_id = trx_news.md_image_id');
 		$builder->limit(3);
+		$builder->where('trx_news.isactive', 'Y');
 		$builder->orderby('news_date', 'desc');
 		$query = $builder->get()->getResult();
 		return $query;

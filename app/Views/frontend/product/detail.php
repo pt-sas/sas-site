@@ -89,9 +89,6 @@
 </div>
 
 
-<!-- kontak kami -->
-<a href="" class="kontak"><img src="<?= base_url('adw/assets/images/wa.png') ?>" alt=""> Hubungi Kami</a>
-
 <!-- Modal -->
 <div class="modal fade" id="modalProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">

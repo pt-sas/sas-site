@@ -61,7 +61,7 @@
         <li class="nav-item">
           <a data-toggle="collapse" href="#collapseNews">
               <i class="fas fa-newspaper"></i>
-              <p>News & Promo</p>
+              <p>News & Event</p>
               <span class="caret"></span>
           </a>
           <div class="collapse" id="collapseNews">
@@ -70,7 +70,7 @@
                       <a href="<?= base_url ('/backend/news') ?>"><span class="sub-item">News</span></a>
                   </li>
                   <li>
-                      <a href="<?= base_url ('/backend/promo') ?>"><span class="sub-item">Promotion</span></a>
+                      <a href="<?= base_url ('/backend/event') ?>"><span class="sub-item">Event</span></a>
                   </li>
               </ul>
           </div>

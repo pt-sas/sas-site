@@ -1,14 +1,14 @@
 <!-- sidebar -->
 <aside class="menu-sidebar">
   <a href="javascript:void(0);" class="close-btn"><img src="<?= base_url('adw/assets/images/close-white.png') ?>" alt=""></a>
-  <a href="javascript:void(0);" onclick="window.open('https://www.tokopedia.com/ptsahabat', '_blank')" class="shop"><img src="<?= base_url('adw/assets/images/shopping-b-bag.svg') ?>" alt=""> Shop</a>
+  <!-- <a href="javascript:void(0);" onclick="window.open('https://www.tokopedia.com/ptsahabat', '_blank')" class="shop"><img src="<?= base_url('adw/assets/images/shopping-b-bag.svg') ?>" alt=""> Shop</a> -->
 
   <div class="clearfix"></div>
   <ul class="menu">
     <li><a href="<?= base_url('/') ?>">Home</a></li>
     <li><a href="<?= base_url('/product') ?>">Product</a></li>
     <li><a href="<?= base_url('/about') ?>">About Us</a></li>
-    <li><a href="<?= base_url('/news') ?>">News & Promo</a></li>
+    <li><a href="<?= base_url('/news') ?>">News & Event</a></li>
     <li><a href="<?= base_url('/career') ?>">Career</a></li>
     <li><a href="<?= base_url('/contact') ?>">Contact Us</a></li>
   </ul>

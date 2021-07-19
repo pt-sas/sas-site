@@ -43,7 +43,7 @@ $routes->get('/about', 'MainController::about');
 
 $routes->get('/news', 'MainController::news');
 $routes->get('/news/(:any)', 'MainController::newsdetail/$1');
-$routes->get('/promo/(:any)', 'MainController::promodetail/$1');
+$routes->get('/event/(:any)', 'MainController::promodetail/$1');
 
 $routes->get('/career', 'MainController::career');
 
