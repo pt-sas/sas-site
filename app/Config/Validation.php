@@ -43,27 +43,21 @@ class Validation
 
 	public $mailbox = [
 		'name' => [
-			'label'		=> 'overview',
 			'rules' 	=> 'required'
 		],
 		'email' => [
-			'label'		=> 'vision',
-			'rules'		=> 'required'
+			'rules'		=> 'required|valid_email'
 		],
 		'subject' => [
-			'label'		=> 'mission',
 			'rules'		=> 'required'
 		],
 		'inquiry' => [
-			'label'		=> 'objectives',
 			'rules'		=> 'required'
 		],
 		'phone' => [
-			'label'		=> 'vision',
 			'rules'		=> 'required'
 		],
 		'message' => [
-			'label'		=> 'mission',
 			'rules'		=> 'required'
 		]
 	];

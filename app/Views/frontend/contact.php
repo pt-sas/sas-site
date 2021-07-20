@@ -43,42 +43,64 @@
   <!-- form contact -->
   <div class="half-half-wrap pb-0">
     <div class="container">
-      <div class="row form form_page">
+      <div class="row">
         <div class="col-md-4">
           <h4 class="left-title">How we can help you?</h4>
         </div>
-        <div class="col-md-8">
-          <form method="post" action="<?php echo base_url('/MainController/create') ?>" class="form-contact form-horizontal form_open" id="form_contact">
+        <div class="col-md-8 card-form">
+          <form class="form-contact" id="form_contact">
             <?= csrf_field(); ?>
             <p class="desc">Fill out the form and we'll be in touch soon!</p>
             <div class="row">
               <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Name" name="mailbox_name" id="mailbox_name" autocomplete="off" required>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Name" name="name" id="name" autocomplete="off">
+                  <small class="form-text text-danger" id="error_name"></small>
+                </div>
               </div>
               <div class="col-md-6">
-                <input type="email" class="form-control" placeholder="Email address" name="mailbox_email" id="mailbox_email" autocomplete="off" required>
+                <div class="form-group">
+                  <input type="email" class="form-control" placeholder="Email address" name="email" id="email" autocomplete="off">
+                  <small class="form-text text-danger" id="error_email"></small>
+                </div>
               </div>
               <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Phone number" name="mailbox_phone" id="mailbox_phone" autocomplete="off" required>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Phone number" name="phone" id="phone" autocomplete="off">
+                  <small class="form-text text-danger" id="error_phone"></small>
+                </div>
               </div>
               <div class="col-md-6">
-                <select class="form-control" name="mailbox_inquiry" id="mailbox_inquiry">
-                  <option value="General">General Inquiry</option>
-                </select>
+                <div class="form-group">
+                  <select class="form-control" name="inquiry" id="inquiry">
+                    <option value="General">General Inquiry</option>
+                  </select>
+                  <small class="form-text text-danger" id="error_inquiry"></small>
+                </div>
               </div>
               <div class="col-md-12">
-                <input type="text" class="form-control" placeholder="Subject" name="mailbox_subject" id="mailbox_subject" autocomplete="off" required>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Subject" name="subject" id="subject" autocomplete="off">
+                  <small class="form-text text-danger" id="error_subject"></small>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <textarea class="form-control" rows="5" placeholder="Message" name="message" id="message"></textarea>
+                  <small class="form-text text-danger" id="error_message"></small>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck1">
+                  <label class="custom-control-label" for="customCheck1">
+                    I accept the terms & conditions and I understand that my data will be hold securely in accordance with the privacy policy.
+                  </label>
+                </div>
               </div>
             </div>
-            <textarea class="form-control" rows="5" placeholder="Message" name="mailbox_message" id="mailbox_message" required></textarea>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheck1" required>
-              <label class="custom-control-label" for="customCheck1">
-                I accept the terms & conditions and I understand that my data will be hold securely in accordance with the privacy policy.
-              </label>
-            </div>
             <div class="clearfix"></div>
-            <button type="submit" class="btn btn-primary mt-3 save_form">Send</button>
+            <button type="button" class="btn btn-primary mt-3 submit_form">Send</button>
           </form>
         </div>
       </div>

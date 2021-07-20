@@ -25,7 +25,7 @@ class Picture
         if (!empty($image_id)) {
             $row = $this->image->find($image_id);
 
-            if (file_exists($path . $row['name'])) {
+            if (!empty($row['name']) && file_exists($path . $row['name'])) {
                 return '<img class="rounded-image" src="' . base_url() . '/' . $row['image_url'] . '" />';
             }
         }
