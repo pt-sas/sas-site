@@ -84,8 +84,8 @@ class MainController extends BaseController
 		$promo	= new M_Promo();
 
 		$data = [
-			'news' 				=> $news->where('isactive', 'Y')->showAll(),
-			'promo' 			=> $promo->where('isactive', 'Y')->showAll(),
+			'news' 				=> $news->showAll(),
+			'promo' 			=> $promo->showAll(),
 			'page_title'	=> 'News & Promo - PT Sahabat Abadi Sejahtera'
 		];
 		return view('frontend/news/index', $data);

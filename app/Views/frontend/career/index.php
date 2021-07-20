@@ -51,19 +51,31 @@
         <div class="col-md-8">
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/ethics.png') ?>" alt="">
-            <span>Ethics</span>
+            <span>Integrity</span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/transparent.png') ?>" alt="">
-            <span>Transparancy</span>
+            <span>Honesty</span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/professional.png') ?>" alt="">
-            <span>Professionalism</span>
+            <span>Hard Work</span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/group.png') ?>" alt="">
-            <span>Teamwork</span>
+            <span>Positive Thinking</span>
+          </div>
+          <div class="item-core">
+            <img src="<?= base_url('adw/assets/images/transparent.png') ?>" alt="">
+            <span>Solid Teamwork</span>
+          </div>
+          <div class="item-core">
+            <img src="<?= base_url('adw/assets/images/professional.png') ?>" alt="">
+            <span>Continuous Self-Improvement</span>
+          </div>
+          <div class="item-core">
+            <img src="<?= base_url('adw/assets/images/group.png') ?>" alt="">
+            <span>Loyalty</span>
           </div>
         </div>
       </div>
@@ -83,8 +95,8 @@
             <select name="" id="" class="form-control">
               <!-- <option value="">All Division</option>
               <?php foreach ($division as $value) : ?>
-                  <option value="<? //= $value->md_division_id 
-                                  ?>"><? //= $value->name 
+                  <option value="<? //= $value->md_division_id
+                                  ?>"><? //= $value->name
                                       ?></option>
               <?php endforeach; ?> -->
               <option value=""> </option>
@@ -101,7 +113,8 @@
                 <h5><?= $row->position; ?></h5>
                 <h6><?= $row->division_name; ?></h6>
               </div>
-              <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>">
+              <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>"
+                data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
                 Detail
               </a>
               <span class="location">
@@ -116,7 +129,7 @@
   </div>
 
   <!-- best cv -->
-  <div class="half-half-wrap bordered-top pb-0">
+  <!-- <div class="half-half-wrap bordered-top pb-0">
     <div class="container">
       <div class="row">
         <div class="col-md-4">
@@ -130,7 +143,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 
 <div class="container">
@@ -172,7 +185,7 @@
         <div name="requirement">
 
         </div>
-        <button class="btn btn-primary">Apply Now</button>
+        <a href="" class="btn btn-primary url">Apply Now</a>
       </div>
     </div>
   </div>
@@ -187,6 +200,7 @@
     var requirement = $(this).data('requirement');
     var posted_date = $(this).data('posted_date');
     var expired_date = $(this).data('expired_date');
+    var url = $(this).data('url');
 
     $('#modalJobs').modal('show');
     $('[name="division"]').text(division);
@@ -194,6 +208,7 @@
     $('[name="posted_date"]').text(posted_date);
     $('[name="description"]').html(description);
     $('[name="requirement"]').html(requirement);
+    $('.url').attr("href", url);
   });
 </script>
 <?= $this->endSection() ?>

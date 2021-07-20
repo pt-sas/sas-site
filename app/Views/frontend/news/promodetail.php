@@ -11,7 +11,7 @@
       <div class="row">
         <div class="col-md-12">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="<?= base_url('/news') ?>">News & Promo</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url('/news') ?>">News & Event</a></li>
             <li class="breadcrumb-item active" aria-current="page"><?= $promo->title ?></li>
           </ol>
         </div>

@@ -160,15 +160,16 @@ class Validation
 			'label'		=> 'expired date',
 			'rules' 	=> 'required'
 		],
+		'url' => [
+			'rules' 	=> 'required'
+		],
 	];
 
 	public $news = [
 		'title' => [
-			'label'		=> 'news title',
 			'rules' 	=> 'required'
 		],
 		'content' => [
-			'label'		=> 'news content',
 			'rules' 	=> 'required'
 		],
 		'news_date' => [
@@ -183,11 +184,9 @@ class Validation
 
 	public $promo = [
 		'title' => [
-			'label'		=> 'promo title',
 			'rules' 	=> 'required'
 		],
 		'content' => [
-			'label'		=> 'promo content',
 			'rules' 	=> 'required'
 		],
 		'start_date' => [

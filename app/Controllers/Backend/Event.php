@@ -6,14 +6,14 @@ use App\Controllers\BaseController;
 use App\Models\M_Promo;
 use App\Models\M_image;
 
-class Promo extends BaseController
+class Event extends BaseController
 {
 	protected $table = 'trx_promo';
 	protected $path_folder = 'custom/image/promo/';
 
 	public function index()
 	{
-		$this->new_title = 'Promo';
+		$this->new_title = 'Event';
 		$this->form_type = 'new_form';
 
 		$data = [

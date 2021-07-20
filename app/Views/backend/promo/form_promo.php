@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="start_date">Posted Date <span class="required">*</span></label>
+                            <label for="start_date">Start Date <span class="required">*</span></label>
                             <input type="text" class="form-control datepicker" id="start_date" name="start_date">
                             <small class="form-text text-danger" id="error_start_date"></small>
                         </div>
