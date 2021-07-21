@@ -5,7 +5,7 @@
 <!-- hero -->
 <div class="content">
   <div class="title-page">
-    Contact Us
+    <?= lang("Contact.CUD11") ?>
   </div>
 
   <!-- contact box  -->
@@ -15,7 +15,7 @@
         <div class="col-md-4">
           <div class="contact-box">
             <img src="<?= base_url('adw/assets/images/map-pin.png') ?>" alt="">
-            <h5>Our Headquarter</h5>
+            <h5><?= lang("Contact.CUH511") ?></h5>
             <p>Jalan Indokarya III Blok F1-2,
               Tanjung Priok, Kota Jakarta Utara,
               DKI Jakarta 14340</p>
@@ -24,14 +24,14 @@
         <div class="col-md-4">
           <div class="contact-box">
             <img src="<?= base_url('adw/assets/images/headphones.png') ?>" alt="">
-            <h5>Lets Talk</h5>
+            <h5><?= lang("Contact.CUH512") ?></h5>
             <p>Phone : (021) 6583 1188</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="contact-box">
             <img src="<?= base_url('adw/assets/images/mail.png') ?>" alt="">
-            <h5>Our Mail</h5>
+            <h5><?= lang("Contact.CUH513") ?></h5>
             <p>info@sahabatabadi.com</p>
           </div>
         </div>
@@ -45,12 +45,12 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <h4 class="left-title">How we can help you?</h4>
+          <h4 class="left-title"><?= lang("Contact.CUH521") ?></h4>
         </div>
         <div class="col-md-8 card-form">
           <form class="form-contact" id="form_contact">
             <?= csrf_field(); ?>
-            <p class="desc">Fill out the form and we'll be in touch soon!</p>
+            <p class="desc"><?= lang("Contact.CUP21") ?></p>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">

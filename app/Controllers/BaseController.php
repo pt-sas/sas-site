@@ -30,7 +30,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = ['action_helper'];
+	protected $helpers = ['action_helper','url'];
 
 	protected $modal_type;
 	protected $form_type;
@@ -58,5 +58,9 @@ class BaseController extends Controller
 		$this->template = new Template();
 		$this->field = new Field();
 		$this->picture = new Picture();
+
+		$session = \Config\Services::session();
+  	$language = \Config\Services::language();
+  	$language->setLocale($session->lang);
 	}
 }

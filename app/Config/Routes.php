@@ -33,7 +33,10 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 
 //Frontend
+$routes->setAutoRoute(false);
 $routes->get('/', 'MainController::index');
+$routes->get('/en', 'Language::en');
+$routes->get('/id', 'Language::id');
 
 $routes->get('/product', 'MainController::product');
 $routes->get('/product/compare', 'MainController::productcompare');

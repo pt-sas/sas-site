@@ -141,7 +141,7 @@
    * @param {*} data from database
    */
   function errorForm(parent, data) {
-    const errorInput = parent.find('input[type="text"], select, textarea');
+    const errorInput = parent.find('input[type="text"], input[type="email"], select, textarea');
     const errorText = parent.find('small');
 
     var arrInput = [];
@@ -192,7 +192,7 @@
       if (field[i].name !== '') {
 
         form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
-          .removeClass('is-invalid');
+          .removeClass('has-error has-feedback');
       }
     }
 
