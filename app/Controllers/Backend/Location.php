@@ -124,4 +124,16 @@ class Location extends BaseController
 		}
 		return json_encode($response);
 	}
+
+	public function getPosition($name)
+	{
+		$location = new M_Location();
+
+		try {
+			$response = $location->where('location', $name)->findAll();
+		} catch (\Exception $e) {
+			$response = message('error', false, $e->getMessage());
+		}
+		return json_encode($response);
+	}
 }
