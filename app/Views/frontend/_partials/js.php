@@ -56,7 +56,7 @@
 
           var map = new google.maps.Map(
             document.getElementById('map'), {
-              zoom: 20,
+              zoom: 15,
               center: mapcenter
             }
           );
