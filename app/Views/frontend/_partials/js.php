@@ -26,28 +26,71 @@
     }, 700);
   })
 
-  window.initMap = function() {
-    var mapcenter = {
-      lat: -6.1665207714398,
-      lng: 106.82544824454114
-    };
+  function initMap(location = null) {
+    if (location === null) {
+      location = 'sunter';
+    }
 
-    var map = new google.maps.Map(
-      document.getElementById('map'), {
-        zoom: 13,
-        center: mapcenter
-      }
-    );
+    var url = '<?= base_url('backend/location/getPosition') ?>' + '/' + location;
 
-    var marker = new google.maps.Marker({
-      position: {
-        lat: -6.149856214247394,
-        lng: 106.90281447067102
+    $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'JSON',
+      beforeSend: function() {
+        loadingForm('map', 'bounce');
       },
-      icon: 'assets/images/marker-map.png',
-      map: map
+      complete: function() {
+        hideLoadingForm('map');
+      },
+      success: function(result) {
+        $.each(result, function(idx, elem) {
+          var lat = parseFloat(elem.lattitude);
+          var lng = parseFloat(elem.longitude);
+          var location_name = elem.name;
+
+          var mapcenter = {
+            lat: lat,
+            lng: lng
+          };
+
+          var map = new google.maps.Map(
+            document.getElementById('map'), {
+              zoom: 20,
+              center: mapcenter
+            }
+          );
+
+          var marker = new google.maps.Marker({
+            position: {
+              lat: lat,
+              lng: lng
+            },
+            icon: 'adw/assets/images/marker-map.png',
+            map: map
+          });
+
+          var infowindow = new google.maps.InfoWindow({
+            content: location_name
+          });
+
+          google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map, marker);
+          });
+        });
+      },
+      error: function(jqXHR, exception) {
+        showError(jqXHR, exception);
+      }
     });
+
   }
+
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+    var target = $(e.target).attr("href") // activated tab
+    var location = target.substr(1);
+    initMap(location);
+  });
 </script>
 
 
