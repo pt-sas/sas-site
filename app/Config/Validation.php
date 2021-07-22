@@ -63,19 +63,35 @@ class Validation
 	];
 
 	public $about = [
-		'about_overview' => [
+		'tb_cp_overview' => [
 			'label'		=> 'overview',
 			'rules' 	=> 'required'
 		],
-		'about_vision' => [
+		'tb_cp_vision' => [
 			'label'		=> 'vision',
 			'rules'		=> 'required'
 		],
-		'about_mision' => [
+		'tb_cp_mision' => [
 			'label'		=> 'mission',
 			'rules'		=> 'required'
 		],
-		'about_objectives' => [
+		'tb_cp_objectives' => [
+			'label'		=> 'objectives',
+			'rules'		=> 'required'
+		],
+		'tb_cp_overview_en' => [
+			'label'		=> 'overview',
+			'rules' 	=> 'required'
+		],
+		'tb_cp_vision_en' => [
+			'label'		=> 'vision',
+			'rules'		=> 'required'
+		],
+		'tb_cp_mision_en' => [
+			'label'		=> 'mission',
+			'rules'		=> 'required'
+		],
+		'tb_cp_objectives_en' => [
 			'label'		=> 'objectives',
 			'rules'		=> 'required'
 		]

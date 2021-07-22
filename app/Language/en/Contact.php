@@ -7,15 +7,19 @@ return [
     'CUD11' => 'Contact Us',
 
     'CUH511' => 'Our Headquarter',
-    'CUP11' => 'PT Sahabat Abadi Sejahtera telah menjadi pemasok Philips Lighting terkemuka',
+    'CUP11' => 'Jalan Indokarya III Blok F1-2, Tanjung Priok, North Jakarta City, DKI Jakarta 14340',
 
     'CUH512' => 'Lets Talk',
-    'CUP12' => 'PT Sahabat Abadi Sejahtera telah menjadi pemasok Philips Lighting terkemuka',
 
     'CUH513' => 'Our Mail',
-    'CUP13' => 'PT Sahabat Abadi Sejahtera telah menjadi pemasok Philips Lighting terkemuka',
 
     'CUH521' => 'How we can help you?',
     'CUP21' => "Fill out the form and we'll be in touch soon!",
 
+    'CUI21' => 'Name',
+    'CUI22' => 'Email Address',
+    'CUI23' => 'Phone Number',
+    'CUDD21' => 'General Inquiry',
+    'CUI25' => 'Subject',
+    'CUI26' => 'Message',
 ];

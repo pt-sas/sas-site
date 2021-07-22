@@ -9,12 +9,12 @@ return [
 
     'HH321' => 'Why us?',
     'HP21' => 'We experienced in Lighting and Electrical Equipment in Indonesia',
-    'HH421' => 'Feature title in here',
-    'HHP21' => 'Quis fringilla egestas dis viverra semper mmo Massa vivamus accumsan imperdiet et urna tempor aliquet',
-    'HH422' => 'Feature title in here',
-    'HHP22' => 'Quis fringilla egestas dis viverra semper mmo Massa vivamus accumsan imperdiet et urna tempor aliquet',
-    'HH423' => 'Feature title in here',
-    'HHP23' => 'Quis fringilla egestas dis viverra semper mmo Massa vivamus accumsan imperdiet et urna tempor aliquet',
+    'HH421' => 'Quality Product',
+    'HHP21' => 'We only deliver quality products that you can trust and rely on – no compromises on this one!',
+    'HH422' => 'Distribution Network',
+    'HHP22' => 'Our business partners are very accessible and always ready to serve you wherever you are.',
+    'HH423' => 'Professional Team',
+    'HHP23' => 'Our knowledgeable sales professionals are only a call away to immediately assist you and understand your needs.',
 
     'HH331' => 'Explore more our brand partners',
     'HP31' => 'Quis fringilla egestas dis viverra semper commodo. Massa vivamus accumsan imperdiet et. Ut urna tempor aliquet elementum eget ultrices vitae. Convallis vulputate at malesuada orci morbi. Ut elementum nunc justo orci, sagittis mauris vestibulum purus.',

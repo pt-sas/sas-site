@@ -1,5 +1,9 @@
 <!-- js -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwpQbIvzRtyUWbnG-fKkhDFrXWqygSoa8&callback=initMap"></script>
+<!-- Sweet Alert -->
+<script src="<?= base_url('atlantis-pro/js/plugin/sweetalert/sweetalert.min.js') ?>"></script>
+<!-- SweetAlert2 -->
+<script src="<?= base_url('atlantis-pro/js/plugin/sweetalert2/sweetalert2.min.js') ?>"></script>
 
 <!-- Loader waitMe -->
 <script src="<?= base_url('atlantis-pro/js/plugin/loader/waitMe.min.js') ?>"></script>
@@ -143,14 +147,21 @@
       success: function(result) {
         console.log(result)
         if (result[0].success) {
-          alert(result[0].message);
+          Swal.fire({
+            type  : 'success',
+            title : result[0].message,
+            timer : 1500
+          });
           clearForm(evt);
-
         } else if (result[0].error) {
           errorForm(form, result);
           hideLoadingForm(form.prop('id'));
         } else {
-          alert(result[0].message);
+          Swal.fire({
+            type  : 'info',
+            title : result[0].message,
+            timer : 2000
+          });
         }
       },
       error: function(jqXHR, exception) {

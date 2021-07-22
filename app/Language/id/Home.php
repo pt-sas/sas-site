@@ -9,12 +9,12 @@ return [
 
     'HH321' => 'Mengapa Kami?',
     'HP21' => 'Kami berpengalaman di bidang Pencahayaan dan Perlengkapan Listrik di Indonesia',
-    'HH421' => 'Judul fitur di sini',
-    'HHP21' => 'Quis fringilla egestas dis viverra semper mmo Massa vivamus accumsan imperdiet et urna tempor aliquet',
-    'HH422' => 'Judul fitur di sini',
-    'HHP22' => 'Quis fringilla egestas dis viverra semper mmo Massa vivamus accumsan imperdiet et urna tempor aliquet',
-    'HH423' => 'Judul fitur di sini',
-    'HHP23' => 'Quis fringilla egestas dis viverra semper mmo Massa vivamus accumsan imperdiet et urna tempor aliquet',
+    'HH421' => 'Produk Berkualitas',
+    'HHP21' => 'Kami hanya menawarkan produk-produk berkualitas yang dapat dipercaya dan diandalkan – tidak ada kompromi untuk yang satu ini!',
+    'HH422' => 'Jaringan Distribusi',
+    'HHP22' => 'Mitra bisnis kami mudah dijangkau dan selalu siap melayani anda dimanapun anda berada.',
+    'HH423' => 'Tim Profesional',
+    'HHP23' => 'Tenaga penjualan kami dapat dihubungi dengan mudah dan selalu siap membantu dan mengerti kebutuhan anda.',
 
     'HH331' => 'Jelajahi lebih banyak mitra produk kami',
     'HP31' => 'Quis fringilla egestas dis viverra semper commodo. Massa vivamus accumsan imperdiet et. Ut urna tempor aliquet elementum eget ultrices vitae. Convallis vulputate at malesuada orci morbi. Ut elementum nunc justo orci, sagittis mauris vestibulum purus.',

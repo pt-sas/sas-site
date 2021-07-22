@@ -6,7 +6,7 @@
 return [
     'CD11' => 'Career',
 
-    'CH411' => 'Why work with us',
+    'CH411' => 'Why work with us?',
     'CP11' => 'PT Sahabat Abadi Sejahtera has been a leading and largest Philips Lighting stockiest for many years and has built a strong and reliable business relationship in the community through its consistent performance and has earned excellent reputation for its prompt settlement of business transactions.
       Being specialized with a focused marketing philosophy, excellent services and extensive distribution network in the region, PT Sahabat Abadi Sejahtera is definitely the right business partner for Philips Lighting.',
 
@@ -15,5 +15,15 @@ return [
 
     'CH431' => 'Our core value',
 
+    'CSP31' => 'Integrity',
+    'CSP32' => 'Honesty',
+    'CSP33' => 'Hard Work',
+    'CSP34' => 'Positive Thinking',
+    'CSP35' => 'Solid Teamwork',
+    'CSP36' => 'Continuous Self-Improvement',
+    'CSP37' => 'Loyalty',
+
     'CH441' => 'Search for available Jobs',
+
+    'CBU41' => 'Search',
 ];

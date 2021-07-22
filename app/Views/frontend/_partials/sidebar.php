@@ -6,11 +6,11 @@
   <div class="clearfix"></div>
   <ul class="menu">
     <li><a href="<?= base_url('/') ?>">Home</a></li>
-    <li><a href="<?= base_url('/product') ?>">Product</a></li>
-    <li><a href="<?= base_url('/about') ?>">About Us</a></li>
-    <li><a href="<?= base_url('/news') ?>">News & Event</a></li>
-    <li><a href="<?= base_url('/career') ?>">Career</a></li>
-    <li><a href="<?= base_url('/contact') ?>">Contact Us</a></li>
+    <li><a href="<?= base_url('/product') ?>"><?= lang("Sidebar.MenuProduct") ?></a></li>
+    <li><a href="<?= base_url('/about') ?>"><?= lang("Sidebar.MenuAbout") ?></a></li>
+    <li><a href="<?= base_url('/news') ?>"><?= lang("Sidebar.MenuNews") ?></a></li>
+    <li><a href="<?= base_url('/career') ?>"><?= lang("Sidebar.MenuCareer") ?></a></li>
+    <li><a href="<?= base_url('/contact') ?>"><?= lang("Sidebar.MenuContact") ?></a></li>
   </ul>
 
   <div class="socmed">

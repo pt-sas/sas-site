@@ -15,6 +15,16 @@ return [
 
     'CH431' => 'Nilai Inti Kami',
 
+    'CSP31' => 'Integritas',
+    'CSP32' => 'Kejujuran',
+    'CSP33' => 'Kerja Keras',
+    'CSP34' => 'Berpikir Positif',
+    'CSP35' => 'Kerja Sama Tim yang Solid',
+    'CSP36' => 'Perbaikan Diri Berkelanjutan',
+    'CSP37' => 'Loyalitas',
+
     'CH441' => 'Cari lowongan yang tersedia',
+
+    'CBU41' => 'Cari',
 
 ];

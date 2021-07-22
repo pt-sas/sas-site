@@ -19,7 +19,13 @@
           </div>
         </div>
         <div class="col-md-7">
-          <?= $about['tb_cp_overview'] ?>
+          <?php
+            if(session()->lang == 'id') {
+              echo $about['tb_cp_overview'];
+            } else {
+              echo $about['tb_cp_overview_en'];
+            }
+          ?>
         </div>
       </div>
     </div>
@@ -33,21 +39,39 @@
           <div class="item-visi">
             <img src="<?= base_url('adw/assets/images/eye.png') ?>" alt="">
             <h6><?= lang("About.AH321") ?></h6>
-            <?= $about['tb_cp_vision'] ?>
+            <?php
+              if(session()->lang == 'id') {
+                echo $about['tb_cp_vision'];
+              } else {
+                echo $about['tb_cp_vision_en'];
+              }
+            ?>
           </div>
         </div>
         <div class="col-md-4">
           <div class="item-visi">
             <img src="<?= base_url('adw/assets/images/target.png') ?>" alt="">
             <h6><?= lang("About.AH322") ?></h6>
-            <?= $about['tb_cp_mision'] ?>
+            <?php
+              if(session('lang') == 'id') {
+                echo $about['tb_cp_mision'];
+              } else {
+                echo $about['tb_cp_mision_en'];
+              }
+            ?>
           </div>
         </div>
         <div class="col-md-4">
           <div class="item-visi">
             <img src="<?= base_url('adw/assets/images/task.png') ?>" alt="">
             <h6><?= lang("About.AH323") ?></h6>
-            <?= $about['tb_cp_objectives'] ?>
+            <?php
+              if(session('lang') == 'id') {
+                echo $about['tb_cp_objectives'];
+              } else {
+                echo $about['tb_cp_objectives_en'];
+              }
+            ?>
           </div>
         </div>
       </div>

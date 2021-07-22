@@ -50,31 +50,31 @@
         <div class="col-md-8">
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/ethics.png') ?>" alt="">
-            <span>Integrity</span>
+            <span><?= lang("Career.CSP31") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/transparent.png') ?>" alt="">
-            <span>Honesty</span>
+            <span><?= lang("Career.CSP32") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/professional.png') ?>" alt="">
-            <span>Hard Work</span>
+            <span><?= lang("Career.CSP33") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/group.png') ?>" alt="">
-            <span>Positive Thinking</span>
+            <span><?= lang("Career.CSP34") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/transparent.png') ?>" alt="">
-            <span>Solid Teamwork</span>
+            <span><?= lang("Career.CSP35") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/professional.png') ?>" alt="">
-            <span>Continuous Self-Improvement</span>
+            <span><?= lang("Career.CSP36") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/group.png') ?>" alt="">
-            <span>Loyalty</span>
+            <span><?= lang("Career.CSP37") ?></span>
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@
               <option value="ml">Mid-level </option>
               <option value="sl">Senior-level </option>
             </select>
-            <button class="btn btn-primary">Search</button>
+            <button class="btn btn-primary"><?= lang("Career.CBU41") ?></button>
           </div>
 
           <?php foreach ($job as $row) : ?>
