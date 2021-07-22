@@ -5,7 +5,7 @@
 <!-- hero -->
 <div class="content">
   <div class="title-page">
-    Career
+    <?= lang("Career.CD11") ?>
   </div>
 
   <!-- photo w text  -->
@@ -19,9 +19,8 @@
           </div>
         </div>
         <div class="col-md-7">
-          <h4>Why work with us</h4>
-          <p>PT Sahabat Abadi Sejahtera has been a leading and largest Philips Lighting stockiest for many years and has built a strong and reliable business relationship in the community through its consistent performance and has earned excellent reputation for its prompt settlement of business transactions.
-            Being specialized with a focused marketing philosophy, excellent services and extensive distribution network in the region, PT Sahabat Abadi Sejahtera is definitely the right business partner for Philips Lighting.</p>
+          <h4><?= lang("Career.CH411") ?></h4>
+          <p><?= lang("Career.CP11") ?></p>
         </div>
       </div>
     </div>
@@ -32,10 +31,10 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <h4 class="left-title">We are looking for</h4>
+          <h4 class="left-title"><?= lang("Career.CH421") ?></h4>
         </div>
         <div class="col-md-8">
-          <p>Members who are a team-player, full of enthusiasm and desire for continuous learning & improvements. If you want to be part of our fast-growing company, we’d love to hear from you.</p>
+          <p><?= lang("Career.CP21") ?></p>
         </div>
       </div>
     </div>
@@ -46,36 +45,36 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <h4 class="left-title">Our core value</h4>
+          <h4 class="left-title"><?= lang("Career.CH431") ?></h4>
         </div>
         <div class="col-md-8">
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/ethics.png') ?>" alt="">
-            <span>Integrity</span>
+            <span><?= lang("Career.CSP31") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/transparent.png') ?>" alt="">
-            <span>Honesty</span>
+            <span><?= lang("Career.CSP32") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/professional.png') ?>" alt="">
-            <span>Hard Work</span>
+            <span><?= lang("Career.CSP33") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/group.png') ?>" alt="">
-            <span>Positive Thinking</span>
+            <span><?= lang("Career.CSP34") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/transparent.png') ?>" alt="">
-            <span>Solid Teamwork</span>
+            <span><?= lang("Career.CSP35") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/professional.png') ?>" alt="">
-            <span>Continuous Self-Improvement</span>
+            <span><?= lang("Career.CSP36") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/group.png') ?>" alt="">
-            <span>Loyalty</span>
+            <span><?= lang("Career.CSP37") ?></span>
           </div>
         </div>
       </div>
@@ -87,7 +86,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <h4 class="left-title">Search for available Jobs</h4>
+          <h4 class="left-title"><?= lang("Career.CH441") ?></h4>
         </div>
         <div class="col-md-8">
           <div class="filter-jobs">
@@ -104,7 +103,7 @@
               <option value="ml">Mid-level </option>
               <option value="sl">Senior-level </option>
             </select>
-            <button class="btn btn-primary">Search</button>
+            <button class="btn btn-primary"><?= lang("Career.CBU41") ?></button>
           </div>
 
           <?php foreach ($job as $row) : ?>

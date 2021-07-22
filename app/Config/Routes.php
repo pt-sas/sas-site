@@ -34,6 +34,8 @@ $routes->setAutoRoute(true);
 
 //Frontend
 $routes->get('/', 'MainController::index');
+$routes->get('/en', 'Language::en');
+$routes->get('/id', 'Language::id');
 
 $routes->get('/product', 'MainController::product');
 $routes->get('/product/compare', 'MainController::productcompare');

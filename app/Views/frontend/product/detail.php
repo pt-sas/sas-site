@@ -22,7 +22,7 @@
     <div class="row justify-content-center">
       <div class="col-md-12">
         <div class="product-head">
-          <a href="<?= base_url('product') ?>" class="back-link">Back to product list</a>
+          <a href="<?= base_url('product') ?>" class="back-link"><?= lang("ProductDetail.PDA11") ?></a>
           <h2><?= $principal->name ?> Product</h2>
           <!-- <a href="<?= base_url('product/compare') ?>" class="btn btn-white">COMPARE PRODUCT</a> -->
         </div>
@@ -41,7 +41,7 @@
                   <option value="<?= $row->md_productgroup_id ?>"><?= $row->name ?></option>
               <?php endforeach; ?>
             </select>
-            <button type="button" id="btn_filter" class="btn btn-primary">Sort</button>
+            <button type="button" id="btn_filter" class="btn btn-primary">Filter</button>
           </div>
         </div>
       </div>
@@ -66,9 +66,9 @@
           </div>
         <?php endforeach; ?>
 
-        <div class="col-md-12 text-center">
+        <!-- <div class="col-md-12 text-center">
           <button class="btn btn-whites mt-3">Load More <img src="<?= base_url('adw/assets/images/loader.png') ?>" alt="" class="spinning" /></button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

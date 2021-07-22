@@ -14,6 +14,11 @@ class M_about extends Model
         'tb_cp_mision',
         'tb_cp_value',
         'tb_cp_objectives',
+        'tb_cp_overview_en',
+        'tb_cp_vision_en',
+        'tb_cp_mision_en',
+        'tb_cp_value_en',
+        'tb_cp_objectives_en',
         'isactive'
     ];
     protected $useTimestamps = true;

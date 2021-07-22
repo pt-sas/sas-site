@@ -16,6 +16,9 @@
 	<!-- Load Style -->
 	<link rel="stylesheet" href="<?= base_url('adw/assets/css/app.css') ?>" media="screen">
 	<link rel="stylesheet" href="<?= base_url('adw/assets/css/add.css') ?>" media="screen">
+
+	<!-- SweetAlert2 -->
+	<link rel="stylesheet" href="<?= base_url('atlantis-pro/js/plugin/sweetalert2/sweetalert2.min.css') ?>">
 	<!-- Loader waitMe -->
 	<link rel="stylesheet" href="<?= base_url('atlantis-pro/js/plugin/loader/waitMe.min.css') ?>">
 
