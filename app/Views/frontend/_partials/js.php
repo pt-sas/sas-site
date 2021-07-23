@@ -39,6 +39,8 @@
 
     var url = '<?= base_url('backend/location/getPosition') ?>' + '/' + location;
 
+    var mapID = document.getElementById('map');
+
     $.ajax({
       url: url,
       type: 'GET',
@@ -60,12 +62,14 @@
             lng: lng
           };
 
-          var map = new google.maps.Map(
-            document.getElementById('map'), {
-              zoom: 15,
-              center: mapcenter
-            }
-          );
+          if (mapID !== null) {
+            var map = new google.maps.Map(
+              mapID, {
+                zoom: 15,
+                center: mapcenter
+              }
+            );
+          }
 
           var marker = new google.maps.Marker({
             position: {
@@ -89,7 +93,6 @@
         showError(jqXHR, exception);
       }
     });
-
   }
 
   $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
@@ -147,7 +150,6 @@
         hideLoadingForm(form.prop('id'));
       },
       success: function(result) {
-        console.log(result)
         if (result[0].success) {
           Swal.fire({
             type: 'success',
