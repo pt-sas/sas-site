@@ -4,6 +4,8 @@
 <script src="<?= base_url('atlantis-pro/js/plugin/sweetalert/sweetalert.min.js') ?>"></script>
 <!-- SweetAlert2 -->
 <script src="<?= base_url('atlantis-pro/js/plugin/sweetalert2/sweetalert2.min.js') ?>"></script>
+<!-- Moment JS -->
+<script src="<?= base_url('atlantis-pro/js/plugin/moment/moment.min.js') ?>"></script>
 
 <!-- Loader waitMe -->
 <script src="<?= base_url('atlantis-pro/js/plugin/loader/waitMe.min.js') ?>"></script>

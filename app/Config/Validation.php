@@ -168,6 +168,14 @@ class Validation
 			'label'		=> 'job requirement',
 			'rules' 	=> 'required'
 		],
+		'description_en' => [
+			'label'		=> 'job description (English)',
+			'rules' 	=> 'required'
+		],
+		'requirement_en' => [
+			'label'		=> 'job requirement (English)',
+			'rules' 	=> 'required'
+		],
 		'posted_date' => [
 			'label'		=> 'posted date',
 			'rules' 	=> 'required'
@@ -188,6 +196,14 @@ class Validation
 		'content' => [
 			'rules' 	=> 'required'
 		],
+		'title_en' => [
+			'label'		=> 'title (English)',
+			'rules' 	=> 'required'
+		],
+		'content_en' => [
+			'label'		=> 'content (English)',
+			'rules' 	=> 'required'
+		],
 		'news_date' => [
 			'label'		=> 'posted date',
 			'rules' 	=> 'required'
@@ -200,9 +216,19 @@ class Validation
 
 	public $promo = [
 		'title' => [
+			'label'		=> 'title',
 			'rules' 	=> 'required'
 		],
 		'content' => [
+			'label'		=> 'content',
+			'rules' 	=> 'required'
+		],
+		'title_en' => [
+			'label'		=> 'title (English)',
+			'rules' 	=> 'required'
+		],
+		'content_en' => [
+			'label'		=> 'content (English)',
 			'rules' 	=> 'required'
 		],
 		'start_date' => [

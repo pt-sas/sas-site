@@ -9,4 +9,7 @@ return [
     'MenuNews'    => 'Berita & Acara',
     'MenuCareer'  => 'Karir',
     'MenuContact' => 'Kontak Kami',
+
+    'MenuP1' => 'Berpengalaman dalam Distribusi Perlampuan',
+    'MenuP2' => 'Peralatan Elektrikal',
 ];

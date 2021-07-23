@@ -5,4 +5,6 @@
 
 return [
     'NDBR11' => 'News & Event',
+
+    'NDS11' => 'Published on',
 ];

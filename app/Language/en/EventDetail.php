@@ -5,4 +5,6 @@
 
 return [
     'EDBR11' => 'News & Event',
+
+    'EDH61' => 'Period',
 ];

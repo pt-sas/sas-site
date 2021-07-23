@@ -5,4 +5,6 @@
 
 return [
     'NDBR11' => 'Berita & Acara',
+
+    'NDS11' => 'Diterbitkan pada',
 ];
