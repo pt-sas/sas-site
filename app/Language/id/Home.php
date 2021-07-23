@@ -16,9 +16,10 @@ return [
     'HH423' => 'Tim Profesional',
     'HHP23' => 'Tenaga penjualan kami dapat dihubungi dengan mudah dan selalu siap membantu dan mengerti kebutuhan anda.',
 
-    'HH331' => 'Jelajahi lebih banyak mitra produk kami',
+    'HH331' => 'Pelajari lebih jauh tentang merek yang kami bawa',
     'HP31' => 'Quis fringilla egestas dis viverra semper commodo. Massa vivamus accumsan imperdiet et. Ut urna tempor aliquet elementum eget ultrices vitae. Convallis vulputate at malesuada orci morbi. Ut elementum nunc justo orci, sagittis mauris vestibulum purus.',
+    'HA31' => 'PELAJARI',
 
-    'HH341' => 'Berita Terbaru',
-    'HP41' => 'Artikel terbaru mengenai pencahayaan dan peralatan listrik',
+    'HH341' => 'Berita Terkini',
+    'HP41' => 'Artikel terkini tentang perlampuan dan peralatan elektrikal',
 ];

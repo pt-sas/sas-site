@@ -18,6 +18,7 @@ return [
 
     'HH331' => 'Explore more our brand partners',
     'HP31' => 'Quis fringilla egestas dis viverra semper commodo. Massa vivamus accumsan imperdiet et. Ut urna tempor aliquet elementum eget ultrices vitae. Convallis vulputate at malesuada orci morbi. Ut elementum nunc justo orci, sagittis mauris vestibulum purus.',
+    'HA31' => 'SEE MORE',
 
     'HH341' => 'Latest News',
     'HP41' => 'Updates article all about lighting and electical equipment',

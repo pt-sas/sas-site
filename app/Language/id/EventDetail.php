@@ -5,4 +5,6 @@
 
 return [
     'EDBR11' => 'Berita & Acara',
+
+    'EDH61' => 'Periode',
 ];

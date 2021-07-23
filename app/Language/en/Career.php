@@ -26,4 +26,8 @@ return [
     'CH441' => 'Search for available Jobs',
 
     'CBU41' => 'Search',
+
+    'CH6M1' => 'What you will do',
+    'CH6M2' => 'What you will need',
+    'CBUM1' => 'Apply Now',
 ];

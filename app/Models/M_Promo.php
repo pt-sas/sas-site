@@ -12,6 +12,8 @@ class M_Promo extends Model
         'md_image_id',
         'title',
         'content',
+    		'title_en',
+    		'content_en',
         'start_date',
         'end_date',
         'slug',
@@ -29,6 +31,8 @@ class M_Promo extends Model
   						mdp.isactive,
   						mdp.title,
   						mdp.content,
+  						mdp.title_en,
+  						mdp.content_en,
   						mdp.start_date,
   						mdp.end_date,
   						mdp.slug,
@@ -47,7 +51,7 @@ class M_Promo extends Model
     {
       $db = \Config\Database::connect();
       $builder = $db->table('trx_promo');
-      $builder->select('title, content, start_date, end_date, slug, image_url');
+      $builder->select('title, content, title_en, content_en, start_date, end_date, slug, image_url');
       $builder->join('md_image', 'md_image.md_image_id = trx_promo.md_image_id');
       $query = $builder->get()->getResult();
       return $query;
@@ -57,7 +61,7 @@ class M_Promo extends Model
   	{
   		$db = \Config\Database::connect();
   		$builder = $db->table('trx_promo');
-  		$builder->select('title, content, image_url, start_date, end_date');
+  		$builder->select('title, content, title_en, content_en, image_url, start_date, end_date');
   		$builder->join('md_image', 'md_image.md_image_id = trx_promo.md_image_id');
       $builder->where('slug',$slug);
   		$query = $builder->get()->getRow();

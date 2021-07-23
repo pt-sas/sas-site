@@ -11,7 +11,7 @@ return [
 
     'CUH512' => 'Lets Talk',
 
-    'CUH513' => 'Our Mail',
+    'CUH513' => 'Our e-Mail',
 
     'CUH521' => 'How we can help you?',
     'CUP21' => "Fill out the form and we'll be in touch soon!",
@@ -22,4 +22,6 @@ return [
     'CUDD21' => 'General Inquiry',
     'CUI25' => 'Subject',
     'CUI26' => 'Message',
+
+    'CUBU26' => 'Send',
 ];

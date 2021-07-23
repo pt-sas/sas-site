@@ -2,18 +2,28 @@
     <form class="form-horizontal" id="form_news">
         <?= csrf_field(); ?>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="title">Title <span class="required">*</span></label>
                     <input type="text" class="form-control" id="title" name="title">
                     <small class="form-text text-danger" id="error_title"></small>
                 </div>
-            </div>
-            <div class="col-md-12">
                 <div class="form-group">
                     <label for="content">Content <span class="required">*</span></label>
                     <textarea class="form-control summernote" id="content" name="content" rows="3"></textarea>
                     <small class="form-text text-danger" id="error_content"></small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="title_en">Title (English) <span class="required">*</span></label>
+                    <input type="text" class="form-control" id="title_en" name="title_en">
+                    <small class="form-text text-danger" id="error_title_en"></small>
+                </div>
+                <div class="form-group">
+                    <label for="content_en">Content (English) <span class="required">*</span></label>
+                    <textarea class="form-control summernote" id="content_en" name="content_en" rows="3"></textarea>
+                    <small class="form-text text-danger" id="error_content_en"></small>
                 </div>
             </div>
             <div class="col-md-6">

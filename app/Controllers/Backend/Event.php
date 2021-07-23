@@ -149,6 +149,14 @@ class Event extends BaseController
 				'label'		=> 'promo content',
 				'rules' 	=> 'required'
 			],
+			'title_en' => [
+				'label'		=> 'promo title (English)',
+				'rules' 	=> 'required'
+			],
+			'content_en' => [
+				'label'		=> 'promo content (English)',
+				'rules' 	=> 'required'
+			],
 			'start_date' => [
 				'label'		=> 'start date',
 				'rules' 	=> 'required'

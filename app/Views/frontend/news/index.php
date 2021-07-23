@@ -19,7 +19,11 @@
           <div class="col-md-4">
             <a href="<?= base_url('/news/'.$row->slug.'') ?>" class="item-news">
               <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');"></div>
-              <h5><?= $row->title;?></h5>
+              <?php if(session()->lang == 'id') { ?>
+                <h5><?= $row->title ?></h5>
+              <?php } else { ?>
+                <h5><?= $row->title_en ?></h5>
+              <?php } ?>
               <span><?= date("d F Y", strtotime($row->news_date)) ?></span>
             </a>
           </div>
@@ -44,7 +48,11 @@
                   <p><?= date("d F Y", strtotime($row->start_date)) ?> - <?= date("d F Y", strtotime($row->end_date)) ?></p>
                 </div>
               </div>
-              <h6><?= $row->title;?></h6>
+              <?php if(session()->lang == 'id') { ?>
+                <h6><?= $row->title ?></h6>
+              <?php } else { ?>
+                <h6><?= $row->title_en ?></h6>
+              <?php } ?>
             </a>
           </div>
         <?php endforeach;?>

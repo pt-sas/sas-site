@@ -113,7 +113,8 @@
                 <h6><?= $row->division_name; ?></h6>
               </div>
               <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>"
-                data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
+                data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-description_en="<?= $row->description_en ?>" data-requirement_en="<?= $row->requirement_en ?>"
+                data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
                 Detail
               </a>
               <span class="location">
@@ -168,23 +169,23 @@
         </button>
         <h4 name="position"></h4>
         <h5>
-          <span>
-            <large name="division"></large>
-          </span>
-          <span>
-            <large name="posted_date"></large>
-          </span>
+          <span name="division"></span>
+          <span name="posted_date"></span>
           <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
         </h5>
-        <h6 class="title-list">What you will do</h6>
-        <div name="description">
-
-        </div>
-        <h6 class="title-list">What you will need</h6>
-        <div name="requirement">
-
-        </div>
-        <a href="" class="btn btn-primary url">Apply Now</a>
+        <h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>
+        <?php if(session()->lang == 'id') { ?>
+          <div name="description"></div>
+        <?php } else { ?>
+          <div name="description_en"></div>
+        <?php } ?>
+        <h6 class="title-list"><?= lang("Career.CH6M2") ?></h6>
+        <?php if(session()->lang == 'id') { ?>
+          <div name="requirement"></div>
+        <?php } else { ?>
+          <div name="requirement_en"></div>
+        <?php } ?>
+        <a href="" class="btn btn-primary url"><?= lang("Career.CBUM1") ?></a>
       </div>
     </div>
   </div>
@@ -195,10 +196,11 @@
     e.preventDefault();
     var division = $(this).data('md_division_id');
     var position = $(this).data('position');
+    var posted_date = moment($(this).data('posted_date')).format('LL');
     var description = $(this).data('description');
     var requirement = $(this).data('requirement');
-    var posted_date = $(this).data('posted_date');
-    var expired_date = $(this).data('expired_date');
+    var description_en = $(this).data('description_en');
+    var requirement_en = $(this).data('requirement_en');
     var url = $(this).data('url');
 
     $('#modalJobs').modal('show');
@@ -207,6 +209,8 @@
     $('[name="posted_date"]').text(posted_date);
     $('[name="description"]').html(description);
     $('[name="requirement"]').html(requirement);
+    $('[name="description_en"]').html(description_en);
+    $('[name="requirement_en"]').html(requirement_en);
     $('.url').attr("href", url);
   });
 </script>
