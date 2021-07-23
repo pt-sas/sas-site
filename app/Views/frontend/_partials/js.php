@@ -108,7 +108,7 @@
 
     let formData = new FormData(form[0]);
 
-    let url = '<?= base_url('maincontroller/create'); ?>';
+    let url = '<?= base_url('MainController/create'); ?>';
 
     const field = form.find('input[type="checkbox"], select, input[type="radio"], input[type="file"]');
 
@@ -150,9 +150,9 @@
         console.log(result)
         if (result[0].success) {
           Swal.fire({
-            type  : 'success',
-            title : result[0].message,
-            timer : 1500
+            type: 'success',
+            title: result[0].message,
+            timer: 1500
           });
           clearForm(evt);
         } else if (result[0].error) {
@@ -160,9 +160,9 @@
           hideLoadingForm(form.prop('id'));
         } else {
           Swal.fire({
-            type  : 'info',
-            title : result[0].message,
-            timer : 2000
+            type: 'info',
+            title: result[0].message,
+            timer: 2000
           });
         }
       },
