@@ -4,17 +4,17 @@
 // Contoh, We Are Looking For pada Career, cH421, Page Career, Syntax H4, Kolom ke 2 pada Page Career, Urutan 1 diantara Syntax yang sama pada Kolom tsb
 
 return [
-    'CUD11' => 'Kontak Kami',
+    'CUD11' => 'Hubungi Kami',
 
-    'CUH511' => 'Kantor Pusat',
+    'CUH511' => 'Kantor Pusat Kami',
     'CUP11' => 'Jalan Indokarya III Blok F1-2, Tanjung Priok, Kota Jakarta Utara, DKI Jakarta 14340',
 
-    'CUH512' => 'Hubungi Kami',
+    'CUH512' => 'Mari Berbincang',
 
-    'CUH513' => 'Email Kami',
+    'CUH513' => 'e-Mail Kami',
 
     'CUH521' => 'Bagaimana kami dapat membantu Anda?',
-    'CUP21' => 'Isi formulir dan kami akan segera menghubungi Anda!',
+    'CUP21' => 'Isi form berikut dan kami akan segera menghubungi Anda!',
 
     'CUI21' => 'Nama',
     'CUI22' => 'Alamat Suret',
@@ -22,4 +22,6 @@ return [
     'CUDD21' => 'Pertanyaan Umum',
     'CUI25' => 'Subjek',
     'CUI26' => 'Pesan',
+
+    'CUBU26' => 'Kirim',
 ];

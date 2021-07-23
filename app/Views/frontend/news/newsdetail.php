@@ -12,12 +12,26 @@
         <div class="col-md-8 offset-md-2">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= base_url('/news') ?>"><?= lang("NewsDetail.NDBR11") ?></a></li>
-            <li class="breadcrumb-item active" aria-current="page"><?= $news->title ?></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <?php if(session()->lang == 'id') {
+                echo $news->title;
+              } else {
+                echo $news->title_en;
+              } ?>
+            </li>
           </ol>
-          <h4><?= $news->title ?></h4>
-          <small>Published <?= date("d F Y", strtotime($news->news_date)) ?></small>
+          <?php if(session()->lang == 'id') { ?>
+            <h4><?= $news->title ?></h4>
+          <?php } else { ?>
+            <h4><?= $news->title_en ?></h4>
+          <?php } ?>
+          <small><?= lang("NewsDetail.NDS11") ?> <?= date("d F Y", strtotime($news->news_date)) ?></small>
           <div class="image my-4" style="background-image: url('<?= base_url($news->image_url) ?>');"></div>
-          <?= $news->content ?>
+          <?php if(session()->lang == 'id') {
+            echo $news->content;
+          } else {
+            echo $news->content_en;
+          } ?>
         </div>
       </div>
     </div>

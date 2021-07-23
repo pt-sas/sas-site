@@ -12,7 +12,13 @@
         <div class="col-md-12">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= base_url('/news') ?>"><?= lang("EventDetail.EDBR11") ?></a></li>
-            <li class="breadcrumb-item active" aria-current="page"><?= $promo->title ?></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <?php if(session()->lang == 'id') {
+                echo $promo->title;
+              } else {
+                echo $promo->title_en;
+              } ?>
+            </li>
           </ol>
         </div>
       </div>
@@ -21,10 +27,18 @@
           <div class="image" style="background-image: url('<?= base_url($promo->image_url) ?>');"></div>
         </div>
         <div class="col-md-8">
-          <h4><?= $promo->title ?></h4>
-          <h6>Period: <?= date("d F Y", strtotime($promo->start_date)) ?> - <?= date("d F Y", strtotime($promo->end_date)) ?></h6>
+          <?php if(session()->lang == 'id') { ?>
+            <h4><?= $promo->title ?></h4>
+          <?php } else { ?>
+            <h4><?= $promo->title_en ?></h4>
+          <?php } ?>
+          <h6><?= lang("EventDetail.EDH61") ?> : <?= date("d F Y", strtotime($promo->start_date)) ?> - <?= date("d F Y", strtotime($promo->end_date)) ?></h6>
           <hr>
-          <?= $promo->content ?>
+          <?php if(session()->lang == 'id') {
+            echo $promo->content;
+          } else {
+            echo $promo->content_en;
+          } ?>
         </div>
       </div>
     </div>

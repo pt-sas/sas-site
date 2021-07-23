@@ -9,4 +9,7 @@ return [
     'MenuNews'    => 'News & Event',
     'MenuCareer'  => 'Career',
     'MenuContact' => 'Contact Us',
+
+    'MenuP1' => 'Experience in Lighting and Electrical',
+    'MenuP2' => 'Equipment distribution',
 ];

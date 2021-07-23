@@ -83,7 +83,7 @@
       <div class="col-lg-6">
         <h3><?= lang("Home.HH331") ?></h3>
         <p><?= lang("Home.HP31") ?></p>
-        <a href="<?= base_url('/product') ?>">SEE MORE <img src="<?= base_url('adw/assets/images/arrow-right.png') ?>" alt=""></a>
+        <a href="<?= base_url('/product') ?>"><?= lang("Home.HA31") ?> <img src="<?= base_url('adw/assets/images/arrow-right.png') ?>" alt=""></a>
       </div>
     </div>
   </div>
@@ -103,7 +103,11 @@
         <div class="col-md-4">
           <a href="<?= base_url('/news/'.$row->slug.'') ?>" class="item-news">
             <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');"></div>
-            <h5><?= $row->title;?></h5>
+            <?php if(session()->lang == 'id') { ?>
+              <h5><?= $row->title ?></h5>
+            <?php } else { ?>
+              <h5><?= $row->title_en ?></h5>
+            <?php } ?>
             <span><?= date("d F Y", strtotime($row->news_date)) ?></span>
           </a>
         </div>

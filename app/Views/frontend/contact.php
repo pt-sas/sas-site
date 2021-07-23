@@ -98,7 +98,7 @@
               </div> -->
             </div>
             <div class="clearfix"></div>
-            <button type="button" class="btn btn-primary mt-3 submit_form">Send</button>
+            <button type="button" class="btn btn-primary mt-3 submit_form"><?= lang("Contact.CUBU26") ?></button>
           </form>
         </div>
       </div>

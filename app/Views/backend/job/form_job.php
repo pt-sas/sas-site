@@ -43,12 +43,22 @@
                     <textarea class="form-control summernote" id="description" name="description" rows="3"></textarea>
                     <small class="form-text text-danger" id="error_description"></small>
                 </div>
-            </div>
-            <div class="col-md-6">
                 <div class="form-group">
                     <label for="requirement">Requirement <span class="required">*</span></label>
                     <textarea class="form-control summernote" id="requirement" name="requirement" rows="3"></textarea>
                     <small class="form-text text-danger" id="error_requirement"></small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="description_en">Description (English)<span class="required">*</span></label>
+                    <textarea class="form-control summernote" id="description_en" name="description_en" rows="3"></textarea>
+                    <small class="form-text text-danger" id="error_description_en"></small>
+                </div>
+                <div class="form-group">
+                    <label for="requirement_en">Requirement (English)<span class="required">*</span></label>
+                    <textarea class="form-control summernote" id="requirement_en" name="requirement_en" rows="3"></textarea>
+                    <small class="form-text text-danger" id="error_requirement_en"></small>
                 </div>
             </div>
             <div class="col-md-6">

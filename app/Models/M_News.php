@@ -12,6 +12,8 @@ class M_News extends Model
 		'md_image_id',
 		'title',
 		'content',
+		'title_en',
+		'content_en',
 		'news_date',
 		'slug',
 		'isactive'
@@ -28,6 +30,8 @@ class M_News extends Model
   						mdp.isactive,
   						mdp.title,
   						mdp.content,
+  						mdp.title_en,
+  						mdp.content_en,
   						mdp.news_date,
   						mdp.start_date,
   						mdp.end_date,
@@ -47,7 +51,7 @@ class M_News extends Model
 	{
 		$db = \Config\Database::connect();
 		$builder = $db->table('trx_news');
-		$builder->select('title, news_date, content, slug, image_url');
+		$builder->select('title, content, title_en, content_en, news_date, slug, image_url');
 		$builder->join('md_image', 'md_image.md_image_id = trx_news.md_image_id');
 		$builder->where('trx_news.isactive', 'Y');
 		$builder->orderby('news_date', 'desc');
@@ -60,7 +64,7 @@ class M_News extends Model
 	{
 		$db = \Config\Database::connect();
 		$builder = $db->table('trx_news');
-		$builder->select('title, news_date, content, slug, image_url');
+		$builder->select('title, content, title_en, content_en, news_date, slug, image_url');
 		$builder->join('md_image', 'md_image.md_image_id = trx_news.md_image_id');
 		$builder->limit(3);
 		$builder->where('trx_news.isactive', 'Y');
@@ -73,7 +77,7 @@ class M_News extends Model
 	{
 		$db = \Config\Database::connect();
 		$builder = $db->table('trx_news');
-		$builder->select('title, news_date, content, image_url');
+		$builder->select('title, content, title_en, content_en, news_date, image_url');
 		$builder->join('md_image', 'md_image.md_image_id = trx_news.md_image_id');
 		$builder->where('slug', $slug);
 		$query = $builder->get()->getRow();
