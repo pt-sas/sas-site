@@ -34,3 +34,76 @@
 <![endif]-->
 
 </head>
+
+<style>
+	.half-half-wrap .filter-product {
+		margin-bottom: 30px
+	}
+
+	@media screen and (max-width: 991px) {
+		.half-half-wrap .filter-product {
+			margin-bottom: 20px
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		.half-half-wrap .filter-product {
+			margin-bottom: 10px
+		}
+	}
+
+	.half-half-wrap .filter-product .search {
+		background-image: url("../images/search-b.png");
+		background-position: left 16px center;
+		background-repeat: no-repeat;
+		padding-left: 43px;
+		width: 60%;
+		display: inline-block;
+		vertical-align: middle
+	}
+
+	@media screen and (max-width: 1199px) {
+		.half-half-wrap .filter-product .search {
+			width: 100%
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		.half-half-wrap .filter-product .search {
+			width: 100%;
+			margin-bottom: 10px
+		}
+	}
+
+	.half-half-wrap .filter-product select {
+		width: 100%;
+		display: inline-block;
+		vertical-align: middle
+	}
+
+	@media screen and (max-width: 767px) {
+		.half-half-wrap .filter-product select {
+			width: 100%;
+			margin-bottom: 10px
+		}
+	}
+
+	.half-half-wrap .filter-product .btn-primary {
+		width: 50%;
+		display: inline-block;
+		vertical-align: middle
+	}
+
+	@media screen and (max-width: 1199px) {
+		.half-half-wrap .filter-product .btn-primary {
+			width: 100%
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		.half-half-wrap .filter-product .btn-primary {
+			width: 100%;
+			margin-bottom: 10px
+		}
+	}
+</style>
