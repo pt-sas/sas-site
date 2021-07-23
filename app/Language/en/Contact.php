@@ -6,12 +6,12 @@
 return [
     'CUD11' => 'Contact Us',
 
-    'CUH511' => 'Our Headquarter',
-    'CUP11' => 'Jalan Indokarya III Blok F1-2, Tanjung Priok, North Jakarta City, DKI Jakarta 14340',
+    'CUH511' => 'Headquarter',
+    'CUP11' => 'Jalan Indo Karya 3 Blok F1-2, Tanjung Priok, North Jakarta City, DKI Jakarta 14340',
 
-    'CUH512' => 'Lets Talk',
+    'CUH512' => 'Phone',
 
-    'CUH513' => 'Our e-Mail',
+    'CUH513' => 'Email',
 
     'CUH521' => 'How we can help you?',
     'CUP21' => "Fill out the form and we'll be in touch soon!",

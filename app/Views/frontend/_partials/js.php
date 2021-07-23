@@ -108,7 +108,7 @@
 
     let formData = new FormData(form[0]);
 
-    let url = '<?= base_url('maincontroller/create'); ?>';
+    let url = '<?= base_url('MainController/create'); ?>';
 
     const field = form.find('input[type="checkbox"], select, input[type="radio"], input[type="file"]');
 

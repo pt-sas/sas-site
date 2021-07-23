@@ -25,7 +25,7 @@
           <?php } else { ?>
             <h4><?= $news->title_en ?></h4>
           <?php } ?>
-          <small><?= lang("NewsDetail.NDS11") ?> <?= date("d F Y", strtotime($news->news_date)) ?></small>
+          <small><?= date("d F Y", strtotime($news->news_date)) ?></small>
           <div class="image my-4" style="background-image: url('<?= base_url($news->image_url) ?>');"></div>
           <?php if(session()->lang == 'id') {
             echo $news->content;
