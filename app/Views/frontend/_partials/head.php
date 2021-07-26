@@ -21,6 +21,8 @@
 	<link rel="stylesheet" href="<?= base_url('atlantis-pro/js/plugin/sweetalert2/sweetalert2.min.css') ?>">
 	<!-- Loader waitMe -->
 	<link rel="stylesheet" href="<?= base_url('atlantis-pro/js/plugin/loader/waitMe.min.css') ?>">
+	<!-- aos -->
+	<link rel="stylesheet" href="<?= base_url('atlantis-pro/js/plugin/aos/aos.css') ?>">
 
 	<!-- Load Scripts -->
 	<script type="text/javascript" src="<?= base_url('adw/assets/js/main.min.js') ?>"></script>

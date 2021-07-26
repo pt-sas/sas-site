@@ -9,8 +9,14 @@
 
 <!-- Loader waitMe -->
 <script src="<?= base_url('atlantis-pro/js/plugin/loader/waitMe.min.js') ?>"></script>
+<!-- aos -->
+<script src="<?= base_url('atlantis-pro/js/plugin/aos/aos.js') ?>"></script>
 
 <script>
+  $(window).on('load', function() {
+    aos_init();
+  });
+
   $('.toggle').on('click', function() {
     $('.menu-sidebar').addClass('slideIn')
   })
@@ -315,5 +321,12 @@
       msg = 'Uncaught Error.\n' + xhr.responseText;
 
     console.log(msg)
+  }
+
+  function aos_init() {
+    AOS.init({
+      duration: 1000,
+      once: true
+    });
   }
 </script>
