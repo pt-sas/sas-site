@@ -23,7 +23,7 @@
       <div class="col-md-12">
         <div class="product-head">
           <a href="<?= base_url('product') ?>" class="back-link"><?= lang("ProductDetail.PDA11") ?></a>
-          <?php if(session()->lang == 'id') { ?>
+          <?php if (session()->lang == 'id') { ?>
             <h2>Produk <?= $principal->name ?></h2>
           <?php } else { ?>
             <h2><?= $principal->name ?> Products</h2>
@@ -50,16 +50,12 @@
         <div class="col-md-3">
           <div class="filter-product">
             <select class="form-control" name="category2" id="category2">
-              <option value=""></option>
-              <option value="59">LED Tape</option>
             </select>
           </div>
         </div>
         <div class="col-md-3">
           <div class="filter-product">
             <select class="form-control" name="category3" id="category3">
-              <option value=""></option>
-              <option value="128">DLI Tape</option>
             </select>
           </div>
         </div>
@@ -75,21 +71,7 @@
   <!-- news  -->
   <div class="product-wrap">
     <div class="container">
-      <div class="row card-product">
-        <?php foreach ($product as $row) : ?>
-          <div class="col-md-4 col-lg-3">
-            <div class="item-product">
-              <a href="javascript:void(0);" data-toggle="modal" data-target="#modalProduct">
-                <div class="image-wrap">
-                  <img src="<?= base_url() . '/custom/image/product/' . $row->url ?>" alt="" class="img-fluid">
-                </div>
-                <h5><?= $row->name ?></h5>
-                <p>Sort description about product</p>
-              </a>
-            </div>
-          </div>
-        <?php endforeach; ?>
-
+      <div class="row" id="card-product">
         <!-- <div class="col-md-12 text-center">
           <button class="btn btn-whites mt-3">Load More <img src="<?= base_url('adw/assets/images/loader.png') ?>" alt="" class="spinning" /></button>
         </div> -->
@@ -117,33 +99,11 @@
 <div class="modal fade" id="modalProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-body">
+      <div class="modal-body" id="product-modal">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <img src="<?= base_url('adw/assets/images/close.png') ?>" alt="">
         </button>
-        <div class="row align-items-center">
-          <div class="col-md-5">
-            <img src="<?= base_url('adw/assets/images/product-big.png') ?>" alt="" class="img-fluid mb-4 mb-md-0">
-          </div>
-          <div class="col-md-7">
-            <h4 class="mb-2">Phillips Essentials</h4>
-            <ul class="no-style">
-              <li>Emergency function could be used up to 5 hours.</li>
-              <li>Save energy up to 90% compared with regular incandescent bulbs.</li>
-              <li>Can operate within 100 - 240 V.</li>
-              <li>Instant start.</li>
-              <li>Very good color rendering > 80.</li>
-              <li>No IR & UV radiation.</li>
-              <li>Frosted cover made of PC (Poly Carbonate), impact resistant.</li>
-              <li>Made of PBT (Polybutylene terephthalate), heat resistant until 150º C.</li>
-              <li>Long Life lamp up to 15'000 hours and Save Maintenance costs.</li>
-              <li>Low heat radiation.</li>
-            </ul>
-            <h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>
-            <a href="" class="ecom"><img src="<?= base_url('adw/assets/images/tokped.png') ?>" alt=""></a>
-            <a href="" class="ecom"><img src="<?= base_url('adw/assets/images/jdid.png') ?>" alt=""></a>
-            <a href="" class="ecom"><img src="<?= base_url('adw/assets/images/shopee.png') ?>" alt=""></a>
-          </div>
+        <div class="row align-items-center" id="detail-product">
         </div>
       </div>
     </div>
@@ -154,191 +114,232 @@
   var SITE_URL = window.location.href;
   var LAST_URL = SITE_URL.substr(SITE_URL.lastIndexOf('/') + 1); //the last url
 
-  // $('#category1').change(function(evt) {
-  //   var category1 = $(this).val();
-  //   let url = '<?= base_url('backend/productgroup/getCategory') ?>';
+  let url;
 
-  //   $.ajax({
-  //     url: url,
-  //     type: 'POST',
-  //     data: {
-  //       principal: LAST_URL,
-  //       category1: category1
-  //     },
-  //     dataType: 'JSON',
-  //     success: function(result) {
-  //       $('#category2').empty();
-  //       $('#category2').append('<option selected="selected" value=""></option>');
+  $('#category1').change(function(evt) {
+    var category1 = $(this).val();
+    url = '<?= base_url('MainController/getCategory') ?>';
 
-  //       if (result[0].success) {
-  //         var data = result[0].message;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        principal: LAST_URL,
+        category1: category1
+      },
+      dataType: 'JSON',
+      success: function(result) {
+        $('#category2').empty();
+        $('#category3').empty();
+        $('#category2').append('<option selected="selected" value=""></option>');
+        $('#category3').append('<option selected="selected" value=""></option>');
 
-  //         $.each(data, function(idx, elem) {
-  //           var category_id = elem.md_category_id;
-  //           var name = elem.category;
+        if (result[0].success) {
+          var data = result[0].message;
 
-  //           $('#category2').append('<option value="' + category_id + '">' + name + '</option>');
-  //         });
-  //       } else {
-  //         Swal.fire({
-  //           type: 'error',
-  //           title: result[0].message,
-  //           timer: 1500
-  //         });
-  //       }
-  //     },
-  //     error: function(jqXHR, exception) {
-  //       showError(jqXHR, exception);
-  //     }
-  //   });
-  // });
+          $.each(data, function(idx, elem) {
+            var category_id = elem.md_category_id;
+            var name = elem.category;
 
-  // $('#category2').change(function(evt) {
-  //   var category2 = $(this).val();
-  //   let url = '<?= base_url('backend/productgroup/getCategory') ?>';
+            $('#category2').append('<option value="' + category_id + '">' + name + '</option>');
+          });
+        } else {
+          Swal.fire({
+            type: 'error',
+            title: result[0].message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      },
+      error: function(jqXHR, exception) {
+        showError(jqXHR, exception);
+      }
+    });
+  });
 
-  //   $.ajax({
-  //     url: url,
-  //     type: 'POST',
-  //     data: {
-  //       principal: LAST_URL,
-  //       category2: category2
-  //     },
-  //     dataType: 'JSON',
-  //     success: function(result) {
-  //       $('#category3').empty();
-  //       $('#category3').append('<option selected="selected" value=""></option>');
+  $('#category2').change(function(evt) {
+    var category2 = $(this).val();
+    url = '<?= base_url('MainController/getCategory') ?>';
 
-  //       if (result[0].success) {
-  //         var data = result[0].message;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        principal: LAST_URL,
+        category2: category2
+      },
+      dataType: 'JSON',
+      success: function(result) {
+        $('#category3').empty();
+        $('#category3').append('<option selected="selected" value=""></option>');
 
-  //         $.each(data, function(idx, elem) {
-  //           var category_id = elem.md_category_id;
-  //           var name = elem.category;
+        if (result[0].success) {
+          var data = result[0].message;
 
-  //           $('#category3').append('<option value="' + category_id + '">' + name + '</option>');
-  //         });
-  //       } else {
-  //         Swal.fire({
-  //           type: 'error',
-  //           title: result[0].message,
-  //           timer: 1500
-  //         });
-  //       }
-  //     },
-  //     error: function(jqXHR, exception) {
-  //       showError(jqXHR, exception);
-  //     }
-  //   });
-  // });
+          $.each(data, function(idx, elem) {
+            var category_id = elem.md_category_id;
+            var name = elem.category;
 
-  // $('.modal-product').click(function(evt) {
-  //   var id = $(evt.currentTarget).attr('id');
-  //   let url = '<?= base_url('backend/product/showBy/') ?>' + '/' + id;
+            $('#category3').append('<option value="' + category_id + '">' + name + '</option>');
+          });
+        } else {
+          Swal.fire({
+            type: 'error',
+            title: result[0].message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      },
+      error: function(jqXHR, exception) {
+        showError(jqXHR, exception);
+      }
+    });
+  });
 
-  //   $.ajax({
-  //     url: url,
-  //     type: 'GET',
-  //     dataType: 'JSON',
-  //     success: function(result) {
-  //       $('#modalProduct').modal('show')
+  $('.btn_filter').click(function(evt) {
+    var html = '';
+    url = '<?php echo base_url('MainController/filterCategory'); ?>';
+    var category1 = $('#category1').val();
+    var category2 = $('#category2').val();
+    var category3 = $('#category3').val();
 
-  //       if (result[0].success) {
-  //         var data = result[0].message;
-  //         var html = '';
-  //         $.each(data, function(idx, elem) {
-  // console.log(elem.url)
-  // html += '<div class="row align-items-center"> <div class="col-md-5">' +
-  //   html = '<img src="' + img + '" alt="" class="img-fluid mb-4 mb-md-0">';
-  //   </div>
-  //   <div class="col-md-7">
-  //     <h4 class="mb-2">Phillips Essentials</h4>
-  //     <ul class="no-style">
-  //       <li>Emergency function could be used up to 5 hours.</li>
-  //       <li>Save energy up to 90% compared with regular incandescent bulbs.</li>
-  //       <li>Can operate within 100 - 240 V.</li>
-  //       <li>Instant start.</li>
-  //       <li>Very good color rendering > 80.</li>
-  //       <li>No IR & UV radiation.</li>
-  //       <li>Frosted cover made of PC (Poly Carbonate), impact resistant.</li>
-  //       <li>Made of PBT (Polybutylene terephthalate), heat resistant until 150º C.</li>
-  //       <li>Long Life lamp up to 15'000 hours and Save Maintenance costs.</li>
-  //       <li>Low heat radiation.</li>
-  //     </ul>
-  //     <h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>
-  //     <a href="" class="ecom"><img src="<?= base_url('adw/assets/images/tokped.png') ?>" alt=""></a>
-  //     <a href="" class="ecom"><img src="<?= base_url('adw/assets/images/jdid.png') ?>" alt=""></a>
-  //     <a href="" class="ecom"><img src="<?= base_url('adw/assets/images/shopee.png') ?>" alt=""></a>
-  //   </div>
-  // </div>
-  //           console.log(elem.url)
-  //         });
-  //         $('.modal-body').html(html)
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        principal: LAST_URL,
+        category1: category1,
+        category2: category2,
+        category3: category3,
+      },
+      cache: false,
+      dataType: 'JSON',
+      beforeSend: function() {
+        $(this).prop('disabled', true);
+        loadingForm('card-product', 'bounce');
+      },
+      complete: function() {
+        $(this).removeAttr('disabled');
+        hideLoadingForm('card-product');
+      },
+      success: function(result) {
+        if (result[0].success) {
+          var data = result[0].message;
 
-  //       } else {
-  //         Swal.fire({
-  //           type: 'error',
-  //           title: result[0].message,
-  //           timer: 1500
-  //         });
-  //       }
-  //     },
-  //     error: function(jqXHR, exception) {
-  //       showError(jqXHR, exception);
-  //     }
-  //   });
-  // });
+          $.each(data, function(idx, elem) {
+            var src = '';
+            if (elem.url !== '0') {
+              var src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
+            }
 
-  // $(document).ready(function() {
-  //   $('#btn_filter').click(function() {
-  //     var md_productgroup_id = $('#md_productgroup_id').val();
-  //     $.ajax({
-  //       url: "<?php echo base_url('MainController/filterProductgroup'); ?>",
-  //       method: "POST",
-  //       data: {
-  //         md_productgroup_id: md_productgroup_id
-  //       },
-  //       async: false,
-  //       dataType: 'json',
-  //       success: function(data) {
-  //         var html = '';
-  //         var i;
-  //         if (data.length > 0) {
-  //           for (i = 0; i < data.length; i++) {
-  //             html +=
-  //               '<div class="col-md-4 col-lg-3">' +
-  //               '<div class="item-product">' +
-  //               '<a href="javascript:void(0);" data-toggle="modal" data-target="#modalProduct">' +
-  //               '<div class="image-wrap">' +
-  //               '<img src="<?= base_url('adw/assets/images/product1.png') ?>" alt="" class="img-fluid">' +
-  //               '</div>' +
-  //               '<h5>' + data[i].name + '</h5>' +
-  //               '<p>Sort description about product</p>' +
-  //               '</a>' +
-  //               '</div>' +
-  //               '</div>';
-  //           }
-  //         } else {
-  //           html +=
-  //             '<div class="col-md-4 col-lg-3">' +
-  //             '<div class="item-product">' +
-  //             '<div class="image-wrap">' +
-  //             '<a href="javascript:void(0);">' +
-  //             '<h5>No Product</h5>' +
-  //             '</a>' +
-  //             '</div>' +
-  //             '</div>' +
-  //             '</div>';
-  //         }
-  //         $('.card-product').html(html);
-  //       }
-  //     });
-  //   });
-  // });
+            html += '<div class="col-md-4 col-lg-3">';
+            html += '<div class="item-product" data-aos="fade-left">';
+            html += '<a href="javascript:void(0);" onclick="openDetailProduct(' + "'" + elem.code + "'" + ')">' +
+              '<div class="image-wrap">' +
+              '<img src="' + src + '" alt="" class="img-fluid">' +
+              '</div>' +
+              '<h5>' + elem.code + '</h5>' +
+              '<p>Sort description about product</p>' +
+              '</a>' +
+              '</div>' +
+              '</div>';
+          });
 
-  // $('.btn_filter').click(function(evt) {
-  //   var html = '';
-  //   $('.card-product').append('<div class="col-md-4 col-lg-3"><div class="item-product"><a href="javascript:void(0);" data-toggle="modal" data-target="#modalProduct"></a></div></div>');
-  // })
+          $('#card-product').html(html);
+
+        } else {
+          Swal.fire({
+            type: 'info',
+            title: result[0].message,
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }
+      },
+      error: function(jqXHR, exception) {
+        showError(jqXHR, exception);
+      }
+    });
+  })
+
+  function openDetailProduct(code) {
+    url = '<?= base_url('backend/Product/showBy/') ?>' + '/' + code;
+    var html = '';
+
+    $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'JSON',
+      beforeSend: function() {
+        loadingForm('product-modal', 'bounce');
+      },
+      complete: function() {
+        hideLoadingForm('product-modal');
+      },
+      success: function(result) {
+        $('#modalProduct').modal('show')
+
+        if (result[0].success) {
+          var data = result[0].message;
+
+          $.each(data, function(idx, elem) {
+            var src = '';
+
+            if (elem.url !== '0') {
+              var src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
+            }
+
+            html += '<div class="col-md-5">' +
+              '<img src="' + src + '" alt="" class="img-fluid mb-4 mb-md-0">' +
+              '</div>' +
+              '<div class="col-md-7">';
+            html += '<h4 class="mb-2">Phillips Essentials</h4>';
+            html += '<ul class="no-style">' +
+              '<li>Emergency function could be used up to 5 hours.</li>' +
+              '<li>Save energy up to 90% compared with regular incandescent bulbs.</li>' +
+              '<li>Can operate within 100 - 240 V.</li>' +
+              '<li>Instant start.</li>' +
+              '<li>Very good color rendering > 80.</li>' +
+              '<li>No IR & UV radiation.</li>' +
+              '<li>Frosted cover made of PC (Poly Carbonate), impact resistant.</li>' +
+              '<li>Made of PBT (Polybutylene terephthalate), heat resistant until 150º C.</li>' +
+              '<li>Long Life lamp up to 15000 hours and Save Maintenance costs.</li>' +
+              '<li>Low heat radiation.</li>' +
+              '</ul>';
+            html += '<h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>';
+
+            if (elem.url_toped !== '') {
+              html += '<a href="' + elem.url_toped + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/tokped.png') ?>" alt=""></a>';
+            }
+
+            if (elem.ur_jdid !== '') {
+              html += '<a href="' + elem.ur_jdid + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/jdid.png') ?>" alt=""></a>';
+            }
+
+            if (elem.url_shopee !== '') {
+              html += '<a href="' + elem.url_shopee + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/shopee.png') ?>" alt=""></a>';
+            }
+
+            html += '</div>';
+          });
+
+          $('#detail-product').html(html)
+
+        } else {
+          Swal.fire({
+            type: 'error',
+            title: result[0].message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      },
+      error: function(jqXHR, exception) {
+        showError(jqXHR, exception);
+      }
+    });
+  }
 </script>
 <?= $this->endSection() ?>

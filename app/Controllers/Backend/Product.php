@@ -249,12 +249,12 @@ class Product extends BaseController
 		return json_encode($response);
 	}
 
-	public function showBy($id)
+	public function showBy($code)
 	{
 		$product = new M_Product();
 
 		try {
-			$result = $product->where('md_product_id', $id)->findAll();
+			$result = $product->where('code', $code)->findAll();
 			$response = message('success', true, $result);
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
