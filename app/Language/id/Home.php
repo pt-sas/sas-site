@@ -8,7 +8,6 @@ return [
     'HP11' => 'Solusi menyeluruh untuk segala kebutuhan elektrikal anda',
 
     'HH321' => 'Mengapa Kami?',
-    'HP21' => 'Kami berpengalaman di bidang Perlampuan dan Peralatan Elektrikal di Indonesia',
     'HH421' => 'Produk Berkualitas',
     'HHP21' => 'Kami hanya menawarkan produk berkualitas yang dapat dipercaya dan diandalkan – tanpa kompromi!',
     'HH422' => 'Pelayanan Unggul',
@@ -16,10 +15,9 @@ return [
     'HH423' => 'Jaringan Distribusi Luas',
     'HHP23' => 'Kami memiliki cakupan wilayah pelayanan yang luas dan produk yang mudah didapatkan dimanapun anda berada.',
 
-    'HH331' => 'Pelajari lebih jauh tentang merek yang kami bawa',
-    'HP31' => 'Quis fringilla egestas dis viverra semper commodo. Massa vivamus accumsan imperdiet et. Ut urna tempor aliquet elementum eget ultrices vitae. Convallis vulputate at malesuada orci morbi. Ut elementum nunc justo orci, sagittis mauris vestibulum purus.',
-    'HA31' => 'PELAJARI',
+    'HH331' => 'Selamat datang di etalase kami',
+    'HP31' => 'Mari lihat lebih jelas produk dari merek-merek terkemuka kami.',
+    'HA31' => 'Pelajari lebih lanjut',
 
     'HH341' => 'Berita Terkini',
-    'HP41' => 'Artikel terkini tentang perlampuan dan peralatan elektrikal',
 ];

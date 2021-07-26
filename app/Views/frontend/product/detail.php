@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-md-12">
         <a href="<?= base_url('product') ?>" class="back-link">Back to product list</a>
-        <h2>Phillips Product</h2>
+        <h2>Phillips Products</h2>
         <a href="<?= base_url('product/compare') ?>" class="btn btn-white">COMPARE PRODUCT</a>
       </div>
     </div>
@@ -23,7 +23,11 @@
       <div class="col-md-12">
         <div class="product-head">
           <a href="<?= base_url('product') ?>" class="back-link"><?= lang("ProductDetail.PDA11") ?></a>
-          <h2><?= $principal->name ?> Product</h2>
+          <?php if(session()->lang == 'id') { ?>
+            <h2>Produk <?= $principal->name ?></h2>
+          <?php } else { ?>
+            <h2><?= $principal->name ?> Products</h2>
+          <?php } ?>
           <!-- <a href="<?= base_url('product/compare') ?>" class="btn btn-white">COMPARE PRODUCT</a> -->
         </div>
       </div>

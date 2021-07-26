@@ -6,18 +6,18 @@
 return [
     'CUD11' => 'Hubungi Kami',
 
-    'CUH511' => 'Kantor Pusat Kami',
-    'CUP11' => 'Jalan Indokarya III Blok F1-2, Tanjung Priok, Kota Jakarta Utara, DKI Jakarta 14340',
+    'CUH511' => 'Kantor Pusat',
+    'CUP11' => 'Jalan Indo Karya 3 Blok F1-2, Tanjung Priok, Kota Jakarta Utara, DKI Jakarta 14340',
 
-    'CUH512' => 'Mari Berbincang',
+    'CUH512' => 'Telepon',
 
-    'CUH513' => 'e-Mail Kami',
+    'CUH513' => 'Email',
 
     'CUH521' => 'Bagaimana kami dapat membantu Anda?',
     'CUP21' => 'Isi form berikut dan kami akan segera menghubungi Anda!',
 
     'CUI21' => 'Nama',
-    'CUI22' => 'Alamat Suret',
+    'CUI22' => 'Email',
     'CUI23' => 'Nomor Telepon',
     'CUDD21' => 'Pertanyaan Umum',
     'CUI25' => 'Subjek',

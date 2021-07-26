@@ -25,7 +25,6 @@
       <div class="col-md-12">
         <div class="head-sect">
           <h3><?= lang("Home.HH321") ?></h3>
-          <p><?= lang("Home.HP21") ?></p>
         </div>
       </div>
       <div class="col-md-4">
@@ -96,7 +95,6 @@
       <div class="col-md-12">
         <div class="head-sect dark">
           <h3><?= lang("Home.HH341") ?></h3>
-          <p><?= lang("Home.HP41") ?></p>
         </div>
       </div>
       <?php foreach($news as $row): ?>
