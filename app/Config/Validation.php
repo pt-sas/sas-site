@@ -63,19 +63,35 @@ class Validation
 	];
 
 	public $about = [
-		'about_overview' => [
+		'tb_cp_overview' => [
 			'label'		=> 'overview',
 			'rules' 	=> 'required'
 		],
-		'about_vision' => [
+		'tb_cp_vision' => [
 			'label'		=> 'vision',
 			'rules'		=> 'required'
 		],
-		'about_mision' => [
+		'tb_cp_mision' => [
 			'label'		=> 'mission',
 			'rules'		=> 'required'
 		],
-		'about_objectives' => [
+		'tb_cp_objectives' => [
+			'label'		=> 'objectives',
+			'rules'		=> 'required'
+		],
+		'tb_cp_overview_en' => [
+			'label'		=> 'overview',
+			'rules' 	=> 'required'
+		],
+		'tb_cp_vision_en' => [
+			'label'		=> 'vision',
+			'rules'		=> 'required'
+		],
+		'tb_cp_mision_en' => [
+			'label'		=> 'mission',
+			'rules'		=> 'required'
+		],
+		'tb_cp_objectives_en' => [
 			'label'		=> 'objectives',
 			'rules'		=> 'required'
 		]
@@ -152,6 +168,14 @@ class Validation
 			'label'		=> 'job requirement',
 			'rules' 	=> 'required'
 		],
+		'description_en' => [
+			'label'		=> 'job description (English)',
+			'rules' 	=> 'required'
+		],
+		'requirement_en' => [
+			'label'		=> 'job requirement (English)',
+			'rules' 	=> 'required'
+		],
 		'posted_date' => [
 			'label'		=> 'posted date',
 			'rules' 	=> 'required'
@@ -172,6 +196,14 @@ class Validation
 		'content' => [
 			'rules' 	=> 'required'
 		],
+		'title_en' => [
+			'label'		=> 'title (English)',
+			'rules' 	=> 'required'
+		],
+		'content_en' => [
+			'label'		=> 'content (English)',
+			'rules' 	=> 'required'
+		],
 		'news_date' => [
 			'label'		=> 'posted date',
 			'rules' 	=> 'required'
@@ -184,9 +216,19 @@ class Validation
 
 	public $promo = [
 		'title' => [
+			'label'		=> 'title',
 			'rules' 	=> 'required'
 		],
 		'content' => [
+			'label'		=> 'content',
+			'rules' 	=> 'required'
+		],
+		'title_en' => [
+			'label'		=> 'title (English)',
+			'rules' 	=> 'required'
+		],
+		'content_en' => [
+			'label'		=> 'content (English)',
 			'rules' 	=> 'required'
 		],
 		'start_date' => [

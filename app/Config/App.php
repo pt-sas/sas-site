@@ -84,7 +84,7 @@ class App extends BaseConfig
 	 *
 	 * @var boolean
 	 */
-	public $negotiateLocale = false;
+	public $negotiateLocale = true;
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -97,7 +97,7 @@ class App extends BaseConfig
 	 *
 	 * @var string[]
 	 */
-	public $supportedLocales = ['en'];
+	public $supportedLocales = ['en','id'];
 
 	/**
 	 * --------------------------------------------------------------------------

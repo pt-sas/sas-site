@@ -5,7 +5,7 @@
 <!-- hero -->
 <div class="content">
   <div class="title-page">
-    News & Event
+    <?= lang("News.ND11") ?>
   </div>
 
   <!-- news  -->
@@ -13,13 +13,17 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h5 class="sec-title">News</h5>
+          <h5 class="sec-title"><?= lang("News.NH511") ?></h5>
         </div>
         <?php foreach($news as $row): ?>
           <div class="col-md-4">
             <a href="<?= base_url('/news/'.$row->slug.'') ?>" class="item-news">
               <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');"></div>
-              <h5><?= $row->title;?></h5>
+              <?php if(session()->lang == 'id') { ?>
+                <h5><?= $row->title ?></h5>
+              <?php } else { ?>
+                <h5><?= $row->title_en ?></h5>
+              <?php } ?>
               <span><?= date("d F Y", strtotime($row->news_date)) ?></span>
             </a>
           </div>
@@ -33,18 +37,22 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h5 class="sec-title">Event</h5>
+          <h5 class="sec-title"><?= lang("News.NH521") ?></h5>
         </div>
         <?php foreach($promo as $row): ?>
           <div class="col-md-4">
             <a href="<?= base_url('/event/'.$row->slug.'') ?>" class="item-promo">
               <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');">
                 <div class="periode">
-                  <span>Periode Event</span>
+                  <span><?= lang("News.NSP21") ?></span>
                   <p><?= date("d F Y", strtotime($row->start_date)) ?> - <?= date("d F Y", strtotime($row->end_date)) ?></p>
                 </div>
               </div>
-              <h6><?= $row->title;?></h6>
+              <?php if(session()->lang == 'id') { ?>
+                <h6><?= $row->title ?></h6>
+              <?php } else { ?>
+                <h6><?= $row->title_en ?></h6>
+              <?php } ?>
             </a>
           </div>
         <?php endforeach;?>

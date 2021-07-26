@@ -53,7 +53,9 @@ class MainController extends BaseController
 
 		$data = [
 			'principal' 		=> $principal->where('url', $url)->first(),
-			'productgroup'	=> $productgroup->getDetail($url),
+			'category1'	=> $productgroup->getDetail($url, 1),
+			// 'category2'	=> $productgroup->getDetail($url, 2),
+			// 'category3'	=> $productgroup->getDetail($url, 3),
 			'product' 			=> $product->getDetail($url),
 			'page_title'		=> 'View Product - PT Sahabat Abadi Sejahtera'
 		];
@@ -135,45 +137,6 @@ class MainController extends BaseController
 
 	public function create()
 	{
-		// $validation = \Config\Services::validation();
-		// $mailbox = new M_Mailbox();
-		// $post = $this->request->getVar();
-
-		// try {
-		// 	$data = [
-		// 		'name' 		=> $post['mailbox_name'],
-		// 		'email' 	=> $post['mailbox_email'],
-		// 		'subject' => $post['mailbox_subject'],
-		// 		'inquiry' => $post['mailbox_inquiry'],
-		// 		'phone' 	=> $post['mailbox_phone'],
-		// 		'message' => $post['mailbox_message']
-		// 	];
-
-		// 	if (!$validation->run($post, 'mailbox')) {
-		// 		$response = $mailbox->formError();
-		// 	} else {
-		// 		$result = $mailbox->save($data);
-		// 		$response = message('success', true, $result);
-
-		// 		$email = \Config\Services::email();
-		// 		$email->setTo('info@sahabatabadi.com');
-		// 		$email->setFrom($post['mailbox_email'], $post['mailbox_name']);
-		// 		$email->setSubject($post['mailbox_subject']);
-		// 		$email->setMessage($post['mailbox_message']);
-
-		// 		if ($email->send()) {
-		// 			echo 'Email successfully sent';
-		// 		} else {
-		// 			$data = $email->printDebugger(['headers']);
-		// 			print_r($data);
-		// 		}
-		// 	}
-		// } catch (\Exception $e) {
-		// 	$response = message('error', false, $e->getMessage());
-		// }
-		// // return json_encode($response);
-		// return redirect()->back();
-
 		$email = \Config\Services::email();
 		$validation = \Config\Services::validation();
 		$eMailbox = new \App\Entities\Mailbox();
@@ -201,13 +164,11 @@ class MainController extends BaseController
 						$result = $email->printDebugger(['headers']);
 					}
 				}
-
 				$response = message('success', true, $result);
 			}
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
 		}
-
 		return json_encode($response);
 	}
 

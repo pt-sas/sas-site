@@ -5,8 +5,8 @@
       <img src="<?= base_url('adw/assets/images/hamburger.png') ?>" alt="">
     </a>
     <div class="lang">
-      <a href="">IND</a>
-      <a href="" class="active">ENG</a>
+      <a <?php if (session()->lang == 'en') { echo 'class="active"'; } ?> href="<?= site_url('en'); ?>">EN</a>
+      <a <?php if (session()->lang == 'id') { echo 'class="active"'; } ?> href="<?= site_url('id'); ?>">ID</a>
     </div>
     <a href="<?= base_url('/') ?>" class="logo">
       <img src="<?= base_url('adw/assets/images/logo.png') ?>" alt="">

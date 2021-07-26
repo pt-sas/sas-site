@@ -149,6 +149,14 @@ class News extends BaseController
 				'label'		=> 'news content',
 				'rules' 	=> 'required'
 			],
+			'title_en' => [
+				'label'		=> 'news title (English)',
+				'rules' 	=> 'required'
+			],
+			'content_en' => [
+				'label'		=> 'news content (English)',
+				'rules' 	=> 'required'
+			],
 			'news_date' => [
 				'label'		=> 'posted date',
 				'rules' 	=> 'required'

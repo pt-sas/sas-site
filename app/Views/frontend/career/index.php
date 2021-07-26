@@ -5,7 +5,7 @@
 <!-- hero -->
 <div class="content">
   <div class="title-page">
-    Career
+    <?= lang("Career.CD11") ?>
   </div>
 
   <!-- photo w text  -->
@@ -19,9 +19,8 @@
           </div>
         </div>
         <div class="col-md-7">
-          <h4>Why work with us</h4>
-          <p>PT Sahabat Abadi Sejahtera has been a leading and largest Philips Lighting stockiest for many years and has built a strong and reliable business relationship in the community through its consistent performance and has earned excellent reputation for its prompt settlement of business transactions.
-            Being specialized with a focused marketing philosophy, excellent services and extensive distribution network in the region, PT Sahabat Abadi Sejahtera is definitely the right business partner for Philips Lighting.</p>
+          <h4><?= lang("Career.CH411") ?></h4>
+          <p><?= lang("Career.CP11") ?></p>
         </div>
       </div>
     </div>
@@ -32,10 +31,10 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <h4 class="left-title">We are looking for</h4>
+          <h4 class="left-title"><?= lang("Career.CH421") ?></h4>
         </div>
         <div class="col-md-8">
-          <p>Members who are a team-player, full of enthusiasm and desire for continuous learning & improvements. If you want to be part of our fast-growing company, we’d love to hear from you.</p>
+          <p><?= lang("Career.CP21") ?></p>
         </div>
       </div>
     </div>
@@ -46,36 +45,36 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <h4 class="left-title">Our core value</h4>
+          <h4 class="left-title"><?= lang("Career.CH431") ?></h4>
         </div>
         <div class="col-md-8">
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/ethics.png') ?>" alt="">
-            <span>Integrity</span>
+            <span><?= lang("Career.CSP31") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/transparent.png') ?>" alt="">
-            <span>Honesty</span>
+            <span><?= lang("Career.CSP32") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/professional.png') ?>" alt="">
-            <span>Hard Work</span>
+            <span><?= lang("Career.CSP33") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/group.png') ?>" alt="">
-            <span>Positive Thinking</span>
+            <span><?= lang("Career.CSP34") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/transparent.png') ?>" alt="">
-            <span>Solid Teamwork</span>
+            <span><?= lang("Career.CSP35") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/professional.png') ?>" alt="">
-            <span>Continuous Self-Improvement</span>
+            <span><?= lang("Career.CSP36") ?></span>
           </div>
           <div class="item-core">
             <img src="<?= base_url('adw/assets/images/group.png') ?>" alt="">
-            <span>Loyalty</span>
+            <span><?= lang("Career.CSP37") ?></span>
           </div>
         </div>
       </div>
@@ -87,7 +86,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <h4 class="left-title">Search for available Jobs</h4>
+          <h4 class="left-title"><?= lang("Career.CH441") ?></h4>
         </div>
         <div class="col-md-8">
           <div class="filter-jobs">
@@ -104,7 +103,7 @@
               <option value="ml">Mid-level </option>
               <option value="sl">Senior-level </option>
             </select>
-            <button class="btn btn-primary">Search</button>
+            <button class="btn btn-primary"><?= lang("Career.CBU41") ?></button>
           </div>
 
           <?php foreach ($job as $row) : ?>
@@ -114,7 +113,8 @@
                 <h6><?= $row->division_name; ?></h6>
               </div>
               <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>"
-                data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
+                data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-description_en="<?= $row->description_en ?>" data-requirement_en="<?= $row->requirement_en ?>"
+                data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
                 Detail
               </a>
               <span class="location">
@@ -169,23 +169,23 @@
         </button>
         <h4 name="position"></h4>
         <h5>
-          <span>
-            <large name="division"></large>
-          </span>
-          <span>
-            <large name="posted_date"></large>
-          </span>
+          <span name="division"></span>
+          <span name="posted_date"></span>
           <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
         </h5>
-        <h6 class="title-list">What you will do</h6>
-        <div name="description">
-
-        </div>
-        <h6 class="title-list">What you will need</h6>
-        <div name="requirement">
-
-        </div>
-        <a href="" class="btn btn-primary url">Apply Now</a>
+        <h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>
+        <?php if(session()->lang == 'id') { ?>
+          <div name="description"></div>
+        <?php } else { ?>
+          <div name="description_en"></div>
+        <?php } ?>
+        <h6 class="title-list"><?= lang("Career.CH6M2") ?></h6>
+        <?php if(session()->lang == 'id') { ?>
+          <div name="requirement"></div>
+        <?php } else { ?>
+          <div name="requirement_en"></div>
+        <?php } ?>
+        <a href="" class="btn btn-primary url"><?= lang("Career.CBUM1") ?></a>
       </div>
     </div>
   </div>
@@ -196,10 +196,11 @@
     e.preventDefault();
     var division = $(this).data('md_division_id');
     var position = $(this).data('position');
+    var posted_date = moment($(this).data('posted_date')).format('LL');
     var description = $(this).data('description');
     var requirement = $(this).data('requirement');
-    var posted_date = $(this).data('posted_date');
-    var expired_date = $(this).data('expired_date');
+    var description_en = $(this).data('description_en');
+    var requirement_en = $(this).data('requirement_en');
     var url = $(this).data('url');
 
     $('#modalJobs').modal('show');
@@ -208,6 +209,8 @@
     $('[name="posted_date"]').text(posted_date);
     $('[name="description"]').html(description);
     $('[name="requirement"]').html(requirement);
+    $('[name="description_en"]').html(description_en);
+    $('[name="requirement_en"]').html(requirement_en);
     $('.url').attr("href", url);
   });
 </script>

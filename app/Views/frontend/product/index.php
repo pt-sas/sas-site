@@ -5,7 +5,7 @@
 <!-- hero -->
 <div class="content dark pb-0">
   <div class="title-page white">
-    Products
+    <?= lang("Product.PD11") ?>
   </div>
 
   <!-- news  -->

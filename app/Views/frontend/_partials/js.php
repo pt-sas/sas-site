@@ -1,5 +1,11 @@
 <!-- js -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwpQbIvzRtyUWbnG-fKkhDFrXWqygSoa8&callback=initMap"></script>
+<!-- Sweet Alert -->
+<script src="<?= base_url('atlantis-pro/js/plugin/sweetalert/sweetalert.min.js') ?>"></script>
+<!-- SweetAlert2 -->
+<script src="<?= base_url('atlantis-pro/js/plugin/sweetalert2/sweetalert2.min.js') ?>"></script>
+<!-- Moment JS -->
+<script src="<?= base_url('atlantis-pro/js/plugin/moment/moment.min.js') ?>"></script>
 
 <!-- Loader waitMe -->
 <script src="<?= base_url('atlantis-pro/js/plugin/loader/waitMe.min.js') ?>"></script>
@@ -26,28 +32,74 @@
     }, 700);
   })
 
-  window.initMap = function() {
-    var mapcenter = {
-      lat: -6.1665207714398,
-      lng: 106.82544824454114
-    };
+  function initMap(location = null) {
+    if (location === null) {
+      location = 'sunter';
+    }
 
-    var map = new google.maps.Map(
-      document.getElementById('map'), {
-        zoom: 13,
-        center: mapcenter
-      }
-    );
+    var url = '<?= base_url('backend/location/getPosition') ?>' + '/' + location;
 
-    var marker = new google.maps.Marker({
-      position: {
-        lat: -6.149856214247394,
-        lng: 106.90281447067102
+    var mapID = document.getElementById('map');
+
+    $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'JSON',
+      beforeSend: function() {
+        loadingForm('map', 'bounce');
       },
-      icon: 'assets/images/marker-map.png',
-      map: map
+      complete: function() {
+        hideLoadingForm('map');
+      },
+      success: function(result) {
+        $.each(result, function(idx, elem) {
+          var lat = parseFloat(elem.lattitude);
+          var lng = parseFloat(elem.longitude);
+          var location_name = elem.name;
+
+          var mapcenter = {
+            lat: lat,
+            lng: lng
+          };
+
+          if (mapID !== null) {
+            var map = new google.maps.Map(
+              mapID, {
+                zoom: 15,
+                center: mapcenter
+              }
+            );
+          }
+
+          var marker = new google.maps.Marker({
+            position: {
+              lat: lat,
+              lng: lng
+            },
+            icon: 'adw/assets/images/marker-map.png',
+            map: map
+          });
+
+          var infowindow = new google.maps.InfoWindow({
+            content: location_name
+          });
+
+          google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map, marker);
+          });
+        });
+      },
+      error: function(jqXHR, exception) {
+        showError(jqXHR, exception);
+      }
     });
   }
+
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+    var target = $(e.target).attr("href") // activated tab
+    var location = target.substr(1);
+    initMap(location);
+  });
 </script>
 
 
@@ -59,7 +111,7 @@
 
     let formData = new FormData(form[0]);
 
-    let url = '<?= base_url('maincontroller/create'); ?>';
+    let url = '<?= base_url('MainController/create'); ?>';
 
     const field = form.find('input[type="checkbox"], select, input[type="radio"], input[type="file"]');
 
@@ -98,16 +150,24 @@
         hideLoadingForm(form.prop('id'));
       },
       success: function(result) {
-        console.log(result)
         if (result[0].success) {
-          alert(result[0].message);
+          Swal.fire({
+            type: 'success',
+            title: result[0].message,
+            showConfirmButton: false,
+            timer: 1500
+          });
           clearForm(evt);
-
         } else if (result[0].error) {
           errorForm(form, result);
           hideLoadingForm(form.prop('id'));
         } else {
-          alert(result[0].message);
+          Swal.fire({
+            type: 'info',
+            title: result[0].message,
+            showConfirmButton: false,
+            timer: 2000
+          });
         }
       },
       error: function(jqXHR, exception) {
@@ -141,7 +201,7 @@
    * @param {*} data from database
    */
   function errorForm(parent, data) {
-    const errorInput = parent.find('input[type="text"], select, textarea');
+    const errorInput = parent.find('input[type="text"], input[type="email"], select, textarea');
     const errorText = parent.find('small');
 
     var arrInput = [];
@@ -192,7 +252,7 @@
       if (field[i].name !== '') {
 
         form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
-          .removeClass('is-invalid');
+          .removeClass('has-error has-feedback');
       }
     }
 

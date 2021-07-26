@@ -5,7 +5,7 @@
 <!-- hero -->
 <div class="content">
   <div class="title-page">
-    About Us
+    <?= lang("About.AD11") ?>
   </div>
 
   <!-- photo w text  -->
@@ -19,7 +19,13 @@
           </div>
         </div>
         <div class="col-md-7">
-          <?= $about['tb_cp_overview'] ?>
+          <?php
+            if(session()->lang == 'id') {
+              echo $about['tb_cp_overview'];
+            } else {
+              echo $about['tb_cp_overview_en'];
+            }
+          ?>
         </div>
       </div>
     </div>
@@ -32,22 +38,40 @@
         <div class="col-md-4">
           <div class="item-visi">
             <img src="<?= base_url('adw/assets/images/eye.png') ?>" alt="">
-            <h6>Our Vision</h6>
-            <?= $about['tb_cp_vision'] ?>
+            <h6><?= lang("About.AH321") ?></h6>
+            <?php
+              if(session()->lang == 'id') {
+                echo $about['tb_cp_vision'];
+              } else {
+                echo $about['tb_cp_vision_en'];
+              }
+            ?>
           </div>
         </div>
         <div class="col-md-4">
           <div class="item-visi">
             <img src="<?= base_url('adw/assets/images/target.png') ?>" alt="">
-            <h6>Our Mission</h6>
-            <?= $about['tb_cp_mision'] ?>
+            <h6><?= lang("About.AH322") ?></h6>
+            <?php
+              if(session('lang') == 'id') {
+                echo $about['tb_cp_mision'];
+              } else {
+                echo $about['tb_cp_mision_en'];
+              }
+            ?>
           </div>
         </div>
         <div class="col-md-4">
           <div class="item-visi">
             <img src="<?= base_url('adw/assets/images/task.png') ?>" alt="">
-            <h6>Our Objective</h6>
-            <?= $about['tb_cp_objectives'] ?>
+            <h6><?= lang("About.AH323") ?></h6>
+            <?php
+              if(session('lang') == 'id') {
+                echo $about['tb_cp_objectives'];
+              } else {
+                echo $about['tb_cp_objectives_en'];
+              }
+            ?>
           </div>
         </div>
       </div>
@@ -60,20 +84,14 @@
       <div class="row">
         <div class="col-md-4">
           <div class="item-flow">
-            <h6>
-              Company Founded Appointed as
-              Philips Authorized Distributor
-            </h6>
+          <h6><?= lang("About.AH631") ?></h6>
             <h3>1987</h3>
             <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:70px;" alt="">
           </div>
         </div>
         <div class="col-md-5 offset-md-1">
           <div class="item-flow">
-            <h6>
-              Appointed as Supreme Authorized Distributor
-              and Schneider Authorized Distributor
-            </h6>
+          <h6><?= lang("About.AH632") ?></h6>
             <h3>2017</h3>
             <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:90px;" alt="">
           </div>
@@ -85,10 +103,7 @@
           <div class="item-flow upside">
             <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:90px;" alt="" class="rotate">
             <h3 class="d-none d-md-block">2009</h3>
-            <h6>
-              Appointed as Legrand Authorized Distributor
-              and Panasonic Authorized Distributor
-            </h6>
+            <h6><?= lang("About.AH633") ?></h6>
             <h3 class="d-block d-md-none">2009</h3>
           </div>
         </div>
@@ -101,7 +116,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h6 class="map-title">Our location</h6>
+          <h6 class="map-title"><?= lang("About.AH641") ?></h6>
           <ul class="nav">
             <?php foreach($location as $count => $row): ?>
               <li class="nav-item">
