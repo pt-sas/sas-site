@@ -154,6 +154,7 @@
           Swal.fire({
             type: 'success',
             title: result[0].message,
+            showConfirmButton: false,
             timer: 1500
           });
           clearForm(evt);
@@ -164,6 +165,7 @@
           Swal.fire({
             type: 'info',
             title: result[0].message,
+            showConfirmButton: false,
             timer: 2000
           });
         }
