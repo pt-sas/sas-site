@@ -295,19 +295,11 @@
               '<img src="' + src + '" alt="" class="img-fluid mb-4 mb-md-0">' +
               '</div>' +
               '<div class="col-md-7">';
-            html += '<h4 class="mb-2">Phillips Essentials</h4>';
+            html += '<h4 class="mb-2">' + elem.name + '</h4>';
             html += '<ul class="no-style">' +
-              '<li>Emergency function could be used up to 5 hours.</li>' +
-              '<li>Save energy up to 90% compared with regular incandescent bulbs.</li>' +
-              '<li>Can operate within 100 - 240 V.</li>' +
-              '<li>Instant start.</li>' +
-              '<li>Very good color rendering > 80.</li>' +
-              '<li>No IR & UV radiation.</li>' +
-              '<li>Frosted cover made of PC (Poly Carbonate), impact resistant.</li>' +
-              '<li>Made of PBT (Polybutylene terephthalate), heat resistant until 150º C.</li>' +
-              '<li>Long Life lamp up to 15000 hours and Save Maintenance costs.</li>' +
-              '<li>Low heat radiation.</li>' +
+              elem.description +
               '</ul>';
+
             html += '<h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>';
 
             if (elem.url_toped !== '') {
