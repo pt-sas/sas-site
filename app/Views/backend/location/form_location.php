@@ -11,16 +11,16 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description" name="description">
-                    <small class="form-text text-danger" id="error_description"></small>
+                    <label for="location">Location <span class="required">*</span></label>
+                    <input type="text" class="form-control" id="location" name="location">
+                    <small class="form-text text-danger" id="error_location"></small>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="location">Location <span class="required">*</span></label>
-                    <input type="text" class="form-control" id="location" name="location">
-                    <small class="form-text text-danger" id="error_location"></small>
+                    <label for="description">Description</label>
+                    <textarea type="text" class="form-control" id="description" name="description" rows="3"></textarea>
+                    <small class="form-text text-danger" id="error_description"></small>
                 </div>
             </div>
             <div class="col-md-6">
@@ -30,34 +30,23 @@
                     <small class="form-text text-danger" id="error_address1"></small>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="subdistrict">Subdistrict<span class="required">*</span></label>
                             <input type="text" class="form-control" id="subdistrict" name="subdistrict">
                             <small class="form-text text-danger" id="error_subdistrict"></small>
                         </div>
                     </div>
-                    <!-- <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="district">District<span class="required">*</span></label>
-                            <input type="text" class="form-control" id="district" name="district">
-                            <small class="form-text text-danger" id="error_district"></small>
-                        </div>
-                    </div> -->
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="city">City <span class="required">*</span></label>
                             <input type="text" class="form-control" id="city" name="city">
                             <small class="form-text text-danger" id="error_city"></small>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="province">Province <span class="required">*</span></label>
                             <input type="text" class="form-control" id="province" name="province">
@@ -91,16 +80,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="longitude">Longitude <span class="required">*</span></label>
                             <input type="text" class="form-control" id="longitude" name="longitude">
                             <small class="form-text text-danger" id="error_longitude"></small>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="lattitude">Lattitude <span class="required">*</span></label>
                             <input type="text" class="form-control" id="lattitude" name="lattitude">
