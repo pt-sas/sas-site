@@ -179,4 +179,30 @@ class MainController extends BaseController
 		$data = $product->getProductgroup($id);
 		echo json_encode($data);
 	}
+
+	public function getCategory()
+	{
+		$productgroup = new M_Productgroup();
+		$post = $this->request->getVar();
+
+		$category1 = '';
+		$category2 = '';
+
+		if (isset($post['category1'])) {
+			$category1 = $post['category1'];
+		}
+
+		if (isset($post['category2'])) {
+			$category2 = $post['category2'];
+		}
+
+		try {
+			$result = $productgroup->showCategoryBy($post['principal'], $category1, $category2);
+			$response = message('success', true, $result->getResult());
+		} catch (\Exception $e) {
+			$response = message('error', false, $e->getMessage());
+		}
+
+		return json_encode($response);
+	}
 }
