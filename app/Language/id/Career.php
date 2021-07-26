@@ -27,8 +27,8 @@ return [
 
     'CBU41' => 'Cari',
 
-    'CH6M1' => 'Apa yang kamu kerjakan',
-    'CH6M2' => 'Apa yang kamu butuhkan',
+    'CH6M1' => 'Deskripsi Pekerjaan :',
+    'CH6M2' => 'Kualifikasi Pekerjaan :',
     'CBUM1' => 'Lamar Sekarang',
 
 ];

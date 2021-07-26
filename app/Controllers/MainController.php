@@ -169,7 +169,6 @@ class MainController extends BaseController
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
 		}
-
 		return json_encode($response);
 	}
 
