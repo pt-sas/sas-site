@@ -38,6 +38,8 @@
     }, 700);
   })
 
+  let marker;
+
   function initMap(location = null) {
     if (location === null) {
       location = 'sunter';
@@ -77,13 +79,14 @@
             );
           }
 
-          var marker = new google.maps.Marker({
+          marker = new google.maps.Marker({
             position: {
               lat: lat,
               lng: lng
             },
             icon: 'adw/assets/images/marker-map.png',
-            map: map
+            map: map,
+            animation: google.maps.Animation.BOUNCE
           });
 
           var infowindow = new google.maps.InfoWindow({
@@ -106,10 +109,7 @@
     var location = target.substr(1);
     initMap(location);
   });
-</script>
 
-
-<script>
   $('.submit_form').click(function(evt) {
     const parent = $(evt.target).closest('.row');
     const form = parent.find('form');
@@ -277,7 +277,7 @@
   function loadingForm(selectorID, effect) {
     $('#' + selectorID + '').waitMe({
       effect: effect,
-      text: 'Please wait...',
+      // text: 'Please wait...',
       bg: 'rgba(255,255,255,0.7)',
       color: '#000',
       maxSize: '',
