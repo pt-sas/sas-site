@@ -230,7 +230,7 @@
 
           $.each(data, function(idx, elem) {
             var src = '';
-            if (elem.url !== '0') {
+            if (elem.url !== '') {
               var src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
             }
 
@@ -287,7 +287,7 @@
           $.each(data, function(idx, elem) {
             var src = '';
 
-            if (elem.url !== '0') {
+            if (elem.url !== '') {
               var src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
             }
 
@@ -300,14 +300,16 @@
               elem.description +
               '</ul>';
 
-            html += '<h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>';
+            if (elem.url_toped !== '' || elem.url_jdid !== '' || elem.url_shopee !== '') {
+              html += '<h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>';
+            }
 
             if (elem.url_toped !== '') {
               html += '<a href="' + elem.url_toped + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/tokped.png') ?>" alt=""></a>';
             }
 
-            if (elem.ur_jdid !== '') {
-              html += '<a href="' + elem.ur_jdid + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/jdid.png') ?>" alt=""></a>';
+            if (elem.url_jdid !== '') {
+              html += '<a href="' + elem.url_jdid + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/jdid.png') ?>" alt=""></a>';
             }
 
             if (elem.url_shopee !== '') {
