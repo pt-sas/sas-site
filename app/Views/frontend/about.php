@@ -12,13 +12,12 @@
   <div class="photo-w-text">
     <div class="container">
       <div class="row align-items-center">
-        <div class="col-md-5">
+        <div class="col-md-6">
           <div class="image-wrap">
-            <div class="image top" style="background-image: url('<?= base_url('adw/assets/images/news1.png') ?>');"></div>
-            <div class="image bot" style="background-image: url('<?= base_url('adw/assets/images/news2.png') ?>');"></div>
+            <div class="image" style="background-image: url('<?= base_url('custom/image/kantor.jpg') ?>');width:100%;"></div>
           </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <?php
             if(session()->lang == 'id') {
               echo $about['tb_cp_overview'];

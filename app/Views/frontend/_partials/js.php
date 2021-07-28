@@ -84,7 +84,7 @@
               lat: lat,
               lng: lng
             },
-            icon: 'adw/assets/images/marker-map.png',
+            icon: "custom/image/map-pin.png",
             map: map,
             animation: google.maps.Animation.BOUNCE
           });
