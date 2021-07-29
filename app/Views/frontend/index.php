@@ -28,21 +28,21 @@
       </div>
       <div class="col-md-4">
         <div class="item-why">
-          <img src="<?= base_url('custom/image/icon/premium.png') ?>" alt="">
+          <img src="<?= base_url('custom/image/icon/premium.png') ?>" style="max-width:50px;" alt="">
           <h4><?= lang("Home.HH421") ?></h4>
           <p><?= lang("Home.HHP21") ?></p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="item-why">
-          <img src="<?= base_url('custom/image/icon/customer-service.png') ?>" alt="">
+          <img src="<?= base_url('custom/image/icon/customer-service.png') ?>" style="max-width:50px;" alt="">
           <h4><?= lang("Home.HH422") ?></h4>
           <p><?= lang("Home.HHP22") ?></p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="item-why">
-          <img src="<?= base_url('custom/image/icon/box.png') ?>" alt="">
+          <img src="<?= base_url('custom/image/icon/box.png') ?>" style="max-width:50px;" alt="">
           <h4><?= lang("Home.HH423") ?></h4>
           <p><?= lang("Home.HHP23") ?></p>
         </div>

@@ -125,25 +125,26 @@
           </ul>
           <div class="map-contain">
             <div id="map" class="map"></div>
-
-      			<?php foreach($location as $count => $row): ?>
-            <div role="tabpanel" id="<?= $row->location;?>" <?php if ($count == 0) { echo 'class="map-address tab-pane fade show active"'; } else { echo 'class="map-address tab-pane fade"'; }?>>
-              <h4><?= $row->name;?></h4>
-              <p>
-                <?= $row->address1;?>
-              </p>
-              <a href="">Get direction</a>
-              <div class="clearfix"></div>
-              <div class="half-wrap">
-                <h6>Phone Number</h6>
-                <p><?= $row->phone;?></p>
+      			<div class="tab-content">
+              <?php foreach($location as $count => $row): ?>
+              <div role="tabpanel" id="<?= $row->location;?>" <?php if ($count == 0) { echo 'class="map-address tab-pane fade show active"'; } else { echo 'class="map-address tab-pane fade"'; }?>>
+                <h4><?= $row->name;?></h4>
+                <p>
+                  <?= $row->address1;?>
+                </p>
+                <a href="<?= $row->url ?>">Get direction</a>
+                <div class="clearfix"></div>
+                <div class="half-wrap">
+                  <h6>Phone Number</h6>
+                  <p><?= $row->phone;?></p>
+                </div>
+                <div class="half-wrap">
+                  <h6>Email</h6>
+                  <p>info@sahabatabadi.com</p>
+                </div>
               </div>
-              <div class="half-wrap">
-                <h6>Email</h6>
-                <p>info@sahabatabadi.com</p>
-              </div>
+        			<?php endforeach;?>
             </div>
-      			<?php endforeach;?>
           </div>
         </div>
       </div>

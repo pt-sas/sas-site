@@ -82,18 +82,25 @@
             </div>
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="longitude">Longitude <span class="required">*</span></label>
                             <input type="text" class="form-control" id="longitude" name="longitude">
                             <small class="form-text text-danger" id="error_longitude"></small>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="lattitude">Lattitude <span class="required">*</span></label>
                             <input type="text" class="form-control" id="lattitude" name="lattitude">
                             <small class="form-text text-danger" id="error_lattitude"></small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="url">Direction URL <span class="required">*</span></label>
+                            <input type="text" class="form-control" id="url" name="url">
+                            <small class="form-text text-danger" id="error_url"></small>
                         </div>
                     </div>
                 </div>

@@ -48,33 +48,33 @@
         </div>
         <div class="col-md-4">
           <div class="item-core">
-            <img src="<?= base_url('custom/image/icon/law.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/law.png') ?>" style="max-width:36px;" alt="">
             <span><?= lang("Career.CSP31") ?></span>
           </div>
           <div class="item-core">
-            <img src="<?= base_url('custom/image/icon/love.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/love.png') ?>" style="max-width:36px;" alt="">
             <span><?= lang("Career.CSP32") ?></span>
           </div>
           <div class="item-core">
-            <img src="<?= base_url('custom/image/icon/support.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/support.png') ?>" style="max-width:36px;" alt="">
             <span><?= lang("Career.CSP33") ?></span>
           </div>
           <div class="item-core">
-            <img src="<?= base_url('custom/image/icon/positive.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/positive.png') ?>" style="max-width:36px;" alt="">
             <span><?= lang("Career.CSP34") ?></span>
           </div>
         </div>
         <div class="col-md-4">
           <div class="item-core">
-            <img src="<?= base_url('custom/image/icon/team.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/team.png') ?>" style="max-width:36px;" alt="">
             <span><?= lang("Career.CSP35") ?></span>
           </div>
           <div class="item-core">
-            <img src="<?= base_url('custom/image/icon/progress.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/progress.png') ?>" style="max-width:36px;" alt="">
             <span><?= lang("Career.CSP36") ?></span>
           </div>
           <div class="item-core">
-            <img src="<?= base_url('custom/image/icon/protection.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/protection.png') ?>" style="max-width:36px;" alt="">
             <span><?= lang("Career.CSP37") ?></span>
           </div>
         </div>
