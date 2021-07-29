@@ -240,7 +240,7 @@
               '<div class="image-wrap">' +
               '<img src="' + src + '" alt="" class="img-fluid">' +
               '</div>' +
-              '<h5>' + elem.code + '</h5>' +
+              '<h5>' + elem.name + '</h5>' +
               '<p>Sort description about product</p>' +
               '</a>' +
               '</div>' +
