@@ -10,9 +10,12 @@ return [
     'AH322' => 'Our Mission',
     'AH323' => 'Our Objective',
 
-    'AH631' => 'Company Founded Appointed as Philips Authorized Distributor',
-    'AH632' => 'Appointed as Supreme Authorized Distributor and Schneider Authorized Distributor',
-    'AH633' => 'Appointed as Legrand Authorized Distributor and Panasonic Authorized Distributor',
+    'AH631' => 'Company Founded.',
+    'AH632' => 'Appointed as Philips Authorized Distributor.',
+    'AH633' => 'Appointed as Supreme Authorized Distributor.',
+    'AH634' => 'Appointed as Schneider Authorized Distributor.',
+    'AH635' => 'Appointed as Legrand Authorized Distributor.',
+    'AH636' => 'Appointed as Panasonic Authorized Distributor.',
 
     'AH641' => 'Our location',
 ];
