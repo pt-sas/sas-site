@@ -235,12 +235,12 @@
             }
 
             html += '<div class="col-md-4 col-lg-3">';
-            html += '<div class="item-product" data-aos="fade-left">';
+            html += '<div class="item-product" data-aos="fade-up">';
             html += '<a href="javascript:void(0);" onclick="openDetailProduct(' + "'" + elem.code + "'" + ')">' +
               '<div class="image-wrap">' +
               '<img src="' + src + '" alt="" class="img-fluid">' +
               '</div>' +
-              '<h5>' + elem.code + '</h5>' +
+              '<h5>' + elem.name + '</h5>' +
               '<p>Sort description about product</p>' +
               '</a>' +
               '</div>' +
