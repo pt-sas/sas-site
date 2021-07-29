@@ -824,7 +824,8 @@ $(document).ready(function (e) {
             ['para', ['ul', 'ol', 'paragraph']],
             ['table', ['table']],
             // ['insert', ['link', 'picture']],
-            ['view', ['fullscreen', 'codeview', 'help']]
+            ['view', ['fullscreen', 'codeview', 'help']],
+            ['height', ['height']]
         ],
         placeholder: 'write here...'
     });
