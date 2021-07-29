@@ -22,6 +22,7 @@ class M_Location extends Model
         'postal',
         'lattitude',
         'longitude',
+        'url',
         'isactive'
     ];
     protected $useTimestamps = true;

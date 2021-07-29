@@ -137,6 +137,10 @@ class Validation
 		'lattitude' => [
 			'label'		=> 'lattitude',
 			'rules'		=> 'required'
+		],
+		'url' => [
+			'label'		=> 'direction link',
+			'rules'		=> 'required'
 		]
 	];
 
