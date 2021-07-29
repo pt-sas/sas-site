@@ -46,9 +46,12 @@ aside.menu-sidebar {
       a {
         display: inline-block;
         color: $wt;
-        font-size: 34px;
+        font-size: 40px;
         font-family: $b;
         margin: 5px 0;
+        @media screen and (max-width: 1378px) {
+          font-size: 28px;
+        }
         @media screen and (max-width: 991px) {
           font-size: 30px;
         }
@@ -70,7 +73,7 @@ aside.menu-sidebar {
       margin-top: 20px;
     }
     p {
-      font-size: 16px;
+      font-size: 13px;
       color: $wt;
     }
     a {

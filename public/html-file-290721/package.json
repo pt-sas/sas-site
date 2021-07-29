@@ -1,0 +1,33 @@
+{
+    "name": "mt-poll",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "mt-poll",
+        "email",
+        "merah",
+        "app"
+    ],
+    "author": "ipnetsoft",
+    "license": "ISC",
+    "devDependencies": {
+        "gulp": "^4.0.0",
+        "gulp-bower": "0.0.14",
+        "gulp-concat": "^2.6.1",
+        "gulp-if": "^2.0.2",
+        "gulp-notify": "^3.0.0",
+        "gulp-ruby-sass": "^2.1.1",
+        "gulp-sass": "^3.1.0",
+        "gulp-uglify": "^3.0.0"
+    },
+    "dependencies": {
+        "bootstrap": "^4.3.1",
+        "jquery": "^3.3.1",
+        "popper.js": "^1.12.3",
+        "slick-carousel": "^1.7.1"
+    }
+}
