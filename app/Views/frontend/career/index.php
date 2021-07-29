@@ -14,8 +14,7 @@
       <div class="row align-items-center">
         <div class="col-md-5">
           <div class="image-wrap">
-            <div class="image top" style="background-image: url('<?= base_url('adw/assets/images/news1.png') ?>');"></div>
-            <div class="image bot" style="background-image: url('<?= base_url('adw/assets/images/news2.png') ?>');"></div>
+            <div class="image" style="background-image: url('<?= base_url('custom/image/gudang.jpeg') ?>');width:100%;"></div>
           </div>
         </div>
         <div class="col-md-7">
@@ -47,33 +46,35 @@
         <div class="col-md-4">
           <h4 class="left-title"><?= lang("Career.CH431") ?></h4>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-4">
           <div class="item-core">
-            <img src="<?= base_url('adw/assets/images/ethics.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/law.png') ?>" alt="">
             <span><?= lang("Career.CSP31") ?></span>
           </div>
           <div class="item-core">
-            <img src="<?= base_url('adw/assets/images/transparent.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/love.png') ?>" alt="">
             <span><?= lang("Career.CSP32") ?></span>
           </div>
           <div class="item-core">
-            <img src="<?= base_url('adw/assets/images/professional.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/support.png') ?>" alt="">
             <span><?= lang("Career.CSP33") ?></span>
           </div>
           <div class="item-core">
-            <img src="<?= base_url('adw/assets/images/group.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/positive.png') ?>" alt="">
             <span><?= lang("Career.CSP34") ?></span>
           </div>
+        </div>
+        <div class="col-md-4">
           <div class="item-core">
-            <img src="<?= base_url('adw/assets/images/transparent.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/team.png') ?>" alt="">
             <span><?= lang("Career.CSP35") ?></span>
           </div>
           <div class="item-core">
-            <img src="<?= base_url('adw/assets/images/professional.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/progress.png') ?>" alt="">
             <span><?= lang("Career.CSP36") ?></span>
           </div>
           <div class="item-core">
-            <img src="<?= base_url('adw/assets/images/group.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/protection.png') ?>" alt="">
             <span><?= lang("Career.CSP37") ?></span>
           </div>
         </div>
@@ -118,7 +119,7 @@
                 Detail
               </a>
               <span class="location">
-                <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
+                <img src="<?= base_url('custom/image/icon/map-pin-s.png') ?>" alt="">
                 DKI Jakarta
               </span>
             </div>
@@ -137,7 +138,7 @@
         </div>
         <div class="col-md-8">
           <a href="" class="btn btn-primary">
-            <img src="<?= base_url('adw/assets/images/file-text-w.png') ?>" alt="">
+            <img src="<?= base_url('custom/image/icon/file-text-w.png') ?>" alt="">
             Drop CV Here
           </a>
         </div>
@@ -165,13 +166,13 @@
     <div class="modal-content">
       <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <img src="<?= base_url('adw/assets/images/close.png') ?>" alt="">
+          <img src="<?= base_url('custom/image/icon/close.png') ?>" alt="">
         </button>
         <h4 name="position"></h4>
         <h5>
           <span name="division"></span>
           <span name="posted_date"></span>
-          <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
+          <span><img src="<?= base_url('custom/image/icon/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
         </h5>
         <h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>
         <?php if(session()->lang == 'id') { ?>

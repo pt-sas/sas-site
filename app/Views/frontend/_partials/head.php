@@ -1,6 +1,6 @@
 <head>
 	<title>PT. Sahabat Abadi Sejahtera</title>
-	<link rel="shortcut icon" href="<?= base_url('adw/assets/images/favicon.png') ?>" type="image/x-icon" />
+	<link rel="shortcut icon" href="<?= base_url('custom/image/logo.png') ?>" type="image/x-icon" />
 	<meta charset="utf-8">
 	<meta name="description" content="lexoffice">
 	<meta name="keywords" content="virual, offce, vo">

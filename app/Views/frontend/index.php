@@ -12,7 +12,6 @@
         <h2 class="slogan"><?= lang("Home.HH211") ?></h2>
         <p><?= lang("Home.HP11") ?></p>
         <lottie-player src="<?= base_url('adw/assets/animation-file/Electricity_Animations.json') ?>"  background="transparent"  speed="1"  style="width: 100%; height: auto;" loop autoplay></lottie-player>
-        <a href="javascript:void(0);" class="scroll-down">Scroll Down <img src="<?= base_url('adw/assets/images/chevrons-down.png') ?>" alt=""></a>
       </div>
     </div>
   </div>
@@ -29,21 +28,21 @@
       </div>
       <div class="col-md-4">
         <div class="item-why">
-          <img src="<?= base_url('adw/assets/images/codepen.png') ?>" alt="">
+          <img src="<?= base_url('custom/image/icon/premium.png') ?>" alt="">
           <h4><?= lang("Home.HH421") ?></h4>
           <p><?= lang("Home.HHP21") ?></p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="item-why">
-          <img src="<?= base_url('adw/assets/images/codepen.png') ?>" alt="">
+          <img src="<?= base_url('custom/image/icon/customer-service.png') ?>" alt="">
           <h4><?= lang("Home.HH422") ?></h4>
           <p><?= lang("Home.HHP22") ?></p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="item-why">
-          <img src="<?= base_url('adw/assets/images/codepen.png') ?>" alt="">
+          <img src="<?= base_url('custom/image/icon/box.png') ?>" alt="">
           <h4><?= lang("Home.HH423") ?></h4>
           <p><?= lang("Home.HHP23") ?></p>
         </div>
