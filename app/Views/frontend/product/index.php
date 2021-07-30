@@ -12,13 +12,17 @@
   <div class="product-cat">
     <div class="container">
       <div class="row justify-content-center">
-        <?php foreach($principal as $row): ?>
+        <?php foreach ($principal as $row) : ?>
           <div class="col-md-4">
-            <a href="<?= base_url('/product/'.$row->url.'') ?>" class="item-product-cat">
-              <img src="<?= base_url($row->image_url) ?>" alt="" class="img-fluid">
+            <a href="<?= base_url('/product/' . $row->url . '') ?>" class="item-product-cat">
+              <?php if (strtolower($row->principal_name) == 'supreme') { ?>
+                <img src="<?= base_url($row->image_url) ?>" alt="<?= $row->principal_name ?>" class="img-fluid supreme">
+              <?php } else { ?>
+                <img src="<?= base_url($row->image_url) ?>" alt="" class="img-fluid">
+              <?php } ?>
             </a>
           </div>
-        <?php endforeach;?>
+        <?php endforeach; ?>
       </div>
     </div>
   </div>
