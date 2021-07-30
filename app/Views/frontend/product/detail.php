@@ -1,17 +1,39 @@
 <?= $this->extend('frontend/_partials/overview') ?>
 
 <?= $this->section('content') ?>
-
-<!-- hero -->
 <!-- header fixed -->
 <div class="product-head fixed d-none">
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
-        <a href="<?= base_url('product') ?>" class="back-link">Back to product list</a>
-        <h2>Phillips Products</h2>
-        <a href="<?= base_url('product/compare') ?>" class="btn btn-white">COMPARE PRODUCT</a>
-      </div>
+      <form>
+        <div class="form-row align-items-center">
+          <div class="col-auto">
+            <label for="filter-product">Filter :</label>
+          </div>
+          <div class="col-auto">
+            <select class="form-control" name="fix_category1" id="fix_category1">
+              <option value="">All Categories</option>
+              <?php foreach ($category1 as $row) : ?>
+                <option value="<?= $row->md_category_id ?>"><?= $row->category ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="col-auto">
+            <select class="form-control" name="fix_category2" id="fix_category2">
+              <option value="">All Sub Categories 1</option>
+            </select>
+          </div>
+          <div class="col-auto">
+            <select class="form-control" name="fix_category3" id="fix_category3">
+              <option value="">All Sub Categories 2</option>
+            </select>
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-primary btn_filter">Filter</button>
+          </div>
+        </div>
+      </form>
+      <!-- <a href="<?= base_url('product/compare') ?>" class="btn btn-white">COMPARE PRODUCT</a> -->
     </div>
   </div>
 </div>
@@ -31,38 +53,34 @@
           <!-- <a href="<?= base_url('product/compare') ?>" class="btn btn-white">COMPARE PRODUCT</a> -->
         </div>
         <div class="product-filter">
-          <div class="form-row align-items-center">
-            <div class="col-auto">
-              <label for="filter-product">Filter :</label>
-            </div>
-            <div class="col-auto col-md-3">
-              <div class="filter-product">
+          <form>
+            <div class="form-row align-items-center">
+              <div class="col-auto">
+                <label for="filter-product">Filter :</label>
+              </div>
+              <div class="col-auto">
                 <select class="form-control" name="category1" id="category1">
-                  <option value=""></option>
+                  <option value="">All Categories</option>
                   <?php foreach ($category1 as $row) : ?>
                     <option value="<?= $row->md_category_id ?>"><?= $row->category ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
-            </div>
-            <div class="col-auto col-md-3">
-              <div class="filter-product">
+              <div class="col-auto">
                 <select class="form-control" name="category2" id="category2">
+                  <option value="">All Sub Categories 1</option>
                 </select>
               </div>
-            </div>
-            <div class="col-auto col-md-3">
-              <div class="filter-product">
+              <div class="col-auto">
                 <select class="form-control" name="category3" id="category3">
+                  <option value="">All Sub Categories 2</option>
                 </select>
               </div>
-            </div>
-            <div class="col-auto">
-              <div class="filter-product">
+              <div class="col-auto">
                 <button type="button" class="btn btn-primary btn_filter">Filter</button>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -72,9 +90,9 @@
   <div class="product-wrap">
     <div class="container">
       <div class="row" id="card-product">
-        <!-- <div class="col-md-12 text-center">
-          <button class="btn btn-whites mt-3">Load More <img src="<?= base_url('adw/assets/images/loader.png') ?>" alt="" class="spinning" /></button>
-        </div> -->
+        <div class="col-md-12 text-center m-lg-5">
+          <!-- <button class="btn btn-whites mt-3">Load More <img src="assets/images/loader.png" alt="" class="spinning" /></button> -->
+        </div>
       </div>
     </div>
   </div>
@@ -110,6 +128,18 @@
   </div>
 </div>
 
+<script>
+  // var userScroll = $(document).scrollTop();
+  // $(window).on('scroll', function() {
+  //   var newScroll = $(document).scrollTop();
+  //   if (userScroll - newScroll > 250 || newScroll - userScroll > 250) {
+  //     $(".product-head.fixed").removeClass('d-none');
+  //   } else {
+  //     $(".product-head.fixed").addClass('d-none');
+  //   }
+  // })
+</script>
+
 <script type="text/javascript">
   var SITE_URL = window.location.href;
   var LAST_URL = SITE_URL.substr(SITE_URL.lastIndexOf('/') + 1); //the last url
@@ -131,8 +161,8 @@
       success: function(result) {
         $('#category2').empty();
         $('#category3').empty();
-        $('#category2').append('<option selected="selected" value=""></option>');
-        $('#category3').append('<option selected="selected" value=""></option>');
+        $('#category2').append('<option selected="selected" value="">All Sub Categories 1</option>');
+        $('#category3').append('<option selected="selected" value="">All Sub Categories 2</option>');
 
         if (result[0].success) {
           var data = result[0].message;
@@ -172,7 +202,7 @@
       dataType: 'JSON',
       success: function(result) {
         $('#category3').empty();
-        $('#category3').append('<option selected="selected" value=""></option>');
+        $('#category3').append('<option selected="selected" value="">All Sub Categories 2</option>');
 
         if (result[0].success) {
           var data = result[0].message;
@@ -225,6 +255,7 @@
         hideLoadingForm('card-product');
       },
       success: function(result) {
+        console.log(result)
         if (result[0].success) {
           var data = result[0].message;
 
