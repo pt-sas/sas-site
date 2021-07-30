@@ -258,14 +258,15 @@
         hideLoadingForm('card-product');
       },
       success: function(result) {
-        console.log(result)
         if (result[0].success) {
           var data = result[0].message;
 
           $.each(data, function(idx, elem) {
             var src = '';
             if (elem.url !== '') {
-              var src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
+              src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
+            } else {
+              src = 'https://via.placeholder.com/200/808080/ffffff?text=Not+found';
             }
 
             html += '<div class="col-md-4 col-lg-3">';
@@ -313,8 +314,6 @@
         hideLoadingForm('product-modal');
       },
       success: function(result) {
-        $('#modalProduct').modal('show')
-
         if (result[0].success) {
           var data = result[0].message;
 
@@ -322,7 +321,9 @@
             var src = '';
 
             if (elem.url !== '') {
-              var src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
+              src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
+            } else {
+              src = 'https://via.placeholder.com/200/808080/ffffff?text=Not+found';
             }
 
             html += '<div class="col-md-5">' +
@@ -355,6 +356,7 @@
 
           $('#detail-product').html(html)
 
+          $('#modalProduct').modal('show');
         } else {
           Swal.fire({
             type: 'error',
