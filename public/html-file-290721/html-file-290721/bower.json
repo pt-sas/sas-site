@@ -1,0 +1,30 @@
+{
+  "name": "mt-poll",
+  "description": "email platform for single sign on",
+  "main": "index.js",
+  "authors": [
+    "ipnetsoft"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "mt-poll",
+    "polling",
+    "merah",
+    "putih",
+    "app"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "fontawesome#~4.7.0",
+    "moment": "^2.18.1",
+    "slick-carousel": "^1.8.1"
+  }
+}

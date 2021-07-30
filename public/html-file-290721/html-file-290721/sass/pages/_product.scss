@@ -1,0 +1,329 @@
+.product-cat {
+  .item-product-cat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 167px;
+    background: #ffffff;
+    box-shadow: 0px 5px 44px rgba(0, 0, 0, 0.15);
+    border-radius: 27px;
+    margin-bottom: 30px;
+    @media screen and (max-width: 767px) {
+      height: 130px;
+      margin-bottom: 15px;
+    }
+    img {
+      max-width: 80%;
+      &.supreme{
+        height: 130px;
+        @media screen and (max-width: 767px) {
+          height: 110px;
+        }
+      }
+    }
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+}
+
+.product-filter{
+  border-top: 1px solid #4E5D77;
+  border-bottom: 1px solid #4E5D77;
+  margin-bottom: 40px;
+  padding: 16px 0px;
+  select.form-control{
+    font-size: 14px;
+  }
+  .col-auto{
+    @media screen and (max-width: 767px) {
+      margin-bottom: 10px;
+      width: 100%;
+      &:last-child{
+        margin-bottom: 0px;
+      }
+    }
+  }
+
+  .btn{
+    @media screen and (max-width: 767px) {
+      width: 100%;
+    }
+  }
+  
+  label{
+    margin-bottom: 0;
+    color: #fff;
+    font-size: 12px;  
+    font-weight: bold;
+    opacity: 0.6;
+  }
+}
+
+.product-head {
+  margin-bottom: 15px;
+  @media screen and (max-width: 991px) {
+    margin-bottom: 25px;
+  }
+  @media screen and (max-width: 767px) {
+    text-align: center;
+  }
+  .back-link {
+    font-size: 20px;
+    opacity: 0.6;
+    margin-bottom: 5px;
+    float: left;
+    color: $wt;
+    display: block;
+    @media screen and (max-width: 991px) {
+      font-size: 16px;
+    }
+    @media screen and (max-width: 767px) {
+      float: none;
+    }
+  }
+  h2 {
+    float: left;
+    clear: left;
+    font-size: 56px;
+    font-family: $b;
+    color: $wt;
+    @media screen and (max-width: 991px) {
+      font-size: 40px;
+    }
+    @media screen and (max-width: 767px) {
+      float: none;
+      clear: none;
+    }
+  }
+  .btn-white {
+    float: right;
+    padding: 8px 20px;
+    color: #0072bc;
+    border-radius: 40px;
+    background-color: $wt;
+    font-family: $b;
+    @media screen and (max-width: 767px) {
+      float: none;
+    }
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  &.center {
+    text-align: center;
+    .back-link,
+    h2 {
+      float: none;
+    }
+  }
+  &.fixed {
+    margin: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    background-color: #304666;
+    z-index: 99;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba($color: $wt, $alpha: 0.1);
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
+    .back-link {
+      font-size: 14px;
+      margin-bottom: 0;
+      @media screen and (max-width: 767px) {
+        float: left;
+      }
+    }
+    h2 {
+      font-size: 32px;
+      margin-bottom: 0;
+      @media screen and (max-width: 767px) {
+        font-size: 20px;
+        float: left;
+        clear: left;
+      }
+    }
+    .btn-white {
+      font-size: 14px;
+      margin-top: 1px;
+      padding: 10px 20px;
+      margin-left: 100px;
+      @media screen and (max-width: 767px) {
+        margin-top: -18px;
+        float: right;
+        font-size: 13px;
+      }
+    }
+    select.form-control{
+      font-size: 14px;
+    }
+    .col-auto{
+      @media screen and (max-width: 767px) {
+        margin-bottom: 10px;
+        width: 100%;
+        &:last-child{
+          margin-bottom: 0px;
+        }
+      }
+    }
+  
+    .btn{
+      @media screen and (max-width: 767px) {
+        width: 100%;
+      }
+    }
+    
+    label{
+      margin-bottom: 0;
+      color: #fff;
+      font-size: 12px;  
+      font-weight: bold;
+      opacity: 0.6;
+    }
+  }
+}
+
+.product-wrap {
+  .item-product {
+    position: relative;
+    margin-bottom: 30px;
+    @media screen and (max-width: 767px) {
+      margin-bottom: 15px;
+    }
+    .custom-control.custom-checkbox {
+      padding-left: 0;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      &:hover,
+      &:focus {
+        cursor: pointer;
+      }
+    }
+    label.custom-control-label {
+      position: relative;
+      padding-right: 1.5rem;
+      font-size: 13px;
+    }
+    label.custom-control-label::before,
+    label.custom-control-label::after {
+      right: 0;
+      left: auto;
+    }
+    a {
+      display: block;
+      padding: 60px 20px 30px 20px;
+      background-color: $wt;
+      border-radius: 10px;
+      text-align: center;
+      @media screen and (max-width: 767px) {
+        padding: 30px 10px 15px 10px;
+      }
+      .image-wrap {
+        width: 100%;
+        height: 188px;
+        margin-bottom: 50px;
+        @media screen and (max-width: 991px) {
+          margin-bottom: 25px;
+        }
+        @media screen and (max-width: 767px) {
+          margin-bottom: 15px;
+        }
+        img {
+          height: 188px;
+          object-fit: cover;
+        }
+      }
+      h5 {
+        font-size: 18px;
+        height: 40px;
+        overflow: hidden;
+        color: #000000;
+        margin-bottom: 4px;
+        font-family: $b;
+        @media screen and (max-width: 991px) {
+          font-size: 16px;
+        }
+      }
+      p {
+        margin-bottom: 0px;
+        opacity: 0.4;
+        color: #000000;
+        font-size: 13px;
+        height: 40px;
+        overflow: hidden;
+        @media screen and (max-width: 991px) {
+          font-size: 14px;
+        }
+      }
+      &:hover,
+      &:focus {
+        cursor: pointer;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.compare-wrap {
+  .name-product {
+    text-align: center;
+    color: $wt;
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-family: $b;
+    @media screen and (max-width: 991px) {
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+  }
+  .image {
+    background-color: $wt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 300px;
+    margin-bottom: 35px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    @media screen and (max-width: 991px) {
+      height: 200px;
+    }
+    img {
+      @media screen and (max-width: 991px) {
+        max-width: 80%;
+      }
+    }
+  }
+  .compare-title {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba($color: $wt, $alpha: 0.2);
+    color: $wt;
+    font-size: 20px;
+    font-family: $b;
+    @media screen and (max-width: 991px) {
+      font-size: 16px;
+    }
+  }
+  .compare-diff {
+    color: $wt;
+    margin-bottom: 10px;
+    font-size: 18px;
+    @media screen and (max-width: 991px) {
+      font-size: 16px;
+    }
+  }
+}

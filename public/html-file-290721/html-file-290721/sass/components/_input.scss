@@ -1,0 +1,91 @@
+// input
+input[type="text"].form-control,
+input[type="email"].form-control,
+input[type="file"].form-control,
+input[type="number"].form-control,
+input[type="password"].form-control,
+input[type="search"].form-control,
+textarea.form-control,
+select.form-control {
+  padding: 10px 16px;
+  border: 1px solid #dedede;
+  background-color: transparent;
+  font-size: 18px;
+  color: $t;
+  height: auto;
+  @include border-radius(10px);
+  &::-webkit-input-placeholder {
+    color: rgba($color: $main, $alpha: 0.4);
+  }
+  &:-moz-placeholder {
+    color: rgba($color: $main, $alpha: 0.4);
+  }
+  &::-moz-placeholder {
+    color: rgba($color: $main, $alpha: 0.4);
+  }
+  &:-ms-input-placeholder {
+    color: rgba($color: $main, $alpha: 0.4);
+  }
+  &:hover,
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.form-control:disabled {
+  background-color: #f4f4f4;
+}
+
+.wmt {
+  margin-top: 34px;
+}
+
+.cb-mt {
+  margin-top: 11px;
+}
+
+textarea.form-control {
+  resize: none;
+  max-width: 100%;
+  min-height: 130px;
+}
+
+.note-editor.note-frame {
+  border-color: rgba($color: #707070, $alpha: 0.15);
+}
+
+.form-group {
+  margin-bottom: 30px;
+  @media screen and (max-width: 767px) {
+    margin-bottom: 15px;
+  }
+  label {
+    font-size: 13px;
+    color: $t;
+    margin-bottom: 9px;
+  }
+  span {
+    display: block;
+    font-size: 12px;
+    line-height: 20px;
+    color: rgba($color: $t, $alpha: 0.5);
+    margin-bottom: 10px;
+  }
+}
+
+select.form-control {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 10px 25px 10px 16px;
+  background: url(../images/adown.png) no-repeat $wt center right 10px;
+  &:hover,
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+select.form-control:not([size]):not([multiple]) {
+  height: auto;
+}

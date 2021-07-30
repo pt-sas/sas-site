@@ -1,0 +1,93 @@
+aside.menu-sidebar {
+  position: fixed;
+  left: -720px;
+  top: 0;
+  bottom: 0;
+  background-color: $ter;
+  width: 720px;
+  padding: 50px 60px;
+  z-index: 9;
+  transition: all 0.3s ease;
+  @media screen and (max-width: 991px) {
+    width: 100%;
+    padding: 20px 30px;
+    left: -100%;
+  }
+  .close-btn {
+    float: left;
+    display: block;
+    margin-top: 7px;
+  }
+  .shop {
+    float: right;
+    display: block;
+    background-color: $wt;
+    padding: 9px 24px;
+    color: $sec;
+    font-size: 15px;
+    font-family: $b;
+    border-radius: 69px;
+    img {
+      margin-right: 3px;
+    }
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+  .menu {
+    padding: 0;
+    margin: 60px 0 0 0;
+    @media screen and (max-width: 991px) {
+      margin: 20px 0 0 0;
+    }
+    li {
+      list-style: none;
+      a {
+        display: inline-block;
+        color: $wt;
+        font-size: 40px;
+        font-family: $b;
+        margin: 5px 0;
+        @media screen and (max-width: 1378px) {
+          font-size: 28px;
+        }
+        @media screen and (max-width: 991px) {
+          font-size: 30px;
+        }
+        &:hover,
+        &:focus {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  .socmed {
+    position: absolute;
+    bottom: 50px;
+    left: 60px;
+    @media screen and (max-width: 991px) {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      margin-top: 20px;
+    }
+    p {
+      font-size: 13px;
+      color: $wt;
+    }
+    a {
+      display: inline-block;
+      color: rgba($color: #fff, $alpha: 0.6);
+      margin-right: 35px;
+    }
+  }
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  &.slideIn {
+    left: 0;
+  }
+}

@@ -236,7 +236,7 @@
 
             html += '<div class="col-md-4 col-lg-3">';
             html += '<div class="item-product" data-aos="fade-left">';
-            html += '<a href="javascript:void(0);" onclick="openDetailProduct(' + "'" + elem.code + "'" + ')">' +
+            html += '<a href="javascript:void(0);" title="' + elem.name + '" onclick="openDetailProduct(' + "'" + elem.code + "'" + ')">' +
               '<div class="image-wrap">' +
               '<img src="' + src + '" alt="" class="img-fluid">' +
               '</div>' +

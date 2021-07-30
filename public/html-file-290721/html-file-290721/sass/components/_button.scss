@@ -1,0 +1,64 @@
+// buttons
+
+.btn-primary {
+  background-color: $sec;
+  color: $wt;
+  border: none;
+  padding: 9px 24px;
+  font-size: 18px;
+  font-family: $b;
+  border-radius: 10px;
+  @include transition(all, 0.3s, ease);
+  img {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 4px;
+  }
+  &:hover,
+  &:focus,
+  &:active {
+    color: $wt !important;
+    background-color: darken($sec, 5%) !important;
+    outline: none;
+    box-shadow: none !important;
+  }
+}
+
+.btn-outline-black {
+  padding: 3px 29px;
+  font-family: $b;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid $bl;
+  color: $bl;
+  @include transition(all, 0.3s, ease);
+  &:hover,
+  &:focus,
+  &:active {
+    color: $wt;
+    background-color: $bl;
+    outline: none;
+    box-shadow: none !important;
+  }
+}
+
+.btn-whites {
+  padding: 15px 29px;
+  font-family: $b;
+  background-color: $wt;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid $wt;
+  border-radius: 28px;
+  color: #363636;
+  @include transition(all, 0.3s, ease);
+  &:hover,
+  &:focus,
+  &:active {
+    color: $wt;
+    border-color: #363636;
+    background-color: #363636;
+    outline: none;
+    box-shadow: none !important;
+  }
+}
