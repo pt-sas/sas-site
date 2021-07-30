@@ -19,11 +19,11 @@
         </div>
         <div class="col-md-6">
           <?php
-            if(session()->lang == 'id') {
-              echo $about['tb_cp_overview'];
-            } else {
-              echo $about['tb_cp_overview_en'];
-            }
+          if (session()->lang == 'id') {
+            echo $about['tb_cp_overview'];
+          } else {
+            echo $about['tb_cp_overview_en'];
+          }
           ?>
         </div>
       </div>
@@ -39,11 +39,11 @@
             <img src="<?= base_url('adw/assets/images/eye.png') ?>" alt="">
             <h6><?= lang("About.AH321") ?></h6>
             <?php
-              if(session()->lang == 'id') {
-                echo $about['tb_cp_vision'];
-              } else {
-                echo $about['tb_cp_vision_en'];
-              }
+            if (session()->lang == 'id') {
+              echo $about['tb_cp_vision'];
+            } else {
+              echo $about['tb_cp_vision_en'];
+            }
             ?>
           </div>
         </div>
@@ -52,11 +52,11 @@
             <img src="<?= base_url('adw/assets/images/target.png') ?>" alt="">
             <h6><?= lang("About.AH322") ?></h6>
             <?php
-              if(session('lang') == 'id') {
-                echo $about['tb_cp_mision'];
-              } else {
-                echo $about['tb_cp_mision_en'];
-              }
+            if (session('lang') == 'id') {
+              echo $about['tb_cp_mision'];
+            } else {
+              echo $about['tb_cp_mision_en'];
+            }
             ?>
           </div>
         </div>
@@ -65,11 +65,11 @@
             <img src="<?= base_url('adw/assets/images/task.png') ?>" alt="">
             <h6><?= lang("About.AH323") ?></h6>
             <?php
-              if(session('lang') == 'id') {
-                echo $about['tb_cp_objectives'];
-              } else {
-                echo $about['tb_cp_objectives_en'];
-              }
+            if (session('lang') == 'id') {
+              echo $about['tb_cp_objectives'];
+            } else {
+              echo $about['tb_cp_objectives_en'];
+            }
             ?>
           </div>
         </div>
@@ -83,10 +83,10 @@
       <div class="row">
         <div class="col-md-12">
           <div class="image">
-            <?php if(session()->lang == 'id') { ?>
+            <?php if (session()->lang == 'id') { ?>
               <img src="<?= base_url('custom/image/flow-ind.png') ?>" alt="PT CKJ" class="img-responsive" width="100%">
             <?php } else { ?>
-              <img src="<?= base_url('custom/image/flow.png') ?>" alt="PT CKJ" class="img-responsive" width="100%">
+              <img src="<?= base_url('custom/image/flow2.png') ?>" alt="PT CKJ" class="img-responsive" width="100%">
             <?php } ?>
           </div>
         </div>
@@ -101,33 +101,41 @@
         <div class="col-md-12">
           <h6 class="map-title"><?= lang("About.AH641") ?></h6>
           <ul class="nav">
-            <?php foreach($location as $count => $row): ?>
+            <?php foreach ($location as $count => $row) : ?>
               <li class="nav-item">
-                  <a href="#<?= $row->location;?>" <?php if ($count == 0) { echo 'class="nav-link active"'; } else { echo 'class="nav-link"'; }?> aria-controls="tab-<?= $row->md_location_id;?>" role="tab" data-toggle="tab"><?= $row->name;?></a>
+                <a href="#<?= $row->location; ?>" <?php if ($count == 0) {
+                                                    echo 'class="nav-link active"';
+                                                  } else {
+                                                    echo 'class="nav-link"';
+                                                  } ?> aria-controls="tab-<?= $row->md_location_id; ?>" role="tab" data-toggle="tab"><?= $row->name; ?></a>
               </li>
-      			<?php endforeach;?>
+            <?php endforeach; ?>
           </ul>
           <div class="map-contain">
             <div id="map" class="map"></div>
-      			<div class="tab-content">
-              <?php foreach($location as $count => $row): ?>
-              <div role="tabpanel" id="<?= $row->location;?>" <?php if ($count == 0) { echo 'class="map-address tab-pane fade show active"'; } else { echo 'class="map-address tab-pane fade"'; }?>>
-                <h4><?= $row->name;?></h4>
-                <p>
-                  <?= $row->address1;?>
-                </p>
-                <a href="<?= $row->url ?>">Get direction</a>
-                <div class="clearfix"></div>
-                <div class="half-wrap">
-                  <h6>Phone Number</h6>
-                  <p><?= $row->phone;?></p>
+            <div class="tab-content">
+              <?php foreach ($location as $count => $row) : ?>
+                <div role="tabpanel" id="<?= $row->location; ?>" <?php if ($count == 0) {
+                                                                  echo 'class="map-address tab-pane fade show active"';
+                                                                } else {
+                                                                  echo 'class="map-address tab-pane fade"';
+                                                                } ?>>
+                  <h4><?= $row->name; ?></h4>
+                  <p>
+                    <?= $row->address1; ?>
+                  </p>
+                  <a href="<?= $row->url ?>">Get direction</a>
+                  <div class="clearfix"></div>
+                  <div class="half-wrap">
+                    <h6>Phone Number</h6>
+                    <p><?= $row->phone; ?></p>
+                  </div>
+                  <div class="half-wrap">
+                    <h6>Email</h6>
+                    <p>info@sahabatabadi.com</p>
+                  </div>
                 </div>
-                <div class="half-wrap">
-                  <h6>Email</h6>
-                  <p>info@sahabatabadi.com</p>
-                </div>
-              </div>
-        			<?php endforeach;?>
+              <?php endforeach; ?>
             </div>
           </div>
         </div>
