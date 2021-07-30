@@ -59,6 +59,9 @@
                 <label for="filter-product">Filter :</label>
               </div>
               <div class="col-auto">
+                <input class="form-control" type="search" placeholder="Search" name="keyword" id="keyword">
+              </div>
+              <div class="col-auto">
                 <select class="form-control" name="category1" id="category1">
                   <option value="">All Categories</option>
                   <?php foreach ($category1 as $row) : ?>
