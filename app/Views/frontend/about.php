@@ -14,7 +14,7 @@
       <div class="row align-items-center">
         <div class="col-md-6">
           <div class="image-wrap">
-            <div class="image" style="background-image: url('<?= base_url('custom/image/kantor.jpg') ?>');width:100%;"></div>
+            <div class="image" style="background-image: url('<?= base_url('custom/image/toba.jpg') ?>');width:100%;"></div>
           </div>
         </div>
         <div class="col-md-6">
@@ -81,32 +81,13 @@
   <div class="flow bordered-top">
     <div class="container">
       <div class="row">
-        <div class="col-md-4">
-          <div class="item-flow">
-          <h6><?= lang("About.AH631") ?></h6>
-          <h6><?= lang("About.AH632") ?></h6>
-            <h3>1987</h3>
-            <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:70px;" alt="">
-          </div>
-        </div>
-        <div class="col-md-5 offset-md-1">
-          <div class="item-flow">
-          <h6><?= lang("About.AH633") ?></h6>
-          <h6><?= lang("About.AH634") ?></h6>
-            <h3>2017</h3>
-            <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:90px;" alt="">
-          </div>
-        </div>
-        <div class="col-md-12 text-center">
-          <img src="<?= base_url('adw/assets/images/flow.png') ?>" alt="" class="img-fluid img-flow">
-        </div>
-        <div class="col-md-5 offset-md-2">
-          <div class="item-flow upside">
-            <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:90px;" alt="" class="rotate">
-            <h3 class="d-none d-md-block">2009</h3>
-            <h6><?= lang("About.AH635") ?></h6>
-            <h6><?= lang("About.AH636") ?></h6>
-            <h3 class="d-block d-md-none">2009</h3>
+        <div class="col-md-12">
+          <div class="image">
+            <?php if(session()->lang == 'id') { ?>
+              <img src="<?= base_url('custom/image/flow-ind.png') ?>" alt="PT CKJ" class="img-responsive" width="100%">
+            <?php } else { ?>
+              <img src="<?= base_url('custom/image/flow.png') ?>" alt="PT CKJ" class="img-responsive" width="100%">
+            <?php } ?>
           </div>
         </div>
       </div>
