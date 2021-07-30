@@ -84,13 +84,15 @@
         <div class="col-md-4">
           <div class="item-flow">
           <h6><?= lang("About.AH631") ?></h6>
+          <h6><?= lang("About.AH632") ?></h6>
             <h3>1987</h3>
             <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:70px;" alt="">
           </div>
         </div>
         <div class="col-md-5 offset-md-1">
           <div class="item-flow">
-          <h6><?= lang("About.AH632") ?></h6>
+          <h6><?= lang("About.AH633") ?></h6>
+          <h6><?= lang("About.AH634") ?></h6>
             <h3>2017</h3>
             <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:90px;" alt="">
           </div>
@@ -102,7 +104,8 @@
           <div class="item-flow upside">
             <img src="<?= base_url('adw/assets/images/point.png') ?>" style="margin-right:90px;" alt="" class="rotate">
             <h3 class="d-none d-md-block">2009</h3>
-            <h6><?= lang("About.AH633") ?></h6>
+            <h6><?= lang("About.AH635") ?></h6>
+            <h6><?= lang("About.AH636") ?></h6>
             <h3 class="d-block d-md-none">2009</h3>
           </div>
         </div>

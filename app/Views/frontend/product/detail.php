@@ -30,38 +30,38 @@
           <?php } ?>
           <!-- <a href="<?= base_url('product/compare') ?>" class="btn btn-white">COMPARE PRODUCT</a> -->
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="half-half-wrap">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3">
-          <div class="filter-product">
-            <select class="form-control" name="category1" id="category1">
-              <option value=""></option>
-              <?php foreach ($category1 as $row) : ?>
-                <option value="<?= $row->md_category_id ?>"><?= $row->category ?></option>
-              <?php endforeach; ?>
-            </select>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="filter-product">
-            <select class="form-control" name="category2" id="category2">
-            </select>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="filter-product">
-            <select class="form-control" name="category3" id="category3">
-            </select>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="filter-product">
-            <button type="button" class="btn btn-primary btn_filter">Filter</button>
+        <div class="product-filter">
+          <div class="form-row align-items-center">
+            <div class="col-auto">
+              <label for="filter-product">Filter :</label>
+            </div>
+            <div class="col-auto col-md-3">
+              <div class="filter-product">
+                <select class="form-control" name="category1" id="category1">
+                  <option value=""></option>
+                  <?php foreach ($category1 as $row) : ?>
+                    <option value="<?= $row->md_category_id ?>"><?= $row->category ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+            <div class="col-auto col-md-3">
+              <div class="filter-product">
+                <select class="form-control" name="category2" id="category2">
+                </select>
+              </div>
+            </div>
+            <div class="col-auto col-md-3">
+              <div class="filter-product">
+                <select class="form-control" name="category3" id="category3">
+                </select>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="filter-product">
+                <button type="button" class="btn btn-primary btn_filter">Filter</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

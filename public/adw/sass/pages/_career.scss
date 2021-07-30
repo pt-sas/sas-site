@@ -28,7 +28,7 @@
     }
   }
   .item-core {
-    display: inline-block;
+    display: block;
     margin-right: 25px;
     margin-bottom: 15px;
     @media screen and (max-width: 991px) {
@@ -36,7 +36,7 @@
       margin-bottom: 10px;
     }
     @media screen and (max-width: 767px) {
-      width: 49%;
+      width: 100%;
     }
     img {
       display: inline-block;

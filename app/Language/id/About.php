@@ -10,9 +10,12 @@ return [
     'AH322' => 'Misi Kami',
     'AH323' => 'Tujuan Kami',
 
-    'AH631' => 'Perusahaan Didirikan Ditunjuk sebagai Distributor Resmi Philips',
-    'AH632' => 'Ditunjuk sebagai Distributor Resmi Supreme dan Distributor Resmi Schneider',
-    'AH633' => 'Ditunjuk sebagai Distributor Resmi Legrand dan Distributor Resmi Panasonic',
+    'AH631' => 'Perusahaan Didirikan.',
+    'AH632' => 'Ditunjuk sebagai Distributor Resmi Philips.',
+    'AH633' => 'Ditunjuk sebagai Distributor Resmi Supreme.',
+    'AH634' => 'Ditunjuk sebagai Distributor Resmi Schneider.',
+    'AH635' => 'Ditunjuk sebagai Distributor Resmi Legrand.',
+    'AH636' => 'Ditunjuk sebagai Distributor Resmi Panasonic.',
 
     'AH641' => 'Lokasi Kami',
 ];

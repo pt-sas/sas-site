@@ -123,7 +123,7 @@ class MainController extends BaseController
 			'job' 				=> $job->where('isactive', 'Y')->showAll(),
 			'page_title'	=> 'About Us - PT Sahabat Abadi Sejahtera'
 		];
-		return view('frontend/career/index', $data);
+		return view('frontend/career', $data);
 	}
 
 	public function contact()
