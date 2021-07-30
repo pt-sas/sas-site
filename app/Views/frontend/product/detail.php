@@ -53,37 +53,35 @@
           <!-- <a href="<?= base_url('product/compare') ?>" class="btn btn-white">COMPARE PRODUCT</a> -->
         </div>
         <div class="product-filter">
-          <form>
-            <div class="form-row align-items-center">
-              <div class="col-auto">
-                <label for="filter-product">Filter :</label>
-              </div>
-              <div class="col-auto">
-                <input class="form-control" type="search" placeholder="Search" name="keyword" id="keyword">
-              </div>
-              <div class="col-auto">
-                <select class="form-control" name="category1" id="category1">
-                  <option value="">All Categories</option>
-                  <?php foreach ($category1 as $row) : ?>
-                    <option value="<?= $row->md_category_id ?>"><?= $row->category ?></option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-              <div class="col-auto">
-                <select class="form-control" name="category2" id="category2">
-                  <option value="">All Sub Categories 1</option>
-                </select>
-              </div>
-              <div class="col-auto">
-                <select class="form-control" name="category3" id="category3">
-                  <option value="">All Sub Categories 2</option>
-                </select>
-              </div>
-              <div class="col-auto">
-                <button type="button" class="btn btn-primary btn_filter">Filter</button>
-              </div>
+          <div class="form-row align-items-center">
+            <div class="col-auto">
+              <label for="filter-product" style="font-size: 20px">Filter :</label>
             </div>
-          </form>
+            <div class="col-auto">
+              <input class="form-control" type="search" placeholder="Search" name="keyword" id="keyword">
+            </div>
+            <div class="col-auto">
+              <select class="form-control" name="category1" id="category1">
+                <option value="">All Categories</option>
+                <?php foreach ($category1 as $row) : ?>
+                  <option value="<?= $row->md_category_id ?>"><?= $row->category ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <div class="col-auto">
+              <select class="form-control" name="category2" id="category2">
+                <option value="">All Sub Categories 1</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <select class="form-control" name="category3" id="category3">
+                <option value="">All Sub Categories 2</option>
+              </select>
+            </div>
+            <div class="col-auto">
+              <button type="button" class="btn btn-primary btn_filter">Filter</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -237,6 +235,7 @@
     var category1 = $('#category1').val();
     var category2 = $('#category2').val();
     var category3 = $('#category3').val();
+    var keyword = $('#keyword').val();
 
     $.ajax({
       url: url,
@@ -246,6 +245,7 @@
         category1: category1,
         category2: category2,
         category3: category3,
+        keyword: keyword
       },
       cache: false,
       dataType: 'JSON',
@@ -261,26 +261,36 @@
         if (result[0].success) {
           var data = result[0].message;
 
-          $.each(data, function(idx, elem) {
-            var src = '';
-            if (elem.url !== '') {
-              src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
-            } else {
-              src = 'https://via.placeholder.com/200/808080/ffffff?text=Not+found';
-            }
+          if (data.length > 0) {
+            $.each(data, function(idx, elem) {
+              var src = '';
+              if (elem.url !== '') {
+                src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
+              } else {
+                src = 'https://via.placeholder.com/200/808080/ffffff?text=Not+found';
+              }
 
+              html += '<div class="col-md-4 col-lg-3">';
+              html += '<div class="item-product" data-aos="fade-left">';
+              html += '<a href="javascript:void(0);" title="' + elem.name + '" onclick="openDetailProduct(' + "'" + elem.code + "'" + ')">' +
+                '<div class="image-wrap">' +
+                '<img src="' + src + '" alt="" class="img-fluid">' +
+                '</div>' +
+                '<h5>' + elem.name + '</h5>' +
+                '<p>Sort description about product</p>' +
+                '</a>' +
+                '</div>' +
+                '</div>';
+            });
+          } else {
             html += '<div class="col-md-4 col-lg-3">';
             html += '<div class="item-product" data-aos="fade-left">';
-            html += '<a href="javascript:void(0);" title="' + elem.name + '" onclick="openDetailProduct(' + "'" + elem.code + "'" + ')">' +
-              '<div class="image-wrap">' +
-              '<img src="' + src + '" alt="" class="img-fluid">' +
-              '</div>' +
-              '<h5>' + elem.name + '</h5>' +
-              '<p>Sort description about product</p>' +
-              '</a>' +
-              '</div>' +
+            html += '<div class="product-head">' +
+              '<h5 class="text-white">Product not found</h5>' +
               '</div>';
-          });
+            html += '</div>' +
+              '</div>';
+          }
 
           $('#card-product').html(html);
 
