@@ -91,7 +91,7 @@ class M_Product extends Model
 		return $query;
 	}
 
-	public function showProductBy($principal = null, $category1 = null, $category2 = null, $category3 = null)
+	public function showProductBy($principal = null, $category1 = null, $category2 = null, $category3 = null, $keyword = null)
 	{
 		$db = \Config\Database::connect();
 		$builder = $db->table('md_product p');
@@ -105,6 +105,11 @@ class M_Product extends Model
 		$builder->where('p.isactive', 'Y');
 		if (!empty($principal)) {
 			$builder->where('pr.url', $principal);
+		}
+
+		if (!empty($keyword)) {
+			$builder->like('p.name', $keyword, 'both');
+			$builder->orLike('p.description', $keyword, 'both');
 		}
 
 		if (!empty($category1)) {

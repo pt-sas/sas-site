@@ -178,7 +178,7 @@ class MainController extends BaseController
 		$post = $this->request->getVar();
 
 		try {
-			$result = $product->showProductBy($post['principal'], $post['category1'], $post['category2'], $post['category3']);
+			$result = $product->showProductBy($post['principal'], $post['category1'], $post['category2'], $post['category3'], $post['keyword']);
 			$response = message('success', true, $result->getResult());
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
