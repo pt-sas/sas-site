@@ -13,6 +13,7 @@ class M_Principal extends Model
         'description',
         'md_image_id',
         'url',
+        'seqno',
         'isactive'
     ];
     protected $useTimestamps = true;
@@ -30,6 +31,7 @@ class M_Principal extends Model
 						mdi.name as image,
 						mdi.image_url as md_image_id,
 						mdp.url,
+						mdp.seqno,
 						mdp.md_image_id as image_id
 						FROM $this->table mdp
 						LEFT JOIN md_image mdi ON mdp.md_image_id = mdi.md_image_id
@@ -43,9 +45,10 @@ class M_Principal extends Model
     {
         $db = \Config\Database::connect();
         $builder = $db->table('md_principal');
-        $builder->select('md_principal.name as principal_name, md_principal.url, image_url');
+        $builder->select('md_principal.name as principal_name, md_principal.url, image_url, seqno');
         $builder->join('md_image', 'md_image.md_image_id = md_principal.md_image_id');
     		$builder->where('md_principal.isactive', 'Y');
+    		$builder->orderby('seqno', 'ASC');
         $query = $builder->get()->getResult();
         return $query;
     }

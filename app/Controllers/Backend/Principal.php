@@ -142,7 +142,8 @@ class Principal extends BaseController
 			'name'	=> [
 				'rules' => 'required'
 			],
-			'url'	=> 'required|valid_url'
+			'url'	=> 'required|valid_url',
+			'seqno'	=> 'required'
 		]);
 
 		// Check if upload new image

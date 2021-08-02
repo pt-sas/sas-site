@@ -20,6 +20,11 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
+                    <label for="seqno">Sequence <span class="required">*</span></label>
+                    <input type="text" class="form-control" id="seqno" name="seqno">
+                    <small class="form-text text-danger" id="error_seqno_id"></small>
+                </div>
+                <div class="form-group">
                     <label>Image <span class="required">*</span></label>
                     <div class="form-upload-result">
                         <label class="col-md-6 form-result" id="logo-result">

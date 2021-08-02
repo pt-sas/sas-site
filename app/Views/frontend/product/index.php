@@ -15,7 +15,7 @@
         <?php foreach($principal as $row): ?>
           <div class="col-md-4">
             <a href="<?= base_url('/product/'.$row->url.'') ?>" class="item-product-cat">
-              <img src="<?= base_url($row->image_url) ?>" alt="" class="img-fluid">
+              <img src="<?= base_url($row->image_url) ?>" alt="" class="img-principal">
             </a>
           </div>
         <?php endforeach;?>
