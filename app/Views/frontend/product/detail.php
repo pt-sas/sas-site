@@ -267,7 +267,7 @@
               if (elem.url !== '') {
                 src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
               } else {
-                src = 'https://via.placeholder.com/200/808080/ffffff?text=Not+found';
+                src = 'https://via.placeholder.com/200/808080/ffffff?text=No+Image';
               }
 
               html += '<div class="col-md-4 col-lg-3">';
@@ -333,7 +333,7 @@
             if (elem.url !== '') {
               src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
             } else {
-              src = 'https://via.placeholder.com/200/808080/ffffff?text=Not+found';
+              src = 'https://via.placeholder.com/200/808080/ffffff?text=No+Image';
             }
 
             html += '<div class="col-md-5">' +
