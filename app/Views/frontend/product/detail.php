@@ -5,34 +5,35 @@
 <div class="product-head fixed d-none">
   <div class="container">
     <div class="row">
-      <form>
-        <div class="form-row align-items-center">
-          <div class="col-auto">
-            <label for="filter-product">Filter :</label>
-          </div>
-          <div class="col-auto">
-            <select class="form-control" name="fix_category1" id="fix_category1">
-              <option value="">All Categories</option>
-              <?php foreach ($category1 as $row) : ?>
-                <option value="<?= $row->md_category_id ?>"><?= $row->category ?></option>
-              <?php endforeach; ?>
-            </select>
-          </div>
-          <div class="col-auto">
-            <select class="form-control" name="fix_category2" id="fix_category2">
-              <option value="">All Sub Categories 1</option>
-            </select>
-          </div>
-          <div class="col-auto">
-            <select class="form-control" name="fix_category3" id="fix_category3">
-              <option value="">All Sub Categories 2</option>
-            </select>
-          </div>
-          <div class="col-auto">
-            <button type="button" class="btn btn-primary btn_filter">Filter</button>
-          </div>
+      <div class="form-row align-items-center">
+        <div class="col-auto">
+          <label for="filter-product" style="font-size: 20px">Filter :</label>
         </div>
-      </form>
+        <div class="col-auto">
+          <input class="form-control" type="search" placeholder="Search" name="keyword">
+        </div>
+        <div class="col-auto">
+          <select class="form-control" name="category1" id="fix_category1">
+            <option value="">All Categories</option>
+            <?php foreach ($category1 as $row) : ?>
+              <option value="<?= $row->md_category_id ?>"><?= $row->category ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="col-auto">
+          <select class="form-control" name="category2" id="fix_category2">
+            <option value="">All Sub Categories 1</option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <select class="form-control" name="category3" id="fix_category3">
+            <option value="">All Sub Categories 2</option>
+          </select>
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-primary btn_filter">Filter</button>
+        </div>
+      </div>
       <!-- <a href="<?= base_url('product/compare') ?>" class="btn btn-white">COMPARE PRODUCT</a> -->
     </div>
   </div>
@@ -130,15 +131,31 @@
 </div>
 
 <script>
-  // var userScroll = $(document).scrollTop();
-  // $(window).on('scroll', function() {
-  //   var newScroll = $(document).scrollTop();
-  //   if (userScroll - newScroll > 250 || newScroll - userScroll > 250) {
-  //     $(".product-head.fixed").removeClass('d-none');
-  //   } else {
-  //     $(".product-head.fixed").addClass('d-none');
-  //   }
-  // })
+  var userScroll = $(document).scrollTop();
+  $(window).on('scroll', function() {
+    var newScroll = $(document).scrollTop();
+    if (userScroll - newScroll > 250 || newScroll - userScroll > 250) {
+      $(".product-head.fixed").removeClass('d-none');
+    } else {
+      $(".product-head.fixed").addClass('d-none');
+    }
+  })
+
+  $('[name = "keyword"]').on('change', function(evt) {
+    $('[name = "keyword"]').val(this.value)
+  });
+
+  $('[name = "category1"]').on('change', function(evt) {
+    $('[name = "category1"]').val(this.value);
+  });
+
+  $('[name = "category2"]').on('change', function(evt) {
+    $('[name = "category2"]').val(this.value);
+  });
+
+  $('[name = "category3"]').on('change', function(evt) {
+    $('[name = "category3"]').val(this.value);
+  });
 </script>
 
 <script type="text/javascript">
@@ -147,7 +164,7 @@
 
   let url;
 
-  $('#category1').change(function(evt) {
+  $('[name = "category1"]').change(function(evt) {
     var category1 = $(this).val();
     url = '<?= base_url('MainController/getCategory') ?>';
 
@@ -160,10 +177,10 @@
       },
       dataType: 'JSON',
       success: function(result) {
-        $('#category2').empty();
-        $('#category3').empty();
-        $('#category2').append('<option selected="selected" value="">All Sub Categories 1</option>');
-        $('#category3').append('<option selected="selected" value="">All Sub Categories 2</option>');
+        $('[name = "category2"]').empty();
+        $('[name = "category3"]').empty();
+        $('[name = "category2"]').append('<option selected="selected" value="">All Sub Categories 1</option>');
+        $('[name = "category3"]').append('<option selected="selected" value="">All Sub Categories 2</option>');
 
         if (result[0].success) {
           var data = result[0].message;
@@ -172,7 +189,7 @@
             var category_id = elem.md_category_id;
             var name = elem.category;
 
-            $('#category2').append('<option value="' + category_id + '">' + name + '</option>');
+            $('[name = "category2"]').append('<option value="' + category_id + '">' + name + '</option>');
           });
         } else {
           Swal.fire({
@@ -189,7 +206,7 @@
     });
   });
 
-  $('#category2').change(function(evt) {
+  $('[name = "category2"]').change(function(evt) {
     var category2 = $(this).val();
     url = '<?= base_url('MainController/getCategory') ?>';
 
@@ -202,8 +219,8 @@
       },
       dataType: 'JSON',
       success: function(result) {
-        $('#category3').empty();
-        $('#category3').append('<option selected="selected" value="">All Sub Categories 2</option>');
+        $('[name = "category3"]').empty();
+        $('[name = "category3"]').append('<option selected="selected" value="">All Sub Categories 2</option>');
 
         if (result[0].success) {
           var data = result[0].message;
@@ -212,7 +229,7 @@
             var category_id = elem.md_category_id;
             var name = elem.category;
 
-            $('#category3').append('<option value="' + category_id + '">' + name + '</option>');
+            $('[name = "category3"]').append('<option value="' + category_id + '">' + name + '</option>');
           });
         } else {
           Swal.fire({
@@ -232,10 +249,10 @@
   $('.btn_filter').click(function(evt) {
     var html = '';
     url = '<?php echo base_url('MainController/filterCategory'); ?>';
-    var category1 = $('#category1').val();
-    var category2 = $('#category2').val();
-    var category3 = $('#category3').val();
-    var keyword = $('#keyword').val();
+    var category1 = $('[name = "category1"]').val();
+    var category2 = $('[name = "category2"]').val();
+    var category3 = $('[name = "category3"]').val();
+    var keyword = $('[name = "keyword"]').val();
 
     $.ajax({
       url: url,
