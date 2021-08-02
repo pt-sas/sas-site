@@ -40,7 +40,7 @@ class MainController extends BaseController
 		$principal = new M_Principal();
 
 		$data = [
-			'principal' 	=> $principal->where('isactive', 'Y')->showAll(),
+			'principal' 	=> $principal->showAll(),
 			'page_title'	=> 'Product - PT Sahabat Abadi Sejahtera'
 		];
 		return view('frontend/product/index', $data);
