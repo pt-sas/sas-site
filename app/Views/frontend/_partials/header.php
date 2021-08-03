@@ -12,7 +12,7 @@
       <img src="<?= base_url('adw/assets/images/logo.png') ?>" alt="">
       <img src="<?= base_url('adw/assets/images/logo-text.png') ?>" alt="" class="d-none d-lg-inline-block">
     </a>
-    <a href="javascript:void(0);" class="search">
+    <a href="javascript:void(0);" class="search-top">
       <img src="<?= base_url('adw/assets/images/search-header.png') ?>" alt="">
     </a>
     <!-- <a href="javascript:void(0);" onclick="window.open('https://www.tokopedia.com/ptsahabat', '_blank')" class="shop">

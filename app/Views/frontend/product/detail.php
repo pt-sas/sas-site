@@ -7,10 +7,7 @@
     <div class="row">
       <div class="form-row align-items-center">
         <div class="col-auto">
-          <label for="filter-product" style="font-size: 20px">Filter :</label>
-        </div>
-        <div class="col-auto">
-          <input class="form-control" type="search" placeholder="Search" name="keyword">
+          <input class="form-control search" type="search" placeholder="Search" name="keyword">
         </div>
         <div class="col-auto">
           <select class="form-control" name="category1" id="fix_category1">
@@ -56,10 +53,7 @@
         <div class="product-filter">
           <div class="form-row align-items-center">
             <div class="col-auto">
-              <label for="filter-product" style="font-size: 20px">Filter :</label>
-            </div>
-            <div class="col-auto">
-              <input class="form-control" type="search" placeholder="Search" name="keyword" id="keyword">
+              <input class="form-control search" type="search" placeholder="Search" name="keyword" id="keyword">
             </div>
             <div class="col-auto">
               <select class="form-control" name="category1" id="category1">
