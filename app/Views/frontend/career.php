@@ -91,14 +91,8 @@
         </div>
         <div class="col-md-8">
           <div class="filter-jobs">
-            <input type="search" class="form-control search" placeholder="Search">
-            <select name="" id="" class="form-control">
-              <!-- <option value="">All Division</option>
-              <?php foreach ($division as $value) : ?>
-                  <option value="<? //= $value->md_division_id
-                                  ?>"><? //= $value->name
-                                      ?></option>
-              <?php endforeach; ?> -->
+            <input type="search" class="form-control search" placeholder="Search" name="keyword">
+            <select class="form-control" name="level" id="level">
               <option value=""> </option>
               <option value="el">Entry-level </option>
               <option value="ml">Mid-level </option>
@@ -119,7 +113,7 @@
                 Detail
               </a>
               <span class="location">
-                <img src="<?= base_url('custom/image/icon/map-pin-s.png') ?>" alt="">
+                <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
                 DKI Jakarta
               </span>
             </div>
@@ -166,27 +160,19 @@
     <div class="modal-content">
       <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <img src="<?= base_url('custom/image/icon/close.png') ?>" alt="">
+          <img src="<?= base_url('adw/assets/images/close.png') ?>" alt="">
         </button>
         <h4 name="position"></h4>
         <h5>
           <span name="division"></span>
           <span name="posted_date"></span>
-          <span><img src="<?= base_url('custom/image/icon/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
+          <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
         </h5>
         <h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>
-        <?php if(session()->lang == 'id') { ?>
-          <div name="description"></div>
-        <?php } else { ?>
-          <div name="description_en"></div>
-        <?php } ?>
+        <div name="<?= session()->lang == 'id' ? 'description' : 'description_en' ?>"></div>
         <h6 class="title-list"><?= lang("Career.CH6M2") ?></h6>
-        <?php if(session()->lang == 'id') { ?>
-          <div name="requirement"></div>
-        <?php } else { ?>
-          <div name="requirement_en"></div>
-        <?php } ?>
-        <a href="" class="btn btn-primary url"><?= lang("Career.CBUM1") ?></a>
+        <div name="<?= session()->lang == 'id' ? 'requirement' : 'requirement_en' ?>"></div>
+        <a href="" class="btn btn-primary url" target="_blank"><?= lang("Career.CBUM1") ?></a>
       </div>
     </div>
   </div>

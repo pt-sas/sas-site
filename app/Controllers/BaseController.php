@@ -30,7 +30,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = ['action_helper','url'];
+	protected $helpers = ['action_helper', 'url'];
 
 	protected $modal_type;
 	protected $form_type;
@@ -60,7 +60,13 @@ class BaseController extends Controller
 		$this->picture = new Picture();
 
 		$session = \Config\Services::session();
-  	$language = \Config\Services::language();
-  	$language->setLocale($session->lang);
+		$language = \Config\Services::language();
+
+		if (!empty($session->lang)) {
+			$session->lang;
+		} else {
+			$session->lang = 'en';
+		}
+		$language->setLocale($session->lang);
 	}
 }

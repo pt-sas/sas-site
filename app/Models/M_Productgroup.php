@@ -36,7 +36,7 @@ class M_Productgroup extends Model
     {
         $db = \Config\Database::connect();
         $builder = $db->table('md_category cat');
-        $builder->select('cat.md_category_id, cat.category');
+        $builder->select('cat.md_category_id, cat.category, cat.category_en');
         $builder->distinct();
         $builder->join('md_principal p', 'p.md_principal_id = cat.md_principal_id', 'left');
 
