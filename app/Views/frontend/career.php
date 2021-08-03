@@ -173,17 +173,9 @@
           <span><img src="<?= base_url('custom/image/icon/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
         </h5>
         <h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>
-        <?php if (session()->lang == 'id') { ?>
-          <div name="description"></div>
-        <?php } else { ?>
-          <div name="description_en"></div>
-        <?php } ?>
+        <div name="<?= session()->lang == 'id' ? 'description' : 'description_en' ?>"></div>
         <h6 class="title-list"><?= lang("Career.CH6M2") ?></h6>
-        <?php if (session()->lang == 'id') { ?>
-          <div name="requirement"></div>
-        <?php } else { ?>
-          <div name="requirement_en"></div>
-        <?php } ?>
+        <div name="<?= session()->lang == 'id' ? 'requirement' : 'requirement_en' ?>"></div>
         <a href="" class="btn btn-primary url" target="_blank"><?= lang("Career.CBUM1") ?></a>
       </div>
     </div>
