@@ -14,20 +14,20 @@
         </div>
         <div class="col-auto">
           <select class="form-control" name="category1" id="fix_category1">
-            <option value="">All Categories</option>
+            <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 1' : 'All Categories 1' ?></option>
             <?php foreach ($category1 as $row) : ?>
-              <option value="<?= $row->md_category_id ?>"><?= $row->category ?></option>
+              <option value="<?= $row->md_category_id ?>"><?= session()->lang == 'id' ? $row->category : $row->category_en ?></option>
             <?php endforeach; ?>
           </select>
         </div>
         <div class="col-auto">
           <select class="form-control" name="category2" id="fix_category2">
-            <option value="">All Sub Categories 1</option>
+            <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 2' : 'All Categories 2' ?></option>
           </select>
         </div>
         <div class="col-auto">
           <select class="form-control" name="category3" id="fix_category3">
-            <option value="">All Sub Categories 2</option>
+            <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 3' : 'All Categories 3' ?></option>
           </select>
         </div>
         <div class="col-auto">
@@ -62,21 +62,21 @@
               <input class="form-control" type="search" placeholder="Search" name="keyword" id="keyword">
             </div>
             <div class="col-auto">
-              <select class="form-control" name="category1" id="category1">
-                <option value="">All Categories</option>
+              <select class="form-control" name="category1">
+                <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 1' : 'All Categories 1' ?></option>
                 <?php foreach ($category1 as $row) : ?>
-                  <option value="<?= $row->md_category_id ?>"><?= $row->category ?></option>
+                  <option value="<?= $row->md_category_id ?>"><?= session()->lang == 'id' ? $row->category : $row->category_en ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
             <div class="col-auto">
-              <select class="form-control" name="category2" id="category2">
-                <option value="">All Sub Categories 1</option>
+              <select class="form-control" name="category2">
+                <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 2' : 'All Categories 2' ?></option>
               </select>
             </div>
             <div class="col-auto">
-              <select class="form-control" name="category3" id="category3">
-                <option value="">All Sub Categories 2</option>
+              <select class="form-control" name="category3">
+                <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 3' : 'All Categories 3' ?></option>
               </select>
             </div>
             <div class="col-auto">
@@ -162,7 +162,8 @@
   var SITE_URL = window.location.href;
   var LAST_URL = SITE_URL.substr(SITE_URL.lastIndexOf('/') + 1); //the last url
 
-  let url;
+  let url,
+    sessLang = '<?= session()->lang ?>';
 
   $('[name = "category1"]').change(function(evt) {
     var category1 = $(this).val();
@@ -179,18 +180,21 @@
       success: function(result) {
         $('[name = "category2"]').empty();
         $('[name = "category3"]').empty();
-        $('[name = "category2"]').append('<option selected="selected" value="">All Sub Categories 1</option>');
-        $('[name = "category3"]').append('<option selected="selected" value="">All Sub Categories 2</option>');
+        $('[name = "category2"]').append('<option selected="selected" value="">' + (sessLang == 'id' ? 'Semua Kategori 2' : 'All Categories 2') + '</option>');
+        $('[name = "category3"]').append('<option selected="selected" value="">' + (sessLang == 'id' ? 'Semua Kategori 3' : 'All Categories 3') + '</option>');
 
         if (result[0].success) {
-          var data = result[0].message;
+          if (category1 !== '') {
+            var data = result[0].message;
 
-          $.each(data, function(idx, elem) {
-            var category_id = elem.md_category_id;
-            var name = elem.category;
+            $.each(data, function(idx, elem) {
+              var category_id = elem.md_category_id;
+              var category = elem.category;
+              var category_en = elem.category_en;
 
-            $('[name = "category2"]').append('<option value="' + category_id + '">' + name + '</option>');
-          });
+              $('[name = "category2"]').append('<option value="' + category_id + '">' + (sessLang == 'id' ? category : category_en) + '</option>');
+            });
+          }
         } else {
           Swal.fire({
             type: 'error',
@@ -220,17 +224,20 @@
       dataType: 'JSON',
       success: function(result) {
         $('[name = "category3"]').empty();
-        $('[name = "category3"]').append('<option selected="selected" value="">All Sub Categories 2</option>');
+        $('[name = "category3"]').append('<option selected="selected" value="">' + (sessLang == 'id' ? 'Semua Kategori 3' : 'All Categories 3') + '</option>');
 
         if (result[0].success) {
-          var data = result[0].message;
+          if (category2 !== '') {
+            var data = result[0].message;
 
-          $.each(data, function(idx, elem) {
-            var category_id = elem.md_category_id;
-            var name = elem.category;
+            $.each(data, function(idx, elem) {
+              var category_id = elem.md_category_id;
+              var category = elem.category;
+              var category_en = elem.category_en;
 
-            $('[name = "category3"]').append('<option value="' + category_id + '">' + name + '</option>');
-          });
+              $('[name = "category3"]').append('<option value="' + category_id + '">' + (sessLang == 'id' ? category : category_en) + '</option>');
+            });
+          }
         } else {
           Swal.fire({
             type: 'error',
