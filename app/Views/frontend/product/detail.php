@@ -113,6 +113,7 @@
     </div>
   </div>
 </div>
+<a href="javascript:void(0);" class="scroll-to-top" role="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'});"><i class="fa fa-chevron-up"></i></a>
 
 
 <!-- Modal -->
