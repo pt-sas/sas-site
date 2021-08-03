@@ -163,8 +163,7 @@
   var SITE_URL = window.location.href;
   var LAST_URL = SITE_URL.substr(SITE_URL.lastIndexOf('/') + 1); //the last url
 
-  let url,
-    sessLang = '<?= session()->lang ?>';
+  let url;
 
   $('[name = "category1"]').change(function(evt) {
     var category1 = $(this).val();
