@@ -30,7 +30,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = ['action_helper', 'url'];
+	protected $helpers = ['action_helper', 'url', 'date_helper'];
 
 	protected $modal_type;
 	protected $form_type;
