@@ -156,7 +156,12 @@ class MainController extends BaseController
 					$email->setTo('info@sahabatabadi.com');
 					$email->setFrom($post['email'], $post['name']);
 					$email->setSubject($post['subject']);
-					$email->setMessage($post['message']);
+					$email->setMessage('
+						Name 		: '. $post['name'] .' <br>
+						Email 	: '. $post['email'] .' <br>
+						Phone 	: '. $post['phone'] .' <br>
+						Message : '. $post['message'] .'
+					');
 
 					if ($email->send()) {
 						$result = 'Email successfully sent';
@@ -205,6 +210,21 @@ class MainController extends BaseController
 
 		try {
 			$result = $productgroup->showCategoryBy($post['principal'], $category1, $category2);
+			$response = message('success', true, $result->getResult());
+		} catch (\Exception $e) {
+			$response = message('error', false, $e->getMessage());
+		}
+
+		return json_encode($response);
+	}
+	//Career Level
+	function filterLevel()
+	{
+		$position = new M_Job();
+		$post = $this->request->getVar();
+
+		try {
+			$result = $position->showPositionBy($post['level'], $post['keyword']);
 			$response = message('success', true, $result->getResult());
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());

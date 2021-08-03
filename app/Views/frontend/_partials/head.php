@@ -31,6 +31,24 @@
 
 	<style media="screen">
 		.product-filter input:focus, .product-filter input {color: #fff;}
+
+    .scroll-to-top {
+        position: fixed;
+        right: 1rem;
+        bottom: 1rem;
+        display: none;
+        border-radius: 5px;
+        width: 2.5rem;
+        height: 2.5rem;
+        text-align: center;
+        color: #fff;
+        background: #106eea;
+        line-height: 36px;
+    }
+    .scroll-to-top:focus, .scroll-to-top:hover {
+        color: white;
+        background: #3284f1;
+    }
 	</style>
 	<!--[if lt IE 9]>
   	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

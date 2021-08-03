@@ -203,7 +203,7 @@ class Event extends BaseController
 			if (!$validation->withRequest($this->request)->run()) {
 				$response =	$this->field->errorValidation($this->table);
 			} else {
-				if (!empty($imgName)) {
+				if (!empty($imgName) && file_exists($row->md_image_id)) {
 					// Remove old image path directory
 					unlink($this->path_folder . $row->image);
 
@@ -217,6 +217,16 @@ class Event extends BaseController
 						// Move to folder
 						$file->move($this->path_folder, $newfilename);
 					}
+				} else if (!empty($imgName)) {
+					if (!empty($row->image_id)) {
+						// Delete old image data
+						$delete = $image->delete($row->image_id);
+					}
+					// Insert new data image
+					$image_id = $image->insert_image($newfilename, $this->path_folder);
+
+					// Move to folder
+					$file->move($this->path_folder, $newfilename);
 				}
 
 				if (isset($image_id)) {
