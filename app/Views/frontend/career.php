@@ -92,13 +92,7 @@
         <div class="col-md-8">
           <div class="filter-jobs">
             <input type="search" class="form-control search" placeholder="Search">
-            <select name="" id="" class="form-control">
-              <!-- <option value="">All Division</option>
-              <?php foreach ($division as $value) : ?>
-                  <option value="<? //= $value->md_division_id
-                                  ?>"><? //= $value->name
-                                      ?></option>
-              <?php endforeach; ?> -->
+            <select class="form-control" name="career_level" id="career_level">
               <option value=""> </option>
               <option value="el">Entry-level </option>
               <option value="ml">Mid-level </option>
