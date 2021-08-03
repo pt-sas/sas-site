@@ -6,6 +6,7 @@
 <script src="<?= base_url('atlantis-pro/js/plugin/sweetalert2/sweetalert2.min.js') ?>"></script>
 <!-- Moment JS -->
 <script src="<?= base_url('atlantis-pro/js/plugin/moment/moment.min.js') ?>"></script>
+<script src="<?= base_url('atlantis-pro/js/plugin/moment/moment-with-locales.min.js') ?>"></script>
 
 <!-- Loader waitMe -->
 <script src="<?= base_url('atlantis-pro/js/plugin/loader/waitMe.min.js') ?>"></script>
@@ -13,6 +14,10 @@
 <script src="<?= base_url('atlantis-pro/js/plugin/aos/aos.js') ?>"></script>
 
 <script>
+  var sessLang = '<?= session()->lang ?>';
+
+  sessLang == 'id' ? moment.locale('id') : moment.locale('en');
+
   $(window).on('load', function() {
     aos_init();
   });
