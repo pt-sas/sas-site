@@ -84,9 +84,9 @@
         <div class="col-md-12">
           <div class="image">
             <?php if (session()->lang == 'id') { ?>
-              <img src="<?= base_url('custom/image/flow-ind.png') ?>" alt="PT CKJ" class="img-responsive" width="100%">
+              <img src="<?= base_url('custom/image/flow-ind.png') ?>" alt="PT SAS" class="img-responsive" width="100%">
             <?php } else { ?>
-              <img src="<?= base_url('custom/image/flow-en.png') ?>" alt="PT CKJ" class="img-responsive" width="100%">
+              <img src="<?= base_url('custom/image/flow-en.png') ?>" alt="PT SAS" class="img-responsive" width="100%">
             <?php } ?>
           </div>
         </div>

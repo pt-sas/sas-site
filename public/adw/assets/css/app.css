@@ -13717,3 +13717,20 @@ aside.menu-sidebar.slideIn {
     height: auto;
     max-height: 130px;
 }
+.scroll-to-top {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    display: none;
+    border-radius: 5px;
+    width: 2.5rem;
+    height: 2.5rem;
+    text-align: center;
+    color: #fff;
+    background: #0D0D0D;
+    line-height: 36px;
+}
+.scroll-to-top:focus, .scroll-to-top:hover {
+    color: white;
+    background: #222222;
+}
