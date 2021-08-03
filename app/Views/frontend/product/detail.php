@@ -309,10 +309,10 @@
           } else {
             html += '<div class="col-md-4 col-lg-3">';
             html += '<div class="item-product" data-aos="fade-left">';
-            html += '<div class="product-head">' +
-              '<h5 class="text-white">Product not found</h5>' +
-              '</div>';
+            html += '<div class="product-head">';
+            html += '<h5 class="text-white">' + (sessLang == 'id' ? 'Produk tidak ditemukan.' : 'Product not found.') + '</h5>';
             html += '</div>' +
+              '</div>' +
               '</div>';
           }
 
