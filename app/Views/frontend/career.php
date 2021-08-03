@@ -117,7 +117,7 @@
                 Detail
               </a>
               <span class="location">
-                <img src="<?= base_url('custom/image/icon/map-pin-s.png') ?>" alt="">
+                <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
                 DKI Jakarta
               </span>
             </div>
@@ -164,13 +164,13 @@
     <div class="modal-content">
       <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <img src="<?= base_url('custom/image/icon/close.png') ?>" alt="">
+          <img src="<?= base_url('adw/assets/images/close.png') ?>" alt="">
         </button>
         <h4 name="position"></h4>
         <h5>
           <span name="division"></span>
           <span name="posted_date"></span>
-          <span><img src="<?= base_url('custom/image/icon/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
+          <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
         </h5>
         <h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>
         <div name="<?= session()->lang == 'id' ? 'description' : 'description_en' ?>"></div>
