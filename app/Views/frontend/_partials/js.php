@@ -34,24 +34,26 @@
 
   $('.toggle').on('click', function() {
     $('.menu-sidebar').addClass('slideIn')
+    $('.overlay').addClass('show')
   })
 
   $('.close-btn').on('click', function() {
     $('.menu-sidebar').removeClass('slideIn')
+    $('.overlay').removeClass('show')
   })
 
-  $('.search').on('click', function() {
+  $('.search-top').on('click', function() {
     $('.search-float').toggleClass('show-up')
   })
 
-  $(document).on('click', '.scroll-down', function(event) {
-    event.preventDefault();
-    var viewportHeight = $(window).height();
-
-    $('html, body').animate({
-      scrollTop: viewportHeight,
-    }, 700);
-  })
+  // $(document).on('click', '.scroll-down', function(event) {
+  //   event.preventDefault();
+  //   var viewportHeight = $(window).height();
+  //
+  //   $('html, body').animate({
+  //     scrollTop: viewportHeight,
+  //   }, 700);
+  // })
 
   let marker;
 
