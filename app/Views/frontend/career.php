@@ -113,9 +113,7 @@
                 <h5><?= $row->position; ?></h5>
                 <h6><?= $row->division_name; ?></h6>
               </div>
-              <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>"
-                data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-description_en="<?= $row->description_en ?>" data-requirement_en="<?= $row->requirement_en ?>"
-                data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
+              <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-description_en="<?= $row->description_en ?>" data-requirement_en="<?= $row->requirement_en ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
                 Detail
               </a>
               <span class="location">
@@ -175,18 +173,18 @@
           <span><img src="<?= base_url('custom/image/icon/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
         </h5>
         <h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>
-        <?php if(session()->lang == 'id') { ?>
+        <?php if (session()->lang == 'id') { ?>
           <div name="description"></div>
         <?php } else { ?>
           <div name="description_en"></div>
         <?php } ?>
         <h6 class="title-list"><?= lang("Career.CH6M2") ?></h6>
-        <?php if(session()->lang == 'id') { ?>
+        <?php if (session()->lang == 'id') { ?>
           <div name="requirement"></div>
         <?php } else { ?>
           <div name="requirement_en"></div>
         <?php } ?>
-        <a href="" class="btn btn-primary url"><?= lang("Career.CBUM1") ?></a>
+        <a href="" class="btn btn-primary url" target="_blank"><?= lang("Career.CBUM1") ?></a>
       </div>
     </div>
   </div>
