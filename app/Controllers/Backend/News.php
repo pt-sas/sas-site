@@ -246,7 +246,7 @@ class News extends BaseController
 
 		$image_id = 0;
 
-		$row = $principal->detail('trx_news_id', $id)->getRow();
+		$row = $news->detail('trx_news_id', $id)->getRow();
 
 		if (!empty($row->image_id)) {
 			$image_id = $row->image_id;

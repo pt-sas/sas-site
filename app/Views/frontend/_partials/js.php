@@ -13,6 +13,18 @@
 <script src="<?= base_url('atlantis-pro/js/plugin/aos/aos.js') ?>"></script>
 
 <script>
+// Scroll to top button appear
+$(document).on('scroll', function() {
+    var scrollDistance = $(this).scrollTop();
+    if (scrollDistance > 700) {
+        $('.scroll-to-top').fadeIn();
+    } else {
+        $('.scroll-to-top').fadeOut();
+    }
+});
+</script>
+
+<script>
   $(window).on('load', function() {
     aos_init();
   });
@@ -160,8 +172,9 @@
           Swal.fire({
             type: 'success',
             title: result[0].message,
-            showConfirmButton: false,
-            timer: 1500
+            text: 'We will respond as soon as possible.',
+            showConfirmButton: true,
+            timer: 2000
           });
           clearForm(evt);
         } else if (result[0].error) {
@@ -171,7 +184,7 @@
           Swal.fire({
             type: 'info',
             title: result[0].message,
-            showConfirmButton: false,
+            showConfirmButton: true,
             timer: 2000
           });
         }

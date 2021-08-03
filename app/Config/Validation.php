@@ -152,16 +152,15 @@ class Validation
 	];
 
 	public $job = [
-		'md_location_id' => [
-			'label'		=> 'location',
-			'rules' 	=> 'required'
-		],
 		'md_division_id' => [
 			'label'		=> 'division',
 			'rules' 	=> 'required'
 		],
 		'position' => [
 			'label'		=> 'job position',
+			'rules' 	=> 'required'
+		],
+		'level' => [
 			'rules' 	=> 'required'
 		],
 		'description' => [
