@@ -6,6 +6,7 @@
 <script src="<?= base_url('atlantis-pro/js/plugin/sweetalert2/sweetalert2.min.js') ?>"></script>
 <!-- Moment JS -->
 <script src="<?= base_url('atlantis-pro/js/plugin/moment/moment.min.js') ?>"></script>
+<script src="<?= base_url('atlantis-pro/js/plugin/moment/moment-with-locales.min.js') ?>"></script>
 
 <!-- Loader waitMe -->
 <script src="<?= base_url('atlantis-pro/js/plugin/loader/waitMe.min.js') ?>"></script>
@@ -13,18 +14,20 @@
 <script src="<?= base_url('atlantis-pro/js/plugin/aos/aos.js') ?>"></script>
 
 <script>
-// Scroll to top button appear
-$(document).on('scroll', function() {
-    var scrollDistance = $(this).scrollTop();
-    if (scrollDistance > 700) {
-        $('.scroll-to-top').fadeIn();
-    } else {
-        $('.scroll-to-top').fadeOut();
-    }
-});
-</script>
+  var sessLang = '<?= session()->lang ?>';
 
-<script>
+  sessLang == 'id' ? moment.locale('id') : moment.locale('en');
+  
+  // Scroll to top button appear
+  $(document).on('scroll', function() {
+      var scrollDistance = $(this).scrollTop();
+      if (scrollDistance > 700) {
+          $('.scroll-to-top').fadeIn();
+      } else {
+          $('.scroll-to-top').fadeOut();
+      }
+  });
+  
   $(window).on('load', function() {
     aos_init();
   });
