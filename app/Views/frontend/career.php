@@ -98,26 +98,30 @@
               <option value="ml">Mid-level </option>
               <option value="sl">Senior-level </option>
             </select>
-            <button class="btn btn-primary"><?= lang("Career.CBU41") ?></button>
+            <button class="btn btn-primary btn_search"><?= lang("Career.CBU41") ?></button>
           </div>
 
-          <?php foreach ($job as $row) : ?>
-            <div class="item-jobs">
-              <div class="left-part">
-                <h5><?= $row->position; ?></h5>
-                <h6><?= $row->division_name; ?></h6>
+          <div class="item-jobs" id="detail-jobs">
+            <?php if (count($job) > 0) {
+              foreach ($job as $row) : ?>
+                <div class="left-part">
+                  <h5><?= $row->position; ?></h5>
+                  <h6><?= $row->division_name; ?></h6>
+                </div>
+                <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-description_en="<?= $row->description_en ?>" data-requirement_en="<?= $row->requirement_en ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
+                  Detail
+                </a>
+                <span class="location">
+                  <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
+                  DKI Jakarta
+                </span>
+              <?php endforeach;
+            } else { ?>
+              <div class="col-md-12">
+                <h5><?= session()->lang == 'id' ? 'Pekerjaan tidak tersedia.' : 'Jobs not available.' ?></h5>
               </div>
-              <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>"
-                data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-description_en="<?= $row->description_en ?>" data-requirement_en="<?= $row->requirement_en ?>"
-                data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
-                Detail
-              </a>
-              <span class="location">
-                <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
-                DKI Jakarta
-              </span>
-            </div>
-          <?php endforeach; ?>
+            <?php } ?>
+          </div>
         </div>
       </div>
     </div>
@@ -199,6 +203,69 @@
     $('[name="description_en"]').html(description_en);
     $('[name="requirement_en"]').html(requirement_en);
     $('.url').attr("href", url);
+  });
+
+  $('.btn_search').click(function(evt) {
+    var html = '';
+    url = '<?php echo base_url('MainController/filterLevel'); ?>';
+    var level = $('[name = "level"]').val();
+    var keyword = $('[name = "keyword"]').val();
+
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        level: level,
+        keyword: keyword
+      },
+      cache: false,
+      dataType: 'JSON',
+      beforeSend: function() {
+        $(this).prop('disabled', true);
+        loadingForm('detail-jobs', 'bounce');
+      },
+      complete: function() {
+        $(this).removeAttr('disabled');
+        hideLoadingForm('detail-jobs');
+      },
+      success: function(result) {
+        if (result[0].success) {
+          var data = result[0].message;
+          if (data.length > 0) {
+            $.each(data, function(idx, elem) {
+              html += '<div class="left-part">' +
+                '<h5>' + elem.position + '</h5>' +
+                '<h6>' + elem.division_name + '</h6>' +
+                '</div>' +
+                '<a href="javascript:void(0);" class="btn btn-outline-black view_details">' +
+                'Detail' +
+                '</a>' +
+                '<span class="location">' +
+                '<img src="' + '<?= base_url('adw/assets/images/map-pin-s.png') ?>' + '" alt="">' +
+                'DKI Jakarta' +
+                '</span>';
+            });
+          } else {
+            html += '<div class="col-md-12">' +
+              '<h5>' + (sessLang == 'id' ? 'Pekerjaan tidak tersedia.' : 'Jobs not available.') + '</h5>' +
+              '</div>';
+          }
+
+          $('#detail-jobs').html(html);
+
+        } else {
+          Swal.fire({
+            type: 'info',
+            title: result[0].message,
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }
+      },
+      error: function(jqXHR, exception) {
+        showError(jqXHR, exception);
+      }
+    });
   });
 </script>
 <?= $this->endSection() ?>
