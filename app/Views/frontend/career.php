@@ -91,8 +91,8 @@
         </div>
         <div class="col-md-8">
           <div class="filter-jobs">
-            <input type="search" class="form-control search" placeholder="Search">
-            <select class="form-control" name="career_level" id="career_level">
+            <input type="search" class="form-control search" placeholder="Search" name="keyword">
+            <select class="form-control" name="level" id="level">
               <option value=""> </option>
               <option value="el">Entry-level </option>
               <option value="ml">Mid-level </option>
