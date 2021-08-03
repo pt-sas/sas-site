@@ -107,7 +107,7 @@
                 <h5><?= $row->position; ?></h5>
                 <h6><?= $row->division_name; ?></h6>
               </div>
-              <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-city="<?= $row->city ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-description_en="<?= $row->description_en ?>" data-requirement_en="<?= $row->requirement_en ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
+              <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-description_en="<?= $row->description_en ?>" data-requirement_en="<?= $row->requirement_en ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
                 Detail
               </a>
               <span class="location">
