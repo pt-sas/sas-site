@@ -53,9 +53,7 @@ class MainController extends BaseController
 
 		$data = [
 			'principal' 		=> $principal->where('url', $url)->first(),
-			'category1'	=> $productgroup->getDetail($url, 1),
-			// 'category2'	=> $productgroup->getDetail($url, 2),
-			// 'category3'	=> $productgroup->getDetail($url, 3),
+			'category1'			=> $productgroup->getDetail($url, 1),
 			'product' 			=> $product->getDetail($url),
 			'page_title'		=> 'View Product - PT Sahabat Abadi Sejahtera'
 		];
