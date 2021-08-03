@@ -7,8 +7,8 @@ return [
     'CD11' => 'Karir',
 
     'CH411' => 'Mengapa bergabung dengan kami?',
-    'CP11' => 'PT Sahabat Abadi Sejahtera telah menjadi pemasok Philips Lighting terkemuka dan terbesar selama bertahun-tahun dan telah membangun hubungan bisnis yang kuat dan dapat diandalkan di masyarakat melalui kinerjanya yang konsisten dan telah mendapatkan reputasi yang sangat baik untuk penyelesaian transaksi bisnis yang cepat.
-       Menjadi spesialis dengan filosofi pemasaran yang terfokus, layanan terbaik, dan jaringan distribusi yang luas di wilayah ini, PT Sahabat Abadi Sejahtera jelas merupakan mitra bisnis yang tepat untuk Philips Lighting.',
+    'CP11' => 'Sebagai perusahaan yang memiliki produk dari beberapa merk terkemuka di industri elektrikal, kami percaya dengan integritas, komitmen dan profesionalisme sebagai pilar yang mendasar dan yang mendefinisikan kualitas kami.
+            Kami perduli dengan karyawan-karyawan kami dan memperlengkapi mereka dengan training dan program pengembangan diri sehingga bisa memberikan hasil terbaik.',
 
     'CH421' => 'Kami mencari',
     'CP21' => 'Anggota yang merupakan pemain tim, penuh semangat dan keinginan untuk terus belajar & berkembang. Jika Anda ingin menjadi bagian dari perusahaan kami yang berkembang pesat, kami akan senang mendengar dari Anda.',
