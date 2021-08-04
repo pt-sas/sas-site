@@ -42,6 +42,7 @@ class Location extends BaseController
 			$row[] = $ID;
 			$row[] = $number;
 			$row[] = $value->name;
+			$row[] = $value->name_en;
 			$row[] = $value->phone;
 			$row[] = active($value->isactive);
 			$row[] = '<center>
