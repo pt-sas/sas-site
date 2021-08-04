@@ -10,6 +10,7 @@
                 <th>ID</th>
                 <th>No</th>
                 <th>Name</th>
+                <th>Name English</th>
                 <th>Phone</th>
                 <th>Active</th>
                 <th>Actions</th>
