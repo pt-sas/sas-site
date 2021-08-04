@@ -11,6 +11,13 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
+                    <label for="name">Name (English) <span class="required">*</span></label>
+                    <input type="text" class="form-control" id="name_en" name="name_en">
+                    <small class="form-text text-danger" id="error_name_en"></small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
                     <label for="location">Location <span class="required">*</span></label>
                     <input type="text" class="form-control" id="location" name="location">
                     <small class="form-text text-danger" id="error_location"></small>
