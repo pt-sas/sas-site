@@ -107,7 +107,7 @@
                                                     echo 'class="nav-link active"';
                                                   } else {
                                                     echo 'class="nav-link"';
-                                                  } ?> aria-controls="tab-<?= $row->md_location_id; ?>" role="tab" data-toggle="tab"><?= $row->name; ?></a>
+                                                  } ?> aria-controls="tab-<?= $row->md_location_id; ?>" role="tab" data-toggle="tab"><?= session()->lang == 'id' ? $row->name : $row->name_en ?></a>
               </li>
             <?php endforeach; ?>
           </ul>
@@ -116,18 +116,18 @@
             <div class="tab-content">
               <?php foreach ($location as $count => $row) : ?>
                 <div role="tabpanel" id="<?= $row->location; ?>" <?php if ($count == 0) {
-                                                                  echo 'class="map-address tab-pane fade show active"';
-                                                                } else {
-                                                                  echo 'class="map-address tab-pane fade"';
-                                                                } ?>>
-                  <h4><?= $row->name; ?></h4>
+                                                                    echo 'class="map-address tab-pane fade show active"';
+                                                                  } else {
+                                                                    echo 'class="map-address tab-pane fade"';
+                                                                  } ?>>
+                  <h4><?= session()->lang == 'id' ? $row->name : $row->name_en ?></h4>
                   <p>
                     <?= $row->address1; ?>
                   </p>
-                  <a href="<?= $row->url ?>">Get direction</a>
+                  <a href="<?= $row->url ?>"><?= lang("About.AH642"); ?></a>
                   <div class="clearfix"></div>
                   <div class="half-wrap">
-                    <h6>Phone Number</h6>
+                    <h6><?= lang("About.AH643"); ?></h6>
                     <p><?= $row->phone; ?></p>
                   </div>
                   <div class="half-wrap">

@@ -18,4 +18,6 @@ return [
     'AH636' => 'Ditunjuk sebagai Distributor Resmi Panasonic.',
 
     'AH641' => 'Lokasi Kami',
+    'AH642' => 'Mendapatkan Arah',
+    'AH643' => 'Nomor Telepon',
 ];

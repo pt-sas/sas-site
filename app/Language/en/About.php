@@ -18,4 +18,6 @@ return [
     'AH636' => 'Appointed as Panasonic Authorized Distributor.',
 
     'AH641' => 'Our location',
+    'AH642' => 'Get direction',
+    'AH643' => 'Phone Number',
 ];
