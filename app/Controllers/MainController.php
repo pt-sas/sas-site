@@ -18,10 +18,15 @@ use App\Models\M_Job;
 
 use App\Models\M_Mailbox;
 
+use App\Models\M_Visit;
+
 class MainController extends BaseController
 {
 	public function __construct()
 	{
+		$ipaddress = $_SERVER['REMOTE_ADDR'];
+		$visit = new M_Visit();
+		$visit->count($ipaddress);
 	}
 
 	public function index()

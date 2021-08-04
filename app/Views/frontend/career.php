@@ -93,10 +93,10 @@
           <div class="filter-jobs">
             <input type="search" class="form-control search" placeholder="Search" name="keyword">
             <select class="form-control" name="level" id="level">
-              <option value=""> </option>
-              <option value="el">Entry-level </option>
-              <option value="ml">Mid-level </option>
-              <option value="sl">Senior-level </option>
+              <option value="">All Level</option>
+              <option value="EL">Entry Level</option>
+              <option value="ML">Mid Level</option>
+              <option value="SL">Senior Level</option>
             </select>
             <button class="btn btn-primary btn_search"><?= lang("Career.CBU41") ?></button>
           </div>
