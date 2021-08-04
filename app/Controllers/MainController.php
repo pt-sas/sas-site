@@ -119,11 +119,11 @@ class MainController extends BaseController
 	public function career()
 	{
 		$division	= new M_Division();
-		$job 			= new M_Job();
+		$job 		= new M_Job();
 
 		$data = [
 			'division' 		=> $division->where('isactive', 'Y')->findAll(),
-			'job' 				=> $job->where('isactive', 'Y')->showAll(),
+			'job' 			=> $job->showPositionBy('trx_job.isactive', 'Y')->getResult(),
 			'page_title'	=> 'About Us - PT Sahabat Abadi Sejahtera'
 		];
 		return view('frontend/career', $data);
@@ -160,10 +160,10 @@ class MainController extends BaseController
 					$email->setFrom($post['email'], $post['name']);
 					$email->setSubject($post['subject']);
 					$email->setMessage('
-						Name 		: '. $post['name'] .' <br>
-						Email 	: '. $post['email'] .' <br>
-						Phone 	: '. $post['phone'] .' <br>
-						Message : '. $post['message'] .'
+						Name 		: ' . $post['name'] . ' <br>
+						Email 	: ' . $post['email'] . ' <br>
+						Phone 	: ' . $post['phone'] . ' <br>
+						Message : ' . $post['message'] . '
 					');
 
 					if ($email->send()) {
@@ -227,8 +227,8 @@ class MainController extends BaseController
 		$post = $this->request->getVar();
 
 		try {
-			$result = $position->showPositionBy($post['level'], $post['keyword']);
-			$response = message('success', true, $result->getResult());
+			$result = $position->showPositionBy('trx_job.isactive', 'Y', $post['level'], $post['keyword'])->getResult();
+			$response = message('success', true, $result);
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
 		}
