@@ -4,20 +4,6 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="md_location_id">Location <span class="required">*</span></label>
-                    <select class="form-control" id="md_location_id" name="md_location_id">
-                      <option value="">Select Location</option>
-                      <?php foreach ($location as $value) :
-                          $location_id    = $value->md_location_id;
-                          $location_name  = $value->name; ?>
-                          <option value="<?= $location_id ?>"><?= $location_name ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                    <small class="form-text text-danger" id="error_md_location_id"></small>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
                     <label for="md_division_id">Division <span class="required">*</span></label>
                     <select class="form-control" id="md_division_id" name="md_division_id">
                       <option value="">Select Division</option>
@@ -35,6 +21,18 @@
                     <label for="position">Position <span class="required">*</span></label>
                     <input type="text" class="form-control" id="position" name="position">
                     <small class="form-text text-danger" id="error_position"></small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="level">Level <span class="required">*</span></label>
+                    <select class="form-control" id="level" name="level">
+                      <option value="">Select Level</option>
+                      <option value="EL">Entry Level</option>
+                      <option value="ML">Mid Level</option>
+                      <option value="SL">Senior Level</option>
+                    </select>
+                    <small class="form-text text-danger" id="error_level"></small>
                 </div>
             </div>
             <div class="col-md-6">

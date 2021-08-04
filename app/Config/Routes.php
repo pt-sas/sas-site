@@ -51,6 +51,7 @@ $routes->get('/career', 'MainController::career');
 
 $routes->get('/contact', 'MainController::contact');
 $routes->get('/create', 'MainController::create');
+$routes->get('/check', 'MainController::check');
 
 
 

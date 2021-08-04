@@ -5,7 +5,7 @@
     <body>
         <?= $this->include('frontend/_partials/header') ?>
         <?= $this->include('frontend/_partials/sidebar') ?>
-      	<a class="overlay close-btn" href="javascript:void(0);"></a>
+      	<a class="overlay close-btn"></a>
         <?= $this->renderSection('content') ?>
         <!-- <a href="https://wa.me/6282169557882?" target="_blank" class="whatsapp" role="button"><i class="fa fa-whatsapp fa-2x"></i></a> -->
         <?= $this->include('frontend/_partials/js') ?>
