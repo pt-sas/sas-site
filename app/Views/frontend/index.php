@@ -11,7 +11,7 @@
         <h3 class="d-none">PT. Sahabat Abadi Sejahtera</h3>
         <h2 class="slogan"><?= lang("Home.HH211") ?></h2>
         <p><?= lang("Home.HP11") ?></p>
-        <lottie-player src="<?= base_url('adw/assets/animation-file/Electricity_Animations.json') ?>"  background="transparent"  speed="1"  style="width: 100%; height: auto;" loop autoplay></lottie-player>
+        <lottie-player src="<?= base_url('adw/assets/animation-file/Electricity_Animations.json') ?>" background="transparent" speed="1" style="width: 100%; height: auto;" loop autoplay></lottie-player>
       </div>
     </div>
   </div>
@@ -96,19 +96,15 @@
           <h3><?= lang("Home.HH341") ?></h3>
         </div>
       </div>
-      <?php foreach($news as $row): ?>
+      <?php foreach ($news as $row) : ?>
         <div class="col-md-4">
-          <a href="<?= base_url('/news/'.$row->slug.'') ?>" class="item-news">
+          <a href="<?= base_url('/news/' . $row->slug . '') ?>" class="item-news">
             <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');"></div>
-            <?php if(session()->lang == 'id') { ?>
-              <h5><?= $row->title ?></h5>
-            <?php } else { ?>
-              <h5><?= $row->title_en ?></h5>
-            <?php } ?>
-            <span><?= date("d F Y", strtotime($row->news_date)) ?></span>
+            <h5><?= session()->lang == 'id' ? $row->title : $row->title_en ?></h5>
+            <span><?= session()->lang == 'id' ? format_idn($row->news_date) : date("F j, Y", strtotime($row->news_date)) ?></span>
           </a>
         </div>
-      <?php endforeach;?>
+      <?php endforeach; ?>
     </div>
     <div class="row">
       <div class="col-md-12">
