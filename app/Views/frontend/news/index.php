@@ -15,19 +15,15 @@
         <div class="col-md-12">
           <h5 class="sec-title"><?= lang("News.NH511") ?></h5>
         </div>
-        <?php foreach($news as $row): ?>
+        <?php foreach ($news as $row) : ?>
           <div class="col-md-4">
-            <a href="<?= base_url('/news/'.$row->slug.'') ?>" class="item-news">
+            <a href="<?= base_url('/news/' . $row->slug . '') ?>" class="item-news">
               <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');"></div>
-              <?php if(session()->lang == 'id') { ?>
-                <h5><?= $row->title ?></h5>
-              <?php } else { ?>
-                <h5><?= $row->title_en ?></h5>
-              <?php } ?>
-              <span><?= date("d F Y", strtotime($row->news_date)) ?></span>
+              <h5><?= session()->lang == 'id' ? $row->title : $row->title_en ?></h5>
+              <span><?= session()->lang == 'id' ? format_idn($row->news_date) : date("F j, Y", strtotime($row->news_date)) ?></span>
             </a>
           </div>
-        <?php endforeach;?>
+        <?php endforeach; ?>
       </div>
     </div>
   </div>
@@ -39,23 +35,19 @@
         <div class="col-md-12">
           <h5 class="sec-title"><?= lang("News.NH521") ?></h5>
         </div>
-        <?php foreach($promo as $row): ?>
+        <?php foreach ($promo as $row) : ?>
           <div class="col-md-4">
-            <a href="<?= base_url('/event/'.$row->slug.'') ?>" class="item-promo">
+            <a href="<?= base_url('/event/' . $row->slug . '') ?>" class="item-promo">
               <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');">
                 <div class="periode">
                   <span><?= lang("News.NSP21") ?></span>
-                  <p><?= date("d F Y", strtotime($row->start_date)) ?> - <?= date("d F Y", strtotime($row->end_date)) ?></p>
+                  <p><?= session()->lang == 'id' ? format_idn(date('Y-m-d', strtotime($row->start_date))) . " - " . format_idn(date('Y-m-d', strtotime($row->end_date)))  : date("F j, Y", strtotime($row->start_date)) . " - " . date("F j, Y", strtotime($row->end_date)) ?></p>
                 </div>
               </div>
-              <?php if(session()->lang == 'id') { ?>
-                <h6><?= $row->title ?></h6>
-              <?php } else { ?>
-                <h6><?= $row->title_en ?></h6>
-              <?php } ?>
+              <h6><?= session()->lang == 'id' ? $row->title : $row->title_en ?></h6>
             </a>
           </div>
-        <?php endforeach;?>
+        <?php endforeach; ?>
       </div>
     </div>
   </div>
