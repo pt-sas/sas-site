@@ -10,6 +10,7 @@ class M_Location extends Model
     protected $primaryKey = 'md_location_id';
     protected $allowedFields = [
         'name',
+        'name_en',
         'description',
         'location',
         'address1',
