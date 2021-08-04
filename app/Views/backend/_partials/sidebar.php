@@ -104,6 +104,12 @@
             <p>Mailbox</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="<?= base_url ('/backend/visitor') ?>">
+            <i class="fas fa-eye"></i>
+            <p>Visitor</p>
+          </a>
+        </li>
 
 
         <li class="nav-section">
