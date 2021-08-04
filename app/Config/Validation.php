@@ -102,6 +102,10 @@ class Validation
 			'label'		=> 'name',
 			'rules' 	=> 'required'
 		],
+		'name_en' => [
+			'label'		=> 'name english',
+			'rules' 	=> 'required'
+		],
 		'location' => [
 			'label'		=> 'location',
 			'rules' 	=> 'required'
