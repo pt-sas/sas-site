@@ -109,7 +109,7 @@ class M_Product extends Model
 
 		if (!empty($keyword)) {
 			$builder->like('p.name', $keyword, 'both');
-			$builder->like('p.description', $keyword, 'both');
+			$builder->orLike('p.description', $keyword, 'both');
 		}
 
 		if (!empty($category1)) {
