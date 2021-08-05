@@ -136,20 +136,9 @@
     }
   })
 
-  $('[name = "keyword"]').on('change', function(evt) {
-    $('[name = "keyword"]').val(this.value)
-  });
-
-  $('[name = "category1"]').on('change', function(evt) {
-    $('[name = "category1"]').val(this.value);
-  });
-
-  $('[name = "category2"]').on('change', function(evt) {
-    $('[name = "category2"]').val(this.value);
-  });
-
-  $('[name = "category3"]').on('change', function(evt) {
-    $('[name = "category3"]').val(this.value);
+  $('input, select').on('change keyup', function(evt) {
+    let parent = $(evt.currentTarget);
+    $('[name = "' + parent.attr('name') + '"]').val(this.value);
   });
 </script>
 
