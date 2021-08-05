@@ -99,7 +99,7 @@ class M_Product extends Model
 						p.name,
 						p.description,
 						p.url');
-		// $builder->distinct();
+		$builder->distinct();
 		$builder->join('md_productcategory pc', 'p.md_product_id = pc.md_product_id', 'left');
 		$builder->join('md_principal pr', 'pr.md_principal_id = p.md_principal_id', 'left');
 		$builder->where('p.isactive', 'Y');
