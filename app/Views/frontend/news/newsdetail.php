@@ -13,25 +13,13 @@
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= base_url('/news') ?>"><?= lang("NewsDetail.NDBR11") ?></a></li>
             <li class="breadcrumb-item active" aria-current="page">
-              <?php if(session()->lang == 'id') {
-                echo $news->title;
-              } else {
-                echo $news->title_en;
-              } ?>
+              <?= session()->lang == 'id' ? $news->title : $news->title_en ?>
             </li>
           </ol>
-          <?php if(session()->lang == 'id') { ?>
-            <h4><?= $news->title ?></h4>
-          <?php } else { ?>
-            <h4><?= $news->title_en ?></h4>
-          <?php } ?>
-          <small><?= date("d F Y", strtotime($news->news_date)) ?></small>
+          <h4><?= session()->lang == 'id' ? $news->title : $news->title_en ?></h4>
+          <small><?= session()->lang == 'id' ? format_idn($news->news_date) : date("F jS, Y", strtotime($news->news_date)) ?></small>
           <div class="image my-4" style="background-image: url('<?= base_url($news->image_url) ?>');"></div>
-          <?php if(session()->lang == 'id') {
-            echo $news->content;
-          } else {
-            echo $news->content_en;
-          } ?>
+          <?= session()->lang == 'id' ? $news->content : $news->content_en ?>
         </div>
       </div>
     </div>
