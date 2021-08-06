@@ -13,11 +13,7 @@
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= base_url('/news') ?>"><?= lang("EventDetail.EDBR11") ?></a></li>
             <li class="breadcrumb-item active" aria-current="page">
-              <?php if(session()->lang == 'id') {
-                echo $promo->title;
-              } else {
-                echo $promo->title_en;
-              } ?>
+              <?= session()->lang == 'id' ? $promo->title : $promo->title_en ?>
             </li>
           </ol>
         </div>
@@ -27,18 +23,10 @@
           <div class="image" style="background-image: url('<?= base_url($promo->image_url) ?>');"></div>
         </div>
         <div class="col-md-8">
-          <?php if(session()->lang == 'id') { ?>
-            <h4><?= $promo->title ?></h4>
-          <?php } else { ?>
-            <h4><?= $promo->title_en ?></h4>
-          <?php } ?>
-          <h6><?= lang("EventDetail.EDH61") ?> : <?= date("d F Y", strtotime($promo->start_date)) ?> - <?= date("d F Y", strtotime($promo->end_date)) ?></h6>
+          <?= session()->lang == 'id' ? $promo->title : $promo->title_en ?>
+          <h6><?= lang("EventDetail.EDH61") ?> : <?= session()->lang == 'id' ? format_idn(date('Y-m-d', strtotime($promo->start_date))) . " - " . format_idn(date('Y-m-d', strtotime($promo->end_date)))  : date("F jS, Y", strtotime($promo->start_date)) . " - " . date("F jS, Y", strtotime($promo->end_date)) ?></h6>
           <hr>
-          <?php if(session()->lang == 'id') {
-            echo $promo->content;
-          } else {
-            echo $promo->content_en;
-          } ?>
+          <?= session()->lang == 'id' ? $promo->content : $promo->content_en ?>
         </div>
       </div>
     </div>
