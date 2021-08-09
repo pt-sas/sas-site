@@ -56,10 +56,15 @@ class MainController extends BaseController
 		$productgroup = new M_Productgroup();
 		$product 			= new M_Product();
 
+		$where = [
+			'md_product.isactive'	=> 'Y',
+			'md_product.visible'	=> 'Y'
+		];
+
 		$data = [
 			'principal' 		=> $principal->where('url', $url)->first(),
 			'category1'			=> $productgroup->getDetail($url, 1),
-			'product' 			=> $product->getDetail($url),
+			'product' 			=> $product->showProductBy($where, $url)->getResult(),
 			'page_title'		=> 'View Product - PT Sahabat Abadi Sejahtera'
 		];
 		return view('frontend/product/detail', $data);
@@ -185,8 +190,12 @@ class MainController extends BaseController
 		$product = new M_Product();
 		$post = $this->request->getVar();
 
+		$where = [
+			'md_product.isactive'	=> 'Y'
+		];
+
 		try {
-			$result = $product->showProductBy($post['principal'], $post['category1'], $post['category2'], $post['category3'], $post['keyword']);
+			$result = $product->showProductBy($where, $post['principal'], $post['category1'], $post['category2'], $post['category3'], $post['keyword']);
 			$response = message('success', true, $result->getResult());
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());

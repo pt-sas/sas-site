@@ -57,59 +57,32 @@ class M_Product extends Model
 		}
 	}
 
-	public function showAll()
+	public function showProductBy($param = [], $principal = null, $category1 = null, $category2 = null, $category3 = null, $keyword = null)
 	{
 		$db = \Config\Database::connect();
-		$builder = $db->table('md_product');
-		$builder->select('md_product.*');
-		$query = $builder->get()->getResult();
-		return $query;
-	}
+		$builder = $db->table($this->table);
+		$builder->select(
+			$this->table . '.code,' .
+				$this->table . '.name,' .
+				$this->table . '.description,' .
+				$this->table . '.url'
+		);
 
-	public function getDetail($url)
-	{
-		$db = \Config\Database::connect();
-		$builder = $db->table('md_product');
-		$builder->select('md_product.*');
-		$builder->join('md_principal', 'md_principal.md_principal_id = md_product.md_principal_id');
-		$builder->where('md_principal.url', $url);
-		$query = $builder->get()->getResult();
-		return $query;
-	}
+		$builder->distinct($this->table . '.code');
+		$builder->join('md_productcategory pc', $this->table . '.md_product_id = pc.md_product_id', 'left');
+		$builder->join('md_principal pr', 'pr.md_principal_id = ' . $this->table . '.md_principal_id', 'left');
 
-	public function getProductgroup($id)
-	{
-		$db = \Config\Database::connect();
-		$builder = $db->table('md_product');
-		if ($id != '') {
-			$builder->select('*');
-			$builder->where('md_productgroup_id', $id);
-		} else {
-			$builder->select('*');
+		if (count($param) > 0) {
+			$builder->where($param);
 		}
-		$query = $builder->get()->getResult();
-		return $query;
-	}
 
-	public function showProductBy($principal = null, $category1 = null, $category2 = null, $category3 = null, $keyword = null)
-	{
-		$db = \Config\Database::connect();
-		$builder = $db->table('md_product p');
-		$builder->select('p.code,
-						p.name,
-						p.description,
-						p.url');
-		$builder->distinct();
-		$builder->join('md_productcategory pc', 'p.md_product_id = pc.md_product_id', 'left');
-		$builder->join('md_principal pr', 'pr.md_principal_id = p.md_principal_id', 'left');
-		$builder->where('p.isactive', 'Y');
 		if (!empty($principal)) {
 			$builder->where('pr.url', $principal);
 		}
 
 		if (!empty($keyword)) {
-			$builder->like('p.name', $keyword, 'both');
-			$builder->orLike('p.description', $keyword, 'both');
+			$builder->like($this->table . '.name', $keyword, 'both');
+			$builder->orLike($this->table . '.description', $keyword, 'both');
 		}
 
 		if (!empty($category1)) {
@@ -124,7 +97,7 @@ class M_Product extends Model
 			$builder->where('pc.category3', $category3);
 		}
 
-		$builder->orderBy('p.code', 'ASC');
+		$builder->orderBy($this->table . '.code', 'ASC');
 		$query = $builder->get();
 		return $query;
 	}
