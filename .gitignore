@@ -125,3 +125,7 @@ nb-configuration.xml
 /phpunit*.xml
 /.phpunit.*.cache
 
+# Media image
+public/custom/image/*/*.jpg
+public/custom/image/*/*.jpeg
+public/custom/image/*/*.png

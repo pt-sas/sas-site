@@ -11,8 +11,8 @@
       <div class="row">
         <div class="col-md-12">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="<?= base_url('/news') ?>"><?= lang("EventDetail.EDBR11") ?></a></li>
-            <li class="breadcrumb-item active" aria-current="page">
+            <li class="breadcrumb-item" style="font-size: 15px;"><a href="<?= base_url('/news') ?>"><?= lang("EventDetail.EDBR11") ?></a></li>
+            <li class="breadcrumb-item active" aria-current="page" style="font-size: 15px;">
               <?= session()->lang == 'id' ? $promo->title : $promo->title_en ?>
             </li>
           </ol>
@@ -36,7 +36,9 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <?= $this->include('frontend/_partials/footer'); ?>
+      <footer>
+        <?= $this->include('frontend/_partials/footer'); ?>
+      </footer>
     </div>
   </div>
 </div>
