@@ -86,6 +86,19 @@
   <div class="product-wrap">
     <div class="container">
       <div class="row" id="card-product">
+        <?php foreach ($product as $row) : ?>
+          <div class="col-md-4 col-lg-3">
+            <div class="item-product" data-aos="fade-left">
+              <a href="javascript:void(0);" title="<?= $row->name ?>" onclick="openDetailProduct('<?= $row->code ?>')">
+                <div class="image-wrap">
+                  <img src="<?= base_url('/custom/image/product/' . $row->url) ?>" alt="" class="img-fluid">
+                </div>
+                <h5><?= $row->name; ?></h5>
+                <!-- <p>Sort description about product</p> -->
+              </a>
+            </div>
+          </div>
+        <?php endforeach; ?>
         <div class="col-md-12 text-center m-lg-5">
           <!-- <button class="btn btn-whites mt-3">Load More <img src="assets/images/loader.png" alt="" class="spinning" /></button> -->
         </div>
@@ -106,13 +119,85 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-body" id="product-modal">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <img src="<?= base_url('adw/assets/images/close.png') ?>" alt="">
         </button>
         <div class="row align-items-center" id="detail-product">
+          <!-- <div class="col-md-5">
+            <img src="https://via.placeholder.com/200/808080/ffffff?text=No+Image" alt="" class="img-fluid mb-4 mb-md-0">
+          </div>
+          <div class="col-md-7">
+            <h4 class="mb-2">Phillips Essentials</h4>
+            <ul class="no-style">
+              <li>Emergency function could be used up to 5 hours.</li>
+              <li>Save energy up to 90% compared with regular incandescent bulbs.</li>
+              <li>Can operate within 100 - 240 V.</li>
+              <li>Instant start.</li>
+              <li>Very good color rendering > 80.</li>
+              <li>No IR & UV radiation.</li>
+              <li>Frosted cover made of PC (Poly Carbonate), impact resistant.</li>
+              <li>Made of PBT (Polybutylene terephthalate), heat resistant until 150º C.</li>
+              <li>Long Life lamp up to 15'000 hours and Save Maintenance costs.</li>
+              <li>Low heat radiation.</li>
+              <li>Emergency function could be used up to 5 hours.</li>
+              <li>Save energy up to 90% compared with regular incandescent bulbs.</li>
+              <li>Can operate within 100 - 240 V.</li>
+              <li>Instant start.</li>
+              <li>Very good color rendering > 80.</li>
+              <li>No IR & UV radiation.</li>
+              <li>Frosted cover made of PC (Poly Carbonate), impact resistant.</li>
+              <li>Made of PBT (Polybutylene terephthalate), heat resistant until 150º C.</li>
+              <li>Long Life lamp up to 15'000 hours and Save Maintenance costs.</li>
+              <li>Low heat radiation.</li>
+              <li>Emergency function could be used up to 5 hours.</li>
+              <li>Save energy up to 90% compared with regular incandescent bulbs.</li>
+              <li>Can operate within 100 - 240 V.</li>
+              <li>Instant start.</li>
+              <li>Very good color rendering > 80.</li>
+              <li>No IR & UV radiation.</li>
+              <li>Frosted cover made of PC (Poly Carbonate), impact resistant.</li>
+              <li>Made of PBT (Polybutylene terephthalate), heat resistant until 150º C.</li>
+              <li>Long Life lamp up to 15'000 hours and Save Maintenance costs.</li>
+              <li>Low heat radiation.</li>
+              <li>Emergency function could be used up to 5 hours.</li>
+              <li>Save energy up to 90% compared with regular incandescent bulbs.</li>
+              <li>Can operate within 100 - 240 V.</li>
+              <li>Instant start.</li>
+              <li>Very good color rendering > 80.</li>
+              <li>No IR & UV radiation.</li>
+              <li>Frosted cover made of PC (Poly Carbonate), impact resistant.</li>
+              <li>Made of PBT (Polybutylene terephthalate), heat resistant until 150º C.</li>
+              <li>Long Life lamp up to 15'000 hours and Save Maintenance costs.</li>
+              <li>Low heat radiation.</li>
+              <li>Emergency function could be used up to 5 hours.</li>
+              <li>Save energy up to 90% compared with regular incandescent bulbs.</li>
+              <li>Can operate within 100 - 240 V.</li>
+              <li>Instant start.</li>
+              <li>Very good color rendering > 80.</li>
+              <li>No IR & UV radiation.</li>
+              <li>Frosted cover made of PC (Poly Carbonate), impact resistant.</li>
+              <li>Made of PBT (Polybutylene terephthalate), heat resistant until 150º C.</li>
+              <li>Long Life lamp up to 15'000 hours and Save Maintenance costs.</li>
+              <li>Low heat radiation.</li>
+              <li>Emergency function could be used up to 5 hours.</li>
+              <li>Save energy up to 90% compared with regular incandescent bulbs.</li>
+              <li>Can operate within 100 - 240 V.</li>
+              <li>Instant start.</li>
+              <li>Very good color rendering > 80.</li>
+              <li>No IR & UV radiation.</li>
+              <li>Frosted cover made of PC (Poly Carbonate), impact resistant.</li>
+              <li>Made of PBT (Polybutylene terephthalate), heat resistant until 150º C.</li>
+              <li>Long Life lamp up to 15'000 hours and Save Maintenance costs.</li>
+              <li>Low heat radiation.</li>
+            </ul>
+            <h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>
+            <a href="" class="ecom"><img src="assets/images/tokped.png" alt=""></a>
+            <a href="" class="ecom"><img src="assets/images/jdid.png" alt=""></a>
+            <a href="" class="ecom"><img src="assets/images/shopee.png" alt=""></a>
+          </div> -->
         </div>
       </div>
     </div>
@@ -278,7 +363,7 @@
                 '<img src="' + src + '" alt="" class="img-fluid">' +
                 '</div>' +
                 '<h5>' + elem.name + '</h5>' +
-                '<p>Sort description about product</p>' +
+                // '<p>Sort description about product</p>' +
                 '</a>' +
                 '</div>' +
                 '</div>';
@@ -342,9 +427,10 @@
               '</div>' +
               '<div class="col-md-7">';
             html += '<h4 class="mb-2">' + elem.name + '</h4>';
-            html += '<ul class="no-style">' +
-              elem.description +
-              '</ul>';
+            // html += '<ul class="no-style">' +
+            //   elem.description +
+            //   '</ul>';
+            html += elem.description;
 
             if (elem.url_toped !== '' || elem.url_jdid !== '' || elem.url_shopee !== '') {
               html += '<h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>';
