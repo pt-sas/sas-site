@@ -15833,10 +15833,9 @@ aside.menu-sidebar.slideIn {
 
 .news-detail-wrap .breadcrumb {
     padding: 0;
-    text-align: center;
-    justify-content: center;
+    text-align: left;
     background-color: transparent;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .news-detail-wrap .breadcrumb .breadcrumb-item {
@@ -15855,7 +15854,9 @@ aside.menu-sidebar.slideIn {
 }
 
 .news-detail-wrap .breadcrumb .breadcrumb-item+.breadcrumb-item::before {
-    content: "|";
+    content: "\f101";
+    font-family: FontAwesome;
+    color: #121e36;
 }
 
 .news-detail-wrap h4 {
