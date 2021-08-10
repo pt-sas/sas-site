@@ -495,11 +495,17 @@ $('.close-img').click(function (evt) {
 
     let className = parent.find('label').prop('className');
 
-    if (form.find('input.active:checkbox').is(':checked') && className.includes('form-result')) {
+    // set condition when add to clear all
+    if (setSave === 'add') {
         formUpload.find('label').css('display', 'block');
         parent.find('label').css('display', 'none');
         formUpload.find('input:file').val('');
-        parent.find('img').attr('src', '');
+        parent.find('.img-result').attr('src', '');
+    } else if (form.find('input.active:checkbox').is(':checked') && className.includes('form-result')) {
+        formUpload.find('label').css('display', 'block');
+        parent.find('label').css('display', 'none');
+        formUpload.find('input:file').val('');
+        parent.find('.img-result').attr('src', '');
     }
 });
 
