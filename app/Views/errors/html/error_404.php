@@ -1,84 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!-- Mirrored from themekita.com/demo-atlantis-bootstrap/livepreview/examples/demo1/404.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Jun 2021 13:42:59 GMT -->
+
 <head>
-	<meta charset="utf-8">
-	<title>404 Page Not Found</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>404</title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	<link rel="icon" href="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/img/icon.ico" type="image/x-icon" />
 
-	<style>
-	div.logo {
-		height: 200px;
-		width: 155px;
-		display: inline-block;
-		opacity: 0.08;
-		position: absolute;
-		top: 2rem;
-		left: 50%;
-		margin-left: -73px;
-	}
-	body {
-		height: 100%;
-		background: #fafafa;
-		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-		color: #777;
-		font-weight: 300;
-	}
-	h1 {
-		font-weight: lighter;
-		letter-spacing: 0.8;
-		font-size: 3rem;
-		margin-top: 0;
-		margin-bottom: 0;
-		color: #222;
-	}
-	.wrap {
-		max-width: 1024px;
-		margin: 5rem auto;
-		padding: 2rem;
-		background: #fff;
-		text-align: center;
-		border: 1px solid #efefef;
-		border-radius: 0.5rem;
-		position: relative;
-	}
-	pre {
-		white-space: normal;
-		margin-top: 1.5rem;
-	}
-	code {
-		background: #fafafa;
-		border: 1px solid #efefef;
-		padding: 0.5rem 1rem;
-		border-radius: 5px;
-		display: block;
-	}
-	p {
-		margin-top: 1.5rem;
-	}
-	.footer {
-		margin-top: 2rem;
-		border-top: 1px solid #efefef;
-		padding: 1em 2em 0 2em;
-		font-size: 85%;
-		color: #999;
-	}
-	a:active,
-	a:link,
-	a:visited {
-		color: #dd4814;
-	}
-</style>
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="<?= base_url('atlantis-pro/css/bootstrap.min.css') ?>">
+	<link rel="stylesheet" href="<?= base_url('atlantis-pro/css/atlantis.css') ?>">
 </head>
-<body>
-	<div class="wrap">
-		<h1>404 - File Not Found</h1>
 
-		<p>
-			<?php if (! empty($message) && $message !== '(null)') : ?>
-				<?= esc($message) ?>
-			<?php else : ?>
-				Sorry! Cannot seem to find the page you were looking for.
-			<?php endif ?>
-		</p>
+<body class="page-not-found">
+	<div class="wrapper not-found">
+		<div class="desc animated fadeIn"><span>OOPS!</span><br />Looks like you get lost</div>
+		<a href="<?= base_url() ?>" class="btn btn-primary btn-back-home mt-4 animated fadeInUp">
+			<span class="btn-label mr-2">
+				<i class="flaticon-home"></i>
+			</span>
+			Back To Home
+		</a>
 	</div>
+	<script src="<?= base_url('atlantis-pro/js/core/jquery.3.2.1.min.js') ?>"></script>
+	<script src="<?= base_url('atlantis-pro/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') ?>"></script>
+	<script src="<?= base_url('atlantis-pro/js/core/popper.min.js') ?>"></script>
+	<script src="<?= base_url('atlantis-pro/js/core/bootstrap.min.js') ?>"></script>
 </body>
+
 </html>
