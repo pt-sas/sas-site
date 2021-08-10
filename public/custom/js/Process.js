@@ -409,6 +409,10 @@ $('.new_form').click(function (evt) {
             $(this).hide();
             form = cardForm;
             form.find('input[type="checkbox"].active').prop('checked', true);
+
+            if (form.find('input:file.control-upload-image').length > 0) {
+                form.find('.img-result').attr('src', '');
+            }
         } else {
             cardMain.css('display', 'block');
             cardForm.css('display', 'none');
@@ -419,6 +423,10 @@ $('.new_form').click(function (evt) {
         form = modalForm.find('form');
         modalTitle.html('New1 ' + capitalize(LAST_URL));
         form.find('input[type="checkbox"].active').prop('checked', true);
+
+        if (form.find('input:file.control-upload-image').length > 0) {
+            form.find('.img-result').attr('src', '');
+        }
     }
 
     setSave = 'add';
