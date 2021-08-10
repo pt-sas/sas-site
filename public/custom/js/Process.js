@@ -451,7 +451,9 @@ $('input.active:checkbox').change(function (evt) {
 
                     if (field[i].type === 'file') {
                         parent.find('input[name=' + field[i].name + ']').removeAttr('disabled');
-                        parent.find('button.close-img').removeAttr('disabled');
+                        parent.find('button.close-img')
+                            .removeAttr('disabled')
+                            .css('display', 'block');
                     }
                 }
 
@@ -471,7 +473,9 @@ $('input.active:checkbox').change(function (evt) {
 
                     if (field[i].type === 'file') {
                         parent.find('input[name=' + field[i].name + ']').prop('disabled', true);
-                        parent.find('button.close-img').prop('disabled', true);
+                        parent.find('button.close-img')
+                            .prop('disabled', true)
+                            .css('display', 'none');
                     }
                 }
 
@@ -636,6 +640,12 @@ function readonly(parent, value) {
                 }
             }
         }
+    }
+
+    if (value && parent.find('.close-img').length > 0) {
+        parent.find('.close-img').css('display', 'none');
+    } else {
+        parent.find('.close-img').css('display', 'block');
     }
 }
 
