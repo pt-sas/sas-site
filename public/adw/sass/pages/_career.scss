@@ -172,13 +172,13 @@
 
 .modal {
   .modal-body {
-    padding: 50px 40px;
+    padding: 75px 30px 30px 30px;
     position: relative;
     @media screen and (max-width: 767px) {
       padding: 25px 20px;
     }
     h4 {
-      font-size: 30px;
+      font-size: 27px;
       font-family: $b;
       color: $main;
       margin-bottom: 0;
@@ -222,6 +222,8 @@
     ul {
       margin: 0 0 35px 0;
       padding: 0;
+      max-height: 320px;
+      overflow: hidden scroll;
       li {
         list-style: none;
         position: relative;
@@ -253,7 +255,7 @@
       }
     }
     .ecom-title {
-      font-size: 18px;
+      font-size: 14px;
       color: $main;
       margin-bottom: 15px;
       text-transform: uppercase;
