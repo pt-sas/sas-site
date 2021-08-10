@@ -10,6 +10,8 @@
                 <th>ID</th>
                 <th>No</th>
                 <th>Title</th>
+                <th>Title (English)</th>
+                <th>Image</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Active</th>
