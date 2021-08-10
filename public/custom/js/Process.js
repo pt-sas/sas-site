@@ -487,10 +487,11 @@ $('.close-img').click(function (evt) {
     const parent = $(evt.currentTarget).closest('div');
     const formGroup = parent.closest('.form-group');
     const formUpload = formGroup.find('.form-upload');
+    const form = $(evt.currentTarget).closest('form');
 
     let className = parent.find('label').prop('className');
 
-    if (className.includes('form-result')) {
+    if (form.find('input.active:checkbox').is(':checked') && className.includes('form-result')) {
         formUpload.find('label').css('display', 'block');
         parent.find('label').css('display', 'none');
         formUpload.find('input:file').val('');
