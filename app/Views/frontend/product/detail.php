@@ -364,7 +364,7 @@
               '<div class="col-md-7">';
             html += '<h4 class="mb-2">' + elem.name + '</h4>';
             html += '<ul class="no-style">' +
-              '<li>' + elem.description + '</li></ul>';
+              elem.description + '</ul>';
 
             if (elem.url_toped !== '' || elem.url_jdid !== '' || elem.url_shopee !== '') {
               html += '<h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>';
