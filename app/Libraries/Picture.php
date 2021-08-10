@@ -30,6 +30,6 @@ class Picture
             }
         }
 
-        return '<img class="rounded-image" src="https://via.placeholder.com/100/808080/ffffff?text=Not+found">';
+        return '<img class="rounded-image" src="https://via.placeholder.com/200/808080/ffffff?text=No+Image">';
     }
 }
