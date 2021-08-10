@@ -5,7 +5,7 @@
 }
 
 .form-upload-foto {
-    border: 1px dashed #ced4da;
+    border: 2px dashed #ced4da;
     width: 40%;
     height: 110px;
     position: relative;
@@ -34,6 +34,18 @@
 .form-upload-foto:hover>img {
     width: 50px;
     margin: -25px 0 0 -25px;
+}
+
+.form-upload-foto:disabled,
+.form-upload-foto[readonly] {
+    background: #e8e8e8 !important;
+    border-color: #ced4da;
+    cursor: not-allowed;
+}
+
+.form-upload-foto:disabled,
+.form-upload-foto[readonly] {
+    opacity: 0.6 !important;
 }
 
 .form-upload-text {
@@ -261,8 +273,9 @@ button.margin-right {
 }
 
 /* Hidden card view page */
-.card-form, .card-button {
-    display:none
+.card-form,
+.card-button {
+    display: none
 }
 
 .rounded-image {
