@@ -835,8 +835,7 @@ $(document).ready(function (e) {
         tabsize: 2,
         height: 200,
         toolbar: [
-            ['style', ['style']],
-            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
             ['fontname', ['fontname']],
             ['fontsize', ['fontsize']],
             ['color', ['color']],
@@ -844,6 +843,20 @@ $(document).ready(function (e) {
             ['table', ['table']],
             // ['insert', ['link', 'picture']],
             ['view', ['fullscreen', 'codeview', 'help']],
+            ['height', ['height']]
+        ],
+        placeholder: 'write here...'
+    });
+
+    $('.summernote-product').summernote({
+        fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Times New Roman'],
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
             ['height', ['height']]
         ],
         placeholder: 'write here...'
