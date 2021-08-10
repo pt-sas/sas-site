@@ -170,7 +170,7 @@ class News extends BaseController
 			$validation->setRules([
 				'md_image_id' => [
 					'label'		=>	'image',
-					'rules'		=>	'max_size[md_image_id, 1024]|is_image[md_image_id]'
+					'rules'		=>	'max_size[md_image_id, 3024]|is_image[md_image_id]'
 				]
 			]);
 		} else {
@@ -181,7 +181,7 @@ class News extends BaseController
 				$validation->setRules([
 					'md_image_id' => [
 						'label'		=>	'image',
-						'rules'		=>	'uploaded[md_image_id]|max_size[md_image_id, 1024]|is_image[md_image_id]|mime_in[md_image_id,image/jpg,image/jpeg,image/png]'
+						'rules'		=>	'uploaded[md_image_id]|max_size[md_image_id, 3024]|is_image[md_image_id]|mime_in[md_image_id,image/jpg,image/jpeg,image/png]'
 					]
 				]);
 				$image_id = $post['md_image_id'];

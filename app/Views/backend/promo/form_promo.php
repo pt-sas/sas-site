@@ -61,7 +61,7 @@
                             <img class="img-upload" src="<?= base_url('custom/image/cameraroll.png') ?>" />
                         </label>
                         <small class="form-upload-text text-muted">
-                            File type (JPG, PNG), the maximum file size is <strong> 1 Mb</strong>
+                            File type (JPG, PNG), the maximum file size is <strong> 3 Mb</strong>
                         </small>
                         <small class="form-text text-danger" id="error_md_image_id"></small>
                     </div>

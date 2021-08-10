@@ -409,6 +409,10 @@ $('.new_form').click(function (evt) {
             $(this).hide();
             form = cardForm;
             form.find('input[type="checkbox"].active').prop('checked', true);
+
+            if (form.find('input:file.control-upload-image').length > 0) {
+                form.find('.img-result').attr('src', '');
+            }
         } else {
             cardMain.css('display', 'block');
             cardForm.css('display', 'none');
@@ -419,6 +423,10 @@ $('.new_form').click(function (evt) {
         form = modalForm.find('form');
         modalTitle.html('New1 ' + capitalize(LAST_URL));
         form.find('input[type="checkbox"].active').prop('checked', true);
+
+        if (form.find('input:file.control-upload-image').length > 0) {
+            form.find('.img-result').attr('src', '');
+        }
     }
 
     setSave = 'add';
@@ -443,7 +451,9 @@ $('input.active:checkbox').change(function (evt) {
 
                     if (field[i].type === 'file') {
                         parent.find('input[name=' + field[i].name + ']').removeAttr('disabled');
-                        parent.find('button.close-img').removeAttr('disabled');
+                        parent.find('button.close-img')
+                            .removeAttr('disabled')
+                            .css('display', 'block');
                     }
                 }
 
@@ -463,7 +473,9 @@ $('input.active:checkbox').change(function (evt) {
 
                     if (field[i].type === 'file') {
                         parent.find('input[name=' + field[i].name + ']').prop('disabled', true);
-                        parent.find('button.close-img').prop('disabled', true);
+                        parent.find('button.close-img')
+                            .prop('disabled', true)
+                            .css('display', 'none');
                     }
                 }
 
@@ -479,10 +491,11 @@ $('.close-img').click(function (evt) {
     const parent = $(evt.currentTarget).closest('div');
     const formGroup = parent.closest('.form-group');
     const formUpload = formGroup.find('.form-upload');
+    const form = $(evt.currentTarget).closest('form');
 
     let className = parent.find('label').prop('className');
 
-    if (className.includes('form-result')) {
+    if (form.find('input.active:checkbox').is(':checked') && className.includes('form-result')) {
         formUpload.find('label').css('display', 'block');
         parent.find('label').css('display', 'none');
         formUpload.find('input:file').val('');
@@ -627,6 +640,12 @@ function readonly(parent, value) {
                 }
             }
         }
+    }
+
+    if (value && parent.find('.close-img').length > 0) {
+        parent.find('.close-img').css('display', 'none');
+    } else {
+        parent.find('.close-img').css('display', 'block');
     }
 }
 
@@ -816,8 +835,7 @@ $(document).ready(function (e) {
         tabsize: 2,
         height: 200,
         toolbar: [
-            ['style', ['style']],
-            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
             ['fontname', ['fontname']],
             ['fontsize', ['fontsize']],
             ['color', ['color']],
@@ -825,6 +843,20 @@ $(document).ready(function (e) {
             ['table', ['table']],
             // ['insert', ['link', 'picture']],
             ['view', ['fullscreen', 'codeview', 'help']],
+            ['height', ['height']]
+        ],
+        placeholder: 'write here...'
+    });
+
+    $('.summernote-product').summernote({
+        fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Times New Roman'],
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
             ['height', ['height']]
         ],
         placeholder: 'write here...'
