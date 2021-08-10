@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from themekita.com/demo-atlantis-bootstrap/livepreview/examples/demo1/404.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 09 Jun 2021 13:42:59 GMT -->
-
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>404</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="https://themekita.com/demo-atlantis-bootstrap/livepreview/examples/assets/img/icon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="<?= base_url('custom/image/logo.png') ?>" type="image/x-icon" />
 
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="<?= base_url('atlantis-pro/css/bootstrap.min.css') ?>">
