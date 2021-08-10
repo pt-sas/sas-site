@@ -22,6 +22,7 @@ use App\Models\M_Visit;
 
 class MainController extends BaseController
 {
+
 	public function __construct()
 	{
 		$ipaddress = $_SERVER['REMOTE_ADDR'];
@@ -190,12 +191,24 @@ class MainController extends BaseController
 		$product = new M_Product();
 		$post = $this->request->getVar();
 
+		$page = 0;
+		$offset = 0;
+
+		if (isset($post['page'])) {
+			$page = $post['page'];
+		}
+
+		if (isset($post['offset'])) {
+			$offset = $post['offset'];
+		}
+
 		$where = [
-			'md_product.isactive'	=> 'Y'
+			'md_product.isactive'	=> 'Y',
+			'md_product.visible'	=> 'N'
 		];
 
 		try {
-			$result = $product->showProductBy($where, $post['principal'], $post['category1'], $post['category2'], $post['category3'], $post['keyword']);
+			$result = $product->showProductBy($where, $post['principal'], $post['category1'], $post['category2'], $post['category3'], $post['keyword'], $page, $offset);
 			$response = message('success', true, $result->getResult());
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
