@@ -41,8 +41,9 @@ class News extends BaseController
 			$row[] = $ID;
 			$row[] = $number;
 			$row[] = $value->title;
+			$row[] = $value->title_en;
 			$row[] = $this->picture->render($this->path_folder, $value->md_image_id);
-			$row[] = $value->news_date;
+			$row[] = format_dmy($value->news_date);
 			$row[] = active($value->isactive);
 			$row[] = '<center>
 						<a class="btn" onclick="Edit(' . "'" . $ID . "'" . ')" title="Edit"><i class="far fa-edit text-info"></i></a>

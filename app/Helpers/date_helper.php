@@ -20,3 +20,8 @@ function format_idn($date)
     $split = explode('-', $date);
     return $split[2] . ' ' . $month[(int)$split[1]] . ' ' . $split[0];
 }
+
+function format_dmy($date)
+{
+    return date('d-m-Y', strtotime($date));
+}
