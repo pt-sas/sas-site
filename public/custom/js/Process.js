@@ -609,6 +609,7 @@ function clearForm(evt) {
 
             if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0) {
                 $('[name =' + field[i].name + ']').summernote('reset');
+                $('[name =' + field[i].name + ']').summernote('enable');
             }
         }
     }
