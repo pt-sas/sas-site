@@ -99,9 +99,9 @@
             </div>
           </div>
         <?php endforeach; ?>
-        <div class="col-md-12 text-center m-lg-5">
-          <!-- <button class="btn btn-whites mt-3">Load More <img src="assets/images/loader.png" alt="" class="spinning" /></button> -->
-        </div>
+      </div>
+      <div class="col-md-12 text-center">
+        <!-- <button class="btn btn-whites mt-3 load_more">More New Items Weekly <img src="" alt="" class="spinning" /></button> -->
       </div>
     </div>
   </div>
@@ -121,13 +121,13 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body" id="product-modal">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <img src="<?= base_url('adw/assets/images/close.png') ?>" alt="">
         </button>
-        <div class="row align-items-center" id="detail-product">
+        <div class="row align-items-top" id="detail-product">
         </div>
       </div>
     </div>
@@ -156,6 +156,10 @@
   var LAST_URL = SITE_URL.substr(SITE_URL.lastIndexOf('/') + 1); //the last url
 
   let url;
+
+  let page = 5;
+
+  let offset = 0;
 
   $('[name = "category1"]').change(function(evt) {
     var category1 = $(this).val();
@@ -306,6 +310,8 @@
             html += '</div>' +
               '</div>' +
               '</div>';
+
+            $('.load_more').css('display', 'none');
           }
 
           $('#card-product').html(html);
@@ -357,10 +363,8 @@
               '</div>' +
               '<div class="col-md-7">';
             html += '<h4 class="mb-2">' + elem.name + '</h4>';
-            // html += '<ul class="no-style">' +
-            //   elem.description +
-            //   '</ul>';
-            html += elem.description;
+            html += '<ul class="no-style">' +
+              '<li>' + elem.description + '</li></ul>';
 
             if (elem.url_toped !== '' || elem.url_jdid !== '' || elem.url_shopee !== '') {
               html += '<h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>';
@@ -381,7 +385,7 @@
             html += '</div>';
           });
 
-          $('#detail-product').html(html)
+          $('#detail-product').html(html);
 
           $('#modalProduct').modal('show');
         } else {
@@ -398,5 +402,84 @@
       }
     });
   }
+
+  $('.load_more').click(function(evt) {
+    url = '<?php echo base_url('MainController/filterCategory'); ?>';
+
+    var btnText = $(this).text();
+    var html = '';
+
+    var category1 = $('[name = "category1"]').val();
+    var category2 = $('[name = "category2"]').val();
+    var category3 = $('[name = "category3"]').val();
+    var keyword = $('[name = "keyword"]').val();
+
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        principal: LAST_URL,
+        category1: category1,
+        category2: category2,
+        category3: category3,
+        keyword: keyword,
+        page: page,
+        offset: offset,
+      },
+      cache: false,
+      dataType: 'JSON',
+      beforeSend: function() {
+        $(this).attr('disabled', true);
+        $('.spinning').attr('src', '<?= base_url('adw/assets/images/loader.png') ?>');
+      },
+      complete: function() {
+        $(this).removeAttr('disabled');
+        $('.spinning').attr('src', '');
+      },
+      success: function(result) {
+        if (result[0].success) {
+          offset = offset + 1;
+          console.log(offset)
+          var data = result[0].message;
+
+          if (data.length > 0) {
+            $.each(data, function(idx, elem) {
+              var src = '';
+              if (elem.url !== '') {
+                src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
+              } else {
+                src = 'https://via.placeholder.com/200/808080/ffffff?text=No+Image';
+              }
+
+              html += '<div class="col-md-4 col-lg-3">';
+              html += '<div class="item-product" data-aos="fade-left">';
+              html += '<a href="javascript:void(0);" title="' + elem.name + '" onclick="openDetailProduct(' + "'" + elem.code + "'" + ')">' +
+                '<div class="image-wrap">' +
+                '<img src="' + src + '" alt="" class="img-fluid">' +
+                '</div>' +
+                '<h5>' + elem.name + '</h5>' +
+                // '<p>Sort description about product</p>' +
+                '</a>' +
+                '</div>' +
+                '</div>';
+            });
+          }
+
+          $('#card-product').append(html);
+
+        } else {
+          Swal.fire({
+            type: 'info',
+            title: result[0].message,
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }
+      },
+      error: function(jqXHR, exception) {
+        showError(jqXHR, exception);
+      }
+    });
+  });
 </script>
 <?= $this->endSection() ?>
