@@ -30,7 +30,7 @@ class Job extends BaseController
 	public function showAll()
 	{
 		$job = new M_Job();
-		$list = $job->findAll();
+		$list = $job->showPositionBy('trx_job.isactive', 'Y')->getResult();
 		$data = [];
 
 		$number = 0;
@@ -44,8 +44,8 @@ class Job extends BaseController
 			$row[] = $number;
 			$row[] = $value->division_name;
 			$row[] = $value->position;
-			$row[] = $value->posted_date;
-			$row[] = $value->expired_date;
+			$row[] = format_dmy($value->posted_date);
+			$row[] = format_dmy($value->expired_date);
 			$row[] = active($value->isactive);
 			$row[] = '<center>
 						<a class="btn" onclick="Edit(' . "'" . $ID . "'" . ')" title="Edit"><i class="far fa-edit text-info"></i></a>
