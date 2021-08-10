@@ -57,7 +57,7 @@ class M_Product extends Model
 		}
 	}
 
-	public function showProductBy($param = [], $principal = null, $category1 = null, $category2 = null, $category3 = null, $keyword = null)
+	public function showProductBy($param = [], $principal = null, $category1 = null, $category2 = null, $category3 = null, $keyword = null, $limit = 0, $offset = 0)
 	{
 		$db = \Config\Database::connect();
 		$builder = $db->table($this->table);
@@ -98,6 +98,11 @@ class M_Product extends Model
 		}
 
 		$builder->orderBy($this->table . '.code', 'ASC');
+
+		if (!empty($limit)) {
+			$builder->limit($limit, $offset);
+		}
+
 		$query = $builder->get();
 		return $query;
 	}
