@@ -22,7 +22,7 @@ class Job extends BaseController
 			'button'    => '<button type="button" class="btn btn-primary btn-sm btn-round ml-auto ' . $this->form_type . ' ' . $this->modal_type . '" title="' . $this->new_title . '">
 												<i class="fa fa-plus fa-fw"></i> ' . $this->new_title . '
 										 </button>',
-			'division'	=> $division->where('isactive','Y')->findAll()
+			'division'	=> $division->where('isactive', 'Y')->findAll()
 		];
 		return $this->template->render('backend/job/v_job', $data);
 	}
@@ -30,7 +30,7 @@ class Job extends BaseController
 	public function showAll()
 	{
 		$job = new M_Job();
-		$list = $job->showAll();
+		$list = $job->findAll();
 		$data = [];
 
 		$number = 0;
