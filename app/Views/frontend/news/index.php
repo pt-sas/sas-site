@@ -19,7 +19,7 @@
           <div class="col-md-4">
             <a href="<?= base_url('/news/' . $row->slug . '') ?>" class="item-news">
               <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');"></div>
-              <h5><?= session()->lang == 'id' ? $row->title : $row->title_en ?></h5>
+              <h5 title="<?= session()->lang == 'id' ? $row->title : $row->title_en ?>"><?= session()->lang == 'id' ? $row->title : $row->title_en ?></h5>
               <span><?= session()->lang == 'id' ? format_idn($row->news_date) : date("F jS, Y", strtotime($row->news_date)) ?></span>
             </a>
           </div>
@@ -44,7 +44,7 @@
                   <p><?= session()->lang == 'id' ? format_idn(date('Y-m-d', strtotime($row->start_date))) . " - " . format_idn(date('Y-m-d', strtotime($row->end_date)))  : date("F jS, Y", strtotime($row->start_date)) . " - " . date("F jS, Y", strtotime($row->end_date)) ?></p>
                 </div>
               </div>
-              <h6><?= session()->lang == 'id' ? $row->title : $row->title_en ?></h6>
+              <h6 title="<?= session()->lang == 'id' ? $row->title : $row->title_en ?>"><?= session()->lang == 'id' ? $row->title : $row->title_en ?></h6>
             </a>
           </div>
         <?php endforeach; ?>
