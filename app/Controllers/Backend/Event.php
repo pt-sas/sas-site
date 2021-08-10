@@ -41,8 +41,10 @@ class Event extends BaseController
 			$row[] = $ID;
 			$row[] = $number;
 			$row[] = $value->title;
-			$row[] = $value->start_date;
-			$row[] = $value->end_date;
+			$row[] = $value->title_en;
+			$row[] = $this->picture->render($this->path_folder, $value->md_image_id);
+			$row[] = format_dmy($value->start_date);
+			$row[] = format_dmy($value->end_date);
 			$row[] = active($value->isactive);
 			$row[] = '<center>
 						<a class="btn" onclick="Edit(' . "'" . $ID . "'" . ')" title="Edit"><i class="far fa-edit text-info"></i></a>
