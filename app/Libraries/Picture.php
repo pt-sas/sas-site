@@ -30,7 +30,7 @@ class Picture
             if (!empty($row['name']) && file_exists($path . $row['name'])) {
                 $result .= '<img class="rounded-image" src="' . site_url() . $row['image_url'] . '" />';
             }
-        } else if (!is_numeric($image)) {
+        } else if (!empty($image) && !is_numeric($image)) {
             $result .= '<img class="rectangle-image" src="' . site_url() . $path . $image . '" />';
         } else {
             $result .= '<img class="rounded-image" src="https://via.placeholder.com/200/808080/ffffff?text=No+Image">';
