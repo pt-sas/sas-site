@@ -332,7 +332,7 @@
   })
 
   function openDetailProduct(code) {
-    url = '<?= base_url('backend/Product/showBy/') ?>' + '/' + code;
+    url = '<?= base_url('MainController/showProductBy/') ?>' + '/' + code;
     var html = '';
 
     $.ajax({
