@@ -252,7 +252,7 @@
                 '<h5>' + elem.position + '</h5>' +
                 '<h6>' + elem.division_name + '</h6>' +
                 '</div>' +
-                '<a href="javascript:void(0);" class="btn btn-outline-black view_details">' +
+                '<a href="javascript:void(0);" class="btn btn-outline-black view_details" id="' + elem.trx_job_id + '">' +
                 'Detail' +
                 '</a>' +
                 '<span class="location">' +
