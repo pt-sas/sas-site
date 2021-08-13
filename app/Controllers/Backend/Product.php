@@ -127,7 +127,9 @@ class Product extends BaseController
 				// Move to folder
 				$file->move($this->path_folder, $newfilename);
 
-				$response = message('success', true, $result);
+				$msg = $result ? 'Your data has been inserted successfully !' : $result;
+
+				$response = message('success', true, $msg);
 			}
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
@@ -258,7 +260,9 @@ class Product extends BaseController
 
 				$result = $product->save($eProduct);
 
-				$response = message('success', true, $result);
+				$msg = $result ? 'Your data has been updated successfully !' : $result;
+
+				$response = message('success', true, $msg);
 			}
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
