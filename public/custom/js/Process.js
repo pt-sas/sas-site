@@ -1050,6 +1050,8 @@ $('select').change(function (evt) {
         url = SITE_URL + '/getCategory';
 
         for (let i = 1; i <= 3; i++) {
+            $('[name = "category' + i + '"]').empty();
+
             $.ajax({
                 url: url,
                 type: 'POST',
