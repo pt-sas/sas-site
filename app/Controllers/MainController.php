@@ -5,29 +5,28 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\M_About;
 use App\Models\M_Location;
-
 use App\Models\M_Principal;
 use App\Models\M_Productgroup;
 use App\Models\M_Product;
-
 use App\Models\M_News;
 use App\Models\M_Promo;
-
 use App\Models\M_Division;
 use App\Models\M_Job;
-
 use App\Models\M_Mailbox;
-
 use App\Models\M_Visit;
+
+use Config\Services;
 
 class MainController extends BaseController
 {
+	protected $request;
 
 	public function __construct()
 	{
 		$ipaddress = $_SERVER['REMOTE_ADDR'];
 		$visit = new M_Visit();
 		$visit->count($ipaddress);
+		$this->request = Services::request();
 	}
 
 	public function index()
@@ -54,8 +53,8 @@ class MainController extends BaseController
 	public function productdetail($url)
 	{
 		$principal 		= new M_Principal();
-		$productgroup = new M_Productgroup();
-		$product 			= new M_Product();
+		$productgroup	= new M_Productgroup();
+		$product 		= new M_Product($this->request);
 
 		$where = [
 			'md_product.isactive'	=> 'Y',
@@ -141,9 +140,6 @@ class MainController extends BaseController
 		return view('frontend/contact', $data);
 	}
 
-	//--------------------------------------------------------------------
-
-
 	public function create()
 	{
 		$email = \Config\Services::email();
@@ -188,7 +184,7 @@ class MainController extends BaseController
 
 	function filterCategory()
 	{
-		$product = new M_Product();
+		$product = new M_Product($this->request);
 		$post = $this->request->getVar();
 
 		$page = 0;
@@ -242,7 +238,7 @@ class MainController extends BaseController
 
 		return json_encode($response);
 	}
-	//Career Level
+
 	function filterLevel()
 	{
 		$position = new M_Job();
@@ -250,6 +246,20 @@ class MainController extends BaseController
 
 		try {
 			$result = $position->showPositionBy('trx_job.isactive', 'Y', $post['level'], $post['keyword'])->getResult();
+			$response = message('success', true, $result);
+		} catch (\Exception $e) {
+			$response = message('error', false, $e->getMessage());
+		}
+
+		return json_encode($response);
+	}
+
+	public function showProductBy($code)
+	{
+		$product = new M_Product($this->request);
+
+		try {
+			$result = $product->where('code', $code)->findAll();
 			$response = message('success', true, $result);
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());

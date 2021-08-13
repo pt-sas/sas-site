@@ -30,7 +30,7 @@ class Job extends BaseController
 	public function showAll()
 	{
 		$job = new M_Job();
-		$list = $job->showPositionBy('trx_job.isactive', 'Y')->getResult();
+		$list = $job->showPositionBy()->getResult();
 		$data = [];
 
 		$number = 0;

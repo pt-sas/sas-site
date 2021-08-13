@@ -24,15 +24,18 @@ class M_Job extends Model
   protected $useTimestamps = true;
   protected $returnType = 'App\Entities\Job';
 
-  public function showPositionBy($field, $where = null, $level = null, $keyword = null)
+  public function showPositionBy($field = null, $where = null, $level = null, $keyword = null)
   {
     $db = \Config\Database::connect();
     $builder = $db->table($this->table);
     $builder->select($this->table . '.*,
                     d.name as division_name');
     $builder->join('md_division d', 'd.md_division_id = ' . $this->table . '.md_division_id', 'left');
-    $builder->where($field, $where);
-    // $builder->where('DATE(job.expired_date)', 'CURDATE()', false);
+
+    if (!empty($where)) {
+      $builder->where($field, $where);
+      $builder->where('DATE(' . $this->table . '.expired_date)', 'CURDATE()', false);
+    }
 
     if (!empty($keyword)) {
       $builder->like($this->table . '.position', $keyword, 'both');

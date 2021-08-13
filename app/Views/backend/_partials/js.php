@@ -18,6 +18,8 @@
 <script src="<?= base_url('atlantis-pro/js/plugin/chart-circle/circles.min.js') ?>"></script>
 <!-- Datatables -->
 <script src="<?= base_url('atlantis-pro/js/plugin/datatables/datatables.min.js') ?>"></script>
+<script src="<?= base_url('atlantis-pro/js/plugin/datatables-bs4/js/dataTables.bootstrap4.js') ?>"></script>
+<script src="<?= base_url('atlantis-pro/js/plugin/datatables-fixedcolumns/js/dataTables.fixedColumns.min.js') ?>"></script>
 <!-- Bootstrap Notify -->
 <script src="<?= base_url('atlantis-pro/js/plugin/bootstrap-notify/bootstrap-notify.min.js') ?>"></script>
 <!-- Bootstrap Toggle -->
@@ -55,6 +57,7 @@
 <script src="<?= base_url('atlantis-pro/js/plugin/loader/waitMe.min.js') ?>"></script>
 <!-- Atlantis JS -->
 <script src="<?= base_url('atlantis-pro/js/atlantis.min.js') ?>"></script>
-
-
-<script src="<?= base_url('custom/js/Process.js') ?>"></script>
+<!-- AutoNumeric Rupiah -->
+<script src="<?= base_url('atlantis-pro/js/plugin/auto-numeric/autoNumeric.js') ?>"></script>
+<!-- Custom Process -->
+<script src="<?= base_url('custom/js/Process.min.js') ?>"></script>

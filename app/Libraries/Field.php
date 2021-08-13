@@ -23,7 +23,12 @@ class Field
     {
         $result = [];
 
-        if ($this->db->fieldExists('name', $table)) {
+        if ($this->db->fieldExists('code', $table)) {
+            $result[] = [
+                'field' => 'title',
+                'label' => $data[0]->code
+            ];
+        } else if ($this->db->fieldExists('name', $table)) {
             $result[] = [
                 'field' => 'title',
                 'label' => $data[0]->name

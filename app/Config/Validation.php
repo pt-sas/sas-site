@@ -265,7 +265,7 @@ class Validation
 
 	public $principal = [
 		'name' => [
-			'rules' 	=>	'required|is_unique[md_principal.name,md_principal,{id}]',
+			'rules' 	=>	'required|is_unique[md_principal.name,md_principal_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]
@@ -292,6 +292,59 @@ class Validation
 		],
 		'url' => [
 			'rules'		=>	'required|valid_url'
+		]
+	];
+
+	public $product = [
+		'code' => [
+			'rules' 	=>	'required|is_unique[md_product.code,md_product_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'name' => [
+			'rules' 	=>	'required|is_unique[md_product.name,md_product_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'm_product_id' => [
+			'label'		=> 'iDempiere code',
+			'rules' 	=>	'required|is_unique[md_product.m_product_id,md_product_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'url' => [
+			'label'		=>	'product image',
+			'rules'		=>	'uploaded[url]|max_size[url, 3024]|is_image[url]|mime_in[url,image/jpg,image/jpeg,image/png]'
+		],
+		'md_uom_id' => [
+			'label'		=> 	'uom',
+			'rules'		=>	'required'
+		],
+		'md_principal_id' => [
+			'label'		=> 	'principal',
+			'rules'		=>	'required'
+		],
+		'description' => [
+			'label'		=>	'content',
+			'rules'		=>	'required'
+		],
+		'height' => [
+			'rules'		=>	'max_length[7]'
+		],
+		'weight' => [
+			'rules'		=>	'max_length[7]'
+		],
+		'depth' => [
+			'rules'		=>	'max_length[7]'
+		],
+		'width' => [
+			'rules'		=>	'max_length[7]'
+		],
+		'volume' => [
+			'rules'		=>	'max_length[7]'
 		]
 	];
 }

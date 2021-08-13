@@ -50,16 +50,61 @@ _table = $('.tb_display').DataTable({
             'visible': false //hide column
         }
     ],
-    'autoWidth': true,
+    'autoWidth': false,
     'scrollX': true
     // 'fixedColumns': {
-    //     'rightColumns': 1,
-    //     'heightMatch': 'auto'
+    //     'rightColumns': checkRight(),
+    //     'leftColumns': checkLeft()
     // }
 });
 
+let _tablePro = $('.tb_product').DataTable({
+    'processing': true,
+    'serverSide': true,
+    'ajax': {
+        'url': SITE_URL + SHOWALL,
+        'type': 'POST'
+    },
+    'columnDefs': [{
+            'targets': -1,
+            'orderable': false //nonaktif sort by
+        },
+        {
+            'targets': 0,
+            'visible': false //hide column
+        }
+    ],
+    'order': [],
+    'autoWidth': false,
+    'scrollX': true,
+    'scrollY': "400px",
+    'scrollCollapse': true,
+    'fixedColumns': {
+        'rightColumns': checkRight(),
+        'leftColumns': checkLeft()
+    }
+});
+
+/**
+ * 
+ * @returns check column datatable
+ */
+function checkRight() {
+    return $('.tb_product thead th').length > 15 ? 1 : 0;
+}
+
+function checkLeft() {
+    return $('.tb_product thead th').length > 15 ? 3 : 0;
+}
+
 function reloadTable() {
-    _table.ajax.reload(null, false);
+    if ($('.tb_display').length > 0) {
+        _table.ajax.reload(null, false);
+    }
+
+    if ($('.tb_product').length > 0) {
+        _tablePro.ajax.reload(null, false);
+    }
 }
 
 /**
@@ -70,10 +115,9 @@ $('.save_form').click(function (evt) {
     const form = parent.find('form');
     cardForm = parent.find('.card-form');
 
-    let formData = new FormData(form[0]);
     let url;
 
-    const field = form.find('input[type="checkbox"], select, input[type="radio"], input[type="file"]');
+    const field = form.find('input, select, textarea');
 
     //remove attribute disabled when field disabled
     for (let i = 0; i < field.length; i++) {
@@ -81,6 +125,8 @@ $('.save_form').click(function (evt) {
             form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
         }
     }
+
+    let formData = new FormData(form[0]);
 
     if (setSave === 'add') {
         url = SITE_URL + CREATE;
@@ -91,12 +137,14 @@ $('.save_form').click(function (evt) {
 
     for (let i = 0; i < field.length; i++) {
         if (field[i].name !== '') {
+            // input type radio button to set into the formData
             if (field[i].type == 'radio') {
                 if (field[i].checked) {
                     formData.append(field[i].name, field[i].value);
                 }
             }
 
+            // input type file whom contain class control-upload-image to set into the formData
             if (field[i].type == 'file' && field[i].className.includes('control-upload-image')) {
                 // Check condition upload add new image or not upload
                 if (field[i].files.length > 0) {
@@ -114,6 +162,13 @@ $('.save_form').click(function (evt) {
                     formData.append(field[i].name, imgSrc);
                 }
             }
+
+            // Check textarea summernote isEmpty to set value null
+            if ((form.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
+                    form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) &&
+                $('[name =' + field[i].name + ']').summernote('isEmpty')) {
+                formData.append(field[i].name, '');
+            }
         }
     }
 
@@ -123,7 +178,7 @@ $('.save_form').click(function (evt) {
         data: formData,
         processData: false,
         contentType: false,
-        async: false,
+        // async: false,
         cache: false,
         dataType: 'JSON',
         beforeSend: function () {
@@ -170,7 +225,9 @@ $('.save_form').click(function (evt) {
 
             } else if (result[0].error) {
                 errorForm(form, result);
-                hideLoadingForm(form.prop('id'));
+                $('html, body').animate({
+                    scrollTop: $('.row').offset().top
+                }, 1500);
 
             } else {
                 Toast.fire({
@@ -242,7 +299,6 @@ function Edit(id) {
     }
 
     const field = form.find('input, textarea, select');
-    const summernote = form.find('textarea.summernote');
 
     let url = SITE_URL + SHOW + ID;
 
@@ -283,7 +339,8 @@ function Edit(id) {
 
                         form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
 
-                        if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0) {
+                        if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
+                            form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) {
                             $('[name =' + field[i].name + ']').summernote('code', label);
                         }
 
@@ -309,10 +366,11 @@ function Edit(id) {
                             }
                         }
 
-                        if (field[i].type === 'file' && label !== null) {
-                            previewImage(form.find('input:file')[0], '', label);
-                        } else if (field[i].type === 'file' && label === null) {
-                            previewImage(form.find('input:file')[0], '', label);
+                        // Pass data form input file to function previewImage
+                        if (field[i].type === 'file') {
+                            if (className.includes('control-upload-image')) {
+                                previewImage(form.find('input[name=' + field[i].name + ']')[0], '', label);
+                            }
                         }
                     }
                 }
@@ -382,6 +440,7 @@ $(document).on('click', '.x_form, .close_form', function (evt) {
     }
 
     clearForm(evt);
+    reloadTable();
     cardTitle.html(capitalize(LAST_URL));
 
     $('html, body').animate({
@@ -433,7 +492,7 @@ $('.new_form').click(function (evt) {
 });
 
 /**
- * Process for aktif nonaktif field in the form using checkbox class active
+ * Process for active non-active field in the form using checkbox class active
  */
 $('input.active:checkbox').change(function (evt) {
     const parent = $(this).closest('form');
@@ -457,7 +516,8 @@ $('input.active:checkbox').change(function (evt) {
                     }
                 }
 
-                if (parent.find('textarea.summernote[name=' + field[i].name + ']').length > 0) {
+                if (parent.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
+                    parent.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) {
                     $('[name =' + field[i].name + ']').summernote('enable');
                 }
             }
@@ -479,7 +539,8 @@ $('input.active:checkbox').change(function (evt) {
                     }
                 }
 
-                if (parent.find('textarea.summernote[name=' + field[i].name + ']').length > 0) {
+                if (parent.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
+                    parent.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) {
                     $('[name =' + field[i].name + ']').summernote('disable');
                 }
             }
@@ -487,25 +548,35 @@ $('input.active:checkbox').change(function (evt) {
     }
 });
 
+/**
+ * Button close image
+ */
 $('.close-img').click(function (evt) {
     const parent = $(evt.currentTarget).closest('div');
     const formGroup = parent.closest('.form-group');
     const formUpload = formGroup.find('.form-upload');
     const form = $(evt.currentTarget).closest('form');
+    const field = form.find('input');
 
     let className = parent.find('label').prop('className');
 
     // set condition when add to clear all
-    if (setSave === 'add') {
+    if (className.includes('form-result')) {
         formUpload.find('label').css('display', 'block');
         parent.find('label').css('display', 'none');
         formUpload.find('input:file').val('');
         parent.find('.img-result').attr('src', '');
-    } else if (form.find('input.active:checkbox').is(':checked') && className.includes('form-result')) {
-        formUpload.find('label').css('display', 'block');
-        parent.find('label').css('display', 'none');
-        formUpload.find('input:file').val('');
-        parent.find('.img-result').attr('src', '');
+
+        for (let i = 0; i < field.length; i++) {
+            if (field[i].name !== '') {
+                if (field[i].type === 'file') {
+                    form.find('input[name=' + field[i].name + ']').removeAttr('disabled');
+                    parent.find('button.close-img')
+                        .removeAttr('disabled')
+                        .css('display', 'block');
+                }
+            }
+        }
     }
 });
 
@@ -587,7 +658,7 @@ function clearForm(evt) {
 
             form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
                 .removeAttr('readonly')
-                .parent('div').removeClass('has-error has-feedback');
+                .parent('div').removeClass('has-error');
 
             form.find('input:checkbox[name=' + field[i].name + ']')
                 .removeAttr('disabled');
@@ -596,18 +667,21 @@ function clearForm(evt) {
             if (option.length > 0 & option.val() !== '') {
                 form.find('select[name=' + field[i].name + ']')
                     .removeAttr('disabled')
+                    .parent('div').removeClass('has-error')
                     .val(option.val()).change();
             } else {
                 form.find('select[name=' + field[i].name + ']')
                     .removeAttr('disabled')
+                    .parent('div').removeClass('has-error')
                     .val(null).change();
             }
 
-            if (field[i].type === 'file') {
+            if (field[i].type == 'file') {
                 $('.close-img').click();
             }
 
-            if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0) {
+            if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
+                form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) {
                 $('[name =' + field[i].name + ']').summernote('reset');
                 $('[name =' + field[i].name + ']').summernote('enable');
             }
@@ -636,10 +710,16 @@ function readonly(parent, value) {
             parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', value);
 
             if (field[i].type !== 'text' && className !== 'active') {
-                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']').prop('disabled', value);
+                parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']')
+                    .prop('disabled', value);
             }
 
-            if (parent.find('textarea.summernote[name=' + field[i].name + ']').length > 0) {
+            if (field[i].type === 'file') {
+                parent.find('input[name=' + field[i].name + ']').prop('disabled', value);
+            }
+
+            if (parent.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
+                parent.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) {
                 if (value) {
                     $('[name =' + field[i].name + ']').summernote('disable');
                 } else {
@@ -649,10 +729,15 @@ function readonly(parent, value) {
         }
     }
 
-    if (value && parent.find('.close-img').length > 0) {
-        parent.find('.close-img').css('display', 'none');
-    } else {
-        parent.find('.close-img').css('display', 'block');
+    // check button close image based on value
+    if (parent.find('button.close-img').length > 0) {
+        parent.find('button.close-img').prop('disabled', value)
+
+        if (value) {
+            parent.find('button.close-img').css('display', 'none');
+        } else {
+            parent.find('button.close-img').css('display', 'block');
+        }
     }
 }
 
@@ -665,6 +750,8 @@ function readonly(parent, value) {
 function previewImage(input, id, src) {
     let labelUpload = input.closest('label');
     id = id || '.img-result';
+
+    src = src == null ? '' : src;
 
     if (input.files && input.files[0]) {
         let reader = new FileReader();
@@ -693,8 +780,9 @@ function previewImage(input, id, src) {
         };
 
         reader.readAsDataURL(input.files[0]);
-    } else if (src !== null) {
+    } else if (src !== '') {
         src = ORI_URL + '/' + src;
+
         $.ajax({
             url: src,
             type: 'HEAD',
@@ -707,12 +795,25 @@ function previewImage(input, id, src) {
                 $('.form-result').css('display', 'none');
             },
             success: function () {
-                $(id)
-                    .attr('src', src)
-                    .width('auto')
-                    .height(150);
-                $('.form-upload-foto').css('display', 'none');
-                $('.form-result').css('display', 'block');
+                loadingForm(labelUpload.id, 'pulse');
+                $('.save_form').attr('disabled', true);
+                $('.x_form').attr('disabled', true);
+                $('.close_form').attr('disabled', true);
+
+                setTimeout(function () {
+                    $(id)
+                        .attr('src', src)
+                        .width('auto')
+                        .height(150);
+                    $('.form-upload-foto').css('display', 'none');
+                    $('.form-result').css('display', 'block');
+
+                    hideLoadingForm(labelUpload.id);
+
+                    $('.save_form').removeAttr('disabled');
+                    $('.x_form').removeAttr('disabled');
+                    $('.close_form').removeAttr('disabled');
+                }, 500);
             }
         });
     } else {
@@ -812,7 +913,8 @@ function Scrollmodal() {
 $(document).ready(function (e) {
     $('.select2').select2({
         placeholder: 'Select an option',
-        width: '100%'
+        width: '100%',
+        theme: "bootstrap"
     });
 
     $('.number').on('keypress keyup blur', function (evt) {
@@ -868,7 +970,13 @@ $(document).ready(function (e) {
         ],
         placeholder: 'write here...'
     });
+
+    $('.float-number').autoNumeric('init', {
+        aSep: ',',
+        mDec: '0'
+    });
 });
+
 
 $(document).ready(function (evt) {
     const form = $('.form');
@@ -923,6 +1031,60 @@ $(document).ready(function (evt) {
                             }
                         }
                     }
+                }
+            });
+        }
+    }
+});
+
+/**
+ * Dropdown select for change data
+ */
+$('select').change(function (evt) {
+    let target = $(evt.target);
+    let value = '';
+
+    if (target.attr('id') === 'md_principal_id') {
+        value = target.val();
+
+        url = SITE_URL + '/getCategory';
+
+        for (let i = 1; i <= 3; i++) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    principal: value,
+                    category: i
+                },
+                cache: false,
+                dataType: 'JSON',
+                success: function (result) {
+                    $('[name = "category' + i + '"]').append('<option selected="selected" value="">Category' + i + ' < /option>');
+
+                    if (result[0].success) {
+                        if (category2 !== '') {
+                            let data = result[0].message;
+
+                            $.each(data, function (idx, elem) {
+                                let category_id = elem.md_category_id;
+                                let category = elem.category;
+                                let category_en = elem.category_en;
+
+                                $('[name = "category' + i + '"]').append('<option value="' + category_id + '">' + category_en + '</option>');
+                            });
+                        }
+                    } else {
+                        Swal.fire({
+                            type: 'error',
+                            title: result[0].message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                },
+                error: function (jqXHR, exception) {
+                    showError(jqXHR, exception);
                 }
             });
         }

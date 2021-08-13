@@ -20,16 +20,30 @@ class Picture
         $this->image = new M_Image();
     }
 
-    public function render($path = null, $image_id = null)
+    public function render($path = null, $image = null)
     {
-        if (!empty($image_id)) {
-            $row = $this->image->find($image_id);
+        $result = '<center>';
+
+        if (!empty($image) && is_numeric($image)) {
+            $row = $this->image->find($image);
 
             if (!empty($row['name']) && file_exists($path . $row['name'])) {
-                return '<img class="rounded-image" src="' . base_url() . '/' . $row['image_url'] . '" />';
+                $result .= '<img class="rounded-image" src="' . site_url() . $row['image_url'] . '" />';
+            } else {
+                $result .= '<img class="rounded-image" src="https://via.placeholder.com/200/808080/ffffff?text=No+Image">';
             }
+        } else if (!empty($image) && !is_numeric($image)) {
+            if (file_exists($path . $image)) {
+                $result .= '<img class="rectangle-image" src="' . site_url() . $path . $image . '" />';
+            } else {
+                $result .= '<img class="rounded-image" src="https://via.placeholder.com/200/808080/ffffff?text=No+Image">';
+            }
+        } else {
+            $result .= '<img class="rounded-image" src="https://via.placeholder.com/200/808080/ffffff?text=No+Image">';
         }
 
-        return '<img class="rounded-image" src="https://via.placeholder.com/100/808080/ffffff?text=Not+found">';
+        $result .= '</center>';
+
+        return $result;
     }
 }
