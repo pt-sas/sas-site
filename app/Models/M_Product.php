@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
 class M_Product extends Model
@@ -32,29 +33,155 @@ class M_Product extends Model
 	];
 	protected $useTimestamps = true;
 	protected $returnType = 'App\Entities\Product';
+	protected $column_order = [
+		'',
+		'',
+		'code',
+		'name',
+		'',
+		'm_product_id',
+		'principal',
+		'md_category1',
+		'md_category2',
+		'md_category3',
+		'color',
+		'weight',
+		'width',
+		'height',
+		'depth',
+		'volume',
+		'visible',
+		'isactive',
+	];
+	protected $column_search = [
+		'code',
+		'name',
+		'm_product_id',
+		'color',
+		'weight',
+		'width',
+		'height',
+		'depth',
+		'volume'
+	];
+	protected $order = ['code' => 'ASC'];
+	protected $request;
+	protected $db;
+	protected $builder;
 
-	public function detail($field, $where = null)
+	public function __construct(RequestInterface $request)
 	{
-		$db = \Config\Database::connect();
-		if (!empty($where)) {
-			return $db->query("SELECT
-  						mdp.md_product_id ,
-  						mdp.isactive,
-  						mdp.title,
-  						mdp.content,
-  						mdp.news_date,
-  						mdp.start_date,
-  						mdp.end_date,
-  						mdp.slug,
-  						mdi.name as image,
-  						mdi.image_url as md_image_id,
-  						mdp.md_image_id as image_id
-  						FROM $this->table mdp
-  						LEFT JOIN md_image mdi ON mdp.md_image_id = mdi.md_image_id
-  						WHERE $field = $where");
-		} else {
-			return $where;
+		parent::__construct();
+		$this->db = db_connect();
+		$this->request = $request;
+		$this->builder = $this->db->table($this->table);
+	}
+
+	private function getAll($field = null, $where = null)
+	{
+		$this->builder->select(
+			$this->table . '.md_product_id,' .
+				$this->table . '.code,' .
+				$this->table . '.name,' .
+				$this->table . '.m_product_id,' .
+				$this->table . '.color,' .
+				$this->table . '.weight,' .
+				$this->table . '.width,' .
+				$this->table . '.height,' .
+				$this->table . '.depth,' .
+				$this->table . '.volume,' .
+				$this->table . '.visible,' .
+				$this->table . '.isactive,' .
+				$this->table . '.url as image, 
+				pr.name as principal,			
+				cat1.category as md_category1,
+				cat2.category as md_category2,
+				cat3.category as md_category3'
+		);
+
+		$this->builder->join('md_principal pr', 'pr.md_principal_id = ' . $this->table . '.md_principal_id', 'left');
+		$this->builder->join('md_productcategory pc', $this->table . '.md_product_id = pc.md_product_id', 'left');
+		$this->builder->join('md_category cat1', 'pc.category1 = cat1.md_category_id', 'left');
+		$this->builder->join('md_category cat2', 'pc.category2 = cat2.md_category_id', 'left');
+		$this->builder->join('md_category cat3', 'pc.category3 = cat3.md_category_id', 'left');
+	}
+
+	private function getDatatablesQuery()
+	{
+		$this->getAll();
+
+		$i = 0;
+		foreach ($this->column_search as $item) :
+			if ($this->request->getPost('search')['value']) {
+				if ($i === 0) {
+					$this->builder->groupStart();
+					$this->builder->like($this->table . '.' . $item, $this->request->getPost('search')['value']);
+				} else {
+					$this->builder->orLike($this->table . '.' . $item, $this->request->getPost('search')['value']);
+				}
+				if (count($this->column_search) - 1 == $i)
+					$this->builder->groupEnd();
+			}
+			$i++;
+		endforeach;
+
+		if ($this->request->getPost('order')) {
+			$this->builder->orderBy($this->column_order[$this->request->getPost('order')['0']['column']], $this->request->getPost('order')['0']['dir']);
+		} else if (isset($this->order)) {
+			$order = $this->order;
+			$this->builder->orderBy(key($order), $order[key($order)]);
 		}
+	}
+
+	public function getDatatables()
+	{
+		$this->getDatatablesQuery();
+		if ($this->request->getPost('length') != -1)
+			$this->builder->limit($this->request->getPost('length'), $this->request->getPost('start'));
+		$query = $this->builder->get();
+		return $query->getResult();
+	}
+
+	public function countFiltered()
+	{
+		$this->getDatatablesQuery();
+		return $this->builder->countAllResults();
+	}
+
+	public function countAll()
+	{
+		$tbl_storage = $this->db->table($this->table);
+		return $tbl_storage->countAllResults();
+	}
+
+	public function detail($field, $where = null, $path = null)
+	{
+		$this->getAll();
+
+		if (!empty($path)) {
+			$this->builder->select('CASE WHEN ' . $this->table . ' . url <> "" THEN CONCAT("' . $path . '",' . $this->table . ' . url) 
+							ELSE ' . $this->table . ' . url
+							END AS url');
+		}
+
+		$this->builder->select(
+			$this->table . '.description,' .
+				$this->table . '.url_toped,' .
+				$this->table . '.url_shopee,' .
+				$this->table . '.url_jdid,' .
+				$this->table . '.md_principal_id,' .
+				$this->table . '.md_uom_id,
+			pc.category1,
+			pc.category2,
+			pc.category3'
+		);
+
+		if (!empty($where)) {
+			$this->builder->where($field, $where);
+		}
+
+		$query = $this->builder->get();
+		return $query;
 	}
 
 	public function showProductBy($param = [], $principal = null, $category1 = null, $category2 = null, $category3 = null, $keyword = null, $limit = 0, $offset = 0)
