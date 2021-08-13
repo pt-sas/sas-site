@@ -664,16 +664,16 @@ function clearForm(evt) {
                 .removeAttr('disabled');
 
             //logic clear data dropdown if not selected from the beginning
-            if (option.length > 0 & option.val() !== '') {
+            if (option.length > 0 && option.val() !== '') {
                 form.find('select[name=' + field[i].name + ']')
+                    .val(option.val()).change()
                     .removeAttr('disabled')
-                    .parent('div').removeClass('has-error')
-                    .val(option.val()).change();
+                    .parent('div').removeClass('has-error');
             } else {
                 form.find('select[name=' + field[i].name + ']')
+                    .val(null).change()
                     .removeAttr('disabled')
-                    .parent('div').removeClass('has-error')
-                    .val(null).change();
+                    .parent('div').removeClass('has-error');
             }
 
             if (field[i].type == 'file') {
