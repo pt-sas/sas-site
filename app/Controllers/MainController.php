@@ -267,4 +267,18 @@ class MainController extends BaseController
 
 		return json_encode($response);
 	}
+
+	function getPositionBy($id)
+	{
+		$position = new M_Job();
+
+		try {
+			$result = $position->showPositionBy('trx_job.trx_job_id', $id)->getResult();
+			$response = message('success', true, $result);
+		} catch (\Exception $e) {
+			$response = message('error', false, $e->getMessage());
+		}
+
+		return json_encode($response);
+	}
 }
