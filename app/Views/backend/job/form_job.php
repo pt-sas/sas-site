@@ -5,13 +5,11 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="md_division_id">Division <span class="required">*</span></label>
-                    <select class="form-control" id="md_division_id" name="md_division_id">
-                      <option value="">Select Division</option>
-                      <?php foreach ($division as $value) :
-                          $division_id    = $value->md_division_id;
-                          $division_name  = $value->name; ?>
-                          <option value="<?= $division_id ?>"><?= $division_name ?></option>
-                      <?php endforeach; ?>
+                    <select class="form-control select2" id="md_division_id" name="md_division_id">
+                        <option value="">Select Division</option>
+                        <?php foreach ($division as $value) : ?>
+                            <option value="<?= $value->md_division_id ?>"><?= $value->name ?></option>
+                        <?php endforeach; ?>
                     </select>
                     <small class="form-text text-danger" id="error_md_division_id"></small>
                 </div>
@@ -26,11 +24,11 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="level">Level <span class="required">*</span></label>
-                    <select class="form-control" id="level" name="level">
-                      <option value="">Select Level</option>
-                      <option value="EL">Entry Level</option>
-                      <option value="ML">Mid Level</option>
-                      <option value="SL">Senior Level</option>
+                    <select class="form-control select2" id="level" name="level">
+                        <option value="">Select Level</option>
+                        <option value="EL">Entry Level</option>
+                        <option value="ML">Mid Level</option>
+                        <option value="SL">Senior Level</option>
                     </select>
                     <small class="form-text text-danger" id="error_level"></small>
                 </div>
