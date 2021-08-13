@@ -8,10 +8,10 @@
         </a>
       </li>
       <li class="nav-item dropdown hidden-caret">
-        <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <!-- <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-envelope"></i>
-        </a>
-        <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
+        </a> -->
+        <!-- <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
           <li>
             <div class="dropdown-title d-flex justify-content-between align-items-center">
               Messages
@@ -199,9 +199,9 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="<?= base_url('auth/logout') ?>">Logout</a>
             </li>
-          </div>
-        </ul>
-      </li>
+          </div> -->
+    </ul>
+    </li>
     </ul>
   </div>
 </nav>

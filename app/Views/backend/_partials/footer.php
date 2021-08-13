@@ -3,14 +3,14 @@
     <nav class="pull-left">
       <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link" href="http://www.themekita.com/">
+          <!-- <a class="nav-link" href="http://www.themekita.com/">
             ThemeKita
-          </a>
+          </a> -->
         </li>
       </ul>
     </nav>
-    <div class="copyright ml-auto">
+    <!-- <div class="copyright ml-auto">
       Copyright © <?php echo date("Y") ?>, made with <i class="fa fa-heart heart text-danger"></i> by <a href="http://www.themekita.com/">Anhar</a>
-    </div>
+    </div> -->
   </div>
 </footer>
