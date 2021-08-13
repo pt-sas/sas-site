@@ -252,7 +252,7 @@
                 '<h5>' + elem.position + '</h5>' +
                 '<h6>' + elem.division_name + '</h6>' +
                 '</div>' +
-                '<a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="' + elem.division_name + '" data-position="' + elem.position + '" data-description="' + elem.description + '" data-requirement="' + elem.requirement + '" data-description_en="' + elem.description_en + '" data-requirement_en="' + elem.requirement_en + '" data-posted_date="' + elem.posted_date + '" data-expired_date="' + elem.expired_date + '" data-url="' + elem.url + '">' +
+                '<a href="javascript:void(0);" class="btn btn-outline-black view_details">' +
                 'Detail' +
                 '</a>' +
                 '<span class="location">' +
