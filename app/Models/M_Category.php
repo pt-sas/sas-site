@@ -30,7 +30,7 @@ class M_Category extends Model
             $builder->where('level', $level);
         }
 
-        $builder->orderBy('category', 'ASC');
+        $builder->orderBy('category_en', 'ASC');
         $query = $builder->get();
         return $query;
     }
