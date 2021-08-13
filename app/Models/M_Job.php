@@ -34,7 +34,7 @@ class M_Job extends Model
 
     if (!empty($where)) {
       $builder->where($field, $where);
-      $builder->where('DATE(' . $this->table . '.expired_date)', 'CURDATE()', false);
+      $builder->where($this->table . '.expired_date >=', 'CURDATE()', false);
     }
 
     if (!empty($keyword)) {
