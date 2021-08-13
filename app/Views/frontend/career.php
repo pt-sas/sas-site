@@ -108,7 +108,7 @@
                   <h5><?= $row->position; ?></h5>
                   <h6><?= $row->division_name; ?></h6>
                 </div>
-                <a href="javascript:void(0);" class="btn btn-outline-black view_details" data-md_division_id="<?= $row->division_name ?>" data-position="<?= $row->position ?>" data-description="<?= $row->description ?>" data-requirement="<?= $row->requirement ?>" data-description_en="<?= $row->description_en ?>" data-requirement_en="<?= $row->requirement_en ?>" data-posted_date="<?= $row->posted_date ?>" data-expired_date="<?= $row->expired_date ?>" data-url="<?= $row->url ?>">
+                <a href="javascript:void(0);" class="btn btn-outline-black view_details" id="<?= $row->trx_job_id ?>">
                   Detail
                 </a>
                 <span class="location">
@@ -162,48 +162,67 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <img src="<?= base_url('adw/assets/images/close.png') ?>" alt="">
         </button>
-        <h4 name="position"></h4>
-        <h5>
-          <span name="division"></span>
-          <span name="posted_date"></span>
-          <span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>
-        </h5>
-        <h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>
-        <div name="<?= session()->lang == 'id' ? 'description' : 'description_en' ?>"></div>
-        <h6 class="title-list"><?= lang("Career.CH6M2") ?></h6>
-        <div name="<?= session()->lang == 'id' ? 'requirement' : 'requirement_en' ?>"></div>
-        <a href="" class="btn btn-primary url" target="_blank"><?= lang("Career.CBUM1") ?></a>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  $(document).on('click', '.view_details', function(e) {
-    e.preventDefault();
-    var division = $(this).data('md_division_id');
-    var position = $(this).data('position');
-    var posted_date = moment($(this).data('posted_date')).format('LL');
-    var description = $(this).data('description');
-    var requirement = $(this).data('requirement');
-    var description_en = $(this).data('description_en');
-    var requirement_en = $(this).data('requirement_en');
-    var url = $(this).data('url');
+  $(document).on('click', '.view_details', function(evt) {
+    let id = $(evt.target).attr('id');
+    let html = '';
 
-    $('#modalJobs').modal('show');
-    $('[name="division"]').text(division);
-    $('[name="position"]').text(position);
-    $('[name="posted_date"]').text(posted_date);
-    $('[name="description"]').html(description);
-    $('[name="requirement"]').html(requirement);
-    $('[name="description_en"]').html(description_en);
-    $('[name="requirement_en"]').html(requirement_en);
-    $('.url').attr("href", url);
+    url = '<?= base_url('MainController/getPositionBy'); ?>' + '/' + id;
+
+    $.ajax({
+      url: url,
+      type: 'GET',
+      cache: false,
+      dataType: 'JSON',
+      beforeSend: function() {
+        loadingForm('modalJobs', 'bounce');
+      },
+      complete: function() {
+        hideLoadingForm('modalJobs');
+      },
+      success: function(result) {
+        if (result[0].success) {
+          var data = result[0].message;
+
+          $.each(data, function(idx, elem) {
+            html += '<h4>' + elem.position + '</h4>';
+            html += '<h5>' +
+              '<span>' + elem.division_name + '</span>' +
+              '<span>' + moment($(this).data(elem.posted_date)).format('LL') + '</span>' +
+              '<span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>' +
+              '</h5>';
+            html += '<h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>' +
+              '<div>' + (sessLang == 'id' ? elem.description : elem.description_en) + '</div>' +
+              '<h6 class="title-list"><?= lang("Career.CH6M2") ?></h6>' +
+              '<div>' + (sessLang == 'id' ? elem.requirement : elem.requirement_en) + '</div>';
+            html += '<a href="' + elem.url + '" class="btn btn-primary" target="_blank"><?= lang("Career.CBUM1") ?></a>';
+          });
+
+          $('.modal-body').html(html);
+          $('#modalJobs').modal('show');
+        } else {
+          Swal.fire({
+            type: 'info',
+            title: result[0].message,
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }
+      },
+      error: function(jqXHR, exception) {
+        showError(jqXHR, exception);
+      }
+    });
   });
 
   $('.btn_search').click(function(evt) {
-    var html = '';
-    url = '<?php echo base_url('MainController/filterLevel'); ?>';
+    let html = '';
+    url = '<?= base_url('MainController/filterLevel'); ?>';
     var level = $('[name = "level"]').val();
     var keyword = $('[name = "keyword"]').val();
 
