@@ -100,8 +100,8 @@
           </div>
         <?php endforeach; ?>
       </div>
-      <div class="col-md-12 text-center">
-        <!-- <button class="btn btn-whites mt-3 load_more">More New Items Weekly <img src="" alt="" class="spinning" /></button> -->
+      <div class="col-md-12 text-center" id="btn-load">
+        <button class="btn btn-whites mt-3 load_more">More New Items Weekly <img alt="" class="spinning" /></button>
       </div>
     </div>
   </div>
@@ -152,17 +152,17 @@
 </script>
 
 <script type="text/javascript">
-  var SITE_URL = window.location.href;
-  var LAST_URL = SITE_URL.substr(SITE_URL.lastIndexOf('/') + 1); //the last url
+  let SITE_URL = window.location.href;
+  let LAST_URL = SITE_URL.substr(SITE_URL.lastIndexOf('/') + 1); //the last url
 
-  let url;
-
-  let page = 5;
-
-  let offset = 0;
+  let url,
+    action = '',
+    limit = parseInt('<?= $limit_product ?>'),
+    offset = 0,
+    calcLimit = 0;
 
   $('[name = "category1"]').change(function(evt) {
-    var category1 = $(this).val();
+    let category1 = $(this).val();
     url = '<?= base_url('MainController/getCategory') ?>';
 
     $.ajax({
@@ -207,7 +207,7 @@
   });
 
   $('[name = "category2"]').change(function(evt) {
-    var category2 = $(this).val();
+    let category2 = $(this).val();
     url = '<?= base_url('MainController/getCategory') ?>';
 
     $.ajax({
@@ -250,12 +250,15 @@
   });
 
   $('.btn_filter').click(function(evt) {
-    var html = '';
     url = '<?php echo base_url('MainController/filterCategory'); ?>';
-    var category1 = $('[name = "category1"]').val();
-    var category2 = $('[name = "category2"]').val();
-    var category3 = $('[name = "category3"]').val();
-    var keyword = $('[name = "keyword"]').val();
+    let html = '';
+    let html2 = '';
+    let category1 = $('[name = "category1"]').val();
+    let category2 = $('[name = "category2"]').val();
+    let category3 = $('[name = "category3"]').val();
+    let keyword = $('[name = "keyword"]').val();
+
+    action = $(evt.target).text();
 
     $.ajax({
       url: url,
@@ -265,7 +268,9 @@
         category1: category1,
         category2: category2,
         category3: category3,
-        keyword: keyword
+        keyword: keyword,
+        limit: limit,
+        action: action
       },
       cache: false,
       dataType: 'JSON',
@@ -278,8 +283,8 @@
         hideLoadingForm('card-product');
       },
       success: function(result) {
-        if (result[0].success) {
-          var data = result[0].message;
+        if (result.data[0].success) {
+          let data = result.data[0].message;
 
           if (data.length > 0) {
             $.each(data, function(idx, elem) {
@@ -302,6 +307,19 @@
                 '</div>' +
                 '</div>';
             });
+
+            // Set value countPage after added
+            calcLimit = parseInt(result.limit);
+
+            // Set value pffset first time after filter button click 
+            offset = limit + 1;
+
+            if (data.length < limit) {
+              $('.load_more').css('display', 'none');
+            } else {
+              html2 += '<button class="btn btn-whites mt-3 load_more">More New Items Weekly <img alt="" class="spinning" /></button>';
+            }
+
           } else {
             html += '<div class="col-md-4 col-lg-3">';
             html += '<div class="item-product" data-aos="fade-left">';
@@ -315,7 +333,7 @@
           }
 
           $('#card-product').html(html);
-
+          $('#btn-load').html(html2);
         } else {
           Swal.fire({
             type: 'info',
@@ -333,7 +351,7 @@
 
   function openDetailProduct(code) {
     url = '<?= base_url('MainController/showProductBy/') ?>' + '/' + code;
-    var html = '';
+    let html = '';
 
     $.ajax({
       url: url,
@@ -347,10 +365,10 @@
       },
       success: function(result) {
         if (result[0].success) {
-          var data = result[0].message;
+          let data = result[0].message;
 
           $.each(data, function(idx, elem) {
-            var src = '';
+            let src = '';
 
             if (elem.url !== '') {
               src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
@@ -403,16 +421,18 @@
     });
   }
 
-  $('.load_more').click(function(evt) {
+
+  $(document).on('click', '.load_more', function(evt) {
     url = '<?php echo base_url('MainController/filterCategory'); ?>';
 
-    var btnText = $(this).text();
-    var html = '';
+    let btnText = $(this).text();
+    let html = '';
+    let html2 = '';
 
-    var category1 = $('[name = "category1"]').val();
-    var category2 = $('[name = "category2"]').val();
-    var category3 = $('[name = "category3"]').val();
-    var keyword = $('[name = "keyword"]').val();
+    let category1 = $('[name = "category1"]').val();
+    let category2 = $('[name = "category2"]').val();
+    let category3 = $('[name = "category3"]').val();
+    let keyword = $('[name = "keyword"]').val();
 
     $.ajax({
       url: url,
@@ -423,8 +443,10 @@
         category2: category2,
         category3: category3,
         keyword: keyword,
-        page: page,
+        limit: limit,
         offset: offset,
+        calcLimit: calcLimit,
+        action: action
       },
       cache: false,
       dataType: 'JSON',
@@ -434,38 +456,41 @@
       },
       complete: function() {
         $(this).removeAttr('disabled');
-        $('.spinning').attr('src', '');
+        $('.spinning').removeAttr('src');
       },
       success: function(result) {
-        if (result[0].success) {
-          offset = offset + 1;
-          console.log(offset)
-          var data = result[0].message;
+        if (result.data[0].success) {
+          let data = result.data[0].message;
 
-          if (data.length > 0) {
-            $.each(data, function(idx, elem) {
-              var src = '';
-              if (elem.url !== '') {
-                src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
-              } else {
-                src = 'https://via.placeholder.com/200/808080/ffffff?text=No+Image';
-              }
+          $.each(data, function(idx, elem) {
+            let src = '';
+            if (elem.url !== '') {
+              src = '<?= base_url() ?>' + '/custom/image/product/' + elem.url;
+            } else {
+              src = 'https://via.placeholder.com/200/808080/ffffff?text=No+Image';
+            }
 
-              html += '<div class="col-md-4 col-lg-3">';
-              html += '<div class="item-product" data-aos="fade-left">';
-              html += '<a href="javascript:void(0);" title="' + elem.name + '" onclick="openDetailProduct(' + "'" + elem.code + "'" + ')">' +
-                '<div class="image-wrap">' +
-                '<img src="' + src + '" alt="" class="img-fluid">' +
-                '</div>' +
-                '<h5>' + elem.name + '</h5>' +
-                // '<p>Sort description about product</p>' +
-                '</a>' +
-                '</div>' +
-                '</div>';
-            });
-          }
+            html += '<div class="col-md-4 col-lg-3">';
+            html += '<div class="item-product" data-aos="fade-left">';
+            html += '<a href="javascript:void(0);" title="' + elem.name + '" onclick="openDetailProduct(' + "'" + elem.code + "'" + ')">' +
+              '<div class="image-wrap">' +
+              '<img src="' + src + '" alt="" class="img-fluid">' +
+              '</div>' +
+              '<h5>' + elem.name + '</h5>' +
+              // '<p>Sort description about product</p>' +
+              '</a>' +
+              '</div>' +
+              '</div>';
+          });
 
           $('#card-product').append(html);
+
+          if (data.length == 0)
+            $('.load_more').css('display', 'none');
+
+          // Calculation limit
+          calcLimit = parseInt(result.limit) + limit;
+          offset = calcLimit + 1;
 
         } else {
           Swal.fire({
