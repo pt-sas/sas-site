@@ -20,6 +20,7 @@ use Config\Services;
 class MainController extends BaseController
 {
 	protected $request;
+	protected $limit;
 
 	public function __construct()
 	{
@@ -27,6 +28,7 @@ class MainController extends BaseController
 		$visit = new M_Visit();
 		$visit->count($ipaddress);
 		$this->request = Services::request();
+		$this->limit = 8;
 	}
 
 	public function index()
@@ -65,7 +67,8 @@ class MainController extends BaseController
 			'principal' 		=> $principal->where('url', $url)->first(),
 			'category1'			=> $productgroup->getDetail($url, 1),
 			'product' 			=> $product->showProductBy($where, $url)->getResult(),
-			'page_title'		=> 'View Product - PT Sahabat Abadi Sejahtera'
+			'page_title'		=> 'View Product - PT Sahabat Abadi Sejahtera',
+			'limit_product'		=> $this->limit
 		];
 		return view('frontend/product/detail', $data);
 	}
@@ -187,25 +190,48 @@ class MainController extends BaseController
 		$product = new M_Product($this->request);
 		$post = $this->request->getVar();
 
-		$page = 0;
+		$limit = 0;
 		$offset = 0;
 
-		if (isset($post['page'])) {
-			$page = $post['page'];
-		}
+		if (isset($post['limit']))
+			$limit = $post['limit'];
 
-		if (isset($post['offset'])) {
+		if (isset($post['offset']))
 			$offset = $post['offset'];
-		}
 
-		$where = [
-			'md_product.isactive'	=> 'Y',
-			'md_product.visible'	=> 'N'
-		];
+		// Set where clause if button filter to show only product active yes
+		if (isset($post['action']) && strtolower($post['action']) === 'filter') {
+			$where = [
+				'md_product.isactive'	=> 'Y'
+			];
+		} else {
+			$where = [
+				'md_product.isactive'	=> 'Y',
+				'md_product.visible'	=> 'N'
+			];
+		}
 
 		try {
-			$result = $product->showProductBy($where, $post['principal'], $post['category1'], $post['category2'], $post['category3'], $post['keyword'], $page, $offset);
-			$response = message('success', true, $result->getResult());
+			$result = $product->showProductBy(
+				$where,
+				$post['principal'],
+				$post['category1'],
+				$post['category2'],
+				$post['category3'],
+				$post['keyword'],
+				$limit,
+				$offset
+			);
+
+			// condition to restore data count
+			if ($result && isset($post['calcLimit'])) {
+				$response['limit'] = $post['calcLimit'];
+			} else if ($result && isset($post['action']) && strtolower($post['action']) === 'filter') {
+				// condition after click button filter
+				$response['limit'] = $post['limit'] * 2;
+			}
+
+			$response['data'] = message('success', true, $result->getResult());
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
 		}
