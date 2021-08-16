@@ -101,24 +101,28 @@
             <button class="btn btn-primary btn_search"><?= lang("Career.CBU41") ?></button>
           </div>
 
-          <div class="item-jobs" id="detail-jobs">
-            <?php if (count($job) > 0) {
-              foreach ($job as $row) : ?>
-                <div class="left-part">
-                  <h5><?= $row->position; ?></h5>
-                  <h6><?= $row->division_name; ?></h6>
+          <div id="detail-jobs">
+            <?php if (count($job) > 0) { ?>
+              <?php foreach ($job as $row) : ?>
+                <div class="item-jobs">
+                  <div class="left-part">
+                    <h5><?= $row->position; ?></h5>
+                    <h6><?= $row->division_name; ?></h6>
+                  </div>
+                  <a href="javascript:void(0);" class="btn btn-outline-black view_details" id="<?= $row->trx_job_id ?>">
+                    Detail
+                  </a>
+                  <span class="location">
+                    <img src="assets/images/map-pin-s.png" alt="">
+                    Jakarta
+                  </span>
                 </div>
-                <a href="javascript:void(0);" class="btn btn-outline-black view_details" id="<?= $row->trx_job_id ?>">
-                  Detail
-                </a>
-                <span class="location">
-                  <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
-                  DKI Jakarta
-                </span>
-              <?php endforeach;
-            } else { ?>
-              <div class="col-md-12">
-                <h5><?= session()->lang == 'id' ? 'Pekerjaan tidak tersedia.' : 'Jobs not available.' ?></h5>
+              <?php endforeach; ?>
+            <?php } else { ?>
+              <div class="item-jobs">
+                <div class="col-md-12">
+                  <h5><?= session()->lang == 'id' ? 'Pekerjaan tidak tersedia.' : 'Jobs not available.' ?></h5>
+                </div>
               </div>
             <?php } ?>
           </div>
@@ -162,6 +166,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <img src="<?= base_url('adw/assets/images/close.png') ?>" alt="">
         </button>
+        <div id="content-modal"></div>
       </div>
     </div>
   </div>
@@ -203,7 +208,7 @@
             html += '<a href="' + elem.url + '" class="btn btn-primary" target="_blank"><?= lang("Career.CBUM1") ?></a>';
           });
 
-          $('.modal-body').html(html);
+          $('#content-modal').html(html);
           $('#modalJobs').modal('show');
         } else {
           Swal.fire({
@@ -248,6 +253,7 @@
           var data = result[0].message;
           if (data.length > 0) {
             $.each(data, function(idx, elem) {
+              html += '<div class="item-jobs">';
               html += '<div class="left-part">' +
                 '<h5>' + elem.position + '</h5>' +
                 '<h6>' + elem.division_name + '</h6>' +
@@ -258,12 +264,14 @@
                 '<span class="location">' +
                 '<img src="' + '<?= base_url('adw/assets/images/map-pin-s.png') ?>' + '" alt="">' +
                 'DKI Jakarta' +
-                '</span>';
+                '</span>' +
+                '</div>';
             });
           } else {
-            html += '<div class="col-md-12">' +
+            html += '<div class="item-jobs">' +
+              '<div class="col-md-12">' +
               '<h5>' + (sessLang == 'id' ? 'Pekerjaan tidak tersedia.' : 'Jobs not available.') + '</h5>' +
-              '</div>';
+              '</div></div>';
           }
 
           $('#detail-jobs').html(html);
