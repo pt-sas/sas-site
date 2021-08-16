@@ -114,7 +114,7 @@
                   </a>
                   <span class="location">
                     <img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt="">
-                    Jakarta
+                    DKI Jakarta
                   </span>
                 </div>
               <?php endforeach; ?>
