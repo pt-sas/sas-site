@@ -58,23 +58,23 @@
       <div class="col-lg-6 text-center">
         <div class="partner-wrap">
           <div class="partner-item">
-            <img src="<?= base_url('adw/assets/images/partner1.png') ?>" alt="">
+            <a href="<?= base_url('/product/philips') ?>"><img src="<?= base_url('adw/assets/images/partner1.png') ?>" alt=""></a>
           </div>
           <div class="partner-item">
-            <img src="<?= base_url('adw/assets/images/partner4.png') ?>" alt="">
+            <a href="<?= base_url('/product/legrand') ?>"><img src="<?= base_url('adw/assets/images/partner4.png') ?>" alt=""></a>
           </div>
         </div>
         <div class="partner-wrap second">
           <div class="partner-item">
-            <img src="<?= base_url('adw/assets/images/partner2.png') ?>" alt="">
+            <a href="<?= base_url('/product/schneider') ?>"><img src="<?= base_url('adw/assets/images/partner2.png') ?>" alt=""></a>
           </div>
           <div class="partner-item">
-            <img src="<?= base_url('adw/assets/images/partner5.png') ?>" alt="">
+            <a href="<?= base_url('/product/panasonic') ?>"><img src="<?= base_url('adw/assets/images/partner5.png') ?>" alt=""></a>
           </div>
         </div>
         <div class="partner-wrap third">
           <div class="partner-item">
-            <img src="<?= base_url('adw/assets/images/partner3.png') ?>" alt="">
+            <a href="<?= base_url('/product/supreme') ?>"><img src="<?= base_url('adw/assets/images/partner3.png') ?>" alt=""></a>
           </div>
         </div>
       </div>
