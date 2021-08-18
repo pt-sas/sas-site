@@ -4,7 +4,7 @@
 
 <?= $this->include('backend/product/form_product'); ?>
 <div class="card-body card-main">
-    <table class="table table-border table-hover table-pointer tb_product" style="width: 100%">
+    <table class="table table-bordered table-hover table-pointer tb_product" style="width: 100%">
         <thead>
             <tr>
                 <th>ID</th>

@@ -54,15 +54,19 @@ class M_Product extends Model
 		'isactive',
 	];
 	protected $column_search = [
-		'code',
-		'name',
-		'm_product_id',
-		'color',
-		'weight',
-		'width',
-		'height',
-		'depth',
-		'volume'
+		'md_product.code',
+		'md_product.name',
+		'md_product.m_product_id',
+		'md_product.color',
+		'md_product.weight',
+		'md_product.width',
+		'md_product.height',
+		'md_product.depth',
+		'md_product.volume',
+		'pr.name',
+		'cat1.category',
+		'cat2.category',
+		'cat3.category'
 	];
 	protected $order = ['code' => 'ASC'];
 	protected $request;
@@ -115,9 +119,9 @@ class M_Product extends Model
 			if ($this->request->getPost('search')['value']) {
 				if ($i === 0) {
 					$this->builder->groupStart();
-					$this->builder->like($this->table . '.' . $item, $this->request->getPost('search')['value']);
+					$this->builder->like($item, $this->request->getPost('search')['value']);
 				} else {
-					$this->builder->orLike($this->table . '.' . $item, $this->request->getPost('search')['value']);
+					$this->builder->orLike($item, $this->request->getPost('search')['value']);
 				}
 				if (count($this->column_search) - 1 == $i)
 					$this->builder->groupEnd();
