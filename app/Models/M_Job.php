@@ -39,7 +39,6 @@ class M_Job extends Model
 
     if (!empty($keyword)) {
       $builder->like($this->table . '.position', $keyword, 'both');
-      $builder->orLike('d.name', $keyword, 'both');
     }
 
     if (!empty($level)) {
