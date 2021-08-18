@@ -705,11 +705,11 @@ function readonly(parent, value) {
 
     for (let i = 0; i < field.length; i++) {
         if (field[i].name !== '') {
-            let className = field[i].className.split(/\s+/)[1];
+            let className = field[i].className.split(/\s+/);
 
             parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', value);
 
-            if (field[i].type !== 'text' && className !== 'active') {
+            if (field[i].type !== 'text' && !className.includes('active')) {
                 parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']')
                     .prop('disabled', value);
             }
