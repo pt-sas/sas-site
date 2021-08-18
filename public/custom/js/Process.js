@@ -608,8 +608,8 @@ function errorForm(parent, data) {
     const errorInput = parent.find('input[type="text"], select, textarea');
     const errorText = parent.find('small');
 
-    var arrInput = [];
-    var arrText = [];
+    let arrInput = [];
+    let arrText = [];
 
     for (let i = 0; i < errorText.length; i++) {
         if (errorText[i].id !== '')
@@ -621,12 +621,12 @@ function errorForm(parent, data) {
     }
 
     for (let j = 0; j < data.length; j++) {
-        var error = data[j].error;
-        var field = data[j].field;
-        var labelMsg = data[j].label;
+        let error = data[j].error;
+        let field = data[j].field;
+        let labelMsg = data[j].label;
 
-        var textName = arrContains(error, arrText);
-        var inputName = arrContains(field, arrInput);
+        let textName = arrContains(error, arrText);
+        let inputName = arrContains(field, arrInput);
 
         if (labelMsg !== '') {
             parent.find('small[id=' + textName + ']').html(labelMsg);
