@@ -198,7 +198,7 @@
             html += '<h4>' + elem.position + '</h4>';
             html += '<h5>' +
               '<span>' + elem.division_name + '</span>' +
-              '<span>' + moment($(this).data(elem.posted_date)).format('LL') + '</span>' +
+              '<span>' + moment(elem.posted_date).format('LL') + '</span>' +
               '<span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>' +
               '</h5>';
             html += '<h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>' +
