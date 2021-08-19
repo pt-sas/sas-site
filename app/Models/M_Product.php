@@ -28,7 +28,7 @@ class M_Product extends Model
 		'url',
 		'url_toped',
 		'url_shopee',
-		'ur_jdid',
+		'url_jdid',
 		'isactive'
 	];
 	protected $useTimestamps = true;
