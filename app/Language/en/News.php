@@ -9,5 +9,5 @@ return [
     'NH511' => 'News',
 
     'NH521' => 'Event',
-    'NSP21' => 'Periode Event',
+    'NSP21' => 'Posted Date',
 ];
