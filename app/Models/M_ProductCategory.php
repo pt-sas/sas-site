@@ -16,7 +16,7 @@ class M_ProductCategory extends Model
         'category3'
     ];
     protected $useTimestamps = true;
-    protected $returnType = 'App\Entities\ProductCategory';
+    protected $returnType = 'App\Entities\Productcategory';
 
     public function create($post, $action)
     {
