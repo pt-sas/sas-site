@@ -15,8 +15,8 @@
         <div class="col-md-12">
           <h5 class="sec-title"><?= lang("News.NH511") ?></h5>
         </div>
-        <?php foreach ($news as $row) : ?>
-          <div class="col-md-4">
+        <?php foreach ($news as $count => $row) : ?>
+          <div class="col-md-4 <?= $count > 2 ? 'mt-4' : '' ?>">
             <a href="<?= base_url('/news/' . $row->slug . '') ?>" class="item-news">
               <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');"></div>
               <h5 title="<?= session()->lang == 'id' ? $row->title : $row->title_en ?>"><?= session()->lang == 'id' ? $row->title : $row->title_en ?></h5>
@@ -35,13 +35,13 @@
         <div class="col-md-12">
           <h5 class="sec-title"><?= lang("News.NH521") ?></h5>
         </div>
-        <?php foreach ($promo as $row) : ?>
-          <div class="col-md-4">
+        <?php foreach ($promo as $count => $row) : ?>
+          <div class="col-md-4 <?= $count > 2 ? 'mt-4' : '' ?>">
             <a href="<?= base_url('/event/' . $row->slug . '') ?>" class="item-promo">
               <div class="image" style="background-image: url('<?= base_url($row->image_url) ?>');">
                 <div class="periode">
                   <span><?= lang("News.NSP21") ?></span>
-                  <p><?= session()->lang == 'id' ? format_idn(date('Y-m-d', strtotime($row->start_date))) . " - " . format_idn(date('Y-m-d', strtotime($row->end_date)))  : date("F jS, Y", strtotime($row->start_date)) . " - " . date("F jS, Y", strtotime($row->end_date)) ?></p>
+                  <p><?= session()->lang == 'id' ? format_idn(date('Y-m-d', strtotime($row->start_date))) : date("F jS, Y", strtotime($row->start_date)) ?></p>
                 </div>
               </div>
               <h6 title="<?= session()->lang == 'id' ? $row->title : $row->title_en ?>"><?= session()->lang == 'id' ? $row->title : $row->title_en ?></h6>

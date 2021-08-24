@@ -170,6 +170,16 @@
   }
 }
 
+#modalJobs {
+  .modal-body {
+    ul {
+      height: auto;
+      overflow: hidden;
+      max-height: 500px;
+    }
+  }
+}
+
 .modal {
   .modal-body {
     padding: 75px 30px 30px 30px;

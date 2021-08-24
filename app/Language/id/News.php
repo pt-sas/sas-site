@@ -9,5 +9,5 @@ return [
     'NH511' => 'Berita',
 
     'NH521' => 'Acara',
-    'NSP21' => 'Periode Promo',
+    'NSP21' => 'Tanggal Posting'
 ];
