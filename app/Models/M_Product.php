@@ -98,9 +98,9 @@ class M_Product extends Model
 				$this->table . '.isactive,' .
 				$this->table . '.url as image, 
 				pr.name as principal,			
-				cat1.category as md_category1,
-				cat2.category as md_category2,
-				cat3.category as md_category3'
+				cat1.category_en as md_category1,
+				cat2.category_en as md_category2,
+				cat3.category_en as md_category3'
 		);
 
 		$this->builder->join('md_principal pr', 'pr.md_principal_id = ' . $this->table . '.md_principal_id', 'left');
