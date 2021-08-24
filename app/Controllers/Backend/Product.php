@@ -7,6 +7,7 @@ use App\Models\M_Product;
 use App\Models\M_Principal;
 use App\Models\M_Category;
 use App\Models\M_Uom;
+use App\Models\M_ProductCategory;
 
 use Config\Services;
 
@@ -97,6 +98,7 @@ class Product extends BaseController
 		$eProduct = new \App\Entities\Product();
 
 		$product = new M_Product($request);
+		$pCategory = new M_ProductCategory();
 		$principal = new M_Principal();
 
 		$post = $this->request->getVar();
@@ -123,6 +125,9 @@ class Product extends BaseController
 				$eProduct->isactive = setCheckbox(isset($post['isactive']));
 
 				$result = $product->save($eProduct);
+
+				$post['id'] = $product->insertID();
+				$pCategory->create($post, 'insert');
 
 				// Move to folder
 				$file->move($this->path_folder, $newfilename);
@@ -154,6 +159,7 @@ class Product extends BaseController
 		$eProduct = new \App\Entities\Product();
 
 		$product = new M_Product($request);
+		$pCategory = new M_ProductCategory();
 		$principal = new M_Principal();
 
 		$post = $this->request->getVar();
@@ -259,6 +265,7 @@ class Product extends BaseController
 				}
 
 				$result = $product->save($eProduct);
+				$pCategory->create($post, 'update');
 
 				$msg = $result ? 'Your data has been updated successfully !' : $result;
 
@@ -275,6 +282,7 @@ class Product extends BaseController
 	{
 		$request = Services::request();
 		$product = new M_Product($request);
+		$pCategory = new M_ProductCategory();
 
 		try {
 			$row = $product->find($id);
@@ -284,6 +292,8 @@ class Product extends BaseController
 				unlink($this->path_folder . $row->url);
 
 			$result = $product->delete($id);
+			$pCategory->where('md_product_id', $id)->delete();
+
 			$response = message('success', true, $result);
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());
@@ -298,7 +308,7 @@ class Product extends BaseController
 		$post = $this->request->getVar();
 
 		try {
-			$result = $category->getDetail($post['principal'], $post['category']);
+			$result = $category->getDetail($post['principal'], $post['level']);
 			$response = message('success', true, $result->getResult());
 		} catch (\Exception $e) {
 			$response = message('error', false, $e->getMessage());

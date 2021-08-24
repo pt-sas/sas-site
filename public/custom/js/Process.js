@@ -6,14 +6,17 @@
  */
 const ADMIN = '/backend/';
 
-var ORI_URL = window.location.origin,
+let ORI_URL = window.location.origin,
     SITE_URL = window.location.href,
     LAST_URL = SITE_URL.substr(SITE_URL.lastIndexOf('/') + 1), //the last url
     ADMIN_URL = ORI_URL + ADMIN;
 
-var ID,
+let ID,
     _table,
     setSave;
+
+// Data array from option
+let option = [];
 
 // Method default controller
 const SHOWALL = '/showAll',
@@ -194,6 +197,7 @@ $('.save_form').click(function (evt) {
             hideLoadingForm(form.prop('id'));
         },
         success: function (result) {
+            console.log(result)
             if (result[0].success) {
                 Toast.fire({
                     type: 'success',
@@ -344,7 +348,15 @@ function Edit(id) {
                             $('[name =' + field[i].name + ']').summernote('code', label);
                         }
 
-                        form.find('select[name=' + field[i].name + ']').val(label).change();
+                        if (field[i].type === 'select-one') {
+                            let fieldName = field[i].name;
+                            let value = label;
+                            option.push({
+                                fieldName,
+                                value
+                            });
+                            form.find('select[name=' + field[i].name + ']').val(label).change();
+                        }
 
                         // Set condition value checked for field type Checkbox based on database
                         if (field[i].type === 'checkbox' && label === 'Y') {
@@ -440,8 +452,10 @@ $(document).on('click', '.x_form, .close_form', function (evt) {
     }
 
     clearForm(evt);
-    reloadTable();
     cardTitle.html(capitalize(LAST_URL));
+
+    // Set to empty array option
+    option = [];
 
     $('html, body').animate({
         scrollTop: $('.row').offset().top
@@ -472,6 +486,7 @@ $('.new_form').click(function (evt) {
             if (form.find('input:file.control-upload-image').length > 0) {
                 form.find('.img-result').attr('src', '');
             }
+
         } else {
             cardMain.css('display', 'block');
             cardForm.css('display', 'none');
@@ -664,7 +679,7 @@ function clearForm(evt) {
                 .removeAttr('disabled');
 
             //logic clear data dropdown if not selected from the beginning
-            if (option.length > 0 && option.val() !== '') {
+            if (option.length > 0 && option.val() !== '' && setSave == 'add') {
                 form.find('select[name=' + field[i].name + ']')
                     .val(option.val()).change()
                     .removeAttr('disabled')
@@ -1044,28 +1059,27 @@ $('select').change(function (evt) {
     let target = $(evt.target);
     let value = '';
 
-    if (target.attr('id') === 'md_principal_id') {
-        value = target.val();
+    if (option.length == 0) {
+        if (target.attr('id') === 'md_principal_id') {
+            value = target.val();
+            url = SITE_URL + '/getCategory';
 
-        url = SITE_URL + '/getCategory';
+            for (let i = 1; i <= 3; i++) {
+                $('[name = "category' + i + '"]').empty();
 
-        for (let i = 1; i <= 3; i++) {
-            $('[name = "category' + i + '"]').empty();
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        principal: value,
+                        level: i
+                    },
+                    cache: false,
+                    dataType: 'JSON',
+                    success: function (result) {
+                        $('[name = "category' + i + '"]').append('<option selected="selected" value="">Category' + i + ' < /option>');
 
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: {
-                    principal: value,
-                    category: i
-                },
-                cache: false,
-                dataType: 'JSON',
-                success: function (result) {
-                    $('[name = "category' + i + '"]').append('<option selected="selected" value="">Category' + i + ' < /option>');
-
-                    if (result[0].success) {
-                        if (category2 !== '') {
+                        if (result[0].success) {
                             let data = result[0].message;
 
                             $.each(data, function (idx, elem) {
@@ -1075,7 +1089,61 @@ $('select').change(function (evt) {
 
                                 $('[name = "category' + i + '"]').append('<option value="' + category_id + '">' + category_en + '</option>');
                             });
+                        } else {
+                            Swal.fire({
+                                type: 'error',
+                                title: result[0].message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                         }
+                    },
+                    error: function (jqXHR, exception) {
+                        showError(jqXHR, exception);
+                    }
+                });
+            }
+        }
+    } else {
+        url = SITE_URL + '/getCategory';
+        let data = option[option.length - 1];
+        let field = data.fieldName;
+        let id_category = data.value;
+
+        value = $('.main-select').val();
+
+        if (field.slice(0, -1) === 'category') {
+            let index = field[field.length - 1];
+
+            $('[name =' + field + ']').empty();
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    principal: value,
+                    level: index
+                },
+                cache: false,
+                dataType: 'JSON',
+                success: function (result) {
+                    $('[name =' + field + ']').append('<option selected="selected" value="">' + option + '< /option>');
+
+                    if (result[0].success) {
+                        let data = result[0].message;
+
+                        $.each(data, function (idx, elem) {
+                            let category_id = elem.md_category_id;
+                            let category_en = elem.category_en;
+
+                            if (id_category == category_id) {
+                                $('[name =' + field + ']').append('<option value="' + category_id + '" selected>' + category_en + '</option>');
+                            } else {
+                                $('[name =' + field + ']').append('<option value="' + category_id + '">' + category_en + '</option>');
+                            }
+                        });
+
+
                     } else {
                         Swal.fire({
                             type: 'error',

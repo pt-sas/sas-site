@@ -59,7 +59,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="md_principal_id">Principal <span class="required">*</span></label>
-                    <select class="form-control select2" id="md_principal_id" name="md_principal_id">
+                    <select class="form-control select2 main-select" id="md_principal_id" name="md_principal_id">
                         <option value="">Select Principal</option>
                         <?php foreach ($principal as $row) : ?>
                             <option value="<?= $row->md_principal_id ?>"><?= $row->name ?></option>
