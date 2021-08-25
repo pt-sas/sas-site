@@ -197,7 +197,6 @@ $('.save_form').click(function (evt) {
             hideLoadingForm(form.prop('id'));
         },
         success: function (result) {
-            console.log(result)
             if (result[0].success) {
                 Toast.fire({
                     type: 'success',
@@ -453,9 +452,6 @@ $(document).on('click', '.x_form, .close_form', function (evt) {
 
     clearForm(evt);
     cardTitle.html(capitalize(LAST_URL));
-
-    // Set to empty array option
-    option = [];
 
     $('html, body').animate({
         scrollTop: $('.row').offset().top
@@ -1143,6 +1139,8 @@ $('select').change(function (evt) {
                             }
                         });
 
+                        // Set to empty array option
+                        option = [];
 
                     } else {
                         Swal.fire({
