@@ -18,7 +18,13 @@ class Field
         $this->validation = \Config\Services::validation();
     }
 
-    // Retrieve field and data from database
+    /**
+     * Retrieve field and data from database
+     *
+     * $table
+     * $data result from database
+     * $query type join table or not
+     */
     public function store($table, $data, $query = null)
     {
         $result = [];
