@@ -192,8 +192,17 @@ class Validation
 			'rules' 	=> 'required'
 		],
 		'url' => [
-			'rules' 	=> 'required'
+			'label'		=> 'jobstreet url',
+			'rules' 	=> 'required|valid_url'
 		],
+		'url1' => [
+			'label'		=> 'jobs db url',
+			'rules' 	=> 'required|valid_url'
+		],
+		'url2' => [
+			'label'		=> 'karir url',
+			'rules' 	=> 'required|valid_url'
+		]
 	];
 
 	public $news = [
