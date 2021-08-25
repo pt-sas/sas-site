@@ -22,6 +22,7 @@ class Field
     public function store($table, $data, $query = null)
     {
         $result = [];
+        $fields;
 
         if ($this->db->fieldExists('code', $table)) {
             $result[] = [
@@ -56,25 +57,18 @@ class Field
          */
         if (empty($query)) {
             $fields = $this->db->getFieldNames($table);
-            foreach ($fields as $field) :
-                foreach ($data as $row) :
-                    $result[] = [
-                        'field' =>  $field,
-                        'label' =>  $row->$field
-                    ];
-                endforeach;
-            endforeach;
         } else {
             $fields = $query->getFieldNames();
-            foreach ($fields as $field) :
-                foreach ($data as $row) :
-                    $result[] = [
-                        'field' =>  $field,
-                        'label' =>  $row->$field
-                    ];
-                endforeach;
-            endforeach;
         }
+
+        foreach ($fields as $field) :
+            foreach ($data as $row) :
+                $result[] = [
+                    'field' =>  $field,
+                    'label' =>  $row->$field
+                ];
+            endforeach;
+        endforeach;
 
         return $result;
     }
