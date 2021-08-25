@@ -11,14 +11,16 @@ class M_Job extends Model
   protected $allowedFields = [
     'position',
     'description',
-    'requirement',
     'description_en',
+    'requirement',
     'requirement_en',
     'md_division_id',
     'posted_date',
     'expired_date',
-    'url',
     'level',
+    'url',
+    'url1',
+    'url2',
     'isactive'
   ];
   protected $useTimestamps = true;

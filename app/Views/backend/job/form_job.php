@@ -82,6 +82,20 @@
                     <small class="form-text text-danger" id="error_url"></small>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="url1">JobsDB URL </label>
+                    <input type="text" class="form-control" id="url1" name="url1">
+                    <small class="form-text text-danger" id="error_url1"></small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="url2">Karir URL </label>
+                    <input type="text" class="form-control" id="url2" name="url2">
+                    <small class="form-text text-danger" id="error_url2"></small>
+                </div>
+            </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
