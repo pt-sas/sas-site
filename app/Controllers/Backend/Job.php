@@ -45,7 +45,7 @@ class Job extends BaseController
 			$row[] = $ID;
 			$row[] = $number;
 			$row[] = $value->division_name;
-			$row[] = $value->position;
+			$row[] = $value->value;
 			$row[] = format_dmy($value->posted_date);
 			$row[] = format_dmy($value->expired_date);
 			$row[] = active($value->isactive);

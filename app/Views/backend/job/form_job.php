@@ -16,9 +16,9 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="position">Position <span class="required">*</span></label>
-                    <input type="text" class="form-control" id="position" name="position">
-                    <small class="form-text text-danger" id="error_position"></small>
+                    <label for="value">Position <span class="required">*</span></label>
+                    <input type="text" class="form-control" id="value" name="value">
+                    <small class="form-text text-danger" id="error_value"></small>
                 </div>
             </div>
             <div class="col-md-4">
