@@ -9,7 +9,7 @@ class M_Job extends Model
   protected $table      = 'trx_job';
   protected $primaryKey = 'trx_job_id';
   protected $allowedFields = [
-    'position',
+    'value',
     'description',
     'description_en',
     'requirement',
@@ -40,7 +40,7 @@ class M_Job extends Model
     }
 
     if (!empty($keyword)) {
-      $builder->like($this->table . '.position', $keyword, 'both');
+      $builder->like($this->table . '.value', $keyword, 'both');
     }
 
     if (!empty($level)) {
