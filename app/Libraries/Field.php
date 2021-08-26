@@ -18,10 +18,17 @@ class Field
         $this->validation = \Config\Services::validation();
     }
 
-    // Retrieve field and data from database
+    /**
+     * Retrieve field and data from database
+     *
+     * $table
+     * $data result from database
+     * $query type join table or not
+     */
     public function store($table, $data, $query = null)
     {
         $result = [];
+        $fields;
 
         if ($this->db->fieldExists('code', $table)) {
             $result[] = [
@@ -56,25 +63,18 @@ class Field
          */
         if (empty($query)) {
             $fields = $this->db->getFieldNames($table);
-            foreach ($fields as $field) :
-                foreach ($data as $row) :
-                    $result[] = [
-                        'field' =>  $field,
-                        'label' =>  $row->$field
-                    ];
-                endforeach;
-            endforeach;
         } else {
             $fields = $query->getFieldNames();
-            foreach ($fields as $field) :
-                foreach ($data as $row) :
-                    $result[] = [
-                        'field' =>  $field,
-                        'label' =>  $row->$field
-                    ];
-                endforeach;
-            endforeach;
         }
+
+        foreach ($fields as $field) :
+            foreach ($data as $row) :
+                $result[] = [
+                    'field' =>  $field,
+                    'label' =>  $row->$field
+                ];
+            endforeach;
+        endforeach;
 
         return $result;
     }

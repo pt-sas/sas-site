@@ -31,5 +31,5 @@
 	<!-- DataTables -->
 	<link rel="stylesheet" href="<?= base_url('atlantis-pro/js/plugin/datatables-bs4/css/dataTables.bootstrap4.css') ?>">
 	<link rel="stylesheet" href="<?= base_url('atlantis-pro/js/plugin/datatables-fixedcolumns/css/fixedColumns.bootstrap4.min.css') ?>">
-	<link href="<?= base_url('custom/css/custom.css') ?>" rel="stylesheet">
+	<link rel="stylesheet" href="<?= base_url('custom/css/custom.css') ?>">
 </head>
