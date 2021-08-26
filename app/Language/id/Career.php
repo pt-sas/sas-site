@@ -27,6 +27,8 @@ return [
 
     'CBU41' => 'Cari',
 
+    'CH511' => 'Pekerjaan tidak tersedia.',
+
     'CH6M1' => 'Deskripsi Pekerjaan :',
     'CH6M2' => 'Kualifikasi Pekerjaan :',
     'CBUM1' => 'Lamar Sekarang',
