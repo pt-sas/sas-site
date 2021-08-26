@@ -121,7 +121,7 @@
             <?php } else { ?>
               <div class="item-jobs">
                 <div class="col-md-12">
-                  <h5><?= session()->lang == 'id' ? 'Pekerjaan tidak tersedia.' : 'Jobs not available.' ?></h5>
+                  <h5><?= lang("Career.CH511") ?></h5>
                 </div>
               </div>
             <?php } ?>
@@ -170,125 +170,129 @@
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  $(document).on('click', '.view_details', function(evt) {
-    let id = $(evt.target).attr('id');
-    let html = '';
+  <script>
+    $(document).on('click', '.view_details', function(evt) {
+      let id = $(evt.target).attr('id');
+      let html = '';
 
-    url = '<?= base_url('MainController/getPositionBy'); ?>' + '/' + id;
+      url = '<?= base_url('MainController/getPositionBy'); ?>' + '/' + id;
 
-    $.ajax({
-      url: url,
-      type: 'GET',
-      cache: false,
-      dataType: 'JSON',
-      beforeSend: function() {
-        loadingForm('modalJobs', 'bounce');
-      },
-      complete: function() {
-        hideLoadingForm('modalJobs');
-      },
-      success: function(result) {
-        if (result[0].success) {
-          var data = result[0].message;
+      $.ajax({
+        url: url,
+        type: 'GET',
+        cache: false,
+        dataType: 'JSON',
+        beforeSend: function() {
+          loadingForm('modalJobs', 'bounce');
+        },
+        complete: function() {
+          hideLoadingForm('modalJobs');
+        },
+        success: function(result) {
+          if (result[0].success) {
+            var data = result[0].message;
 
-          $.each(data, function(idx, elem) {
-            html += '<h4>' + elem.position + '</h4>';
-            html += '<h5>' +
-              '<span>' + elem.division_name + '</span>' +
-              '<span>' + moment(elem.posted_date).format('LL') + '</span>' +
-              '<span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>' +
-              '</h5>';
-            html += '<h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>' +
-              '<div>' + (sessLang == 'id' ? elem.description : elem.description_en) + '</div>' +
-              '<h6 class="title-list"><?= lang("Career.CH6M2") ?></h6>' +
-              '<div>' + (sessLang == 'id' ? elem.requirement : elem.requirement_en) + '</div>';
-            html += '<a href="' + elem.url + '" class="btn btn-primary" target="_blank"><?= lang("Career.CBUM1") ?></a>';
-          });
-
-          $('#content-modal').html(html);
-          $('#modalJobs').modal('show');
-        } else {
-          Swal.fire({
-            type: 'info',
-            title: result[0].message,
-            showConfirmButton: false,
-            timer: 2000
-          });
-        }
-      },
-      error: function(jqXHR, exception) {
-        showError(jqXHR, exception);
-      }
-    });
-  });
-
-  $('.btn_search').click(function(evt) {
-    let html = '';
-    url = '<?= base_url('MainController/filterLevel'); ?>';
-    var level = $('[name = "level"]').val();
-    var keyword = $('[name = "keyword"]').val();
-
-    $.ajax({
-      url: url,
-      type: 'POST',
-      data: {
-        level: level,
-        keyword: keyword
-      },
-      cache: false,
-      dataType: 'JSON',
-      beforeSend: function() {
-        $(this).prop('disabled', true);
-        loadingForm('detail-jobs', 'bounce');
-      },
-      complete: function() {
-        $(this).removeAttr('disabled');
-        hideLoadingForm('detail-jobs');
-      },
-      success: function(result) {
-        if (result[0].success) {
-          var data = result[0].message;
-          if (data.length > 0) {
             $.each(data, function(idx, elem) {
-              html += '<div class="item-jobs">';
-              html += '<div class="left-part">' +
-                '<h5>' + elem.position + '</h5>' +
-                '<h6>' + elem.division_name + '</h6>' +
-                '</div>' +
-                '<a href="javascript:void(0);" class="btn btn-outline-black view_details" id="' + elem.trx_job_id + '">' +
-                'Detail' +
-                '</a>' +
-                '<span class="location">' +
-                '<img src="' + '<?= base_url('adw/assets/images/map-pin-s.png') ?>' + '" alt="">' +
-                'DKI Jakarta' +
-                '</span>' +
-                '</div>';
+              html += '<h4>' + elem.position + '</h4>';
+              html += '<h5>' +
+                '<span>' + elem.division_name + '</span>' +
+                '<span>' + moment(elem.posted_date).format('LL') + '</span>' +
+                '<span><img src="<?= base_url('adw/assets/images/map-pin-s.png') ?>" alt=""> DKI Jakarta</span>' +
+                '</h5>';
+              html += '<h6 class="title-list"><?= lang("Career.CH6M1") ?></h6>' +
+                '<div>' + (sessLang == 'id' ? elem.description : elem.description_en) + '</div>' +
+                '<h6 class="title-list"><?= lang("Career.CH6M2") ?></h6>' +
+                '<div>' + (sessLang == 'id' ? elem.requirement : elem.requirement_en) + '</div>';
+
+              html += '<h6 class="ecom-title">Apply On :</h6>';
+
+              html += elem.url !== '' ? '<a href="' + elem.url + '" class="btn btn-primary ecom" target="_blank">JobStreet</a>' : '';
+              html += elem.url1 !== '' ? '<a href="' + elem.url1 + '" class="btn btn-primary ecom" target="_blank">Jobs DB</a>' : '';
+              html += elem.url2 !== '' ? '<a href="' + elem.url2 + '" class="btn btn-primary ecom" target="_blank">Karir</a>' : '';
             });
+
+            $('#content-modal').html(html);
+            $('#modalJobs').modal('show');
           } else {
-            html += '<div class="item-jobs">' +
-              '<div class="col-md-12">' +
-              '<h5>' + (sessLang == 'id' ? 'Pekerjaan tidak tersedia.' : 'Jobs not available.') + '</h5>' +
-              '</div></div>';
+            Swal.fire({
+              type: 'info',
+              title: result[0].message,
+              showConfirmButton: false,
+              timer: 2000
+            });
           }
-
-          $('#detail-jobs').html(html);
-
-        } else {
-          Swal.fire({
-            type: 'info',
-            title: result[0].message,
-            showConfirmButton: false,
-            timer: 2000
-          });
+        },
+        error: function(jqXHR, exception) {
+          showError(jqXHR, exception);
         }
-      },
-      error: function(jqXHR, exception) {
-        showError(jqXHR, exception);
-      }
+      });
     });
-  });
-</script>
-<?= $this->endSection() ?>
+
+    $('.btn_search').click(function(evt) {
+      let html = '';
+      url = '<?= base_url('MainController/filterLevel'); ?>';
+      var level = $('[name = "level"]').val();
+      var keyword = $('[name = "keyword"]').val();
+
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+          level: level,
+          keyword: keyword
+        },
+        cache: false,
+        dataType: 'JSON',
+        beforeSend: function() {
+          $(this).prop('disabled', true);
+          loadingForm('detail-jobs', 'bounce');
+        },
+        complete: function() {
+          $(this).removeAttr('disabled');
+          hideLoadingForm('detail-jobs');
+        },
+        success: function(result) {
+          if (result[0].success) {
+            var data = result[0].message;
+            if (data.length > 0) {
+              $.each(data, function(idx, elem) {
+                html += '<div class="item-jobs">';
+                html += '<div class="left-part">' +
+                  '<h5>' + elem.position + '</h5>' +
+                  '<h6>' + elem.division_name + '</h6>' +
+                  '</div>' +
+                  '<a href="javascript:void(0);" class="btn btn-outline-black view_details" id="' + elem.trx_job_id + '">' +
+                  'Detail' +
+                  '</a>' +
+                  '<span class="location">' +
+                  '<img src="' + '<?= base_url('adw/assets/images/map-pin-s.png') ?>' + '" alt="">' +
+                  'DKI Jakarta' +
+                  '</span>' +
+                  '</div>';
+              });
+            } else {
+              html += '<div class="item-jobs">' +
+                '<div class="col-md-12">' +
+                '<h5><?= lang("Career.CH511") ?></h5>' +
+                '</div></div>';
+            }
+
+            $('#detail-jobs').html(html);
+
+          } else {
+            Swal.fire({
+              type: 'info',
+              title: result[0].message,
+              showConfirmButton: false,
+              timer: 2000
+            });
+          }
+        },
+        error: function(jqXHR, exception) {
+          showError(jqXHR, exception);
+        }
+      });
+    });
+  </script>
+  <?= $this->endSection() ?>
