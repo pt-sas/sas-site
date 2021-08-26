@@ -106,7 +106,7 @@
               <?php foreach ($job as $row) : ?>
                 <div class="item-jobs">
                   <div class="left-part">
-                    <h5><?= $row->position; ?></h5>
+                    <h5><?= $row->value; ?></h5>
                     <h6><?= $row->division_name; ?></h6>
                   </div>
                   <a href="javascript:void(0);" class="btn btn-outline-black view_details" id="<?= $row->trx_job_id ?>">
@@ -194,7 +194,7 @@
             var data = result[0].message;
 
             $.each(data, function(idx, elem) {
-              html += '<h4>' + elem.position + '</h4>';
+              html += '<h4>' + elem.value + '</h4>';
               html += '<h5>' +
                 '<span>' + elem.division_name + '</span>' +
                 '<span>' + moment(elem.posted_date).format('LL') + '</span>' +
@@ -259,7 +259,7 @@
               $.each(data, function(idx, elem) {
                 html += '<div class="item-jobs">';
                 html += '<div class="left-part">' +
-                  '<h5>' + elem.position + '</h5>' +
+                  '<h5>' + elem.value + '</h5>' +
                   '<h6>' + elem.division_name + '</h6>' +
                   '</div>' +
                   '<a href="javascript:void(0);" class="btn btn-outline-black view_details" id="' + elem.trx_job_id + '">' +
