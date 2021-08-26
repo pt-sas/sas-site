@@ -197,11 +197,11 @@ class Validation
 		],
 		'url1' => [
 			'label'		=> 'jobs db url',
-			'rules' 	=> 'required|valid_url'
+			'rules' 	=> 'valid_url'
 		],
 		'url2' => [
 			'label'		=> 'karir url',
-			'rules' 	=> 'required|valid_url'
+			'rules' 	=> 'valid_url'
 		]
 	];
 
