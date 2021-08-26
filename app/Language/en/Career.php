@@ -27,6 +27,8 @@ return [
 
   'CBU41' => 'Search',
 
+  'CH511' => 'Jobs not available.',
+
   'CH6M1' => 'Job Description :',
   'CH6M2' => 'Job Requirements :',
   'CBUM1' => 'Apply Now',

@@ -17,17 +17,17 @@
   var sessLang = '<?= session()->lang ?>';
 
   sessLang == 'id' ? moment.locale('id') : moment.locale('en');
-  
+
   // Scroll to top button appear
   $(document).on('scroll', function() {
-      var scrollDistance = $(this).scrollTop();
-      if (scrollDistance > 700) {
-          $('.scroll-to-top').fadeIn();
-      } else {
-          $('.scroll-to-top').fadeOut();
-      }
+    var scrollDistance = $(this).scrollTop();
+    if (scrollDistance > 700) {
+      $('.scroll-to-top').fadeIn();
+    } else {
+      $('.scroll-to-top').fadeOut();
+    }
   });
-  
+
   $(window).on('load', function() {
     aos_init();
   });
@@ -161,7 +161,7 @@
       data: formData,
       processData: false,
       contentType: false,
-      async: false,
+      // async: false,
       cache: false,
       dataType: 'JSON',
       beforeSend: function() {
