@@ -160,7 +160,7 @@ class Validation
 			'label'		=> 'division',
 			'rules' 	=> 'required'
 		],
-		'position' => [
+		'value' => [
 			'label'		=> 'job position',
 			'rules' 	=> 'required'
 		],
