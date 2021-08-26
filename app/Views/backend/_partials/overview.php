@@ -25,8 +25,10 @@
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <div class="d-flex align-items-center">
+                    <div class="float-left">
                       <h4 class="card-title"><?= $title; ?></h4>
+                    </div>
+                    <div class="float-right">
                       <button type="button" class="btn btn-primary btn-sm btn-round ml-auto new_form" title="Location">
                         <i class="fa fa-plus fa-fw"></i> <?= $title; ?>
                       </button>
