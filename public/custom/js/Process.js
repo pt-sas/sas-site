@@ -230,7 +230,7 @@ $('.save_form').click(function (evt) {
             } else if (result[0].error) {
                 errorForm(form, result);
                 $('html, body').animate({
-                    scrollTop: $('.row').offset().top
+                    scrollTop: $('.container').offset().top
                 }, 1500);
 
             } else {
@@ -407,7 +407,7 @@ function Edit(id) {
             }
 
             $('html, body').animate({
-                scrollTop: $('.row').offset().top
+                scrollTop: $('.main-panel').offset().top
             }, 500);
         },
         error: function (jqXHR, exception) {
@@ -473,7 +473,7 @@ $(document).on('click', '.x_form, .close_form', function (evt) {
     cardTitle.html(capitalize(LAST_URL));
 
     $('html, body').animate({
-        scrollTop: $('.row').offset().top
+        scrollTop: $('.main-panel').offset().top
     }, 500);
 
     // Remove breadcrumb list
@@ -682,7 +682,7 @@ function errorForm(parent, data) {
         let textName = arrContains(error, arrText);
         let inputName = arrContains(field, arrInput);
 
-        if (labelMsg !== '') {
+        if (labelMsg !== '' && j > 0) {
             parent.find('small[id=' + textName + ']').html(labelMsg);
             parent.find('input:text[name=' + inputName + '], select[name=' + inputName + '], textarea[name=' + inputName + ']').parent('div').addClass('has-error');
         } else {
