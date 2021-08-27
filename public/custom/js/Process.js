@@ -13,7 +13,8 @@ let ORI_URL = window.location.origin,
 
 let ID,
     _table,
-    setSave;
+    setSave,
+    ul;
 
 // Data array from option
 let option = [];
@@ -274,10 +275,28 @@ function Edit(id) {
         cardMain.css('display', 'none');
         cardForm.css('display', 'block');
 
+        const container = cardForm.closest('.container');
+
         if (!cardForm.prop('classList').contains('modal')) {
             cardBtn.css('display', 'block');
             const card = cardForm.closest('.card');
             const btnList = card.find('.card-header').find('button');
+
+            const pageHeader = container.find('.page-header');
+            ul = pageHeader.find('ul.breadcrumbs');
+
+            // Append list separator and text create
+            ul.find('li.nav-item > a').attr('href', SITE_URL);
+
+            let list = '<li class="separator">' +
+                '<i class="flaticon-right-arrow"></i>' +
+                '</li>';
+
+            list += '<li class="nav-item">' +
+                '<a class="text-primary font-weight-bold">Update</a>' +
+                '</li>';
+
+            ul.append(list);
 
             $.each(btnList, function () {
                 const btnClass = this.classList;
@@ -456,20 +475,44 @@ $(document).on('click', '.x_form, .close_form', function (evt) {
     $('html, body').animate({
         scrollTop: $('.row').offset().top
     }, 500);
+
+    // Remove breadcrumb list
+    let li = ul.find('li');
+    $.each(li, function (idx, elem) {
+        if (idx > 2)
+            elem.remove();
+    });
 });
 
 /**
  * Button new data
  */
 $('.new_form').click(function (evt) {
+    const container = $(evt.target).closest('.container');
     const parent = $(evt.target).closest('.row');
     const main = parent.find('.card-main');
 
     let form;
 
     if (main.length > 0) {
+        const pageHeader = container.find('.page-header');
+        ul = pageHeader.find('ul.breadcrumbs');
+
         cardMain.css('display', 'none');
         cardForm.css('display', 'block');
+
+        // Append list separator and text create
+        ul.find('li.nav-item > a').attr('href', SITE_URL);
+
+        let list = '<li class="separator">' +
+            '<i class="flaticon-right-arrow"></i>' +
+            '</li>';
+
+        list += '<li class="nav-item">' +
+            '<a class="text-primary font-weight-bold">Create</a>' +
+            '</li>';
+
+        ul.append(list);
 
         if (!cardForm.prop('classList').contains('modal')) {
             cardBtn.css('display', 'block');
