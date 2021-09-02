@@ -968,6 +968,9 @@ function clearForm(evt) {
             //logic clear data dropdown if not selected from the beginning
             form.find('select[name=' + field[i].name + ']').val(option.val()).change();
         }
+
+        // After close form input to click button filter for reset datatable
+        form.find('.btn_filter').click();
     }
 }
 
