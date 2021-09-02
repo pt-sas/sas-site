@@ -14,7 +14,8 @@ let ORI_URL = window.location.origin,
 let ID,
     _table,
     setSave,
-    ul;
+    ul,
+    formTable;
 
 // Data array from option
 let option = [];
@@ -67,7 +68,12 @@ let _tablePro = $('.tb_product').DataTable({
     'serverSide': true,
     'ajax': {
         'url': SITE_URL + SHOWALL,
-        'type': 'POST'
+        'type': 'POST',
+        'data': function (d) {
+            return $.extend({}, d, {
+                'form': formTable
+            });
+        }
     },
     'columnDefs': [{
             'targets': -1,
@@ -280,6 +286,7 @@ $('.save_form').click(function (evt) {
             hideLoadingForm(form.prop('id'));
         },
         success: function (result) {
+            console.log(result)
             if (result[0].success) {
                 Toast.fire({
                     type: 'success',
@@ -304,6 +311,10 @@ $('.save_form').click(function (evt) {
                                 if (idx > 2)
                                     elem.remove();
                             });
+
+                            if (parent.find('div.filter_page').length > 0) {
+                                parent.find('div.filter_page').css('display', 'block');
+                            }
                         }
 
                         if (className.includes('card-form')) {
@@ -396,6 +407,10 @@ function Edit(id) {
                 '</li>';
 
             ul.append(list);
+
+            if (container.find('div.filter_page').length > 0) {
+                container.find('div.filter_page').css('display', 'none');
+            }
 
             $.each(btnList, function () {
                 const btnClass = this.classList;
@@ -637,6 +652,10 @@ $(document).on('click', '.x_form, .close_form', function (evt) {
                     if (idx > 2)
                         elem.remove();
                 });
+
+                if (parent.find('div.filter_page').length > 0) {
+                    parent.find('div.filter_page').css('display', 'block');
+                }
             }
 
             if (className.includes('card-form')) {
@@ -692,6 +711,10 @@ $('.new_form').click(function (evt) {
                     '</li>';
 
                 ul.append(list);
+
+                if (parent.find('div.filter_page').length > 0) {
+                    parent.find('div.filter_page').css('display', 'none');
+                }
             }
 
             if (className.includes('card-form')) {
@@ -1279,48 +1302,52 @@ $('select').change(function (evt) {
     let value = '';
 
     if (option.length == 0) {
-        if (target.attr('id') === 'md_principal_id') {
+        if (target.attr('id') === 'md_principal_id' || target.attr('name') === 'md_principal_id') {
             value = target.val();
             url = SITE_URL + '/getCategory';
 
             for (let i = 1; i <= 3; i++) {
-                $('[name = "category' + i + '"]').empty();
+                if (value != 0) {
+                    $('[name = "category' + i + '"]').empty();
 
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: {
-                        principal: value,
-                        level: i
-                    },
-                    cache: false,
-                    dataType: 'JSON',
-                    success: function (result) {
-                        $('[name = "category' + i + '"]').append('<option selected="selected" value="">Category' + i + ' < /option>');
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: {
+                            principal: value,
+                            level: i
+                        },
+                        cache: false,
+                        dataType: 'JSON',
+                        success: function (result) {
+                            $('[name = "category' + i + '"]').append('<option value="0"></option>');
 
-                        if (result[0].success) {
-                            let data = result[0].message;
+                            if (result[0].success) {
+                                let data = result[0].message;
 
-                            $.each(data, function (idx, elem) {
-                                let category_id = elem.md_category_id;
-                                let category = elem.category;
-                                let category_en = elem.category_en;
+                                $.each(data, function (idx, elem) {
+                                    let category_id = elem.md_category_id;
+                                    let category = elem.category;
+                                    let category_en = elem.category_en;
 
-                                $('[name = "category' + i + '"]').append('<option value="' + category_id + '">' + category_en + '</option>');
-                            });
-                        } else {
-                            Swal.fire({
-                                type: 'error',
-                                title: result[0].message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                                    $('[name = "category' + i + '"]').append('<option value="' + category_id + '">' + category_en + '</option>');
+                                });
+                            } else {
+                                Swal.fire({
+                                    type: 'error',
+                                    title: result[0].message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        },
+                        error: function (jqXHR, exception) {
+                            showError(jqXHR, exception);
                         }
-                    },
-                    error: function (jqXHR, exception) {
-                        showError(jqXHR, exception);
-                    }
-                });
+                    });
+                } else {
+                    $('[name = "category' + i + '"]').empty();
+                }
             }
         }
     } else {
@@ -1346,7 +1373,7 @@ $('select').change(function (evt) {
                 cache: false,
                 dataType: 'JSON',
                 success: function (result) {
-                    $('[name =' + field + ']').append('<option selected="selected" value="">' + option + '< /option>');
+                    $('[name =' + field + ']').append('<option value="0"></option>');
 
                     if (result[0].success) {
                         let data = result[0].message;
@@ -1446,4 +1473,21 @@ $(document).on('click', 'input:checkbox', function () {
             table.find('tr[data-pnode=treetable-parent-' + dataNode + '] td:nth-child(' + index + ') input:checkbox').prop('checked', false);
         }
     }
+});
+
+
+$('.btn_filter').click(function (evt) {
+    const form = $(evt.target).closest('form');
+
+    formTable = form.serializeArray();
+
+    loadingForm(form[0].id, 'facebook');
+    $(this).prop('disabled', true);
+
+    setTimeout(function () {
+        hideLoadingForm(form[0].id);
+    }, 500);
+
+    $(this).prop('disabled', false);
+    reloadTable();
 });
