@@ -286,7 +286,6 @@ $('.save_form').click(function (evt) {
             hideLoadingForm(form.prop('id'));
         },
         success: function (result) {
-            console.log(result)
             if (result[0].success) {
                 Toast.fire({
                     type: 'success',
@@ -900,6 +899,7 @@ function errorForm(parent, data) {
  * @param {*} evt selector html
  */
 function clearForm(evt) {
+    const container = $(evt.target).closest('.container')
     const parent = $(evt.target).closest('.row');
     const form = parent.find('form');
     const field = form.find('input, textarea, select');
@@ -949,6 +949,25 @@ function clearForm(evt) {
     for (let l = 0; l < errorText.length; l++) {
         if (errorText[l].id !== '')
             form.find('small[id=' + errorText[l].id + ']').html('');
+    }
+
+    // Clear form filter
+    if (container.find('.card-filter').length > 0) {
+        const cardFilter = container.find('.card-filter');
+        const form = cardFilter.find('form');
+
+        const field = form.find('select');
+
+        // clear field data on the form
+        form[0].reset();
+
+        // clear data
+        for (let i = 0; i < field.length; i++) {
+            let option = $(field[i]).find('option:selected');
+
+            //logic clear data dropdown if not selected from the beginning
+            form.find('select[name=' + field[i].name + ']').val(option.val()).change();
+        }
     }
 }
 
@@ -1387,11 +1406,11 @@ $('select').change(function (evt) {
                             } else {
                                 $('[name =' + field + ']').append('<option value="' + category_id + '">' + category_en + '</option>');
                             }
+
                         });
 
                         // Set to empty array option
                         option = [];
-
                     } else {
                         Swal.fire({
                             type: 'error',
