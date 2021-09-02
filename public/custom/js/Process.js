@@ -13,7 +13,8 @@ let ORI_URL = window.location.origin,
 
 let ID,
     _table,
-    setSave;
+    setSave,
+    ul;
 
 // Data array from option
 let option = [];
@@ -85,6 +86,17 @@ let _tablePro = $('.tb_product').DataTable({
     'fixedColumns': {
         'rightColumns': checkRight(),
         'leftColumns': checkLeft()
+    }
+});
+
+$('.tb_tree').treeFy({
+    initState: 'expanded',
+    treeColumn: 0,
+    collapseAnimateCallback: function (row) {
+        row.fadeOut();
+    },
+    expandAnimateCallback: function (row) {
+        row.fadeIn();
     }
 });
 
@@ -175,6 +187,77 @@ $('.save_form').click(function (evt) {
         }
     }
 
+    // Table role
+    if (form.find('table.tb_tree').length > 0) {
+        const table = form.find('table.tb_tree');
+        const input = table.find('td input:checkbox');
+
+        let isView = [];
+        let isCreate = [];
+        let isUpdate = [];
+        let isDelete = [];
+        let accessID = [];
+
+        $.each(input, function () {
+            let row_index = $(this).parent().parent().parent().parent().index();
+            let field = $(this).attr('name');
+            let menu_id = $(this).val();
+            let menu = $(this).attr('data-menu');
+
+            let access_id = typeof $(this).attr('id') !== 'undefined' ? $(this).attr('id') : 0;
+
+            let value;
+
+            if ($(this).is(':checked')) {
+                value = 'Y';
+            } else {
+                value = 'N';
+            }
+
+            if (field == 'isview') {
+                isView.push({
+                    row: row_index,
+                    view: value,
+                    menu_id: menu_id,
+                    menu: menu
+                });
+            } else if (field == 'iscreate') {
+                isCreate.push({
+                    row: row_index,
+                    create: value,
+                    menu_id: menu_id,
+                    menu: menu
+                });
+            } else if (field == 'isupdate') {
+                isUpdate.push({
+                    row: row_index,
+                    update: value,
+                    menu_id: menu_id,
+                    menu: menu
+                });
+            } else if (field == 'isdelete') {
+                isDelete.push({
+                    row: row_index,
+                    delete: value,
+                    menu_id: menu_id,
+                    menu: menu
+                });
+            }
+
+            if (setSave !== 'add')
+                accessID.push({
+                    row: row_index,
+                    access_id
+                });
+        });
+
+        accessID = removeDuplicates(accessID, item => item.row);
+
+        let arrRole = mergeArrayObjects(isView, isCreate, isUpdate, isDelete, accessID);
+
+        formData.append('roles', JSON.stringify(arrRole));
+    }
+
     $.ajax({
         url: url,
         type: 'POST',
@@ -206,18 +289,35 @@ $('.save_form').click(function (evt) {
                 clearForm(evt);
 
                 if (!cardForm.prop('classList').contains('modal')) {
-                    cardMain.css('display', 'block');
-                    cardForm.css('display', 'none');
-                    cardBtn.css('display', 'none');
-                    const cardHeader = parent.find('.card-header');
-                    const btnList = cardHeader.find('button');
+                    const parent = cardForm.closest('.container');
+                    const cardBody = parent.find('.card-body');
 
-                    $.each(btnList, function () {
-                        const btnClass = this.classList;
-                        if (btnClass.contains('new_form')) {
-                            $(this).show();
+                    $.each(cardBody, function (idx, elem) {
+                        let className = elem.className.split(/\s+/);
+
+                        if (className.includes('card-main')) {
+                            $(this).css('display', 'block');
+
+                            // Remove breadcrumb list
+                            let li = ul.find('li');
+                            $.each(li, function (idx, elem) {
+                                if (idx > 2)
+                                    elem.remove();
+                            });
+                        }
+
+                        if (className.includes('card-form')) {
+                            $(this).css('display', 'none');
                         }
                     });
+
+                    cardBtn.css('display', 'none');
+
+                    const cardHeader = parent.find('.card-header');
+                    const btnList = cardHeader.find('button').prop('classList');
+
+                    if (btnList.contains('new_form'))
+                        cardHeader.find('button').css('display', 'block');
                 } else {
                     modalForm.modal('hide');
                 }
@@ -229,7 +329,7 @@ $('.save_form').click(function (evt) {
             } else if (result[0].error) {
                 errorForm(form, result);
                 $('html, body').animate({
-                    scrollTop: $('.row').offset().top
+                    scrollTop: $('.container').offset().top
                 }, 1500);
 
             } else {
@@ -274,10 +374,28 @@ function Edit(id) {
         cardMain.css('display', 'none');
         cardForm.css('display', 'block');
 
+        const container = cardForm.closest('.container');
+
         if (!cardForm.prop('classList').contains('modal')) {
             cardBtn.css('display', 'block');
             const card = cardForm.closest('.card');
             const btnList = card.find('.card-header').find('button');
+
+            const pageHeader = container.find('.page-header');
+            ul = pageHeader.find('ul.breadcrumbs');
+
+            // Append list separator and text create
+            ul.find('li.nav-item > a').attr('href', SITE_URL);
+
+            let list = '<li class="separator">' +
+                '<i class="flaticon-right-arrow"></i>' +
+                '</li>';
+
+            list += '<li class="nav-item">' +
+                '<a class="text-primary font-weight-bold">Update</a>' +
+                '</li>';
+
+            ul.append(list);
 
             $.each(btnList, function () {
                 const btnClass = this.classList;
@@ -327,60 +445,123 @@ function Edit(id) {
         },
         success: function (result) {
             for (let i = 0; i < result.length; i++) {
-                let fieldInput = result[i].field;
-                let label = result[i].label;
+                if (form.find('table.tb_tree').length > 0) {
+                    const table = form.find('table.tb_tree');
+                    const input = table.find('td input:checkbox');
 
-                if (formList.contains('modal') && fieldInput === 'title') {
-                    modalTitle.html(capitalize(label));
-                } else if (fieldInput === 'title') {
-                    cardTitle.html(capitalize(label));
-                }
+                    let keyName = Object.keys(result[i]);
+                    let label = Object.values(result[i]);
 
-                for (let i = 0; i < field.length; i++) {
-                    if (field[i].name !== '' && field[i].name === fieldInput) {
-                        let className = field[i].className.split(/\s+/);
+                    $.each(input, function (idx, elem) {
+                        // Menu parent
+                        if ($(elem).attr('data-menu') === 'parent') {
 
-                        form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
+                            if (result[i].sys_menu_id == $(elem).val() && result[i].sys_submenu_id == 0) {
+                                if ((result[i].isview == 'Y' && $(elem).attr('name') === 'isview') ||
+                                    (result[i].iscreate == 'Y' && $(elem).attr('name') === 'iscreate') ||
+                                    (result[i].isupdate == 'Y' && $(elem).attr('name') === 'isupdate') ||
+                                    (result[i].isdelete == 'Y' && $(elem).attr('name') === 'isdelete')) {
+                                    $(elem).prop('checked', true);
+                                } else {
+                                    $(elem).prop('checked', false);
+                                }
 
-                        if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
-                            form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) {
-                            $('[name =' + field[i].name + ']').summernote('code', label);
-                        }
+                                // Set attribute id element to value sys_access_menu_id
+                                $(elem).attr('id', result[i].sys_access_menu_id);
+                            }
 
-                        if (field[i].type === 'select-one') {
-                            let fieldName = field[i].name;
-                            let value = label;
-                            option.push({
-                                fieldName,
-                                value
-                            });
-                            form.find('select[name=' + field[i].name + ']').val(label).change();
-                        }
-
-                        // Set condition value checked for field type Checkbox based on database
-                        if (field[i].type === 'checkbox' && label === 'Y') {
-                            form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', true);
-
-                            if (className.includes('active'))
-                                readonly(form, false);
                         } else {
-                            form.find('input:checkbox[name=' + field[i].name + ']').removeAttr('checked');
+                            if (result[i].sys_submenu_id === $(elem).val()) {
+                                if ((result[i].isview == 'Y' && $(elem).attr('name') === 'isview') ||
+                                    (result[i].iscreate == 'Y' && $(elem).attr('name') === 'iscreate') ||
+                                    (result[i].isupdate == 'Y' && $(elem).attr('name') === 'isupdate') ||
+                                    (result[i].isdelete == 'Y' && $(elem).attr('name') === 'isdelete')) {
+                                    $(elem).prop('checked', true);
+                                } else {
+                                    $(elem).prop('checked', false);
+                                }
 
-                            if (className.includes('active'))
-                                readonly(form, true);
-                        }
-
-                        // Set value checked for field type Radio Button
-                        if (field[i].type == 'radio') {
-                            if (field[i].value == label) {
-                                field[i].checked = true;
+                                // Set attribute id element to value sys_access_menu_id
+                                $(elem).attr('id', result[i].sys_access_menu_id);
                             }
                         }
+                    });
 
-                        // Pass data form input file to function previewImage
-                        if (field[i].type === 'file') {
-                            if (className.includes('control-upload-image')) {
-                                previewImage(form.find('input[name=' + field[i].name + ']')[0], '', label);
+                    // Populate data into the form field
+                    $.each(keyName, function (idx, elem) {
+                        form.find('input:text[name=' + elem + '], textarea[name=' + elem + ']').val(label[idx]);
+
+                        if (elem === 'isactive' && label[idx] === 'Y') {
+                            form.find('input:checkbox[name=' + elem + ']').prop('checked', true);
+                            readonly(form, false);
+                        } else if (elem === 'isactive' && label[idx] === 'N') {
+                            form.find('input:checkbox[name=' + elem + ']').removeAttr('checked');
+                            readonly(form, true);
+                        }
+
+                        if (formList.contains('modal') && elem === 'name') {
+                            modalTitle.html(capitalize(label[idx]));
+                        } else if (elem === 'name') {
+                            cardTitle.html(capitalize(label[idx]));
+                        }
+                    });
+
+                } else {
+                    let fieldInput = result[i].field;
+                    let label = result[i].label;
+
+                    if (formList.contains('modal') && fieldInput === 'title') {
+                        modalTitle.html(capitalize(label));
+                    } else if (fieldInput === 'title') {
+                        cardTitle.html(capitalize(label));
+                    }
+
+                    for (let i = 0; i < field.length; i++) {
+                        if (field[i].name !== '' && field[i].name === fieldInput) {
+                            let className = field[i].className.split(/\s+/);
+
+                            form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
+
+                            if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
+                                form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) {
+                                $('[name =' + field[i].name + ']').summernote('code', label);
+                            }
+
+                            if (field[i].type === 'select-one') {
+                                let fieldName = field[i].name;
+                                let value = label;
+                                option.push({
+                                    fieldName,
+                                    value
+                                });
+                                form.find('select[name=' + field[i].name + ']').val(label).change();
+                            }
+
+                            // Set condition value checked for field type Checkbox based on database
+                            if (field[i].type === 'checkbox' && label === 'Y') {
+                                form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', true);
+
+                                if (className.includes('active'))
+                                    readonly(form, false);
+                            } else {
+                                form.find('input:checkbox[name=' + field[i].name + ']').removeAttr('checked');
+
+                                if (className.includes('active'))
+                                    readonly(form, true);
+                            }
+
+                            // Set value checked for field type Radio Button
+                            if (field[i].type == 'radio') {
+                                if (field[i].value == label) {
+                                    field[i].checked = true;
+                                }
+                            }
+
+                            // Pass data form input file to function previewImage
+                            if (field[i].type === 'file') {
+                                if (className.includes('control-upload-image')) {
+                                    previewImage(form.find('input[name=' + field[i].name + ']')[0], '', label);
+                                }
                             }
                         }
                     }
@@ -388,7 +569,7 @@ function Edit(id) {
             }
 
             $('html, body').animate({
-                scrollTop: $('.row').offset().top
+                scrollTop: $('.main-panel').offset().top
             }, 500);
         },
         error: function (jqXHR, exception) {
@@ -419,8 +600,10 @@ function Destroy(id) {
                     title: 'Deleted!',
                     text: 'Your data has been deleted.',
                     type: 'success',
+                    showConfirmButton: false,
                     timer: 1000,
-                })
+                });
+
                 reloadTable()
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -436,25 +619,45 @@ function Destroy(id) {
  * @close_form button in card-action
  */
 $(document).on('click', '.x_form, .close_form', function (evt) {
-    if ($(evt.currentTarget).attr('data-dismiss') !== 'modal') {
-        const parent = $(evt.target).closest('.row');
-        cardMain.css('display', 'block');
-        cardForm.css('display', 'none');
+    let target = $(evt.currentTarget);
+
+    if (target.attr('data-dismiss') !== 'modal') {
+        const parent = target.closest('.container');
+        const cardBody = parent.find('.card-body');
+
+        $.each(cardBody, function (idx, elem) {
+            let className = elem.className.split(/\s+/);
+
+            if (className.includes('card-main')) {
+                $(this).css('display', 'block');
+
+                // Remove breadcrumb list
+                let li = ul.find('li');
+                $.each(li, function (idx, elem) {
+                    if (idx > 2)
+                        elem.remove();
+                });
+            }
+
+            if (className.includes('card-form')) {
+                $(this).css('display', 'none');
+            }
+        });
+
         cardBtn.css('display', 'none');
 
         const cardHeader = parent.find('.card-header');
         const btnList = cardHeader.find('button').prop('classList');
 
-        if (btnList.contains('new_form')) {
-            cardHeader.find('button').show();
-        }
+        if (btnList.contains('new_form'))
+            cardHeader.find('button').css('display', 'block');
     }
 
     clearForm(evt);
     cardTitle.html(capitalize(LAST_URL));
 
     $('html, body').animate({
-        scrollTop: $('.row').offset().top
+        scrollTop: $('.main-panel').offset().top
     }, 500);
 });
 
@@ -462,42 +665,62 @@ $(document).on('click', '.x_form, .close_form', function (evt) {
  * Button new data
  */
 $('.new_form').click(function (evt) {
-    const parent = $(evt.target).closest('.row');
-    const main = parent.find('.card-main');
+    const parent = $(evt.target).closest('.container');
+    const cardBody = parent.find('.card-body');
 
     let form;
 
-    if (main.length > 0) {
-        cardMain.css('display', 'none');
-        cardForm.css('display', 'block');
+    $.each(cardBody, function (idx, elem) {
+        let className = elem.className.split(/\s+/);
 
-        if (!cardForm.prop('classList').contains('modal')) {
-            cardBtn.css('display', 'block');
-            cardTitle.html('New ' + capitalize(LAST_URL));
+        if (cardBody.length > 1) {
+            if (className.includes('card-main')) {
+                $(this).css('display', 'none');
 
-            $(this).hide();
-            form = cardForm;
-            form.find('input[type="checkbox"].active').prop('checked', true);
+                const pageHeader = parent.find('.page-header');
+                ul = pageHeader.find('ul.breadcrumbs');
+
+                // Append list separator and text create
+                ul.find('li.nav-item > a').attr('href', SITE_URL);
+
+                let list = '<li class="separator">' +
+                    '<i class="flaticon-right-arrow"></i>' +
+                    '</li>';
+
+                list += '<li class="nav-item">' +
+                    '<a class="text-primary font-weight-bold">Create</a>' +
+                    '</li>';
+
+                ul.append(list);
+            }
+
+            if (className.includes('card-form')) {
+                $(evt.target).css('display', 'none');
+                $(this).css('display', 'block');
+                cardBtn.css('display', 'block');
+
+                cardTitle.html('New ' + capitalize(LAST_URL));
+
+                form = $(this).find('form');
+
+                if (form.find('input:file.control-upload-image').length > 0) {
+                    form.find('.img-result').attr('src', '');
+                }
+            }
+        } else {
+            openModalForm();
+            Scrollmodal();
+            modalTitle.html('New1 ' + capitalize(LAST_URL));
+
+            form = modalForm.find('form');
 
             if (form.find('input:file.control-upload-image').length > 0) {
                 form.find('.img-result').attr('src', '');
             }
-
-        } else {
-            cardMain.css('display', 'block');
-            cardForm.css('display', 'none');
         }
-    } else {
-        openModalForm();
-        Scrollmodal();
-        form = modalForm.find('form');
-        modalTitle.html('New1 ' + capitalize(LAST_URL));
-        form.find('input[type="checkbox"].active').prop('checked', true);
+    });
 
-        if (form.find('input:file.control-upload-image').length > 0) {
-            form.find('.img-result').attr('src', '');
-        }
-    }
+    form.find('input[type="checkbox"].active').prop('checked', true);
 
     setSave = 'add';
 });
@@ -639,7 +862,7 @@ function errorForm(parent, data) {
         let textName = arrContains(error, arrText);
         let inputName = arrContains(field, arrInput);
 
-        if (labelMsg !== '') {
+        if (labelMsg !== '' && j > 0) {
             parent.find('small[id=' + textName + ']').html(labelMsg);
             parent.find('input:text[name=' + inputName + '], select[name=' + inputName + '], textarea[name=' + inputName + ']').parent('div').addClass('has-error');
         } else {
@@ -1155,6 +1378,72 @@ $('select').change(function (evt) {
                     showError(jqXHR, exception);
                 }
             });
+        }
+    }
+});
+
+/**
+ * Function to merge Array Object
+ * @param {*} arr1 
+ * @param {*} arr2 
+ * @param {*} arr3 
+ * @param {*} arr4 
+ * @param {*} arrID Access ID to retrieve edit data 
+ * @returns 
+ */
+function mergeArrayObjects(arr1, arr2, arr3, arr4, arrID) {
+    return arr1.map((item, i) => {
+        if (item.row === arr2[i].row || item.row === arr3[i].row || item.row === arr4[i].row || item.row === arrID[i].row)
+            return Object.assign({}, item, arr2[i], arr3[i], arr4[i], arrID[i]);
+    })
+}
+
+/**
+ * Remove duplicate array object
+ * @param {*} arr 
+ * @param {*} key object key to define when call function
+ * @returns 
+ */
+function removeDuplicates(arr, key) {
+    return [
+        ...new Map(arr.map(item => [key(item), item])).values()
+    ]
+}
+
+$(document).on('click', 'input:checkbox', function () {
+    const table = $(this).closest('table');
+    const tr = $(this).closest('tr');
+    let th = $(this).closest('th').index();
+    let cell = $(this).parent().parent().parent().index()
+
+    // Row start from 0
+    let index = cell + 1;
+
+    let dataNode;
+
+    if ($(this).is(':checked')) {
+        // Checked all checkbox based on index header
+        if (th > 0)
+            table.find('td:nth-child(' + index + ') input:checkbox').prop('checked', true);
+
+        // Checked checkbox based on parent
+        if (tr.hasClass('treetable-expanded') || tr.hasClass('treetable-collapsed')) {
+            // Substring attribute data-node
+            dataNode = tr.attr('data-node').substring(10);
+
+            table.find('tr[data-pnode=treetable-parent-' + dataNode + '] td:nth-child(' + index + ') input:checkbox').prop('checked', true);
+        }
+    } else {
+        // Unchecked all checkbox based on index header
+        if (th > 0)
+            table.find('td:nth-child(' + index + ') input:checkbox').prop('checked', false);
+
+        // Unchecked checkbox based on parent
+        if (tr.hasClass('treetable-expanded') || tr.hasClass('treetable-collapsed')) {
+            // Substring attribute data-node
+            dataNode = tr.attr('data-node').substring(10);
+
+            table.find('tr[data-pnode=treetable-parent-' + dataNode + '] td:nth-child(' + index + ') input:checkbox').prop('checked', false);
         }
     }
 });

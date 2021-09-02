@@ -348,4 +348,46 @@ class Validation
 			'rules'		=>	'max_length[7]'
 		]
 	];
+
+	public $menu = [
+		'name' => [
+			'rules' 	=>	'required|is_unique[sys_menu.name,sys_menu_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'url' => [
+			'rules'		=>	'required|valid_url'
+		],
+		'icon' => [
+			'rules'		=>	'required'
+		],
+		'sequence' => [
+			'rules'		=>	'required'
+		]
+	];
+
+	public $submenu = [
+		'name' => [
+			'rules' 	=>	'required|is_unique[sys_submenu.name,sys_submenu_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'url' => [
+			'rules'		=>	'required|valid_url'
+		],
+		'sequence' => [
+			'rules'		=>	'required'
+		]
+	];
+
+	public $role = [
+		'name' => [
+			'rules' 	=>	'required|is_unique[sys_role.name,sys_role_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		]
+	];
 }

@@ -23,25 +23,27 @@ class Picture
     public function render($path = null, $image = null)
     {
         $result = '<center>';
+        $result .= '<div class="avatar avatar-xl">';
 
         if (!empty($image) && is_numeric($image)) {
             $row = $this->image->find($image);
 
             if (!empty($row['name']) && file_exists($path . $row['name'])) {
-                $result .= '<img class="rounded-image" src="' . site_url() . $row['image_url'] . '" />';
+                $result .= '<img class="avatar-img rounded-circle" src="' . site_url() . $row['image_url'] . '" />';
             } else {
-                $result .= '<img class="rounded-image" src="https://via.placeholder.com/200/808080/ffffff?text=No+Image">';
+                $result .= '<img class="avatar-img rounded-circle" src="https://via.placeholder.com/200/808080/ffffff?text=No+Image">';
             }
         } else if (!empty($image) && !is_numeric($image)) {
             if (file_exists($path . $image)) {
-                $result .= '<img class="rectangle-image" src="' . site_url() . $path . $image . '" />';
+                $result .= '<img class="avatar-img rounded" src="' . site_url() . $path . $image . '" />';
             } else {
-                $result .= '<img class="rounded-image" src="https://via.placeholder.com/200/808080/ffffff?text=No+Image">';
+                $result .= '<img class="avatar-img rounded-circle" src="https://via.placeholder.com/200/808080/ffffff?text=No+Image">';
             }
         } else {
-            $result .= '<img class="rounded-image" src="https://via.placeholder.com/200/808080/ffffff?text=No+Image">';
+            $result .= '<img class="avatar-img rounded-circle" src="https://via.placeholder.com/200/808080/ffffff?text=No+Image">';
         }
 
+        $result .= '</div>';
         $result .= '</center>';
 
         return $result;
