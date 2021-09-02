@@ -63,18 +63,27 @@ class Field
          */
         if (empty($query)) {
             $fields = $this->db->getFieldNames($table);
-        } else {
-            $fields = $query->getFieldNames();
-        }
-
-        foreach ($fields as $field) :
-            foreach ($data as $row) :
-                $result[] = [
-                    'field' =>  $field,
-                    'label' =>  $row->$field
-                ];
+            foreach ($fields as $field) :
+                foreach ($data as $row) :
+                    $result[] = [
+                        'field' =>  $field,
+                        'label' =>  $row->$field
+                    ];
+                endforeach;
             endforeach;
-        endforeach;
+        } else if (is_object($query)) {
+            $fields = $query->getFieldNames();
+            foreach ($fields as $field) :
+                foreach ($data as $row) :
+                    $result[] = [
+                        'field' =>  $field,
+                        'label' =>  $row->$field
+                    ];
+                endforeach;
+            endforeach;
+        } else if (is_string($query)) {
+            $result = $data;
+        }
 
         return $result;
     }
