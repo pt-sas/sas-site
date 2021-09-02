@@ -1,5 +1,5 @@
 <div class="card-body card-form">
-    <form class="form-horizontal" id="form_news">
+    <form class="form-horizontal" id="form_product">
         <?= csrf_field(); ?>
         <div class="row">
             <div class="col-md-6">
