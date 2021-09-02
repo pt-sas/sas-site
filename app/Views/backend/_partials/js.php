@@ -61,3 +61,5 @@
 <script src="<?= base_url('atlantis-pro/js/plugin/auto-numeric/autoNumeric.js') ?>"></script>
 <!-- Custom Process -->
 <script src="<?= base_url('custom/js/Process.min.js') ?>"></script>
+<!-- Table Treefy -->
+<script src="<?= base_url('atlantis-pro/js/plugin/bootstrap-treefy/js/bootstrap-treefy.min.js') ?>"></script>
