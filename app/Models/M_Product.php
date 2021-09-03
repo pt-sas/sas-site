@@ -64,9 +64,9 @@ class M_Product extends Model
 		'md_product.depth',
 		'md_product.volume',
 		'pr.name',
-		'cat1.category',
-		'cat2.category',
-		'cat3.category'
+		'cat1.category_en',
+		'cat2.category_en',
+		'cat3.category_en'
 	];
 	protected $order = ['code' => 'ASC'];
 	protected $request;
