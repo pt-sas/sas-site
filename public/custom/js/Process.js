@@ -76,8 +76,8 @@ let _tablePro = $('.tb_product').DataTable({
         }
     },
     'columnDefs': [{
-            'targets': -1,
-            'orderable': false //nonaktif sort by
+            'targets': '_all',
+            'orderable': false
         },
         {
             'targets': 0,
@@ -87,7 +87,7 @@ let _tablePro = $('.tb_product').DataTable({
     'order': [],
     'autoWidth': false,
     'scrollX': true,
-    'scrollY': "400px",
+    'scrollY': '400px',
     'scrollCollapse': true,
     'fixedColumns': {
         'rightColumns': checkRight(),
