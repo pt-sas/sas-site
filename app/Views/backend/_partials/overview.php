@@ -21,6 +21,7 @@
         <div class="container">
           <div class="page-inner">
             <?= $this->include('backend/_partials/breadcrumb') ?>
+            <?= !$filter ? '' : $this->include($filter) ?>
             <div class="row main_page">
               <div class="col-md-12">
                 <div class="card">
@@ -30,7 +31,7 @@
                     </div>
                     <div class="float-right">
                       <button type="button" class="btn btn-primary btn-sm btn-round ml-auto new_form" title="Location">
-                        <i class="fa fa-plus fa-fw"></i> <?= $title; ?>
+                        <i class="fa fa-plus fa-fw"></i> Add New
                       </button>
                     </div>
                   </div>

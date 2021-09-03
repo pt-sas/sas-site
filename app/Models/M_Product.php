@@ -112,7 +112,13 @@ class M_Product extends Model
 
 	private function getDatatablesQuery()
 	{
+		$post = $this->request->getVar();
+
 		$this->getAll();
+
+		if (isset($post['form'])) {
+			$this->filterDatatable($post);
+		}
 
 		$i = 0;
 		foreach ($this->column_search as $item) :
@@ -236,5 +242,25 @@ class M_Product extends Model
 
 		$query = $builder->get();
 		return $query;
+	}
+
+	public function filterDatatable($post)
+	{
+		foreach ($post['form'] as $value) :
+			if (!empty($value['value'])) {
+				if ($value['name'] === 'md_principal_id')
+					$this->builder->where($this->table . '.md_principal_id', $value['value']);
+
+				if ($value['name'] === 'category1')
+					$this->builder->where('cat1.md_category_id', $value['value']);
+
+				if ($value['name'] === 'category2')
+					$this->builder->where('cat2.md_category_id', $value['value']);
+
+				if ($value['name'] === 'category3')
+					$this->builder->where('cat3.md_category_id', $value['value']);
+			}
+
+		endforeach;
 	}
 }
