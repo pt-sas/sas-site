@@ -317,6 +317,8 @@ $('.save_form').click(function (evt) {
                         }
 
                         if (className.includes('card-form')) {
+                            const cardHeader = parent.find('.card-header');
+                            cardHeader.find('button').show();
                             $(this).css('display', 'none');
                         }
                     });
@@ -411,12 +413,7 @@ function Edit(id) {
                 container.find('div.filter_page').css('display', 'none');
             }
 
-            $.each(btnList, function () {
-                const btnClass = this.classList;
-                if (btnClass.contains('new_form')) {
-                    $(this).hide();
-                }
-            });
+            btnList.css('display', 'none');
 
             formList = cardForm.prop('classList');
             form = cardForm.find('form');
@@ -665,10 +662,7 @@ $(document).on('click', '.x_form, .close_form', function (evt) {
         cardBtn.css('display', 'none');
 
         const cardHeader = parent.find('.card-header');
-        const btnList = cardHeader.find('button').prop('classList');
-
-        if (btnList.contains('new_form'))
-            cardHeader.find('button').css('display', 'block');
+        cardHeader.find('button').show();
     }
 
     clearForm(evt);
@@ -717,7 +711,8 @@ $('.new_form').click(function (evt) {
             }
 
             if (className.includes('card-form')) {
-                $(evt.target).css('display', 'none');
+                const cardHeader = $(evt.target).closest('.card-header');
+                cardHeader.find('button').css('display', 'none');
                 $(this).css('display', 'block');
                 cardBtn.css('display', 'block');
 
@@ -949,28 +944,6 @@ function clearForm(evt) {
     for (let l = 0; l < errorText.length; l++) {
         if (errorText[l].id !== '')
             form.find('small[id=' + errorText[l].id + ']').html('');
-    }
-
-    // Clear form filter
-    if (container.find('.card-filter').length > 0) {
-        const cardFilter = container.find('.card-filter');
-        const form = cardFilter.find('form');
-
-        const field = form.find('select');
-
-        // clear field data on the form
-        form[0].reset();
-
-        // clear data
-        for (let i = 0; i < field.length; i++) {
-            let option = $(field[i]).find('option:selected');
-
-            //logic clear data dropdown if not selected from the beginning
-            form.find('select[name=' + field[i].name + ']').val(option.val()).change();
-        }
-
-        // After close form input to click button filter for reset datatable
-        form.find('.btn_filter').click();
     }
 }
 
@@ -1503,13 +1476,13 @@ $('.btn_filter').click(function (evt) {
 
     formTable = form.serializeArray();
 
-    loadingForm(form[0].id, 'facebook');
+    loadingForm(form[0].id, 'none');
     $(this).prop('disabled', true);
 
     setTimeout(function () {
         hideLoadingForm(form[0].id);
     }, 500);
-
     $(this).prop('disabled', false);
+
     reloadTable();
 });
