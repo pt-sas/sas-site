@@ -1296,6 +1296,9 @@ $('select').change(function (evt) {
     let target = $(evt.target);
     let value = '';
 
+    const form = $(this).closest('form');
+    let lengthFilter = $(this).closest('.card-filter').length;
+
     if (option.length == 0) {
         if (target.attr('id') === 'md_principal_id' || target.attr('name') === 'md_principal_id') {
             value = target.val();
@@ -1303,7 +1306,7 @@ $('select').change(function (evt) {
 
             for (let i = 1; i <= 3; i++) {
                 if (value != 0) {
-                    $('[name = "category' + i + '"]').empty();
+                    form.find('select[name = "category' + i + '"]').empty();
 
                     $.ajax({
                         url: url,
@@ -1315,7 +1318,11 @@ $('select').change(function (evt) {
                         cache: false,
                         dataType: 'JSON',
                         success: function (result) {
-                            $('[name = "category' + i + '"]').append('<option value="0"></option>');
+                            if (lengthFilter > 0) {
+                                form.find('select[name = "category' + i + '"]').append('<option value="0">All Categories ' + (i > 1 ? i : '') + '</option>');
+                            } else {
+                                form.find('select[name = "category' + i + '"]').append('<option value="0">&nbsp;</option>');
+                            }
 
                             if (result[0].success) {
                                 let data = result[0].message;
@@ -1325,7 +1332,7 @@ $('select').change(function (evt) {
                                     let category = elem.category;
                                     let category_en = elem.category_en;
 
-                                    $('[name = "category' + i + '"]').append('<option value="' + category_id + '">' + category_en + '</option>');
+                                    form.find('select[name = "category' + i + '"]').append('<option value="' + category_id + '">' + category_en + '</option>');
                                 });
                             } else {
                                 Swal.fire({
@@ -1341,7 +1348,7 @@ $('select').change(function (evt) {
                         }
                     });
                 } else {
-                    $('[name = "category' + i + '"]').empty();
+                    form.find('select[name = "category' + i + '"]').empty();
                 }
             }
         }
@@ -1356,7 +1363,7 @@ $('select').change(function (evt) {
         if (field.slice(0, -1) === 'category') {
             let index = field[field.length - 1];
 
-            $('[name =' + field + ']').empty();
+            form.find('select[name =' + field + ']').empty();
 
             $.ajax({
                 url: url,
@@ -1368,7 +1375,7 @@ $('select').change(function (evt) {
                 cache: false,
                 dataType: 'JSON',
                 success: function (result) {
-                    $('[name =' + field + ']').append('<option value="0"></option>');
+                    form.find('select[name =' + field + ']').append('<option value="0">&nbsp;</option>');
 
                     if (result[0].success) {
                         let data = result[0].message;
@@ -1378,9 +1385,9 @@ $('select').change(function (evt) {
                             let category_en = elem.category_en;
 
                             if (id_category == category_id) {
-                                $('[name =' + field + ']').append('<option value="' + category_id + '" selected>' + category_en + '</option>');
+                                form.find('select[name =' + field + ']').append('<option value="' + category_id + '" selected>' + category_en + '</option>');
                             } else {
-                                $('[name =' + field + ']').append('<option value="' + category_id + '">' + category_en + '</option>');
+                                form.find('select[name =' + field + ']').append('<option value="' + category_id + '">' + category_en + '</option>');
                             }
 
                         });
