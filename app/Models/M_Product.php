@@ -164,7 +164,7 @@ class M_Product extends Model
 		return $tbl_storage->countAllResults();
 	}
 
-	public function detail($field, $where = null, $path = null)
+	public function detail($field, $where = null, $path = null, $post = [])
 	{
 		$this->getAll();
 
@@ -180,7 +180,8 @@ class M_Product extends Model
 				$this->table . '.url_shopee,' .
 				$this->table . '.url_jdid,' .
 				$this->table . '.md_principal_id,' .
-				$this->table . '.md_uom_id,
+				$this->table . '.md_uom_id,' .
+				$this->table . '.url as path,
 			pc.category1,
 			pc.category2,
 			pc.category3'
@@ -188,6 +189,21 @@ class M_Product extends Model
 
 		if (!empty($where)) {
 			$this->builder->where($field, $where);
+		}
+
+		if (count($post) > 0) {
+			if (!empty($post['md_principal_id'])) {
+				$this->builder->where($this->table . '.md_principal_id', $post['md_principal_id']);
+
+				if (!empty($post['category1']))
+					$this->builder->where('cat1.md_category_id', $post['category1']);
+
+				if (!empty($post['category2']))
+					$this->builder->where('cat2.md_category_id', $post['category2']);
+
+				if (!empty($post['category3']))
+					$this->builder->where('cat3.md_category_id', $post['category3']);
+			}
 		}
 
 		$query = $this->builder->get();
