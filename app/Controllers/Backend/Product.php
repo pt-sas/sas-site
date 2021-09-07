@@ -11,6 +11,9 @@ use App\Models\M_ProductCategory;
 
 use Config\Services;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Product extends BaseController
 {
 	protected $table = 'md_product';
@@ -101,8 +104,8 @@ class Product extends BaseController
 		$pCategory = new M_ProductCategory();
 		$principal = new M_Principal();
 
-		$post = $this->request->getVar();
-		$file = $this->request->getFile('url');
+		$post = $request->getVar();
+		$file = $request->getFile('url');
 
 		try {
 			if (!$validation->run($post, 'product')) {
@@ -162,8 +165,8 @@ class Product extends BaseController
 		$pCategory = new M_ProductCategory();
 		$principal = new M_Principal();
 
-		$post = $this->request->getVar();
-		$file = $this->request->getFile('url');
+		$post = $request->getVar();
+		$file = $request->getFile('url');
 
 		$imgName = '';
 		$newfilename = '';
@@ -250,7 +253,7 @@ class Product extends BaseController
 			$eProduct->visible = setCheckbox(isset($post['visible']));
 			$eProduct->isactive = setCheckbox(isset($post['isactive']));
 
-			if (!$validation->withRequest($this->request)->run()) {
+			if (!$validation->withRequest($request)->run()) {
 				$response =	$this->field->errorValidation($this->table);
 			} else {
 				$row = $product->find($post['id']);
@@ -315,5 +318,54 @@ class Product extends BaseController
 		}
 
 		return json_encode($response);
+	}
+
+	public function export()
+	{
+		$request = Services::request();
+		$product = new M_Product($request);
+		$post = $request->getVar();
+
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$sheet->setTitle('Sheet 1');
+
+		$sheet->setCellValue('A1', 'Code')
+			->setCellValue('B1', 'Name')
+			->setCellValue('C1', 'Vendor')
+			->setCellValue('D1', 'Category1')
+			->setCellValue('E1', 'Category2')
+			->setCellValue('F1', 'Category3')
+			->setCellValue('G1', 'Description')
+			->setCellValue('H1', 'Url');
+
+		$column = 2;
+		$list = $product->detail(null, null, null, $post)->getResult();
+		foreach ($list as $row) :
+			$sheet->setCellValue('A' . $column, $row->code)
+				->setCellValue('B' . $column, $row->name)
+				->setCellValue('C' . $column, $row->principal)
+				->setCellValue('D' . $column, $row->md_category1)
+				->setCellValue('E' . $column, $row->md_category2)
+				->setCellValue('F' . $column, $row->md_category3)
+				->setCellValue('G' . $column, $row->description)
+				->setCellValue('H' . $column, $row->path);
+
+			$column++;
+		endforeach;
+
+		$writer = new Xlsx($spreadsheet);
+
+		$filename = 'Master Product' . date('Ymd' . '_' . 'His') . '.xlsx'; //save our workbook as this file name
+
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment;filename="' . $filename . '"');
+		header('Cache-Control: max-age=0');
+
+		ob_flush();
+
+		$writer->save('php://output');
+
+		exit;
 	}
 }
