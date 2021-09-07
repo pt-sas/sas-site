@@ -1493,3 +1493,18 @@ $('.btn_filter').click(function (evt) {
 
     reloadTable();
 });
+
+$('.btn_export').click(function (evt) {
+    const container = $(evt.target).closest('.container');
+    const cardFilter = container.find('.card-filter');
+    let form = cardFilter.find('form');
+
+    form.attr('action', SITE_URL + '/export');
+    form.attr('method', 'POST');
+
+    $(this).prop('disabled', true);
+    setTimeout(function () {
+        form.submit();
+    }, 500);
+    $(this).prop('disabled', false);
+});
