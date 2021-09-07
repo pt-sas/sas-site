@@ -30,9 +30,15 @@
                       <h4 class="card-title"><?= $title; ?></h4>
                     </div>
                     <div class="float-right">
-                      <button type="button" class="btn btn-primary btn-sm btn-round ml-auto new_form" title="Location">
+                      <?php $request = \Config\Services::request(); ?>
+                      <button type="button" class="btn btn-primary btn-sm btn-round ml-auto new_form" title="New Data">
                         <i class="fa fa-plus fa-fw"></i> Add New
                       </button>
+                      <?php if ($request->uri->getSegment(2) === 'product') { ?>
+                        <button type="button" class="btn btn-info btn-sm btn-border btn-round ml-auto btn_export" title="Export">
+                          <i class="fas fa-file-export"></i> Export
+                        </button>
+                      <?php } ?>
                     </div>
                   </div>
                   <?= $this->renderSection('content') ?>
