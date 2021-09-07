@@ -76,8 +76,8 @@ let _tablePro = $('.tb_product').DataTable({
         }
     },
     'columnDefs': [{
-            'targets': -1,
-            'orderable': false //nonaktif sort by
+            'targets': '_all',
+            'orderable': false
         },
         {
             'targets': 0,
@@ -87,7 +87,7 @@ let _tablePro = $('.tb_product').DataTable({
     'order': [],
     'autoWidth': false,
     'scrollX': true,
-    'scrollY': "400px",
+    'scrollY': '400px',
     'scrollCollapse': true,
     'fixedColumns': {
         'rightColumns': checkRight(),
@@ -317,6 +317,8 @@ $('.save_form').click(function (evt) {
                         }
 
                         if (className.includes('card-form')) {
+                            const cardHeader = parent.find('.card-header');
+                            cardHeader.find('button').show();
                             $(this).css('display', 'none');
                         }
                     });
@@ -411,12 +413,7 @@ function Edit(id) {
                 container.find('div.filter_page').css('display', 'none');
             }
 
-            $.each(btnList, function () {
-                const btnClass = this.classList;
-                if (btnClass.contains('new_form')) {
-                    $(this).hide();
-                }
-            });
+            btnList.css('display', 'none');
 
             formList = cardForm.prop('classList');
             form = cardForm.find('form');
@@ -665,10 +662,7 @@ $(document).on('click', '.x_form, .close_form', function (evt) {
         cardBtn.css('display', 'none');
 
         const cardHeader = parent.find('.card-header');
-        const btnList = cardHeader.find('button').prop('classList');
-
-        if (btnList.contains('new_form'))
-            cardHeader.find('button').css('display', 'block');
+        cardHeader.find('button').show();
     }
 
     clearForm(evt);
@@ -717,7 +711,8 @@ $('.new_form').click(function (evt) {
             }
 
             if (className.includes('card-form')) {
-                $(evt.target).css('display', 'none');
+                const cardHeader = $(evt.target).closest('.card-header');
+                cardHeader.find('button').css('display', 'none');
                 $(this).css('display', 'block');
                 cardBtn.css('display', 'block');
 
@@ -949,28 +944,6 @@ function clearForm(evt) {
     for (let l = 0; l < errorText.length; l++) {
         if (errorText[l].id !== '')
             form.find('small[id=' + errorText[l].id + ']').html('');
-    }
-
-    // Clear form filter
-    if (container.find('.card-filter').length > 0) {
-        const cardFilter = container.find('.card-filter');
-        const form = cardFilter.find('form');
-
-        const field = form.find('select');
-
-        // clear field data on the form
-        form[0].reset();
-
-        // clear data
-        for (let i = 0; i < field.length; i++) {
-            let option = $(field[i]).find('option:selected');
-
-            //logic clear data dropdown if not selected from the beginning
-            form.find('select[name=' + field[i].name + ']').val(option.val()).change();
-        }
-
-        // After close form input to click button filter for reset datatable
-        form.find('.btn_filter').click();
     }
 }
 
@@ -1323,6 +1296,9 @@ $('select').change(function (evt) {
     let target = $(evt.target);
     let value = '';
 
+    const form = $(this).closest('form');
+    let lengthFilter = $(this).closest('.card-filter').length;
+
     if (option.length == 0) {
         if (target.attr('id') === 'md_principal_id' || target.attr('name') === 'md_principal_id') {
             value = target.val();
@@ -1330,7 +1306,7 @@ $('select').change(function (evt) {
 
             for (let i = 1; i <= 3; i++) {
                 if (value != 0) {
-                    $('[name = "category' + i + '"]').empty();
+                    form.find('select[name = "category' + i + '"]').empty();
 
                     $.ajax({
                         url: url,
@@ -1342,7 +1318,11 @@ $('select').change(function (evt) {
                         cache: false,
                         dataType: 'JSON',
                         success: function (result) {
-                            $('[name = "category' + i + '"]').append('<option value="0"></option>');
+                            if (lengthFilter > 0) {
+                                form.find('select[name = "category' + i + '"]').append('<option value="0">All Categories ' + (i > 1 ? i : '') + '</option>');
+                            } else {
+                                form.find('select[name = "category' + i + '"]').append('<option value="0">&nbsp;</option>');
+                            }
 
                             if (result[0].success) {
                                 let data = result[0].message;
@@ -1352,7 +1332,7 @@ $('select').change(function (evt) {
                                     let category = elem.category;
                                     let category_en = elem.category_en;
 
-                                    $('[name = "category' + i + '"]').append('<option value="' + category_id + '">' + category_en + '</option>');
+                                    form.find('select[name = "category' + i + '"]').append('<option value="' + category_id + '">' + category_en + '</option>');
                                 });
                             } else {
                                 Swal.fire({
@@ -1368,7 +1348,7 @@ $('select').change(function (evt) {
                         }
                     });
                 } else {
-                    $('[name = "category' + i + '"]').empty();
+                    form.find('select[name = "category' + i + '"]').empty();
                 }
             }
         }
@@ -1383,7 +1363,7 @@ $('select').change(function (evt) {
         if (field.slice(0, -1) === 'category') {
             let index = field[field.length - 1];
 
-            $('[name =' + field + ']').empty();
+            form.find('select[name =' + field + ']').empty();
 
             $.ajax({
                 url: url,
@@ -1395,7 +1375,7 @@ $('select').change(function (evt) {
                 cache: false,
                 dataType: 'JSON',
                 success: function (result) {
-                    $('[name =' + field + ']').append('<option value="0"></option>');
+                    form.find('select[name =' + field + ']').append('<option value="0">&nbsp;</option>');
 
                     if (result[0].success) {
                         let data = result[0].message;
@@ -1405,9 +1385,9 @@ $('select').change(function (evt) {
                             let category_en = elem.category_en;
 
                             if (id_category == category_id) {
-                                $('[name =' + field + ']').append('<option value="' + category_id + '" selected>' + category_en + '</option>');
+                                form.find('select[name =' + field + ']').append('<option value="' + category_id + '" selected>' + category_en + '</option>');
                             } else {
-                                $('[name =' + field + ']').append('<option value="' + category_id + '">' + category_en + '</option>');
+                                form.find('select[name =' + field + ']').append('<option value="' + category_id + '">' + category_en + '</option>');
                             }
 
                         });
@@ -1503,13 +1483,28 @@ $('.btn_filter').click(function (evt) {
 
     formTable = form.serializeArray();
 
-    loadingForm(form[0].id, 'facebook');
+    loadingForm(form[0].id, 'none');
     $(this).prop('disabled', true);
 
     setTimeout(function () {
         hideLoadingForm(form[0].id);
     }, 500);
-
     $(this).prop('disabled', false);
+
     reloadTable();
+});
+
+$('.btn_export').click(function (evt) {
+    const container = $(evt.target).closest('.container');
+    const cardFilter = container.find('.card-filter');
+    let form = cardFilter.find('form');
+
+    form.attr('action', SITE_URL + '/export');
+    form.attr('method', 'POST');
+
+    $(this).prop('disabled', true);
+    setTimeout(function () {
+        form.submit();
+    }, 500);
+    $(this).prop('disabled', false);
 });
