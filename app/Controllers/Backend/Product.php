@@ -13,6 +13,7 @@ use Config\Services;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Html2Text\Html2Text;
 
 class Product extends BaseController
 {
@@ -326,6 +327,7 @@ class Product extends BaseController
 		$product = new M_Product($request);
 		$post = $request->getVar();
 
+
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
 		$sheet->setTitle('Sheet 1');
@@ -341,14 +343,18 @@ class Product extends BaseController
 
 		$column = 2;
 		$list = $product->detail(null, null, null, $post)->getResult();
+
 		foreach ($list as $row) :
+			// Convert html tag to plain text
+			$convertHtml = new Html2Text($row->description);
+
 			$sheet->setCellValue('A' . $column, $row->code)
 				->setCellValue('B' . $column, $row->name)
 				->setCellValue('C' . $column, $row->principal)
 				->setCellValue('D' . $column, $row->md_category1)
 				->setCellValue('E' . $column, $row->md_category2)
 				->setCellValue('F' . $column, $row->md_category3)
-				->setCellValue('G' . $column, $row->description)
+				->setCellValue('G' . $column, $convertHtml->getText())
 				->setCellValue('H' . $column, $row->path);
 
 			$column++;
