@@ -391,7 +391,7 @@ function Edit(id) {
         if (!cardForm.prop('classList').contains('modal')) {
             cardBtn.css('display', 'block');
             const card = cardForm.closest('.card');
-            const btnList = card.find('.card-header').find('button');
+            const btnList = card.find('.float-right').find('button');
 
             const pageHeader = container.find('.page-header');
             ul = pageHeader.find('ul.breadcrumbs');
