@@ -25,7 +25,8 @@ const SHOWALL = '/showAll',
     CREATE = '/create',
     SHOW = '/show/',
     EDIT = '/edit',
-    DELETE = '/destroy/';
+    DELETE = '/destroy/',
+    EXPORT = '/export';
 
 // view page class on div
 let cardMain = $('.card-main'),
@@ -158,6 +159,7 @@ $('.save_form').click(function (evt) {
 
     for (let i = 0; i < field.length; i++) {
         if (field[i].name !== '') {
+
             // input type radio button to set into the formData
             if (field[i].type == 'radio') {
                 if (field[i].checked) {
@@ -189,6 +191,11 @@ $('.save_form').click(function (evt) {
                     form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) &&
                 $('[name =' + field[i].name + ']').summernote('isEmpty')) {
                 formData.append(field[i].name, '');
+            }
+
+            // Multiple select populate array data
+            if (field[i].type === 'select-multiple') {
+                formData.append(field[i].name, $('[name = ' + field[i].name + ']').val())
             }
         }
     }
@@ -381,6 +388,7 @@ function Edit(id) {
     ID = id;
 
     let form, formList;
+    let arrMultiSelect = [];
 
     if (cardMain.length > 0) {
         cardMain.css('display', 'none');
@@ -500,7 +508,7 @@ function Edit(id) {
 
                     // Populate data into the form field
                     $.each(keyName, function (idx, elem) {
-                        form.find('input:text[name=' + elem + '], textarea[name=' + elem + ']').val(label[idx]);
+                        form.find('input:text[name=' + elem + '], textarea[name=' + elem + '], input:password[name=' + field[i].name + ']').val(label[idx]);
 
                         if (elem === 'isactive' && label[idx] === 'Y') {
                             form.find('input:checkbox[name=' + elem + ']').prop('checked', true);
@@ -531,7 +539,7 @@ function Edit(id) {
                         if (field[i].name !== '' && field[i].name === fieldInput) {
                             let className = field[i].className.split(/\s+/);
 
-                            form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').val(label);
+                            form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').val(label);
 
                             if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
                                 form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) {
@@ -545,7 +553,13 @@ function Edit(id) {
                                     fieldName,
                                     value
                                 });
+
                                 form.find('select[name=' + field[i].name + ']').val(label).change();
+                            }
+
+                            if (field[i].type === 'select-multiple') {
+                                arrMultiSelect.push(label);
+                                form.find('select[name=' + field[i].name + ']').val(arrMultiSelect).change();
                             }
 
                             // Set condition value checked for field type Checkbox based on database
@@ -743,6 +757,45 @@ $('.new_form').click(function (evt) {
 });
 
 /**
+ * Process for Export based on filter form
+ */
+$('.btn_export').click(function (evt) {
+    const container = $(evt.target).closest('.container');
+    const cardFilter = container.find('.card-filter');
+    let form = cardFilter.find('form');
+
+    form.attr('action', SITE_URL + EXPORT);
+    form.attr('method', 'POST');
+
+    $(this).prop('disabled', true);
+
+    setTimeout(function () {
+        form.submit();
+    }, 500);
+
+    $(this).prop('disabled', false);
+});
+
+/**
+ * Process for filter datatable form filter
+ */
+$('.btn_filter').click(function (evt) {
+    const form = $(evt.target).closest('form');
+
+    formTable = form.serializeArray();
+
+    loadingForm(form[0].id, 'none');
+    $(this).prop('disabled', true);
+
+    setTimeout(function () {
+        hideLoadingForm(form[0].id);
+    }, 500);
+    $(this).prop('disabled', false);
+
+    reloadTable();
+});
+
+/**
  * Process for active non-active field in the form using checkbox class active
  */
 $('input.active:checkbox').change(function (evt) {
@@ -754,7 +807,7 @@ $('input.active:checkbox').change(function (evt) {
         for (let i = 0; i < field.length; i++) {
             if (field[i].name !== '') {
                 className = field[i].className.split(/\s+/);
-                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').removeAttr('readonly');
+                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').removeAttr('readonly');
 
                 if (field[i].type !== 'text' && !className.includes('active')) {
                     parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
@@ -777,7 +830,7 @@ $('input.active:checkbox').change(function (evt) {
         for (let i = 0; i < field.length; i++) {
             if (field[i].name !== '') {
                 className = field[i].className.split(/\s+/);
-                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', true);
+                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').prop('readonly', true);
 
                 if (field[i].type !== 'text' && !className.includes('active')) {
                     parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
@@ -856,7 +909,7 @@ function arrContains(value, arr) {
  * @param {*} data from database
  */
 function errorForm(parent, data) {
-    const errorInput = parent.find('input[type="text"], select, textarea');
+    const errorInput = parent.find('input, select, textarea');
     const errorText = parent.find('small');
 
     let arrInput = [];
@@ -881,10 +934,10 @@ function errorForm(parent, data) {
 
         if (labelMsg !== '' && j > 0) {
             parent.find('small[id=' + textName + ']').html(labelMsg);
-            parent.find('input:text[name=' + inputName + '], select[name=' + inputName + '], textarea[name=' + inputName + ']').parent('div').addClass('has-error');
+            parent.find('input:text[name=' + inputName + '], select[name=' + inputName + '], textarea[name=' + inputName + '], input:password[name=' + inputName + ']').closest('.form-group').addClass('has-error');
         } else {
             parent.find('small[id=' + textName + ']').html('');
-            parent.find('input:text[name=' + inputName + '], select[name=' + inputName + '], textarea[name=' + inputName + ']').parent('div').removeClass('has-error');
+            parent.find('input:text[name=' + inputName + '], select[name=' + inputName + '], textarea[name=' + inputName + '], input:password[name=' + inputName + ']').closest('.form-group').removeClass('has-error');
         }
     }
 }
@@ -920,12 +973,12 @@ function clearForm(evt) {
                 form.find('select[name=' + field[i].name + ']')
                     .val(option.val()).change()
                     .removeAttr('disabled')
-                    .parent('div').removeClass('has-error');
+                    .closest('.form-group').removeClass('has-error');
             } else {
                 form.find('select[name=' + field[i].name + ']')
                     .val(null).change()
                     .removeAttr('disabled')
-                    .parent('div').removeClass('has-error');
+                    .closest('.form-group').removeClass('has-error');
             }
 
             if (field[i].type == 'file') {
@@ -959,7 +1012,7 @@ function readonly(parent, value) {
         if (field[i].name !== '') {
             let className = field[i].className.split(/\s+/);
 
-            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + ']').prop('readonly', value);
+            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').prop('readonly', value);
 
             if (field[i].type !== 'text' && !className.includes('active')) {
                 parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']')
@@ -1166,6 +1219,10 @@ $(document).ready(function (e) {
     $('.select2').select2({
         placeholder: 'Select an option',
         width: '100%',
+        theme: "bootstrap"
+    });
+
+    $('.multiple-select').select2({
         theme: "bootstrap"
     });
 
@@ -1439,6 +1496,9 @@ function removeDuplicates(arr, key) {
     ]
 }
 
+/**
+ * Event checked checkbox table role
+ */
 $(document).on('click', 'input:checkbox', function () {
     const table = $(this).closest('table');
     const tr = $(this).closest('tr');
@@ -1475,36 +1535,4 @@ $(document).on('click', 'input:checkbox', function () {
             table.find('tr[data-pnode=treetable-parent-' + dataNode + '] td:nth-child(' + index + ') input:checkbox').prop('checked', false);
         }
     }
-});
-
-
-$('.btn_filter').click(function (evt) {
-    const form = $(evt.target).closest('form');
-
-    formTable = form.serializeArray();
-
-    loadingForm(form[0].id, 'none');
-    $(this).prop('disabled', true);
-
-    setTimeout(function () {
-        hideLoadingForm(form[0].id);
-    }, 500);
-    $(this).prop('disabled', false);
-
-    reloadTable();
-});
-
-$('.btn_export').click(function (evt) {
-    const container = $(evt.target).closest('.container');
-    const cardFilter = container.find('.card-filter');
-    let form = cardFilter.find('form');
-
-    form.attr('action', SITE_URL + '/export');
-    form.attr('method', 'POST');
-
-    $(this).prop('disabled', true);
-    setTimeout(function () {
-        form.submit();
-    }, 500);
-    $(this).prop('disabled', false);
 });
