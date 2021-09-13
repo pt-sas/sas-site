@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <label for="sequence">Sequence <span class="required">*</span></label>
                     <input type="text" class="form-control number" id="sequence" name="sequence">
-                    <small class="form-text text-danger" id="error_icon"></small>
+                    <small class="form-text text-danger" id="error_sequence"></small>
                 </div>
             </div>
             <div class="col-md-6">
