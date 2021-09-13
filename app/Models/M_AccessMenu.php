@@ -19,6 +19,13 @@ class M_AccessMenu extends Model
   ];
   protected $useTimestamps = true;
   protected $returnType = 'App\Entities\Accessmenu';
+  protected $db;
+
+  public function __construct()
+  {
+    parent::__construct();
+    $this->db = db_connect();
+  }
 
   public function create($post)
   {
