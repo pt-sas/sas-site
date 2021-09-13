@@ -89,22 +89,46 @@ class Field
     }
 
     // Get error validation field
-    function errorValidation($table)
+    function errorValidation($table, $query = null)
     {
-        $fields = $this->db->getFieldNames($table);
+        $allError = $this->validation->getErrors();
+
         $result = [];
+        $arrField = [];
+        $fields;
 
         $result[] = [
             'error' => true,
             'field' => $table
         ];
 
+        // Populate array field from object all error
+        foreach ($allError as $field => $msg) :
+            if (strpos($field, '.*'))
+                $arrField[] = str_replace('.*', '', $field);
+        endforeach;
+
+        if (empty($query)) {
+            $fields = $this->db->getFieldNames($table);
+        } else {
+            $fields = $query->getFieldNames();
+        }
+
         foreach ($fields as $field) :
-            $result[] = [
-                'error' => 'error_' . $field,
-                'field' => $field,
-                'label' => $this->validation->getError($field)
-            ];
+            // Validation field dot array
+            if (in_array($field, $arrField)) {
+                $result[] = [
+                    'error' => 'error_' . $field,
+                    'field' => $field,
+                    'label' => $this->validation->getError($field . '.*')
+                ];
+            } else {
+                $result[] = [
+                    'error' => 'error_' . $field,
+                    'field' => $field,
+                    'label' => $this->validation->getError($field)
+                ];
+            }
         endforeach;
 
         return $result;

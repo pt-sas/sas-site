@@ -390,4 +390,24 @@ class Validation
 			]
 		]
 	];
+
+	public $user = [
+		'username'	=> [
+			'rules' 	=>	'required|is_unique[sys_user.username,sys_user_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'name'		=> [
+			'rules' 	=>	'required|is_unique[sys_user.name,sys_user_id,{id}]',
+			'errors' 	=> [
+				'is_unique' => 'This {field} already exists.'
+			]
+		],
+		'password'	=> 'required',
+		'role.*'	=> [
+			'label'		=> 'role',
+			'rules'		=> 'required'
+		]
+	];
 }
