@@ -152,36 +152,39 @@ class MainController extends BaseController
 
 		$post = $this->request->getVar();
 
-		try {
-			$eMailbox->fill($post);
+		if ($this->request->getMethod(true) === 'POST') {
+			try {
+				$eMailbox->fill($post);
 
-			if (!$validation->run($post, 'mailbox')) {
-				$response =	$this->field->errorValidation('trx_contact');
-			} else {
-				$insert = $mailbox->save($eMailbox);
+				if (!$validation->run($post, 'mailbox')) {
+					$response =	$this->field->errorValidation('trx_contact');
+				} else {
+					$insert = $mailbox->save($eMailbox);
 
-				if ($insert) {
-					$email->setTo('info@sahabatabadi.com');
-					$email->setFrom($post['email'], $post['name']);
-					$email->setSubject($post['subject']);
-					$email->setMessage('
+					if ($insert) {
+						$email->setTo('info@sahabatabadi.com');
+						$email->setFrom($post['email'], $post['name']);
+						$email->setSubject($post['subject']);
+						$email->setMessage('
 						Name 		: ' . $post['name'] . ' <br>
 						Email 	: ' . $post['email'] . ' <br>
 						Phone 	: ' . $post['phone'] . ' <br>
 						Message : ' . $post['message'] . '
 					');
 
-					if ($email->send()) {
-						$result = 'Email successfully sent';
-					} else {
-						$result = $email->printDebugger(['headers']);
+						if ($email->send()) {
+							$result = 'Email successfully sent';
+						} else {
+							$result = $email->printDebugger(['headers']);
+						}
 					}
+					$response = message('success', true, $result);
 				}
-				$response = message('success', true, $result);
+			} catch (\Exception $e) {
+				$response = message('error', false, $e->getMessage());
 			}
-		} catch (\Exception $e) {
-			$response = message('error', false, $e->getMessage());
 		}
+
 		return json_encode($response);
 	}
 
@@ -193,47 +196,49 @@ class MainController extends BaseController
 		$limit = 0;
 		$offset = 0;
 
-		if (isset($post['limit']))
-			$limit = $post['limit'];
+		if ($this->request->getMethod(true) === 'POST') {
+			if (isset($post['limit']))
+				$limit = $post['limit'];
 
-		if (isset($post['offset']))
-			$offset = $post['offset'];
+			if (isset($post['offset']))
+				$offset = $post['offset'];
 
-		// Set where clause if button filter to show only product active yes
-		if (isset($post['action']) && strtolower($post['action']) === 'filter') {
-			$where = [
-				'md_product.isactive'	=> 'Y'
-			];
-		} else {
-			$where = [
-				'md_product.isactive'	=> 'Y',
-				'md_product.visible'	=> 'N'
-			];
-		}
-
-		try {
-			$result = $product->showProductBy(
-				$where,
-				$post['principal'],
-				$post['category1'],
-				$post['category2'],
-				$post['category3'],
-				$post['keyword'],
-				$limit,
-				$offset
-			);
-
-			// condition to restore data count
-			if ($result && isset($post['calcLimit'])) {
-				$response['limit'] = $post['calcLimit'];
-			} else if ($result && isset($post['action']) && strtolower($post['action']) === 'filter') {
-				// condition after click button filter
-				$response['limit'] = $post['limit'] * 2;
+			// Set where clause if button filter to show only product active yes
+			if (isset($post['action']) && strtolower($post['action']) === 'filter') {
+				$where = [
+					'md_product.isactive'	=> 'Y'
+				];
+			} else {
+				$where = [
+					'md_product.isactive'	=> 'Y',
+					'md_product.visible'	=> 'N'
+				];
 			}
 
-			$response['data'] = message('success', true, $result->getResult());
-		} catch (\Exception $e) {
-			$response = message('error', false, $e->getMessage());
+			try {
+				$result = $product->showProductBy(
+					$where,
+					$post['principal'],
+					$post['category1'],
+					$post['category2'],
+					$post['category3'],
+					$post['keyword'],
+					$limit,
+					$offset
+				);
+
+				// condition to restore data count
+				if ($result && isset($post['calcLimit'])) {
+					$response['limit'] = $post['calcLimit'];
+				} else if ($result && isset($post['action']) && strtolower($post['action']) === 'filter') {
+					// condition after click button filter
+					$response['limit'] = $post['limit'] * 2;
+				}
+
+				$response['data'] = message('success', true, $result->getResult());
+			} catch (\Exception $e) {
+				$response = message('error', false, $e->getMessage());
+			}
 		}
 
 		return json_encode($response);
@@ -247,19 +252,21 @@ class MainController extends BaseController
 		$category1 = '';
 		$category2 = '';
 
-		if (isset($post['category1'])) {
-			$category1 = $post['category1'];
-		}
+		if ($this->request->getMethod(true) === 'POST') {
+			if (isset($post['category1'])) {
+				$category1 = $post['category1'];
+			}
 
-		if (isset($post['category2'])) {
-			$category2 = $post['category2'];
-		}
+			if (isset($post['category2'])) {
+				$category2 = $post['category2'];
+			}
 
-		try {
-			$result = $productgroup->showCategoryBy($post['principal'], $category1, $category2);
-			$response = message('success', true, $result->getResult());
-		} catch (\Exception $e) {
-			$response = message('error', false, $e->getMessage());
+			try {
+				$result = $productgroup->showCategoryBy($post['principal'], $category1, $category2);
+				$response = message('success', true, $result->getResult());
+			} catch (\Exception $e) {
+				$response = message('error', false, $e->getMessage());
+			}
 		}
 
 		return json_encode($response);
@@ -270,11 +277,13 @@ class MainController extends BaseController
 		$position = new M_Job();
 		$post = $this->request->getVar();
 
-		try {
-			$result = $position->showPositionBy('trx_job.isactive', 'Y', $post['level'], $post['keyword'])->getResult();
-			$response = message('success', true, $result);
-		} catch (\Exception $e) {
-			$response = message('error', false, $e->getMessage());
+		if ($this->request->getMethod(true) === 'POST') {
+			try {
+				$result = $position->showPositionBy('trx_job.isactive', 'Y', $post['level'], $post['keyword'])->getResult();
+				$response = message('success', true, $result);
+			} catch (\Exception $e) {
+				$response = message('error', false, $e->getMessage());
+			}
 		}
 
 		return json_encode($response);
