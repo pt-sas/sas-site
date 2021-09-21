@@ -95,7 +95,7 @@ class Role extends BaseController
 	public function show($id)
 	{
 		$role = new M_Role();
-		$list = $role->detail($this->table . '.sys_role_id', $id)->getResult();
+		$list = $role->detail([], $this->table . '.sys_role_id', $id)->getResult();
 		$reponse = $this->field->store($this->table, $list, 'table');
 		return json_encode($reponse);
 	}
