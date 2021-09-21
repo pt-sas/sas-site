@@ -54,10 +54,24 @@ $routes->get('/create', 'MainController::create');
 $routes->get('/check', 'MainController::check');
 
 
-
 //Backend
-$routes->group('backend', function ($routes) {
-	$routes->add('/', 'Backend/Dashboard::index');
+$routes->get('auth', 'Backend/Auth::index', ['filter' => 'auth']);
+
+$routes->group('panel', ['filter' => 'auth'], function ($routes) {
+	$routes->add('/', 'Backend\Dashboard::index');
+	$routes->add('about', 'Backend\About::index');
+	$routes->add('product', 'Backend\Product::index');
+	$routes->add('principal', 'Backend\Principal::index');
+	$routes->add('menu', 'Backend\Menu::index');
+	$routes->add('submenu', 'Backend\Submenu::index');
+	$routes->add('visitor', 'Backend\Visitor::index');
+	$routes->add('role', 'Backend\Role::index');
+	$routes->add('location', 'Backend\Location::index');
+	$routes->add('user', 'Backend\User::index');
+	$routes->add('promo', 'Backend\Promo::index');
+	$routes->add('job', 'Backend\Job::index');
+	$routes->add('news', 'Backend\News::index');
+	$routes->add('division', 'Backend\Division::index');
 });
 
 
