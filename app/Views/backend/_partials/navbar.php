@@ -2,16 +2,16 @@
 
   <div class="container-fluid">
     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-      <li class="nav-item toggle-nav-search hidden-caret">
+      <!-- <li class="nav-item toggle-nav-search hidden-caret">
         <a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
           <i class="fa fa-search"></i>
         </a>
-      </li>
-      <li class="nav-item dropdown hidden-caret">
-        <!-- <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      </li> -->
+      <!-- <li class="nav-item dropdown hidden-caret">
+        <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-envelope"></i>
-        </a> -->
-        <!-- <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
+        </a>
+        <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
           <li>
             <div class="dropdown-title d-flex justify-content-between align-items-center">
               Messages
@@ -64,8 +64,8 @@
             <a class="see-all" href="javascript:void(0);">See all messages<i class="fa fa-angle-right"></i> </a>
           </li>
         </ul>
-      </li>
-      <li class="nav-item dropdown hidden-caret">
+      </li> -->
+      <!-- <li class="nav-item dropdown hidden-caret">
         <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-bell"></i>
           <span class="notification">4</span>
@@ -102,8 +102,8 @@
             <a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i> </a>
           </li>
         </ul>
-      </li>
-      <li class="nav-item dropdown hidden-caret">
+      </li> -->
+      <!-- <li class="nav-item dropdown hidden-caret">
         <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
           <i class="fas fa-layer-group"></i>
         </a>
@@ -167,12 +167,12 @@
             </div>
           </div>
         </div>
-      </li>
-      <li class="nav-item">
+      </li> -->
+      <!-- <li class="nav-item">
         <a href="#" class="nav-link quick-sidebar-toggler">
           <i class="fa fa-th"></i>
         </a>
-      </li>
+      </li> -->
       <li class="nav-item dropdown hidden-caret">
         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
           <div class="avatar-sm">
@@ -185,23 +185,23 @@
               <div class="user-box">
                 <div class="avatar-lg"><img src="<?= base_url('custom/image/undraw_profile_1.svg') ?>" alt="image profile" class="avatar-img rounded"></div>
                 <div class="u-text">
-                  <h4>Hizrian</h4>
-                  <p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                  <h4>Admin</h4>
+                  <!-- <p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a> -->
                 </div>
               </div>
             </li>
             <li>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">My Profile</a>
+              <!-- <a class="dropdown-item" href="#">My Profile</a>
               <a class="dropdown-item" href="#">Inbox</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Account Setting</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="<?= base_url('auth/logout') ?>">Logout</a>
+              <div class="dropdown-divider"></div> -->
+              <a class="dropdown-item" href="<?= site_url('backend/auth/logout') ?>">Logout</a>
             </li>
-          </div> -->
-    </ul>
-    </li>
+          </div>
+        </ul>
+      </li>
     </ul>
   </div>
 </nav>
