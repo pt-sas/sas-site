@@ -13,8 +13,7 @@ class Auth extends BaseController
 		$this->new_title = 'Login';
 
 		$data = [
-			'title'    	=> '' . $this->new_title . '',
-			'sess'    	=> session()->get('logged_in')
+			'title'    	=> '' . $this->new_title . ''
 		];
 
 		echo view('backend/auth/login', $data);
