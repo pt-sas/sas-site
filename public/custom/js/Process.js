@@ -552,7 +552,13 @@ function Edit(id) {
                             if (field[i].name !== '' && field[i].name === fieldInput) {
                                 let className = field[i].className.split(/\s+/);
 
-                                form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').val(label);
+                                if (className.includes('datepicker')) {
+                                    form.find('input:text[name=' + field[i].name + ']').val(moment(label).format('Y-MM-DD'));
+                                } else {
+                                    form.find('input:text[name=' + field[i].name + ']').val(label);
+                                }
+
+                                form.find('textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').val(label);
 
                                 if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
                                     form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) {
