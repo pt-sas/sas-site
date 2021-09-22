@@ -854,7 +854,6 @@ $('.btn_login').click(function () {
             hideLoadingForm(form.attr('id'));
         },
         success: function (result) {
-            console.log(result)
             if (result[0].success) {
                 Toast.fire({
                     type: 'success',
