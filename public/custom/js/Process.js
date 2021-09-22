@@ -878,6 +878,16 @@ $('.btn_login').click(function () {
 });
 
 /**
+ * Enter key press button login form
+ */
+$('.login-form input').keypress(function (evt) {
+    let key = evt.which;
+
+    if (key == 13)
+        $('.btn_login').click();
+});
+
+/**
  * Process for active non-active field in the form using checkbox class active
  */
 $('input.active:checkbox').change(function (evt) {
