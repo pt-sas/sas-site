@@ -33,7 +33,7 @@ class Auth extends BaseController
 				if ($check == 0 || $check == 2) {
 					$response = message('error', false, 'Wrong Username or Password');
 				} else {
-					$msg = $check == 1 ? 'Berhasil Login !' : $check;
+					$msg = $check == 1 ? 'Login successfully !' : $check;
 					$response = message('success', true, $msg);
 				}
 			}
