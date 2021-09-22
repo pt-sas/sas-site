@@ -68,7 +68,7 @@ $routes->group('panel', ['filter' => 'auth'], function ($routes) {
 	$routes->add('role', 'Backend\Role::index');
 	$routes->add('location', 'Backend\Location::index');
 	$routes->add('user', 'Backend\User::index');
-	$routes->add('promo', 'Backend\Promo::index');
+	$routes->add('event', 'Backend\Event::index');
 	$routes->add('job', 'Backend\Job::index');
 	$routes->add('news', 'Backend\News::index');
 	$routes->add('division', 'Backend\Division::index');
