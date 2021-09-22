@@ -6,10 +6,10 @@
           <img src="<?= base_url('custom/image/undraw_profile_1.svg') ?>" alt="..." class="avatar-img rounded-circle">
         </div>
         <div class="info">
-          <a href="#myProfile">
+          <a href="<?= site_url('panel') ?>">
             <span>
-              Admin
-              <span class="user-level">Administrator</span>
+              <?= $username; ?>
+              <span class="user-level"><?= $level; ?></span>
             </span>
           </a>
         </div>
