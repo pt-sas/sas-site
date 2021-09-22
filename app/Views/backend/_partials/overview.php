@@ -31,28 +31,30 @@
 
             <?= $this->include('backend/_partials/breadcrumb') ?>
             <?= !$filter ? '' : $this->include($filter) ?>
-            <div class="row main_page">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <div class="float-left">
-                      <h4 class="card-title"><?= $title; ?></h4>
+            <?php if ($title) : ?>
+              <div class="row main_page">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="float-left">
+                        <h4 class="card-title"><?= $title; ?></h4>
+                      </div>
+                      <div class="float-right">
+                        <?php $request = \Config\Services::request(); ?>
+                        <?= $toolbar_button ?>
+                        <?php if ($request->uri->getSegment(2) === 'product') { ?>
+                          <button type="button" class="btn btn-info btn-sm btn-border btn-round ml-auto btn_export" title="Export">
+                            <i class="fas fa-file-export"></i> Export
+                          </button>
+                        <?php } ?>
+                      </div>
                     </div>
-                    <div class="float-right">
-                      <?php $request = \Config\Services::request(); ?>
-                      <?= $toolbar_button ?>
-                      <?php if ($request->uri->getSegment(2) === 'product') { ?>
-                        <button type="button" class="btn btn-info btn-sm btn-border btn-round ml-auto btn_export" title="Export">
-                          <i class="fas fa-file-export"></i> Export
-                        </button>
-                      <?php } ?>
-                    </div>
+                    <?= $this->renderSection('content') ?>
+                    <?= $action_button ?>
                   </div>
-                  <?= $this->renderSection('content') ?>
-                  <?= $action_button ?>
                 </div>
               </div>
-            </div>
+            <?php endif ?>
           </div>
         </div>
       <?php endif; ?>
