@@ -25,6 +25,7 @@ class Access
      * 0 = username tidak ada
      * 1 = sukses
      * 2 = password salah
+     * 3 = user nonaktif
      * @param unknown_type $post
      * @return boolean
      */
@@ -37,15 +38,19 @@ class Access
         ])->getRow();
 
         if ($dataUser) {
-            if (password_verify($post['password'], $dataUser->password)) {
-                $this->session->set([
-                    'sys_user_id'   => $dataUser->sys_user_id,
-                    'sys_role_id'   => $dataUser->role,
-                    'logged_in'     => TRUE
-                ]);
-                return 1;
+            if ($dataUser->isactive === 'Y') {
+                if (password_verify($post['password'], $dataUser->password)) {
+                    $this->session->set([
+                        'sys_user_id'   => $dataUser->sys_user_id,
+                        'sys_role_id'   => $dataUser->role,
+                        'logged_in'     => TRUE
+                    ]);
+                    return 1;
+                } else {
+                    return 2;
+                }
             } else {
-                return 2;
+                return 3;
             }
         }
 
