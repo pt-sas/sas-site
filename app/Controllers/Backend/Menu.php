@@ -11,13 +11,7 @@ class Menu extends BaseController
 
 	public function index()
 	{
-		$this->new_title = 'Menu';
-		$this->form_type = 'new_form';
-
-		$data = [
-			'title'    	=> '' . $this->new_title . '',
-		];
-		return $this->template->render('backend/configuration/menu/v_menu', $data);
+		return $this->template->render('backend/configuration/menu/v_menu');
 	}
 
 	public function showAll()

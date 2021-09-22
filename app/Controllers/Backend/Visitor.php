@@ -11,13 +11,7 @@ class Visitor extends BaseController
 
 	public function index()
 	{
-		$this->new_title = 'Visitor';
-		$this->form_type = 'new_form';
-
-		$data = [
-			'title'    	=> '' . $this->new_title . ''
-		];
-		return $this->template->render('backend/visitor/v_visitor', $data);
+		return $this->template->render('backend/visitor/v_visitor');
 	}
 
 	public function showAll()

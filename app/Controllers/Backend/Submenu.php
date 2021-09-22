@@ -14,15 +14,12 @@ class Submenu extends BaseController
 	{
 		$menu = new M_Menu();
 
-		$this->new_title = 'Submenu';
-		$this->form_type = 'new_form';
-
 		$data = [
-			'title'    	=> '' . $this->new_title . '',
 			'menu'		=> $menu->where('isactive', 'Y')
 				->orderBy('name', 'ASC')
 				->findAll()
 		];
+
 		return $this->template->render('backend/configuration/submenu/v_submenu', $data);
 	}
 
@@ -47,10 +44,7 @@ class Submenu extends BaseController
 			$row[] = $value->sequence;
 			$row[] = $value->icon;
 			$row[] = active($value->isactive);
-			$row[] = '<center>
-						<a class="btn" onclick="Edit(' . "'" . $ID . "'" . ')" title="Edit"><i class="far fa-edit text-info"></i></a>
-						<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
-					</center>';
+			$row[] = $this->template->table_button($ID);
 			$data[] = $row;
 		endforeach;
 
