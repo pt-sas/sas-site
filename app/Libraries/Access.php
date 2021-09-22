@@ -22,7 +22,7 @@ class Access
 
     /**
      * check login
-     * 0 = username tak ada
+     * 0 = username tidak ada
      * 1 = sukses
      * 2 = password salah
      * @param unknown_type $post
@@ -74,8 +74,8 @@ class Access
                         'am.sys_role_id'        => session()->get('sys_role_id')
                     ])->getRow();
 
-                    // submenu set in role
-                    if ($access)
+                    // submenu set in role and role isactive Y
+                    if ($access && $access->isactive === 'Y')
                         $field = $access->$field;
                     else
                         $field = false;
@@ -86,8 +86,8 @@ class Access
                         'am.sys_role_id'        => session()->get('sys_role_id')
                     ])->getRow();
 
-                    // menu set in role
-                    if ($access)
+                    // menu set in role and role isactive Y
+                    if ($access && $access->isactive === 'Y')
                         $field = $access->$field;
                     else
                         $field = false;
@@ -102,7 +102,7 @@ class Access
                         'am.sys_role_id'        => session()->get('sys_role_id')
                     ])->getRow();
 
-                    if ($access)
+                    if ($access && $access->isactive === 'Y')
                         $field = $access->$field;
                     else
                         $field = false;
@@ -113,7 +113,7 @@ class Access
                     ])->getRow();
 
                     // submenu set in role
-                    if ($access)
+                    if ($access && $access->isactive === 'Y')
                         $field = $access->$field;
                     else
                         $field = false;
@@ -121,6 +121,44 @@ class Access
             }
         } catch (\Exception $e) {
             die($e->getMessage());
+        }
+
+        return $field;
+    }
+
+    public function getUser($field)
+    {
+        $user = new M_User();
+        $row = $user->find(session()->get('sys_user_id'));
+        return $row->$field;
+    }
+
+    public function getRole()
+    {
+        $role = new M_Role();
+        $row = $role->find(session()->get('sys_role_id'));
+        return $row->name;
+    }
+
+    public function getMenu($uri, $field)
+    {
+        $menu = new M_Menu();
+        $submenu = new M_Submenu();
+
+        if (!empty($uri)) {
+            $sub = $submenu->where('url', $uri)->first();
+
+            $parent = $menu->where('url', $uri)->first();
+
+            if (isset($sub)) {
+                $field = $sub->$field;
+            } else if (isset($parent)) {
+                $field = $parent->$field;
+            } else {
+                $field = false;
+            }
+        } else {
+            $field = false;
         }
 
         return $field;
