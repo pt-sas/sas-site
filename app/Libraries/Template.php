@@ -11,7 +11,6 @@ class Template
 {
     protected $request;
     protected $session;
-    protected $db;
 
     protected $access;
 
@@ -22,7 +21,6 @@ class Template
 
     public function __construct()
     {
-        $this->db = db_connect();
         $this->request = \Config\Services::request();
         $this->session = \Config\Services::session();
         $this->access = new Access();
@@ -30,13 +28,21 @@ class Template
 
     public function render($template = '', $view_data = [])
     {
+        $uri = $this->request->uri->getSegment(2);
+
         // Set previouse url from current url
         $this->session->set(['previous_url' => current_url()]);
 
+        $view_data['title'] = $this->access->getMenu($uri, 'name');
         $view_data['filter'] = $this->render_page($template, 'form_filter');
         $view_data['sidebar'] = $this->menu_sidebar();
         $view_data['toolbar_button'] = $this->toolbar_button();
         $view_data['action_button'] = $this->action_button();
+
+        $view_data['username'] = $this->access->getUser('username');
+        $view_data['name'] = $this->access->getUser('name');
+        $view_data['email'] = $this->access->getUser('email');
+        $view_data['level'] = $this->access->getRole();
 
         return view($template, $view_data);
     }
