@@ -146,7 +146,9 @@ class Template
 
             if ($check === 'Y') {
                 $isActive = '';
-                if ($uri == $row->url)
+                if ($uri == '' && $row->url === 'dashboard')
+                    $isActive = 'active';
+                else if ($uri == $row->url)
                     $isActive = 'active';
 
                 $dataSub = $submenu->where('sys_menu_id', $menu_id)->where('isactive', 'Y')
