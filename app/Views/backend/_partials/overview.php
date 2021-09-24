@@ -20,35 +20,41 @@
       <?php else : ?>
         <div class="container">
           <div class="page-inner">
+            <?php if (!empty(session()->getFlashdata('error'))) : ?>
+              <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <?= session()->getFlashdata('error'); ?>
+              </div>
+            <?php endif; ?>
+
             <?= $this->include('backend/_partials/breadcrumb') ?>
             <?= !$filter ? '' : $this->include($filter) ?>
-            <div class="row main_page">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <div class="float-left">
-                      <h4 class="card-title"><?= $title; ?></h4>
+            <?php if ($title) : ?>
+              <div class="row main_page">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="float-left">
+                        <h4 class="card-title"><?= $title; ?></h4>
+                      </div>
+                      <div class="float-right">
+                        <?php $request = \Config\Services::request(); ?>
+                        <?= $toolbar_button ?>
+                        <?php if ($request->uri->getSegment(2) === 'product') { ?>
+                          <button type="button" class="btn btn-info btn-sm btn-border btn-round ml-auto btn_export" title="Export">
+                            <i class="fas fa-file-export"></i> Export
+                          </button>
+                        <?php } ?>
+                      </div>
                     </div>
-                    <div class="float-right">
-                      <?php $request = \Config\Services::request(); ?>
-                      <button type="button" class="btn btn-primary btn-sm btn-round ml-auto new_form" title="New Data">
-                        <i class="fa fa-plus fa-fw"></i> Add New
-                      </button>
-                      <?php if ($request->uri->getSegment(2) === 'product') { ?>
-                        <button type="button" class="btn btn-info btn-sm btn-border btn-round ml-auto btn_export" title="Export">
-                          <i class="fas fa-file-export"></i> Export
-                        </button>
-                      <?php } ?>
-                    </div>
-                  </div>
-                  <?= $this->renderSection('content') ?>
-                  <div class="card-action card-button">
-                    <button type="button" class="btn btn-outline-danger btn-round ml-auto close_form">Close</button>
-                    <button type="button" class="btn btn-primary btn-round ml-auto save_form">Save changes</button>
+                    <?= $this->renderSection('content') ?>
+                    <?= $action_button ?>
                   </div>
                 </div>
               </div>
-            </div>
+            <?php endif ?>
           </div>
         </div>
       <?php endif; ?>

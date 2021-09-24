@@ -410,4 +410,9 @@ class Validation
 			'rules'		=> 'required'
 		]
 	];
+
+	public $login = [
+		'username'	=> 'required',
+		'password'	=> 'required'
+	];
 }

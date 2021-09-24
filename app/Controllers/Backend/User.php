@@ -15,10 +15,7 @@ class User extends BaseController
 	{
 		$role = new M_Role();
 
-		$this->new_title = 'User';
-
 		$data = [
-			'title'    	=> '' . $this->new_title . '',
 			'role'		=> $role->where('isactive', 'Y')
 				->orderBy('name', 'ASC')
 				->findAll()
@@ -47,10 +44,7 @@ class User extends BaseController
 			$row[] = $value->description;
 			$row[] = $value->email;
 			$row[] = active($value->isactive);
-			$row[] = '<center>
-						<a class="btn" onclick="Edit(' . "'" . $ID . "'" . ')" title="Edit"><i class="far fa-edit text-info"></i></a>
-						<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
-					</center>';
+			$row[] = $this->template->table_button($ID);
 			$data[] = $row;
 		endforeach;
 

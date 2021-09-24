@@ -2,7 +2,7 @@
 
 <?= $this->section('content') ?>
 <!-- Content Row -->
-<div class="row">
+<!-- <div class="row">
   <div class="col-md-6">
     <div class="card full-height">
       <div class="card-body">
@@ -106,5 +106,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 <?= $this->endSection() ?>

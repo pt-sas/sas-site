@@ -7,9 +7,10 @@
 const ADMIN = '/backend/';
 
 let ORI_URL = window.location.origin,
-    SITE_URL = window.location.href,
-    LAST_URL = SITE_URL.substr(SITE_URL.lastIndexOf('/') + 1), //the last url
-    ADMIN_URL = ORI_URL + ADMIN;
+    CURRENT_URL = window.location.href,
+    LAST_URL = CURRENT_URL.substr(CURRENT_URL.lastIndexOf('/') + 1), //the last url
+    ADMIN_URL = ORI_URL + ADMIN,
+    SITE_URL = ADMIN_URL + LAST_URL;
 
 let ID,
     _table,
@@ -138,244 +139,253 @@ $('.save_form').click(function (evt) {
     cardForm = parent.find('.card-form');
 
     let url;
+    let action = 'create';
 
-    const field = form.find('input, select, textarea');
+    if (isAccess(action, LAST_URL) == 'Y') {
+        const field = form.find('input, select, textarea');
 
-    //remove attribute disabled when field disabled
-    for (let i = 0; i < field.length; i++) {
-        if (field[i].name !== '') {
-            form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
-        }
-    }
-
-    let formData = new FormData(form[0]);
-
-    if (setSave === 'add') {
-        url = SITE_URL + CREATE;
-    } else {
-        formData.append('id', ID);
-        url = SITE_URL + EDIT;
-    }
-
-    for (let i = 0; i < field.length; i++) {
-        if (field[i].name !== '') {
-
-            // input type radio button to set into the formData
-            if (field[i].type == 'radio') {
-                if (field[i].checked) {
-                    formData.append(field[i].name, field[i].value);
-                }
+        //remove attribute disabled when field disabled
+        for (let i = 0; i < field.length; i++) {
+            if (field[i].name !== '') {
+                form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
             }
+        }
 
-            // input type file whom contain class control-upload-image to set into the formData
-            if (field[i].type == 'file' && field[i].className.includes('control-upload-image')) {
-                // Check condition upload add new image or not upload
-                if (field[i].files.length > 0) {
-                    formData.append(field[i].name, field[i].files[0]);
-                } else {
-                    let source = form.find('.img-result').attr('src');
-                    let imgSrc;
+        let formData = new FormData(form[0]);
 
-                    if (source !== '') {
-                        imgSrc = source.substr(source.lastIndexOf('/') + 1);
-                    } else {
-                        imgSrc = source;
+        if (setSave === 'add') {
+            url = SITE_URL + CREATE;
+        } else {
+            formData.append('id', ID);
+            url = SITE_URL + EDIT;
+        }
+
+        for (let i = 0; i < field.length; i++) {
+            if (field[i].name !== '') {
+
+                // input type radio button to set into the formData
+                if (field[i].type == 'radio') {
+                    if (field[i].checked) {
+                        formData.append(field[i].name, field[i].value);
                     }
+                }
 
-                    formData.append(field[i].name, imgSrc);
+                // input type file whom contain class control-upload-image to set into the formData
+                if (field[i].type == 'file' && field[i].className.includes('control-upload-image')) {
+                    // Check condition upload add new image or not upload
+                    if (field[i].files.length > 0) {
+                        formData.append(field[i].name, field[i].files[0]);
+                    } else {
+                        let source = form.find('.img-result').attr('src');
+                        let imgSrc;
+
+                        if (source !== '') {
+                            imgSrc = source.substr(source.lastIndexOf('/') + 1);
+                        } else {
+                            imgSrc = source;
+                        }
+
+                        formData.append(field[i].name, imgSrc);
+                    }
+                }
+
+                // Check textarea summernote isEmpty to set value null
+                if ((form.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
+                        form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) &&
+                    $('[name =' + field[i].name + ']').summernote('isEmpty')) {
+                    formData.append(field[i].name, '');
+                }
+
+                // Multiple select populate array data
+                if (field[i].type === 'select-multiple') {
+                    formData.append(field[i].name, $('[name = ' + field[i].name + ']').val())
                 }
             }
-
-            // Check textarea summernote isEmpty to set value null
-            if ((form.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
-                    form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) &&
-                $('[name =' + field[i].name + ']').summernote('isEmpty')) {
-                formData.append(field[i].name, '');
-            }
-
-            // Multiple select populate array data
-            if (field[i].type === 'select-multiple') {
-                formData.append(field[i].name, $('[name = ' + field[i].name + ']').val())
-            }
         }
-    }
 
-    // Table role
-    if (form.find('table.tb_tree').length > 0) {
-        const table = form.find('table.tb_tree');
-        const input = table.find('td input:checkbox');
+        // Table role
+        if (form.find('table.tb_tree').length > 0) {
+            const table = form.find('table.tb_tree');
+            const input = table.find('td input:checkbox');
 
-        let isView = [];
-        let isCreate = [];
-        let isUpdate = [];
-        let isDelete = [];
-        let accessID = [];
+            let isView = [];
+            let isCreate = [];
+            let isUpdate = [];
+            let isDelete = [];
+            let accessID = [];
 
-        $.each(input, function () {
-            let row_index = $(this).parent().parent().parent().parent().index();
-            let field = $(this).attr('name');
-            let menu_id = $(this).val();
-            let menu = $(this).attr('data-menu');
+            $.each(input, function () {
+                let row_index = $(this).parent().parent().parent().parent().index();
+                let field = $(this).attr('name');
+                let menu_id = $(this).val();
+                let menu = $(this).attr('data-menu');
 
-            let access_id = typeof $(this).attr('id') !== 'undefined' ? $(this).attr('id') : 0;
+                let access_id = typeof $(this).attr('id') !== 'undefined' ? $(this).attr('id') : 0;
 
-            let value;
+                let value;
 
-            if ($(this).is(':checked')) {
-                value = 'Y';
-            } else {
-                value = 'N';
-            }
+                if ($(this).is(':checked')) {
+                    value = 'Y';
+                } else {
+                    value = 'N';
+                }
 
-            if (field == 'isview') {
-                isView.push({
-                    row: row_index,
-                    view: value,
-                    menu_id: menu_id,
-                    menu: menu
-                });
-            } else if (field == 'iscreate') {
-                isCreate.push({
-                    row: row_index,
-                    create: value,
-                    menu_id: menu_id,
-                    menu: menu
-                });
-            } else if (field == 'isupdate') {
-                isUpdate.push({
-                    row: row_index,
-                    update: value,
-                    menu_id: menu_id,
-                    menu: menu
-                });
-            } else if (field == 'isdelete') {
-                isDelete.push({
-                    row: row_index,
-                    delete: value,
-                    menu_id: menu_id,
-                    menu: menu
-                });
-            }
+                if (field == 'isview') {
+                    isView.push({
+                        row: row_index,
+                        view: value,
+                        menu_id: menu_id,
+                        menu: menu
+                    });
+                } else if (field == 'iscreate') {
+                    isCreate.push({
+                        row: row_index,
+                        create: value,
+                        menu_id: menu_id,
+                        menu: menu
+                    });
+                } else if (field == 'isupdate') {
+                    isUpdate.push({
+                        row: row_index,
+                        update: value,
+                        menu_id: menu_id,
+                        menu: menu
+                    });
+                } else if (field == 'isdelete') {
+                    isDelete.push({
+                        row: row_index,
+                        delete: value,
+                        menu_id: menu_id,
+                        menu: menu
+                    });
+                }
 
-            if (setSave !== 'add')
-                accessID.push({
-                    row: row_index,
-                    access_id
-                });
-        });
+                if (setSave !== 'add')
+                    accessID.push({
+                        row: row_index,
+                        access_id
+                    });
+            });
 
-        accessID = removeDuplicates(accessID, item => item.row);
+            accessID = removeDuplicates(accessID, item => item.row);
 
-        let arrRole = mergeArrayObjects(isView, isCreate, isUpdate, isDelete, accessID);
+            let arrRole = mergeArrayObjects(isView, isCreate, isUpdate, isDelete, accessID);
 
-        formData.append('roles', JSON.stringify(arrRole));
-    }
+            formData.append('roles', JSON.stringify(arrRole));
+        }
 
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        // async: false,
-        cache: false,
-        dataType: 'JSON',
-        beforeSend: function () {
-            $('.save_form').prop('disabled', true);
-            $('.x_form').prop('disabled', true);
-            $('.close_form').prop('disabled', true);
-            loadingForm(form.prop('id'), 'facebook');
-        },
-        complete: function () {
-            $('.save_form').removeAttr('disabled');
-            $('.x_form').removeAttr('disabled');
-            $('.close_form').removeAttr('disabled');
-            hideLoadingForm(form.prop('id'));
-        },
-        success: function (result) {
-            if (result[0].success) {
-                Toast.fire({
-                    type: 'success',
-                    title: result[0].message
-                });
-
-                clearForm(evt);
-
-                if (!cardForm.prop('classList').contains('modal')) {
-                    const parent = cardForm.closest('.container');
-                    const cardBody = parent.find('.card-body');
-
-                    $.each(cardBody, function (idx, elem) {
-                        let className = elem.className.split(/\s+/);
-
-                        if (className.includes('card-main')) {
-                            $(this).css('display', 'block');
-
-                            // Remove breadcrumb list
-                            let li = ul.find('li');
-                            $.each(li, function (idx, elem) {
-                                if (idx > 2)
-                                    elem.remove();
-                            });
-
-                            if (parent.find('div.filter_page').length > 0) {
-                                parent.find('div.filter_page').css('display', 'block');
-                            }
-                        }
-
-                        if (className.includes('card-form')) {
-                            const cardHeader = parent.find('.card-header');
-                            cardHeader.find('button').show();
-                            $(this).css('display', 'none');
-                        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            // async: false,
+            cache: false,
+            dataType: 'JSON',
+            beforeSend: function () {
+                $('.save_form').prop('disabled', true);
+                $('.x_form').prop('disabled', true);
+                $('.close_form').prop('disabled', true);
+                loadingForm(form.prop('id'), 'facebook');
+            },
+            complete: function () {
+                $('.save_form').removeAttr('disabled');
+                $('.x_form').removeAttr('disabled');
+                $('.close_form').removeAttr('disabled');
+                hideLoadingForm(form.prop('id'));
+            },
+            success: function (result) {
+                if (result[0].success) {
+                    Toast.fire({
+                        type: 'success',
+                        title: result[0].message
                     });
 
-                    cardBtn.css('display', 'none');
+                    clearForm(evt);
 
-                    const cardHeader = parent.find('.card-header');
-                    const btnList = cardHeader.find('button').prop('classList');
+                    if (!cardForm.prop('classList').contains('modal')) {
+                        const parent = cardForm.closest('.container');
+                        const cardBody = parent.find('.card-body');
 
-                    if (btnList.contains('new_form'))
-                        cardHeader.find('button').css('display', 'block');
+                        $.each(cardBody, function (idx, elem) {
+                            let className = elem.className.split(/\s+/);
+
+                            if (className.includes('card-main')) {
+                                $(this).css('display', 'block');
+
+                                // Remove breadcrumb list
+                                let li = ul.find('li');
+                                $.each(li, function (idx, elem) {
+                                    if (idx > 2)
+                                        elem.remove();
+                                });
+
+                                if (parent.find('div.filter_page').length > 0) {
+                                    parent.find('div.filter_page').css('display', 'block');
+                                }
+                            }
+
+                            if (className.includes('card-form')) {
+                                const cardHeader = parent.find('.card-header');
+                                cardHeader.find('button').show();
+                                $(this).css('display', 'none');
+                            }
+                        });
+
+                        cardBtn.css('display', 'none');
+
+                        const cardHeader = parent.find('.card-header');
+                        const btnList = cardHeader.find('button').prop('classList');
+
+                        if (btnList.contains('new_form'))
+                            cardHeader.find('button').css('display', 'block');
+                    } else {
+                        modalForm.modal('hide');
+                    }
+
+                    cardTitle.html(capitalize(LAST_URL));
+
+                    reloadTable();
+
+                } else if (result[0].error) {
+                    errorForm(form, result);
+                    $('html, body').animate({
+                        scrollTop: $('.container').offset().top
+                    }, 1500);
+
                 } else {
-                    modalForm.modal('hide');
+                    Toast.fire({
+                        type: 'error',
+                        title: result[0].message
+                    });
                 }
-
-                cardTitle.html(capitalize(LAST_URL));
-
-                reloadTable();
-
-            } else if (result[0].error) {
-                errorForm(form, result);
-                $('html, body').animate({
-                    scrollTop: $('.container').offset().top
-                }, 1500);
-
-            } else {
-                Toast.fire({
-                    type: 'error',
-                    title: result[0].message
-                });
+            },
+            error: function (jqXHR, exception) {
+                showError(jqXHR, exception);
             }
-        },
-        error: function (jqXHR, exception) {
-            showError(jqXHR, exception);
-        }
-    });
+        });
 
-    // logic after insert / update data to set attribute based on field isactive condition
-    for (let i = 0; i < field.length; i++) {
-        if (field[i].name !== '') {
-            let className = field[i].className.split(/\s+/);
+        // logic after insert / update data to set attribute based on field isactive condition
+        for (let i = 0; i < field.length; i++) {
+            if (field[i].name !== '') {
+                let className = field[i].className.split(/\s+/);
 
-            if (form.find('input.active').is(':checked')) {
-                form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
-            } else {
-                if (!className.includes('active')) {
-                    form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
+                if (form.find('input.active').is(':checked')) {
+                    form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
+                } else {
+                    if (!className.includes('active')) {
+                        form.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
+                    }
                 }
             }
         }
+
+    } else {
+        Toast.fire({
+            type: 'error',
+            title: "You are role don't have permission, please reload !!"
+        });
     }
 });
 
@@ -390,217 +400,232 @@ function Edit(id) {
     let form, formList;
     let arrMultiSelect = [];
 
-    if (cardMain.length > 0) {
-        cardMain.css('display', 'none');
-        cardForm.css('display', 'block');
+    let action = 'update';
 
-        const container = cardForm.closest('.container');
+    if (isAccess(action, LAST_URL) == 'Y') {
+        if (cardMain.length > 0) {
+            cardMain.css('display', 'none');
+            cardForm.css('display', 'block');
 
-        if (!cardForm.prop('classList').contains('modal')) {
-            cardBtn.css('display', 'block');
-            const card = cardForm.closest('.card');
-            const btnList = card.find('.float-right').find('button');
+            const container = cardForm.closest('.container');
 
-            const pageHeader = container.find('.page-header');
-            ul = pageHeader.find('ul.breadcrumbs');
+            if (!cardForm.prop('classList').contains('modal')) {
+                cardBtn.css('display', 'block');
+                const card = cardForm.closest('.card');
+                const btnList = card.find('.float-right').find('button');
 
-            // Append list separator and text create
-            ul.find('li.nav-item > a').attr('href', SITE_URL);
+                const pageHeader = container.find('.page-header');
+                ul = pageHeader.find('ul.breadcrumbs');
 
-            let list = '<li class="separator">' +
-                '<i class="flaticon-right-arrow"></i>' +
-                '</li>';
+                // Append list separator and text create
+                ul.find('li.nav-item > a').attr('href', CURRENT_URL);
 
-            list += '<li class="nav-item">' +
-                '<a class="text-primary font-weight-bold">Update</a>' +
-                '</li>';
+                let list = '<li class="separator">' +
+                    '<i class="flaticon-right-arrow"></i>' +
+                    '</li>';
 
-            ul.append(list);
+                list += '<li class="nav-item">' +
+                    '<a class="text-primary font-weight-bold">Update</a>' +
+                    '</li>';
 
-            if (container.find('div.filter_page').length > 0) {
-                container.find('div.filter_page').css('display', 'none');
+                ul.append(list);
+
+                if (container.find('div.filter_page').length > 0) {
+                    container.find('div.filter_page').css('display', 'none');
+                }
+
+                btnList.css('display', 'none');
+
+                formList = cardForm.prop('classList');
+                form = cardForm.find('form');
+            } else {
+                cardMain.css('display', 'block');
+                cardForm.css('display', 'none');
+                formList = cardForm.prop('classList');
+                form = cardForm.find('form');
             }
-
-            btnList.css('display', 'none');
-
-            formList = cardForm.prop('classList');
-            form = cardForm.find('form');
         } else {
-            cardMain.css('display', 'block');
-            cardForm.css('display', 'none');
+            openModalForm();
+            Scrollmodal();
+            form = modalForm.find('form');
             formList = cardForm.prop('classList');
-            form = cardForm.find('form');
         }
-    } else {
-        openModalForm();
-        Scrollmodal();
-        form = modalForm.find('form');
-        formList = cardForm.prop('classList');
-    }
 
-    const field = form.find('input, textarea, select');
+        const field = form.find('input, textarea, select');
 
-    let url = SITE_URL + SHOW + ID;
+        let url = SITE_URL + SHOW + ID;
 
-    setSave = 'update';
+        setSave = 'update';
 
-    $.ajax({
-        url: url,
-        type: 'GET',
-        // async: false,
-        cache: false,
-        dataType: 'JSON',
-        beforeSend: function () {
-            $('.save_form').attr('disabled', true);
-            $('.x_form').attr('disabled', true);
-            $('.close_form').attr('disabled', true);
-            loadingForm(form.prop('id'), 'facebook');
-        },
-        complete: function () {
-            $('.save_form').removeAttr('disabled');
-            $('.x_form').removeAttr('disabled');
-            $('.close_form').removeAttr('disabled');
-            hideLoadingForm(form.prop('id'));
-        },
-        success: function (result) {
-            for (let i = 0; i < result.length; i++) {
-                if (form.find('table.tb_tree').length > 0) {
-                    const table = form.find('table.tb_tree');
-                    const input = table.find('td input:checkbox');
+        $.ajax({
+            url: url,
+            type: 'GET',
+            // async: false,
+            cache: false,
+            dataType: 'JSON',
+            beforeSend: function () {
+                $('.save_form').attr('disabled', true);
+                $('.x_form').attr('disabled', true);
+                $('.close_form').attr('disabled', true);
+                loadingForm(form.prop('id'), 'facebook');
+            },
+            complete: function () {
+                $('.save_form').removeAttr('disabled');
+                $('.x_form').removeAttr('disabled');
+                $('.close_form').removeAttr('disabled');
+                hideLoadingForm(form.prop('id'));
+            },
+            success: function (result) {
+                for (let i = 0; i < result.length; i++) {
+                    if (form.find('table.tb_tree').length > 0) {
+                        const table = form.find('table.tb_tree');
+                        const input = table.find('td input:checkbox');
 
-                    let keyName = Object.keys(result[i]);
-                    let label = Object.values(result[i]);
+                        let keyName = Object.keys(result[i]);
+                        let label = Object.values(result[i]);
 
-                    $.each(input, function (idx, elem) {
-                        // Menu parent
-                        if ($(elem).attr('data-menu') === 'parent') {
+                        $.each(input, function (idx, elem) {
+                            // Menu parent
+                            if ($(elem).attr('data-menu') === 'parent') {
 
-                            if (result[i].sys_menu_id == $(elem).val() && result[i].sys_submenu_id == 0) {
-                                if ((result[i].isview == 'Y' && $(elem).attr('name') === 'isview') ||
-                                    (result[i].iscreate == 'Y' && $(elem).attr('name') === 'iscreate') ||
-                                    (result[i].isupdate == 'Y' && $(elem).attr('name') === 'isupdate') ||
-                                    (result[i].isdelete == 'Y' && $(elem).attr('name') === 'isdelete')) {
-                                    $(elem).prop('checked', true);
-                                } else {
-                                    $(elem).prop('checked', false);
+                                if (result[i].sys_menu_id == $(elem).val() && result[i].sys_submenu_id == 0) {
+                                    if ((result[i].isview == 'Y' && $(elem).attr('name') === 'isview') ||
+                                        (result[i].iscreate == 'Y' && $(elem).attr('name') === 'iscreate') ||
+                                        (result[i].isupdate == 'Y' && $(elem).attr('name') === 'isupdate') ||
+                                        (result[i].isdelete == 'Y' && $(elem).attr('name') === 'isdelete')) {
+                                        $(elem).prop('checked', true);
+                                    } else {
+                                        $(elem).prop('checked', false);
+                                    }
+
+                                    // Set attribute id element to value sys_access_menu_id
+                                    $(elem).attr('id', result[i].sys_access_menu_id);
                                 }
 
-                                // Set attribute id element to value sys_access_menu_id
-                                $(elem).attr('id', result[i].sys_access_menu_id);
-                            }
-
-                        } else {
-                            if (result[i].sys_submenu_id === $(elem).val()) {
-                                if ((result[i].isview == 'Y' && $(elem).attr('name') === 'isview') ||
-                                    (result[i].iscreate == 'Y' && $(elem).attr('name') === 'iscreate') ||
-                                    (result[i].isupdate == 'Y' && $(elem).attr('name') === 'isupdate') ||
-                                    (result[i].isdelete == 'Y' && $(elem).attr('name') === 'isdelete')) {
-                                    $(elem).prop('checked', true);
-                                } else {
-                                    $(elem).prop('checked', false);
-                                }
-
-                                // Set attribute id element to value sys_access_menu_id
-                                $(elem).attr('id', result[i].sys_access_menu_id);
-                            }
-                        }
-                    });
-
-                    // Populate data into the form field
-                    $.each(keyName, function (idx, elem) {
-                        form.find('input:text[name=' + elem + '], textarea[name=' + elem + '], input:password[name=' + field[i].name + ']').val(label[idx]);
-
-                        if (elem === 'isactive' && label[idx] === 'Y') {
-                            form.find('input:checkbox[name=' + elem + ']').prop('checked', true);
-                            readonly(form, false);
-                        } else if (elem === 'isactive' && label[idx] === 'N') {
-                            form.find('input:checkbox[name=' + elem + ']').removeAttr('checked');
-                            readonly(form, true);
-                        }
-
-                        if (formList.contains('modal') && elem === 'name') {
-                            modalTitle.html(capitalize(label[idx]));
-                        } else if (elem === 'name') {
-                            cardTitle.html(capitalize(label[idx]));
-                        }
-                    });
-
-                } else {
-                    let fieldInput = result[i].field;
-                    let label = result[i].label;
-
-                    if (formList.contains('modal') && fieldInput === 'title') {
-                        modalTitle.html(capitalize(label));
-                    } else if (fieldInput === 'title') {
-                        cardTitle.html(capitalize(label));
-                    }
-
-                    for (let i = 0; i < field.length; i++) {
-                        if (field[i].name !== '' && field[i].name === fieldInput) {
-                            let className = field[i].className.split(/\s+/);
-
-                            form.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').val(label);
-
-                            if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
-                                form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) {
-                                $('[name =' + field[i].name + ']').summernote('code', label);
-                            }
-
-                            if (field[i].type === 'select-one') {
-                                let fieldName = field[i].name;
-                                let value = label;
-                                option.push({
-                                    fieldName,
-                                    value
-                                });
-
-                                form.find('select[name=' + field[i].name + ']').val(label).change();
-                            }
-
-                            if (field[i].type === 'select-multiple') {
-                                arrMultiSelect.push(label);
-                                form.find('select[name=' + field[i].name + ']').val(arrMultiSelect).change();
-                            }
-
-                            // Set condition value checked for field type Checkbox based on database
-                            if (field[i].type === 'checkbox' && label === 'Y') {
-                                form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', true);
-
-                                if (className.includes('active'))
-                                    readonly(form, false);
                             } else {
-                                form.find('input:checkbox[name=' + field[i].name + ']').removeAttr('checked');
+                                if (result[i].sys_submenu_id === $(elem).val()) {
+                                    if ((result[i].isview == 'Y' && $(elem).attr('name') === 'isview') ||
+                                        (result[i].iscreate == 'Y' && $(elem).attr('name') === 'iscreate') ||
+                                        (result[i].isupdate == 'Y' && $(elem).attr('name') === 'isupdate') ||
+                                        (result[i].isdelete == 'Y' && $(elem).attr('name') === 'isdelete')) {
+                                        $(elem).prop('checked', true);
+                                    } else {
+                                        $(elem).prop('checked', false);
+                                    }
 
-                                if (className.includes('active'))
-                                    readonly(form, true);
-                            }
-
-                            // Set value checked for field type Radio Button
-                            if (field[i].type == 'radio') {
-                                if (field[i].value == label) {
-                                    field[i].checked = true;
+                                    // Set attribute id element to value sys_access_menu_id
+                                    $(elem).attr('id', result[i].sys_access_menu_id);
                                 }
                             }
+                        });
 
-                            // Pass data form input file to function previewImage
-                            if (field[i].type === 'file') {
-                                if (className.includes('control-upload-image')) {
-                                    previewImage(form.find('input[name=' + field[i].name + ']')[0], '', label);
+                        // Populate data into the form field
+                        $.each(keyName, function (idx, elem) {
+                            form.find('input:text[name=' + elem + '], textarea[name=' + elem + '], input:password[name=' + field[i].name + ']').val(label[idx]);
+
+                            if (elem === 'isactive' && label[idx] === 'Y') {
+                                form.find('input:checkbox[name=' + elem + ']').prop('checked', true);
+                                readonly(form, false);
+                            } else if (elem === 'isactive' && label[idx] === 'N') {
+                                form.find('input:checkbox[name=' + elem + ']').removeAttr('checked');
+                                readonly(form, true);
+                            }
+
+                            if (formList.contains('modal') && elem === 'name') {
+                                modalTitle.html(capitalize(label[idx]));
+                            } else if (elem === 'name') {
+                                cardTitle.html(capitalize(label[idx]));
+                            }
+                        });
+
+                    } else {
+                        let fieldInput = result[i].field;
+                        let label = result[i].label;
+
+                        if (formList.contains('modal') && fieldInput === 'title') {
+                            modalTitle.html(capitalize(label));
+                        } else if (fieldInput === 'title') {
+                            cardTitle.html(capitalize(label));
+                        }
+
+                        for (let i = 0; i < field.length; i++) {
+                            if (field[i].name !== '' && field[i].name === fieldInput) {
+                                let className = field[i].className.split(/\s+/);
+
+                                if (className.includes('datepicker')) {
+                                    form.find('input:text[name=' + field[i].name + ']').val(moment(label).format('Y-MM-DD'));
+                                } else {
+                                    form.find('input:text[name=' + field[i].name + ']').val(label);
+                                }
+
+                                form.find('textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').val(label);
+
+                                if (form.find('textarea.summernote[name=' + field[i].name + ']').length > 0 ||
+                                    form.find('textarea.summernote-product[name=' + field[i].name + ']').length > 0) {
+                                    $('[name =' + field[i].name + ']').summernote('code', label);
+                                }
+
+                                if (field[i].type === 'select-one') {
+                                    let fieldName = field[i].name;
+                                    let value = label;
+                                    option.push({
+                                        fieldName,
+                                        value
+                                    });
+
+                                    form.find('select[name=' + field[i].name + ']').val(label).change();
+                                }
+
+                                if (field[i].type === 'select-multiple') {
+                                    arrMultiSelect.push(label);
+                                    form.find('select[name=' + field[i].name + ']').val(arrMultiSelect).change();
+                                }
+
+                                // Set condition value checked for field type Checkbox based on database
+                                if (field[i].type === 'checkbox' && label === 'Y') {
+                                    form.find('input:checkbox[name=' + field[i].name + ']').prop('checked', true);
+
+                                    if (className.includes('active'))
+                                        readonly(form, false);
+                                } else {
+                                    form.find('input:checkbox[name=' + field[i].name + ']').removeAttr('checked');
+
+                                    if (className.includes('active'))
+                                        readonly(form, true);
+                                }
+
+                                // Set value checked for field type Radio Button
+                                if (field[i].type == 'radio') {
+                                    if (field[i].value == label) {
+                                        field[i].checked = true;
+                                    }
+                                }
+
+                                // Pass data form input file to function previewImage
+                                if (field[i].type === 'file') {
+                                    if (className.includes('control-upload-image')) {
+                                        previewImage(form.find('input[name=' + field[i].name + ']')[0], '', label);
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
 
-            $('html, body').animate({
-                scrollTop: $('.main-panel').offset().top
-            }, 500);
-        },
-        error: function (jqXHR, exception) {
-            showError(jqXHR, exception);
-        }
-    });
+                $('html, body').animate({
+                    scrollTop: $('.main-panel').offset().top
+                }, 500);
+            },
+            error: function (jqXHR, exception) {
+                showError(jqXHR, exception);
+            }
+        });
+    } else {
+        Toast.fire({
+            type: 'error',
+            title: "You are role don't have permission, please reload !!"
+        });
+    }
 }
 
 /**
@@ -608,34 +633,43 @@ function Edit(id) {
  */
 function Destroy(id) {
     let url = SITE_URL + DELETE + id;
-    Swal.fire({
-        title: 'Delete?',
-        text: "Are you sure you wish to delete the selected data ? ",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        confirmButtonText: 'Okay',
-        cancelButtonText: 'Close',
-        reverseButtons: true
-    }).then((data) => {
-        if (data.value) //value is true
+    let action = 'delete';
 
-            $.post(url, function (result) {
-                Swal.fire({
-                    title: 'Deleted!',
-                    text: 'Your data has been deleted.',
-                    type: 'success',
-                    showConfirmButton: false,
-                    timer: 1000,
+    if (isAccess(action, LAST_URL) == 'Y') {
+        Swal.fire({
+            title: 'Delete?',
+            text: "Are you sure you wish to delete the selected data ? ",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Okay',
+            cancelButtonText: 'Close',
+            reverseButtons: true
+        }).then((data) => {
+            if (data.value) //value is true
+
+                $.post(url, function (result) {
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your data has been deleted.',
+                        type: 'success',
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+
+                    reloadTable()
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.info(errorThrown)
+                    reloadTable()
                 });
-
-                reloadTable()
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                console.info(errorThrown)
-                reloadTable()
-            });
-    });
+        });
+    } else {
+        Toast.fire({
+            type: 'error',
+            title: "You are role don't have permission, please reload !!"
+        });
+    }
 }
 
 /**
@@ -695,65 +729,73 @@ $('.new_form').click(function (evt) {
     const cardBody = parent.find('.card-body');
 
     let form;
+    let action = 'create';
 
-    $.each(cardBody, function (idx, elem) {
-        let className = elem.className.split(/\s+/);
+    if (isAccess(action, LAST_URL) == 'Y') {
+        $.each(cardBody, function (idx, elem) {
+            let className = elem.className.split(/\s+/);
 
-        if (cardBody.length > 1) {
-            if (className.includes('card-main')) {
-                $(this).css('display', 'none');
+            if (cardBody.length > 1) {
+                if (className.includes('card-main')) {
+                    $(this).css('display', 'none');
 
-                const pageHeader = parent.find('.page-header');
-                ul = pageHeader.find('ul.breadcrumbs');
+                    const pageHeader = parent.find('.page-header');
+                    ul = pageHeader.find('ul.breadcrumbs');
 
-                // Append list separator and text create
-                ul.find('li.nav-item > a').attr('href', SITE_URL);
+                    // Append list separator and text create
+                    ul.find('li.nav-item > a').attr('href', CURRENT_URL);
 
-                let list = '<li class="separator">' +
-                    '<i class="flaticon-right-arrow"></i>' +
-                    '</li>';
+                    let list = '<li class="separator">' +
+                        '<i class="flaticon-right-arrow"></i>' +
+                        '</li>';
 
-                list += '<li class="nav-item">' +
-                    '<a class="text-primary font-weight-bold">Create</a>' +
-                    '</li>';
+                    list += '<li class="nav-item">' +
+                        '<a class="text-primary font-weight-bold">Create</a>' +
+                        '</li>';
 
-                ul.append(list);
+                    ul.append(list);
 
-                if (parent.find('div.filter_page').length > 0) {
-                    parent.find('div.filter_page').css('display', 'none');
+                    if (parent.find('div.filter_page').length > 0) {
+                        parent.find('div.filter_page').css('display', 'none');
+                    }
                 }
-            }
 
-            if (className.includes('card-form')) {
-                const cardHeader = $(evt.target).closest('.card-header');
-                cardHeader.find('button').css('display', 'none');
-                $(this).css('display', 'block');
-                cardBtn.css('display', 'block');
+                if (className.includes('card-form')) {
+                    const cardHeader = $(evt.target).closest('.card-header');
+                    cardHeader.find('button').css('display', 'none');
+                    $(this).css('display', 'block');
+                    cardBtn.css('display', 'block');
 
-                cardTitle.html('New ' + capitalize(LAST_URL));
+                    cardTitle.html('New ' + capitalize(LAST_URL));
 
-                form = $(this).find('form');
+                    form = $(this).find('form');
+
+                    if (form.find('input:file.control-upload-image').length > 0) {
+                        form.find('.img-result').attr('src', '');
+                    }
+                }
+            } else {
+                openModalForm();
+                Scrollmodal();
+                modalTitle.html('New1 ' + capitalize(LAST_URL));
+
+                form = modalForm.find('form');
 
                 if (form.find('input:file.control-upload-image').length > 0) {
                     form.find('.img-result').attr('src', '');
                 }
             }
-        } else {
-            openModalForm();
-            Scrollmodal();
-            modalTitle.html('New1 ' + capitalize(LAST_URL));
+        });
 
-            form = modalForm.find('form');
+        form.find('input[type="checkbox"].active').prop('checked', true);
 
-            if (form.find('input:file.control-upload-image').length > 0) {
-                form.find('.img-result').attr('src', '');
-            }
-        }
-    });
-
-    form.find('input[type="checkbox"].active').prop('checked', true);
-
-    setSave = 'add';
+        setSave = 'add';
+    } else {
+        Toast.fire({
+            type: 'error',
+            title: "You are role don't have permission, please reload !!"
+        });
+    }
 });
 
 /**
@@ -793,6 +835,62 @@ $('.btn_filter').click(function (evt) {
     $(this).prop('disabled', false);
 
     reloadTable();
+});
+
+/**
+ * Process login
+ */
+$('.btn_login').click(function () {
+    const form = $(this).closest('form');
+
+    let url = ADMIN_URL + 'auth/login';
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: form.serialize(),
+        cache: false,
+        dataType: 'JSON',
+        beforeSend: function () {
+            $(this).prop('disabled', true);
+            loadingForm(form.attr('id'), 'facebook');
+        },
+        complete: function () {
+            $(this).removeAttr('disabled');
+            hideLoadingForm(form.attr('id'));
+        },
+        success: function (result) {
+            if (result[0].success) {
+                Toast.fire({
+                    type: 'success',
+                    title: result[0].message
+                });
+
+                window.open(ORI_URL + '/panel', '_self');
+
+            } else if (result[0].error) {
+                errorForm(form, result);
+            } else {
+                Toast.fire({
+                    type: 'error',
+                    title: result[0].message
+                });
+            }
+        },
+        error: function (jqXHR, exception) {
+            showError(jqXHR, exception);
+        }
+    });
+});
+
+/**
+ * Enter key press button login form
+ */
+$('.login-form input').keypress(function (evt) {
+    let key = evt.which;
+
+    if (key == 13)
+        $('.btn_login').click();
 });
 
 /**
@@ -1132,6 +1230,36 @@ function previewImage(input, id, src) {
 }
 
 /**
+ * 
+ * @param {*} input action "create, update, delete"
+ * @param {*} last_url get the last url
+ * @returns 
+ */
+function isAccess(input, last_url) {
+    let url = ADMIN_URL + 'accessmenu/' + 'getAccess';
+    let value;
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+            last_url: last_url,
+            action: input
+        },
+        async: false,
+        dataType: 'JSON',
+        success: function (result) {
+            value = result;
+        },
+        error: function (jqXHR, exception) {
+            showError(jqXHR, exception);
+        }
+    });
+
+    return value;
+}
+
+/**
  * Function to show error logic when process ajax
  * @param {*} xhr
  * @param {*} exception
@@ -1284,6 +1412,12 @@ $(document).ready(function (e) {
         aSep: ',',
         mDec: '0'
     });
+
+    window.setTimeout(function () {
+        $('.alert ').fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 4000);
 });
 
 

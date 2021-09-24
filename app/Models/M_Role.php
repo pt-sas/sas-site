@@ -16,7 +16,7 @@ class M_Role extends Model
   protected $useTimestamps = true;
   protected $returnType = 'App\Entities\Role';
 
-  public function detail($field = null, $where = null)
+  public function detail($param = [], $field = null, $where = null)
   {
     $db = \Config\Database::connect();
     $builder = $db->table($this->table);
@@ -30,6 +30,10 @@ class M_Role extends Model
                     am.isupdate,
                     am.isdelete');
     $builder->join('sys_access_menu am', 'am.sys_role_id = ' . $this->table . '.sys_role_id', 'left');
+
+    if (count($param) > 0) {
+      $builder->where($param);
+    }
 
     if (!empty($where)) {
       $builder->where($field, $where);
