@@ -138,6 +138,9 @@ $('.save_form').click(function (evt) {
     const form = parent.find('form');
     cardForm = parent.find('.card-form');
 
+    let _this = $(this);
+    let oriElement = _this.html();
+
     let url;
     let action = 'create';
 
@@ -288,12 +291,14 @@ $('.save_form').click(function (evt) {
                 $('.x_form').prop('disabled', true);
                 $('.close_form').prop('disabled', true);
                 loadingForm(form.prop('id'), 'facebook');
+                $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').prop('disabled', true);
             },
             complete: function () {
                 $('.save_form').removeAttr('disabled');
                 $('.x_form').removeAttr('disabled');
                 $('.close_form').removeAttr('disabled');
                 hideLoadingForm(form.prop('id'));
+                $(_this).html(oriElement).prop('disabled', false);
             },
             success: function (result) {
                 if (result[0].success) {
@@ -806,16 +811,20 @@ $('.btn_export').click(function (evt) {
     const cardFilter = container.find('.card-filter');
     let form = cardFilter.find('form');
 
+    let _this = $(this);
+    let oriElement = _this.html();
+
     form.attr('action', SITE_URL + EXPORT);
     form.attr('method', 'POST');
 
-    $(this).prop('disabled', true);
+    // form submit to export data
+    form.submit();
+
+    $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').prop('disabled', true);
 
     setTimeout(function () {
-        form.submit();
-    }, 500);
-
-    $(this).prop('disabled', false);
+        $(_this).html(oriElement).prop('disabled', false);
+    }, 700);
 });
 
 /**
@@ -841,6 +850,9 @@ $('.btn_filter').click(function (evt) {
  * Process login
  */
 $('.btn_login').click(function () {
+    let _this = $(this);
+    let oriElement = _this.html();
+
     const form = $(this).closest('form');
 
     let url = ADMIN_URL + 'auth/login';
@@ -853,11 +865,11 @@ $('.btn_login').click(function () {
         dataType: 'JSON',
         beforeSend: function () {
             $(this).prop('disabled', true);
-            loadingForm(form.attr('id'), 'facebook');
+            $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').prop('disabled', true);
         },
         complete: function () {
             $(this).removeAttr('disabled');
-            hideLoadingForm(form.attr('id'));
+            $(_this).html(oriElement).prop('disabled', false);
         },
         success: function (result) {
             if (result[0].success) {
