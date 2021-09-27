@@ -832,16 +832,16 @@ $('.btn_export').click(function (evt) {
  */
 $('.btn_filter').click(function (evt) {
     const form = $(evt.target).closest('form');
+    let _this = $(this);
+    let oriElement = _this.html();
 
     formTable = form.serializeArray();
 
-    loadingForm(form[0].id, 'none');
-    $(this).prop('disabled', true);
+    $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').prop('disabled', true);
 
     setTimeout(function () {
-        hideLoadingForm(form[0].id);
-    }, 500);
-    $(this).prop('disabled', false);
+        $(_this).html(oriElement).prop('disabled', false);
+    }, 700);
 
     reloadTable();
 });
