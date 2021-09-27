@@ -21,6 +21,9 @@ let ID,
 // Data array from option
 let option = [];
 
+// Data field array is readonly default
+let fieldReadOnly = [];
+
 // Method default controller
 const SHOWALL = '/showAll',
     CREATE = '/create',
@@ -778,6 +781,17 @@ $('.new_form').click(function (evt) {
                     if (form.find('input:file.control-upload-image').length > 0) {
                         form.find('.img-result').attr('src', '');
                     }
+
+                    const field = parent.find('input, textarea');
+
+                    for (let i = 0; i < field.length; i++) {
+                        if (field[i].name !== '') {
+
+                            // set field is readonly by default
+                            if (field[i].readOnly)
+                                fieldReadOnly.push(field[i].name)
+                        }
+                    }
                 }
             } else {
                 openModalForm();
@@ -917,7 +931,10 @@ $('input.active:checkbox').change(function (evt) {
         for (let i = 0; i < field.length; i++) {
             if (field[i].name !== '') {
                 className = field[i].className.split(/\s+/);
-                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').removeAttr('readonly');
+
+                // field is not readonly by default
+                if (!fieldReadOnly.includes(field[i].name))
+                    parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').removeAttr('readonly');
 
                 if (field[i].type !== 'text' && !className.includes('active')) {
                     parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
@@ -940,7 +957,14 @@ $('input.active:checkbox').change(function (evt) {
         for (let i = 0; i < field.length; i++) {
             if (field[i].name !== '') {
                 className = field[i].className.split(/\s+/);
-                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').prop('readonly', true);
+
+                // set field is readonly by default
+                if (field[i].readOnly)
+                    fieldReadOnly.push(field[i].name);
+
+                // field is not readonly by default
+                if (!fieldReadOnly.includes(field[i].name))
+                    parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').prop('readonly', true);
 
                 if (field[i].type !== 'text' && !className.includes('active')) {
                     parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
@@ -961,6 +985,7 @@ $('input.active:checkbox').change(function (evt) {
         }
     }
 });
+
 
 /**
  * Button close image
@@ -1071,9 +1096,15 @@ function clearForm(evt) {
         if (field[i].name !== '') {
             let option = $(field[i]).find('option:selected');
 
-            form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
-                .removeAttr('readonly')
-                .parent('div').removeClass('has-error');
+            if (fieldReadOnly.length == 0) {
+                form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
+                    .removeAttr('readonly')
+                    .parent('div').removeClass('has-error');
+            } else if (fieldReadOnly.length > 0 && !fieldReadOnly.includes(field[i].name)) { // field is not readonly by default
+                form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
+                    .removeAttr('readonly')
+                    .parent('div').removeClass('has-error');
+            }
 
             form.find('input:checkbox[name=' + field[i].name + ']')
                 .removeAttr('disabled');
@@ -1122,7 +1153,13 @@ function readonly(parent, value) {
         if (field[i].name !== '') {
             let className = field[i].className.split(/\s+/);
 
-            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').prop('readonly', value);
+            // set field is readonly by default
+            if (field[i].readOnly)
+                fieldReadOnly.push(field[i].name);
+
+            // field is not readonly by default
+            if (!fieldReadOnly.includes(field[i].name))
+                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').prop('readonly', value);
 
             if (field[i].type !== 'text' && !className.includes('active')) {
                 parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']')
