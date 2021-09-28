@@ -164,16 +164,16 @@ class Template
                     endforeach;
 
                     $sidebar .= '<li class="nav-item ' . $subActive . ' submenu">
-                                <a data-toggle="collapse" href="#' . $row->name . '">
+                                <a data-toggle="collapse" href="#' . $row->url . '">
                                     <i class="' . $row->icon . '"></i>
                                     <p>' . $row->name . '</p>
                                     <span class="caret"></span>
                                 </a>';
 
                     if (!empty($subActive))
-                        $sidebar .= '<div class="collapse show" id="' . $row->name . '">';
+                        $sidebar .= '<div class="collapse show" id="' . $row->url . '">';
                     else
-                        $sidebar .= '<div class="collapse" id="' . $row->name . '">';
+                        $sidebar .= '<div class="collapse" id="' . $row->url . '">';
 
                     $sidebar .= '<ul class="nav nav-collapse">';
 
