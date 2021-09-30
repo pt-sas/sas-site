@@ -36,7 +36,7 @@ class Auth extends BaseController
 			} else {
 				$check = $this->access->checkLogin($post);
 
-				if ($check == 3) {
+				if ($check == 3 || $check == 4) {
 					$response = message('error', false, "User don't have access");
 				} else if ($check == 0 || $check == 2) {
 					$response = message('error', false, 'Wrong Username or Password');
