@@ -7,6 +7,8 @@ use CodeIgniter\Validation\FileRules;
 use CodeIgniter\Validation\FormatRules;
 use CodeIgniter\Validation\Rules;
 
+use App\Validation\PasswordRules;
+
 class Validation
 {
 	//--------------------------------------------------------------------
@@ -24,6 +26,7 @@ class Validation
 		FormatRules::class,
 		FileRules::class,
 		CreditCardRules::class,
+		PasswordRules::class
 	];
 
 	/**
@@ -414,5 +417,23 @@ class Validation
 	public $login = [
 		'username'	=> 'required',
 		'password'	=> 'required'
+	];
+
+	public $change_password = [
+		'password'		=> [
+			'label'		=> 'old password',
+			'rules'		=> 'required|match',
+			'errors'	=> [
+				'match'	=> 'The {field} does not match'
+			]
+		],
+		'new_password'	=> [
+			'label'		=> 'new password',
+			'rules'		=> 'required'
+		],
+		'conf_password'	=> [
+			'label'		=> 'confirmation password',
+			'rules'		=> 'required|matches[new_password]'
+		]
 	];
 }
