@@ -4,6 +4,8 @@ namespace App\Controllers\Backend;
 
 use App\Controllers\BaseController;
 
+use App\Models\M_User;
+
 class Auth extends BaseController
 {
 	protected $table = 'sys_user';
@@ -22,6 +24,10 @@ class Auth extends BaseController
 	public function login()
 	{
 		$validation = \Config\Services::validation();
+		$eUser = new \App\Entities\User();
+
+		$user = new M_User();
+
 		$post = $this->request->getVar();
 
 		try {
@@ -35,7 +41,16 @@ class Auth extends BaseController
 				} else if ($check == 0 || $check == 2) {
 					$response = message('error', false, 'Wrong Username or Password');
 				} else {
-					$msg = $check == 1 ? 'Login successfully !' : $check;
+					if ($check == 1) {
+						$eUser->datelastlogin = date('Y-m-d H:i:s');
+						$eUser->sys_user_id = session()->get('sys_user_id');
+						$user->save($eUser);
+
+						$msg = 'Login successfully !';
+					} else {
+						$msg = $check;
+					}
+
 					$response = message('success', true, $msg);
 				}
 			}
