@@ -57,6 +57,8 @@ $routes->get('/check', 'MainController::check');
 //Backend
 $routes->get('auth', 'Backend/Auth::index', ['filter' => 'auth']);
 
+$routes->get('logout', 'Backend\Auth::logout');
+
 $routes->group('panel', ['filter' => 'auth'], function ($routes) {
 	$routes->add('/', 'Backend\Dashboard::index');
 	$routes->add('about', 'Backend\About::index');
