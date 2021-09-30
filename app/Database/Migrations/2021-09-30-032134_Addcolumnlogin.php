@@ -10,10 +10,10 @@ class Addcolumnlogin extends Migration
 	{
 		$fields = [
 			'datelastlogin'			=> [
-				'type'				=> 'TIMESTAMP'
+				'type'				=> 'TIMESTAMP NULL',
 			],
 			'datepasswordchange'	=> [
-				'type'				=> 'TIMESTAMP'
+				'type'				=> 'TIMESTAMP NULL',
 			]
 		];
 
