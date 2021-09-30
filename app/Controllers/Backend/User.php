@@ -113,10 +113,13 @@ class User extends BaseController
 			$eUser->username = $post['username'];
 			$eUser->email = $post['email'];
 			$eUser->description = $post['description'];
+			$eUser->updated_at = date('Y-m-d H:i:s');
 
 			// Check password has change true
-			if ($row->hasChanged('password'))
+			if ($row->hasChanged('password')) {
 				$eUser->password = $post['password'];
+				$eUser->datepasswordchange = date('Y-m-d H:i:s');
+			}
 
 			$eUser->sys_user_id = $post['id'];
 			$eUser->isactive = setCheckbox(isset($post['isactive']));
