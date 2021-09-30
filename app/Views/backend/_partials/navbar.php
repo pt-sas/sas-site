@@ -26,7 +26,7 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Account Setting</a>
               <div class="dropdown-divider"></div> -->
-              <a class="dropdown-item" href="<?= site_url('backend/auth/logout') ?>">Logout</a>
+              <a class="dropdown-item" href="<?= site_url('logout') ?>">Logout</a>
             </li>
           </div>
         </ul>
