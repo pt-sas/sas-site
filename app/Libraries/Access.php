@@ -26,6 +26,7 @@ class Access
      * 1 = sukses
      * 2 = password salah
      * 3 = user nonaktif
+     * 4 = role tidak ada
      * @param unknown_type $post
      * @return boolean
      */
@@ -38,7 +39,7 @@ class Access
         ])->getRow();
 
         if ($dataUser) {
-            if ($dataUser->isactive === 'Y') {
+            if ($dataUser->isactive === 'Y' && !empty($dataUser->role)) {
                 if (password_verify($post['password'], $dataUser->password)) {
                     $this->session->set([
                         'sys_user_id'   => $dataUser->sys_user_id,
@@ -49,6 +50,8 @@ class Access
                 } else {
                     return 2;
                 }
+            } else if ($dataUser->isactive === 'Y' && empty($dataUser->role)) {
+                return 4;
             } else {
                 return 3;
             }
@@ -142,7 +145,7 @@ class Access
     {
         $role = new M_Role();
         $row = $role->find(session()->get('sys_role_id'));
-        return $row->name;
+        return $row ? $row->name : 'No Role';
     }
 
     public function getMenu($uri, $field)
