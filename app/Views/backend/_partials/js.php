@@ -1,8 +1,10 @@
 <!--   Core JS Files   -->
 <script src="<?= base_url('atlantis-pro/js/core/jquery.3.2.1.min.js') ?>"></script>
 <script src="<?= base_url('atlantis-pro/js/core/popper.min.js') ?>"></script>
-<script src="<?= base_url('atlantis-pro/js/core/bootstrap.min.js') ?>"></script>
-
+<!-- <script src="<? //= base_url('atlantis-pro/js/core/bootstrap.min.js') 
+                    ?>"></script> -->
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- jQuery UI -->
 <script src="<?= base_url('atlantis-pro/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') ?>"></script>
 <script src="<?= base_url('atlantis-pro/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') ?>"></script>

@@ -21,6 +21,9 @@ let ID,
 // Data array from option
 let option = [];
 
+// Data field array is readonly default
+let fieldReadOnly = [];
+
 // Method default controller
 const SHOWALL = '/showAll',
     CREATE = '/create',
@@ -137,6 +140,9 @@ $('.save_form').click(function (evt) {
     const parent = $(evt.target).closest('.row');
     const form = parent.find('form');
     cardForm = parent.find('.card-form');
+
+    let _this = $(this);
+    let oriElement = _this.html();
 
     let url;
     let action = 'create';
@@ -288,12 +294,14 @@ $('.save_form').click(function (evt) {
                 $('.x_form').prop('disabled', true);
                 $('.close_form').prop('disabled', true);
                 loadingForm(form.prop('id'), 'facebook');
+                $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').prop('disabled', true);
             },
             complete: function () {
                 $('.save_form').removeAttr('disabled');
                 $('.x_form').removeAttr('disabled');
                 $('.close_form').removeAttr('disabled');
                 hideLoadingForm(form.prop('id'));
+                $(_this).html(oriElement).prop('disabled', false);
             },
             success: function (result) {
                 if (result[0].success) {
@@ -773,6 +781,17 @@ $('.new_form').click(function (evt) {
                     if (form.find('input:file.control-upload-image').length > 0) {
                         form.find('.img-result').attr('src', '');
                     }
+
+                    const field = parent.find('input, textarea');
+
+                    for (let i = 0; i < field.length; i++) {
+                        if (field[i].name !== '') {
+
+                            // set field is readonly by default
+                            if (field[i].readOnly)
+                                fieldReadOnly.push(field[i].name)
+                        }
+                    }
                 }
             } else {
                 openModalForm();
@@ -806,16 +825,20 @@ $('.btn_export').click(function (evt) {
     const cardFilter = container.find('.card-filter');
     let form = cardFilter.find('form');
 
+    let _this = $(this);
+    let oriElement = _this.html();
+
     form.attr('action', SITE_URL + EXPORT);
     form.attr('method', 'POST');
 
-    $(this).prop('disabled', true);
+    // form submit to export data
+    form.submit();
+
+    $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').prop('disabled', true);
 
     setTimeout(function () {
-        form.submit();
-    }, 500);
-
-    $(this).prop('disabled', false);
+        $(_this).html(oriElement).prop('disabled', false);
+    }, 700);
 });
 
 /**
@@ -823,16 +846,16 @@ $('.btn_export').click(function (evt) {
  */
 $('.btn_filter').click(function (evt) {
     const form = $(evt.target).closest('form');
+    let _this = $(this);
+    let oriElement = _this.html();
 
     formTable = form.serializeArray();
 
-    loadingForm(form[0].id, 'none');
-    $(this).prop('disabled', true);
+    $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').prop('disabled', true);
 
     setTimeout(function () {
-        hideLoadingForm(form[0].id);
-    }, 500);
-    $(this).prop('disabled', false);
+        $(_this).html(oriElement).prop('disabled', false);
+    }, 700);
 
     reloadTable();
 });
@@ -841,6 +864,9 @@ $('.btn_filter').click(function (evt) {
  * Process login
  */
 $('.btn_login').click(function () {
+    let _this = $(this);
+    let oriElement = _this.html();
+
     const form = $(this).closest('form');
 
     let url = ADMIN_URL + 'auth/login';
@@ -853,11 +879,11 @@ $('.btn_login').click(function () {
         dataType: 'JSON',
         beforeSend: function () {
             $(this).prop('disabled', true);
-            loadingForm(form.attr('id'), 'facebook');
+            $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').prop('disabled', true);
         },
         complete: function () {
             $(this).removeAttr('disabled');
-            hideLoadingForm(form.attr('id'));
+            $(_this).html(oriElement).prop('disabled', false);
         },
         success: function (result) {
             if (result[0].success) {
@@ -905,7 +931,10 @@ $('input.active:checkbox').change(function (evt) {
         for (let i = 0; i < field.length; i++) {
             if (field[i].name !== '') {
                 className = field[i].className.split(/\s+/);
-                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').removeAttr('readonly');
+
+                // field is not readonly by default
+                if (!fieldReadOnly.includes(field[i].name))
+                    parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').removeAttr('readonly');
 
                 if (field[i].type !== 'text' && !className.includes('active')) {
                     parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').removeAttr('disabled');
@@ -928,7 +957,14 @@ $('input.active:checkbox').change(function (evt) {
         for (let i = 0; i < field.length; i++) {
             if (field[i].name !== '') {
                 className = field[i].className.split(/\s+/);
-                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').prop('readonly', true);
+
+                // set field is readonly by default
+                if (field[i].readOnly)
+                    fieldReadOnly.push(field[i].name);
+
+                // field is not readonly by default
+                if (!fieldReadOnly.includes(field[i].name))
+                    parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').prop('readonly', true);
 
                 if (field[i].type !== 'text' && !className.includes('active')) {
                     parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + ']').prop('disabled', true);
@@ -949,6 +985,7 @@ $('input.active:checkbox').change(function (evt) {
         }
     }
 });
+
 
 /**
  * Button close image
@@ -1059,9 +1096,15 @@ function clearForm(evt) {
         if (field[i].name !== '') {
             let option = $(field[i]).find('option:selected');
 
-            form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
-                .removeAttr('readonly')
-                .parent('div').removeClass('has-error');
+            if (fieldReadOnly.length == 0) {
+                form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
+                    .removeAttr('readonly')
+                    .parent('div').removeClass('has-error');
+            } else if (fieldReadOnly.length > 0 && !fieldReadOnly.includes(field[i].name)) { // field is not readonly by default
+                form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
+                    .removeAttr('readonly')
+                    .parent('div').removeClass('has-error');
+            }
 
             form.find('input:checkbox[name=' + field[i].name + ']')
                 .removeAttr('disabled');
@@ -1110,7 +1153,13 @@ function readonly(parent, value) {
         if (field[i].name !== '') {
             let className = field[i].className.split(/\s+/);
 
-            parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').prop('readonly', value);
+            // set field is readonly by default
+            if (field[i].readOnly)
+                fieldReadOnly.push(field[i].name);
+
+            // field is not readonly by default
+            if (!fieldReadOnly.includes(field[i].name))
+                parent.find('input:text[name=' + field[i].name + '], textarea[name=' + field[i].name + '], input:password[name=' + field[i].name + ']').prop('readonly', value);
 
             if (field[i].type !== 'text' && !className.includes('active')) {
                 parent.find('input:checkbox[name=' + field[i].name + '], select[name=' + field[i].name + '], input:radio[name=' + field[i].name + ']')
