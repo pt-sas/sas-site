@@ -920,6 +920,87 @@ $('.login-form input').keypress(function (evt) {
 });
 
 /**
+ * Anchor change password on the navbar admin
+ */
+$('.change-password').click(function (evt) {
+    openModalForm();
+});
+
+/**
+ * Save modal password
+ */
+$('.save_form_pass').click(function (evt) {
+    const parent = $(evt.target).closest('.modal');
+    const form = parent.find('form');
+
+    let _this = $(this);
+    let oriElement = _this.html();
+
+    let url = ADMIN_URL + 'auth/' + 'change_password';
+
+    let formData = new FormData(form[0]);
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        dataType: 'JSON',
+        beforeSend: function () {
+            $('.close').prop('disabled', true);
+            loadingForm(form.prop('id'), 'facebook');
+            $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').prop('disabled', true);
+        },
+        complete: function () {
+            $('.close').prop('disabled', false);
+            hideLoadingForm(form.prop('id'));
+            $(_this).html(oriElement).prop('disabled', false);
+        },
+        success: function (result) {
+            if (result[0].success) {
+                Toast.fire({
+                    type: 'success',
+                    title: result[0].message
+                });
+
+                clearForm(evt);
+
+                $('.modal_form').modal('hide');
+
+            } else if (result[0].error) {
+                let fields = result[0].message;
+
+                $.each(fields, function (idx, elem) {
+                    if (elem !== '') {
+                        form.find('input:password[name="' + idx + '"]')
+                            .closest('.form-group')
+                            .addClass('has-error');
+
+                        form.find('small[id=error_' + idx + ']').html(elem);
+                    } else {
+                        form.find('input:password[name="' + idx + '"]')
+                            .closest('.form-group')
+                            .removeClass('has-error');
+
+                        form.find('small[id=error_' + idx + ']').html('');
+                    }
+                });
+            } else {
+                Toast.fire({
+                    type: 'error',
+                    title: result[0].message
+                });
+            }
+        },
+        error: function (jqXHR, exception) {
+            showError(jqXHR, exception);
+        }
+    });
+});
+
+/**
  * Process for active non-active field in the form using checkbox class active
  */
 $('input.active:checkbox').change(function (evt) {
@@ -1082,8 +1163,8 @@ function errorForm(parent, data) {
  * @param {*} evt selector html
  */
 function clearForm(evt) {
-    const container = $(evt.target).closest('.container')
-    const parent = $(evt.target).closest('.row');
+    const container = $(evt.target).closest('.container');
+    let parent = $(evt.target).closest('.row').length > 0 ? $(evt.target).closest('.row') : $(evt.target).closest('.modal');
     const form = parent.find('form');
     const field = form.find('input, textarea, select');
     const errorText = form.find('small');
@@ -1099,11 +1180,11 @@ function clearForm(evt) {
             if (fieldReadOnly.length == 0) {
                 form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
                     .removeAttr('readonly')
-                    .parent('div').removeClass('has-error');
+                    .closest('.form-group').removeClass('has-error');
             } else if (fieldReadOnly.length > 0 && !fieldReadOnly.includes(field[i].name)) { // field is not readonly by default
                 form.find('input[name=' + field[i].name + '], textarea[name=' + field[i].name + ']')
                     .removeAttr('readonly')
-                    .parent('div').removeClass('has-error');
+                    .closest('.form-group').removeClass('has-error');
             }
 
             form.find('input:checkbox[name=' + field[i].name + ']')
@@ -1379,7 +1460,7 @@ const capitalize = (s) => {
  * Funtion to show modal form
  */
 function openModalForm() {
-    return modalForm.modal({
+    return $('.modal_form').modal({
         backdrop: 'static',
         keyboard: false
     });

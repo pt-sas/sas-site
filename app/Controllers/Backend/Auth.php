@@ -66,4 +66,38 @@ class Auth extends BaseController
 		session()->destroy();
 		return redirect()->to(site_url('auth'));
 	}
+
+	public function change_password()
+	{
+		$validation = \Config\Services::validation();
+		$eUser = new \App\Entities\User();
+
+		$user = new M_User();
+
+		$post = $this->request->getVar();
+
+		try {
+			$eUser->password = $post['new_password'];
+			$eUser->updated_at = date('Y-m-d H:i:s');
+			$eUser->datepasswordchange = date('Y-m-d H:i:s');
+			$eUser->sys_user_id = session()->get('sys_user_id');
+
+			if (!$validation->run($post, 'change_password')) {
+				$errors = [
+					'password'		=> $validation->getError('password'),
+					'new_password'	=> $validation->getError('new_password'),
+					'conf_password'	=> $validation->getError('conf_password')
+				];
+
+				$response = message('error', true, $errors);
+			} else {
+				$result = $user->save($eUser);
+				$response = message('success', true, $result);
+			}
+		} catch (\Exception $e) {
+			$response = message('error', false, $e->getMessage());
+		}
+
+		return json_encode($response);
+	}
 }
