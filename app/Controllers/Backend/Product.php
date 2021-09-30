@@ -22,17 +22,10 @@ class Product extends BaseController
 
 	public function index()
 	{
-		$this->new_title = 'Product';
-		$this->form_type = 'new_form';
-
 		$principal = new M_Principal();
 		$uom = new M_Uom();
 
 		$data = [
-			'title'    	=> '' . $this->new_title . '',
-			'button'    => '<button type="button" class="btn btn-primary btn-sm btn-round ml-auto ' . $this->form_type . ' ' . $this->modal_type . '" title="' . $this->new_title . '">
-												<i class="fa fa-plus fa-fw"></i> ' . $this->new_title . '
-										 </button>',
 			'principal'	=> $principal->where('isactive', 'Y')
 				->orderBy('name', 'ASC')
 				->findAll(),
@@ -40,6 +33,7 @@ class Product extends BaseController
 				->orderBy('name', 'ASC')
 				->findAll()
 		];
+
 		return $this->template->render('backend/product/v_product', $data);
 	}
 
@@ -77,10 +71,7 @@ class Product extends BaseController
 				$row[] = $value->volume;
 				$row[] = active($value->visible);
 				$row[] = active($value->isactive);
-				$row[] = '<center>
-						<a class="btn" onclick="Edit(' . "'" . $ID . "'" . ')" title="Edit"><i class="far fa-edit text-info"></i></a>
-						<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
-					</center>';
+				$row[] = $this->template->table_button($ID);
 				$data[] = $row;
 			endforeach;
 

@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use App\Libraries\Template;
 use App\Libraries\Field;
 use App\Libraries\Picture;
+use App\Libraries\Access;
 
 /**
  * Class BaseController
@@ -38,6 +39,7 @@ class BaseController extends Controller
 	protected $template;
 	protected $field;
 	protected $picture;
+	protected $access;
 
 	/**
 	 * Constructor.
@@ -58,6 +60,7 @@ class BaseController extends Controller
 		$this->template = new Template();
 		$this->field = new Field();
 		$this->picture = new Picture();
+		$this->access = new Access();
 
 		$session = \Config\Services::session();
 		$language = \Config\Services::language();

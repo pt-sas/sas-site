@@ -1,9 +1,9 @@
 <div class="page-header">
-	<h4 class="page-title"><?= $title ?></h4>
-	<?php if($title != 'Dashboard') :?>
+	<h4 class="page-title"><?= $title ? $title : '' ?></h4>
+	<?php if ($title) : ?>
 		<ul class="breadcrumbs">
 			<li class="nav-home">
-				<a href="<?= base_url('/backend') ?>">
+				<a href="<?= site_url('panel') ?>">
 					<i class="flaticon-home"></i>
 				</a>
 			</li>
@@ -14,7 +14,5 @@
 				<a><?= $title ?></a>
 			</li>
 		</ul>
-	<?php else  : ?>
-
 	<?php endif ?>
 </div>

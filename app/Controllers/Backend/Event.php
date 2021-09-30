@@ -46,10 +46,7 @@ class Event extends BaseController
 			$row[] = format_dmy($value->start_date);
 			$row[] = format_dmy($value->end_date);
 			$row[] = active($value->isactive);
-			$row[] = '<center>
-						<a class="btn" onclick="Edit(' . "'" . $ID . "'" . ')" title="Edit"><i class="far fa-edit text-info"></i></a>
-						<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
-					</center>';
+			$row[] = $this->template->table_button($ID);
 			$data[] = $row;
 		endforeach;
 

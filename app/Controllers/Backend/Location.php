@@ -13,16 +13,10 @@ class Location extends BaseController
 	{
 		$location = new M_Location();
 
-		$this->new_title = 'Location';
-		$this->form_type = 'new_form';
-
 		$data = [
-			'title'    	=> '' . $this->new_title . '',
-			'button'    => '<button type="button" class="btn btn-primary btn-sm btn-round ml-auto ' . $this->form_type . ' ' . $this->modal_type . '" title="' . $this->new_title . '">
-												<i class="fa fa-plus fa-fw"></i> ' . $this->new_title . '
-										 </button>',
 			'location' 	=> $location->findAll()
 		];
+
 		return $this->template->render('backend/location/v_location', $data);
 	}
 
@@ -45,10 +39,7 @@ class Location extends BaseController
 			$row[] = $value->name_en;
 			$row[] = $value->phone;
 			$row[] = active($value->isactive);
-			$row[] = '<center>
-						<a class="btn" onclick="Edit(' . "'" . $ID . "'" . ')" title="Edit"><i class="far fa-edit text-info"></i></a>
-						<a class="btn" onclick="Destroy(' . "'" . $ID . "'" . ')" title="Delete"><i class="fas fa-trash-alt text-danger"></i></a>
-					</center>';
+			$row[] = $this->template->table_button($ID);
 			$data[] = $row;
 		endforeach;
 
