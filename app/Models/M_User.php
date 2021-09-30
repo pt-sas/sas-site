@@ -14,9 +14,12 @@ class M_User extends Model
 		'description',
 		'password',
 		'email',
-		'isactive'
+		'isactive',
+		'datelastlogin',
+		'datepasswordchange',
+		'updated_at'
 	];
-	protected $useTimestamps        = true;
+	protected $useTimestamps        = false;
 	protected $returnType           = 'App\Entities\User';
 
 	public function detail($arrParam = [], $field = null, $where = null)
