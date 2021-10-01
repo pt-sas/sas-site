@@ -290,14 +290,13 @@ $('.save_form').click(function (evt) {
             cache: false,
             dataType: 'JSON',
             beforeSend: function () {
-                $('.save_form').prop('disabled', true);
                 $('.x_form').prop('disabled', true);
                 $('.close_form').prop('disabled', true);
                 loadingForm(form.prop('id'), 'facebook');
-                $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').prop('disabled', true);
+                $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...')
+                    .prop('disabled', true);
             },
             complete: function () {
-                $('.save_form').removeAttr('disabled');
                 $('.x_form').removeAttr('disabled');
                 $('.close_form').removeAttr('disabled');
                 hideLoadingForm(form.prop('id'));
