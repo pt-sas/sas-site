@@ -83,13 +83,7 @@ class Auth extends BaseController
 			$eUser->sys_user_id = session()->get('sys_user_id');
 
 			if (!$validation->run($post, 'change_password')) {
-				$errors = [
-					'password'		=> $validation->getError('password'),
-					'new_password'	=> $validation->getError('new_password'),
-					'conf_password'	=> $validation->getError('conf_password')
-				];
-
-				$response = message('error', true, $errors);
+				$response =	$this->field->errorValidation($this->table, null, $post);
 			} else {
 				$result = $user->save($eUser);
 				$response = message('success', true, $result);
