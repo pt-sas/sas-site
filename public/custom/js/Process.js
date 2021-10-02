@@ -969,23 +969,7 @@ $('.save_form_pass').click(function (evt) {
                 $('.modal_form').modal('hide');
 
             } else if (result[0].error) {
-                let fields = result[0].message;
-
-                $.each(fields, function (idx, elem) {
-                    if (elem !== '') {
-                        form.find('input:password[name="' + idx + '"]')
-                            .closest('.form-group')
-                            .addClass('has-error');
-
-                        form.find('small[id=error_' + idx + ']').html(elem);
-                    } else {
-                        form.find('input:password[name="' + idx + '"]')
-                            .closest('.form-group')
-                            .removeClass('has-error');
-
-                        form.find('small[id=error_' + idx + ']').html('');
-                    }
-                });
+                errorForm(form, result);
             } else {
                 Toast.fire({
                     type: 'error',
