@@ -92,11 +92,10 @@ class Field
      * Get error validation field
      *
      * $table untuk mendapatkan nama table
-     * $query jenis data
      * $field_post mendapatkan field dari method post
      * @return $result
      */
-    function errorValidation($table, $query = null, $field_post = null)
+    function errorValidation($table, $field_post)
     {
         $allError = $this->validation->getErrors();
 
@@ -115,47 +114,22 @@ class Field
                 $arrField[] = str_replace('.*', '', $field);
         endforeach;
 
-        if (!isset($field_post)) {
-            if (empty($query)) {
-                $fields = $this->db->getFieldNames($table);
+        foreach ($field_post as $key => $field) :
+            // Validation field is not inarray
+            if (in_array($key, $arrField)) {
+                $result[] = [
+                    'error' => 'error_' . $key,
+                    'field' => $key,
+                    'label' => $this->validation->getError($key . '.*')
+                ];
             } else {
-                $fields = $query->getFieldNames();
+                $result[] = [
+                    'error' => 'error_' . $key,
+                    'field' => $key,
+                    'label' => $this->validation->getError($key)
+                ];
             }
-
-            foreach ($fields as $field) :
-                // Validation field dot array
-                if (in_array($field, $arrField)) {
-                    $result[] = [
-                        'error' => 'error_' . $field,
-                        'field' => $field,
-                        'label' => $this->validation->getError($field . '.*')
-                    ];
-                } else {
-                    $result[] = [
-                        'error' => 'error_' . $field,
-                        'field' => $field,
-                        'label' => $this->validation->getError($field)
-                    ];
-                }
-            endforeach;
-        } else {
-            foreach ($field_post as $key => $field) :
-                // Validation field dot array
-                if (in_array($field, $arrField)) {
-                    $result[] = [
-                        'error' => 'error_' . $key,
-                        'field' => $key,
-                        'label' => $this->validation->getError($key . '.*')
-                    ];
-                } else {
-                    $result[] = [
-                        'error' => 'error_' . $key,
-                        'field' => $key,
-                        'label' => $this->validation->getError($key)
-                    ];
-                }
-            endforeach;
-        }
+        endforeach;
 
         return $result;
     }
