@@ -101,7 +101,7 @@ class Product extends BaseController
 
 		try {
 			if (!$validation->run($post, 'product')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$newfilename = '';
 
@@ -246,7 +246,7 @@ class Product extends BaseController
 			$eProduct->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->withRequest($request)->run()) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$row = $product->find($post['id']);
 				$oldImage = $this->path_folder . $row->url;

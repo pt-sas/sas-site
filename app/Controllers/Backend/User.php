@@ -67,8 +67,7 @@ class User extends BaseController
 			$eUser->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'user')) {
-				$list = $user->detail();
-				$response =	$this->field->errorValidation($this->table, $list);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $user->save($eUser);
 
@@ -125,8 +124,7 @@ class User extends BaseController
 			$eUser->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'user')) {
-				$list = $user->detail();
-				$response =	$this->field->errorValidation($this->table, $list);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $user->save($eUser);
 

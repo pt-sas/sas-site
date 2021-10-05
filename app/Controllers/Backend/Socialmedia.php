@@ -53,7 +53,7 @@ class Socialmedia extends BaseController
 			$eSocialmedia->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'socialmedia')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $socialmedia->save($eSocialmedia);
 				$response = message('success', true, $result);
@@ -86,7 +86,7 @@ class Socialmedia extends BaseController
 			$eSocialmedia->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'socialmedia')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $socialmedia->save($eSocialmedia);
 				$response = message('success', true, $result);

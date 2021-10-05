@@ -53,7 +53,7 @@ class Division extends BaseController
 			$eDivision->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'division')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $division->save($eDivision);
 				$response = message('success', true, $result);
@@ -86,7 +86,7 @@ class Division extends BaseController
 			$eDivision->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'division')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $division->save($eDivision);
 				$response = message('success', true, $result);

@@ -13,16 +13,7 @@ class Event extends BaseController
 
 	public function index()
 	{
-		$this->new_title = 'Event';
-		$this->form_type = 'new_form';
-
-		$data = [
-			'title'    	=> '' . $this->new_title . '',
-			'button'    => '<button type="button" class="btn btn-primary btn-sm btn-round ml-auto ' . $this->form_type . ' ' . $this->modal_type . '" title="' . $this->new_title . '">
-												<i class="fa fa-plus fa-fw"></i> ' . $this->new_title . '
-										 </button>',
-		];
-		return $this->template->render('backend/promo/v_promo', $data);
+		return $this->template->render('backend/promo/v_promo');
 	}
 
 	public function showAll()
@@ -86,7 +77,7 @@ class Event extends BaseController
 			$ePromo->slug = $slug;
 
 			if (!$validation->run($post, 'promo')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$image_id = $image->insert_image($newfilename, $this->path_folder);
 
@@ -200,7 +191,7 @@ class Event extends BaseController
 			$ePromo->slug = $slug;
 
 			if (!$validation->withRequest($this->request)->run()) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				if (!empty($imgName) && file_exists($row->md_image_id)) {
 					// Remove old image path directory

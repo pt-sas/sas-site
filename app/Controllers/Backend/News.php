@@ -76,7 +76,7 @@ class News extends BaseController
 			$eNews->slug = $slug;
 
 			if (!$validation->run($post, 'news')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$image_id = $image->insert_image($newfilename, $this->path_folder);
 
@@ -186,7 +186,7 @@ class News extends BaseController
 			$eNews->slug = $slug;
 
 			if (!$validation->withRequest($this->request)->run()) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				if (!empty($imgName) && file_exists($row->md_image_id)) {
 					// Remove old image path directory
