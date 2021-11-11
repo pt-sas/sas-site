@@ -60,7 +60,7 @@ class Productgroup extends BaseController
 			$eProductgroup->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'productgroup')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $productgroup->save($eProductgroup);
 				$response = message('success', true, $result);
@@ -93,7 +93,7 @@ class Productgroup extends BaseController
 			$eProductgroup->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'productgroup')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $productgroup->save($eProductgroup);
 				$response = message('success', true, $result);

@@ -65,7 +65,7 @@ class Submenu extends BaseController
 			$eSubmenu->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'submenu')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $submenu->save($eSubmenu);
 				$response = message('success', true, $result);
@@ -99,7 +99,7 @@ class Submenu extends BaseController
 			$eSubmenu->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'submenu')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $submenu->save($eSubmenu);
 				$response = message('success', true, $result);

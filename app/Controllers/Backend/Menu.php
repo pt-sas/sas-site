@@ -55,7 +55,7 @@ class Menu extends BaseController
 			$eMenu->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'menu')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $menu->save($eMenu);
 				$response = message('success', true, $result);
@@ -89,7 +89,7 @@ class Menu extends BaseController
 			$eMenu->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'menu')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $menu->save($eMenu);
 				$response = message('success', true, $result);

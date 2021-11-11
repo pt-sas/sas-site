@@ -88,8 +88,14 @@ class Field
         return $result;
     }
 
-    // Get error validation field
-    function errorValidation($table, $query = null)
+    /**
+     * Get error validation field
+     *
+     * $table untuk mendapatkan nama table
+     * $field_post mendapatkan field dari method post
+     * @return $result
+     */
+    function errorValidation($table, $field_post)
     {
         $allError = $this->validation->getErrors();
 
@@ -108,25 +114,19 @@ class Field
                 $arrField[] = str_replace('.*', '', $field);
         endforeach;
 
-        if (empty($query)) {
-            $fields = $this->db->getFieldNames($table);
-        } else {
-            $fields = $query->getFieldNames();
-        }
-
-        foreach ($fields as $field) :
-            // Validation field dot array
-            if (in_array($field, $arrField)) {
+        foreach ($field_post as $key => $field) :
+            // Validation field is not inarray
+            if (in_array($key, $arrField)) {
                 $result[] = [
-                    'error' => 'error_' . $field,
-                    'field' => $field,
-                    'label' => $this->validation->getError($field . '.*')
+                    'error' => 'error_' . $key,
+                    'field' => $key,
+                    'label' => $this->validation->getError($key . '.*')
                 ];
             } else {
                 $result[] = [
-                    'error' => 'error_' . $field,
-                    'field' => $field,
-                    'label' => $this->validation->getError($field)
+                    'error' => 'error_' . $key,
+                    'field' => $key,
+                    'label' => $this->validation->getError($key)
                 ];
             }
         endforeach;

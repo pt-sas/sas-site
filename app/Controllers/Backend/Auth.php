@@ -76,26 +76,22 @@ class Auth extends BaseController
 
 		$post = $this->request->getVar();
 
-		try {
-			$eUser->password = $post['new_password'];
-			$eUser->updated_at = date('Y-m-d H:i:s');
-			$eUser->datepasswordchange = date('Y-m-d H:i:s');
-			$eUser->sys_user_id = session()->get('sys_user_id');
+		if ($this->request->getMethod(true) === 'POST') {
+			try {
+				$eUser->password = $post['new_password'];
+				$eUser->updated_at = date('Y-m-d H:i:s');
+				$eUser->datepasswordchange = date('Y-m-d H:i:s');
+				$eUser->sys_user_id = session()->get('sys_user_id');
 
-			if (!$validation->run($post, 'change_password')) {
-				$errors = [
-					'password'		=> $validation->getError('password'),
-					'new_password'	=> $validation->getError('new_password'),
-					'conf_password'	=> $validation->getError('conf_password')
-				];
-
-				$response = message('error', true, $errors);
-			} else {
-				$result = $user->save($eUser);
-				$response = message('success', true, $result);
+				if (!$validation->run($post, 'change_password')) {
+					$response =	$this->field->errorValidation($this->table, $post);
+				} else {
+					$result = $user->save($eUser);
+					$response = message('success', true, $result);
+				}
+			} catch (\Exception $e) {
+				$response = message('error', false, $e->getMessage());
 			}
-		} catch (\Exception $e) {
-			$response = message('error', false, $e->getMessage());
 		}
 
 		return json_encode($response);

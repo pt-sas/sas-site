@@ -101,7 +101,7 @@ class Product extends BaseController
 
 		try {
 			if (!$validation->run($post, 'product')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$newfilename = '';
 
@@ -246,7 +246,7 @@ class Product extends BaseController
 			$eProduct->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->withRequest($request)->run()) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$row = $product->find($post['id']);
 				$oldImage = $this->path_folder . $row->url;
@@ -318,51 +318,58 @@ class Product extends BaseController
 		$product = new M_Product($request);
 		$post = $request->getVar();
 
+		if ($request->getMethod(true) === 'POST') {
+			$spreadsheet = new Spreadsheet();
+			$sheet = $spreadsheet->getActiveSheet();
+			$sheet->setTitle('Sheet 1');
 
-		$spreadsheet = new Spreadsheet();
-		$sheet = $spreadsheet->getActiveSheet();
-		$sheet->setTitle('Sheet 1');
+			$sheet->setCellValue('A1', 'Code')
+				->setCellValue('B1', 'Name')
+				->setCellValue('C1', 'Vendor')
+				->setCellValue('D1', 'Category1')
+				->setCellValue('E1', 'Category2')
+				->setCellValue('F1', 'Category3')
+				->setCellValue('G1', 'Description')
+				->setCellValue('H1', 'Url')
+				->setCellValue('I1', 'Url Tokopedia')
+				->setCellValue('J1', 'Url Shopee')
+				->setCellValue('K1', 'Url JD ID');
 
-		$sheet->setCellValue('A1', 'Code')
-			->setCellValue('B1', 'Name')
-			->setCellValue('C1', 'Vendor')
-			->setCellValue('D1', 'Category1')
-			->setCellValue('E1', 'Category2')
-			->setCellValue('F1', 'Category3')
-			->setCellValue('G1', 'Description')
-			->setCellValue('H1', 'Url');
+			$column = 2;
+			$list = $product->detail(null, null, null, $post)->getResult();
 
-		$column = 2;
-		$list = $product->detail(null, null, null, $post)->getResult();
+			foreach ($list as $row) :
+				// Convert html tag to plain text
+				$convertHtml = new Html2Text($row->description);
 
-		foreach ($list as $row) :
-			// Convert html tag to plain text
-			$convertHtml = new Html2Text($row->description);
+				$sheet->setCellValue('A' . $column, $row->code)
+					->setCellValue('B' . $column, $row->name)
+					->setCellValue('C' . $column, $row->principal)
+					->setCellValue('D' . $column, $row->md_category1)
+					->setCellValue('E' . $column, $row->md_category2)
+					->setCellValue('F' . $column, $row->md_category3)
+					->setCellValue('G' . $column, $convertHtml->getText())
+					->setCellValue('H' . $column, $row->path)
+					->setCellValue('I' . $column, $row->url_toped)
+					->setCellValue('J' . $column, $row->url_shopee)
+					->setCellValue('K' . $column, $row->url_jdid);
 
-			$sheet->setCellValue('A' . $column, $row->code)
-				->setCellValue('B' . $column, $row->name)
-				->setCellValue('C' . $column, $row->principal)
-				->setCellValue('D' . $column, $row->md_category1)
-				->setCellValue('E' . $column, $row->md_category2)
-				->setCellValue('F' . $column, $row->md_category3)
-				->setCellValue('G' . $column, $convertHtml->getText())
-				->setCellValue('H' . $column, $row->path);
+				$column++;
+			endforeach;
 
-			$column++;
-		endforeach;
+			$writer = new Xlsx($spreadsheet);
 
-		$writer = new Xlsx($spreadsheet);
+			$filename = 'Master Product' . date('Ymd' . '_' . 'His') . '.xlsx'; //save our workbook as this file name
 
-		$filename = 'Master Product' . date('Ymd' . '_' . 'His') . '.xlsx'; //save our workbook as this file name
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Disposition: attachment;filename="' . $filename . '"');
+			header('Cache-Control: max-age=0');
 
-		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Content-Disposition: attachment;filename="' . $filename . '"');
-		header('Cache-Control: max-age=0');
+			ob_flush();
 
-		ob_flush();
+			$writer->save('php://output');
 
-		$writer->save('php://output');
-
-		exit;
+			exit;
+		}
 	}
 }

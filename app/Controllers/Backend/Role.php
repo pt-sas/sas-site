@@ -69,7 +69,7 @@ class Role extends BaseController
 			$eRole->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'role')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $role->save($eRole);
 
@@ -108,7 +108,7 @@ class Role extends BaseController
 			$eRole->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'role')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $role->save($eRole);
 

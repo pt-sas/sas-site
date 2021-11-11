@@ -64,7 +64,7 @@ class Job extends BaseController
 			$eJob->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'job')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $job->save($eJob);
 				$response = message('success', true, $result);
@@ -97,7 +97,7 @@ class Job extends BaseController
 			$eJob->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'job')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $job->save($eJob);
 				$response = message('success', true, $result);

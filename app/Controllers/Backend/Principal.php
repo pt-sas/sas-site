@@ -73,7 +73,7 @@ class Principal extends BaseController
 			$ePrincipal->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'principal')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$image_id = $image->insert_image($newfilename, $this->path_folder);
 
@@ -164,7 +164,7 @@ class Principal extends BaseController
 			$ePrincipal->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->withRequest($this->request)->run()) {
-				$response = $this->field->errorValidation($this->table);
+				$response = $this->field->errorValidation($this->table, $post);
 			} else {
 				if (!empty($imgName) && file_exists($row->md_image_id)) {
 					// Remove old image path directory

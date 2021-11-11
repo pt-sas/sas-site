@@ -60,7 +60,7 @@ class Location extends BaseController
 			$eLocation->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'location')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $location->save($eLocation);
 				$response = message('success', true, $result);
@@ -93,7 +93,7 @@ class Location extends BaseController
 			$eLocation->isactive = setCheckbox(isset($post['isactive']));
 
 			if (!$validation->run($post, 'location')) {
-				$response =	$this->field->errorValidation($this->table);
+				$response =	$this->field->errorValidation($this->table, $post);
 			} else {
 				$result = $location->save($eLocation);
 				$response = message('success', true, $result);

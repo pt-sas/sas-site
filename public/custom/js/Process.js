@@ -290,14 +290,13 @@ $('.save_form').click(function (evt) {
             cache: false,
             dataType: 'JSON',
             beforeSend: function () {
-                $('.save_form').prop('disabled', true);
                 $('.x_form').prop('disabled', true);
                 $('.close_form').prop('disabled', true);
                 loadingForm(form.prop('id'), 'facebook');
-                $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').prop('disabled', true);
+                $(_this).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...')
+                    .prop('disabled', true);
             },
             complete: function () {
-                $('.save_form').removeAttr('disabled');
                 $('.x_form').removeAttr('disabled');
                 $('.close_form').removeAttr('disabled');
                 hideLoadingForm(form.prop('id'));
@@ -970,23 +969,7 @@ $('.save_form_pass').click(function (evt) {
                 $('.modal_form').modal('hide');
 
             } else if (result[0].error) {
-                let fields = result[0].message;
-
-                $.each(fields, function (idx, elem) {
-                    if (elem !== '') {
-                        form.find('input:password[name="' + idx + '"]')
-                            .closest('.form-group')
-                            .addClass('has-error');
-
-                        form.find('small[id=error_' + idx + ']').html(elem);
-                    } else {
-                        form.find('input:password[name="' + idx + '"]')
-                            .closest('.form-group')
-                            .removeClass('has-error');
-
-                        form.find('small[id=error_' + idx + ']').html('');
-                    }
-                });
+                errorForm(form, result);
             } else {
                 Toast.fire({
                     type: 'error',
