@@ -193,10 +193,10 @@ class Validation
 		'expired_date' => [
 			'label'		=> 'expired date',
 			'rules' 	=> 'required'
-		],
-		'url' => [
-			'label'		=> 'jobstreet url',
-			'rules' 	=> 'required|valid_url'
+			// ],
+			// 'url' => [
+			// 	'label'		=> 'jobstreet url',
+			// 	'rules' 	=> 'required|valid_url'
 		]
 	];
 

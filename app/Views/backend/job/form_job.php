@@ -77,9 +77,8 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="url">Jobstreet URL <span class="required">*</span></label>
+                    <label for="url">Jobstreet URL </label>
                     <input type="text" class="form-control" id="url" name="url">
-                    <small class="form-text text-danger" id="error_url"></small>
                 </div>
             </div>
             <div class="col-md-6">
