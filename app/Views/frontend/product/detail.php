@@ -101,7 +101,7 @@
         <?php endforeach; ?>
       </div>
       <div class="col-md-12 text-center" id="btn-load">
-        <button class="btn btn-whites mt-3 load_more">More New Items Weekly <img alt="" class="spinning" /></button>
+        <button class="btn btn-whites mt-3 load_more">Load More <img alt="" class="spinning" /></button>
       </div>
     </div>
   </div>
@@ -327,7 +327,7 @@
             if (data.length < limit) {
               $('.load_more').css('display', 'none');
             } else {
-              html2 += '<button class="btn btn-whites mt-3 load_more">More New Items Weekly <img alt="" class="spinning" /></button>';
+              html2 += '<button class="btn btn-whites mt-3 load_more">Load More <img alt="" class="spinning" /></button>';
             }
 
           } else {
