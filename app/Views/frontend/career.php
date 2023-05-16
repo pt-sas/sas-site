@@ -205,11 +205,13 @@
                 '<h6 class="title-list"><?= lang("Career.CH6M2") ?></h6>' +
                 '<div>' + (sessLang == 'id' ? elem.requirement : elem.requirement_en) + '</div>';
 
-              html += '<h6 class="ecom-title">Apply On :</h6>';
+              if (elem.url !== "" || elem.url1 !== "" || elem.url2) {
+                html += '<h6 class="ecom-title">Apply On :</h6>';
 
-              html += elem.url !== '' ? '<a href="' + elem.url + '" class="btn btn-primary ecom" target="_blank">JobStreet</a>' : '';
-              html += elem.url1 !== '' ? '<a href="' + elem.url1 + '" class="btn btn-primary ecom" target="_blank">Jobs DB</a>' : '';
-              html += elem.url2 !== '' ? '<a href="' + elem.url2 + '" class="btn btn-primary ecom" target="_blank">Karir</a>' : '';
+                html += elem.url !== '' ? '<a href="' + elem.url + '" class="btn btn-primary ecom" target="_blank">JobStreet</a>' : '';
+                html += elem.url1 !== '' ? '<a href="' + elem.url1 + '" class="btn btn-primary ecom" target="_blank">Jobs DB</a>' : '';
+                html += elem.url2 !== '' ? '<a href="' + elem.url2 + '" class="btn btn-primary ecom" target="_blank">Karir</a>' : '';
+              }
             });
 
             $('#content-modal').html(html);
