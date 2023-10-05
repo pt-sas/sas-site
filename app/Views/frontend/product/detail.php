@@ -392,9 +392,9 @@
               html += '<a href="' + elem.url_toped + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/tokped.png') ?>" alt=""></a>';
             }
 
-            if (elem.url_jdid !== '') {
-              html += '<a href="' + elem.url_jdid + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/jdid.png') ?>" alt=""></a>';
-            }
+            // if (elem.url_jdid !== '') {
+            //   html += '<a href="' + elem.url_jdid + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/jdid.png') ?>" alt=""></a>';
+            // }
 
             if (elem.url_shopee !== '') {
               html += '<a href="' + elem.url_shopee + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/shopee.png') ?>" alt=""></a>';
