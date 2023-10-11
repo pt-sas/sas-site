@@ -384,7 +384,7 @@
             html += '<ul class="no-style">' +
               elem.description + '</ul>';
 
-            if (elem.url_toped !== '' || elem.url_jdid !== '' || elem.url_shopee !== '') {
+            if (elem.url_toped !== '' || elem.url_jdid !== '' || elem.url_shopee !== '' || elem.url_lazada !== '') {
               html += '<h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>';
             }
 
