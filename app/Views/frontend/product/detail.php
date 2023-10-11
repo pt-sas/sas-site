@@ -400,6 +400,10 @@
               html += '<a href="' + elem.url_shopee + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/shopee.png') ?>" alt=""></a>';
             }
 
+            if (elem.url_lazada !== '') {
+              html += '<a href="' + elem.url_lazada + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/lazada.png') ?>" alt=""></a>';
+            }
+
             html += '</div>';
           });
 
