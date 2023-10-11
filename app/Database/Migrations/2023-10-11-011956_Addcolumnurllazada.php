@@ -15,7 +15,7 @@ class Addcolumnurllazada extends Migration
 				'type'          => 'VARCHAR',
 				'after'         => 'url_jdid',
 				'constraint'    => 256,
-				'null'          => true
+				'null'          => false
 			]
 		];
 
