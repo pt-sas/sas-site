@@ -140,10 +140,16 @@
                     <input type="text" class="form-control" id="url_shopee" name="url_shopee">
                 </div>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <div class="form-group">
                     <label for="url_jdid">URL JD.ID </label>
                     <input type="text" class="form-control" id="url_jdid" name="url_jdid">
+                </div>
+            </div> -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="url_lazada">URL Lazada </label>
+                    <input type="text" class="form-control" id="url_lazada" name="url_lazada">
                 </div>
             </div>
             <div class="col-md-2">
