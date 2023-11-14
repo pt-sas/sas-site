@@ -20,4 +20,5 @@ return [
     'AH641' => 'Our location',
     'AH642' => 'Get direction',
     'AH643' => 'Phone Number',
+    'AH644' => 'Cellular Number',
 ];
