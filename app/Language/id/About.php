@@ -20,4 +20,5 @@ return [
     'AH641' => 'Lokasi Kami',
     'AH642' => 'Mendapatkan Arah',
     'AH643' => 'Nomor Telepon',
+    'AH644' => 'Nomor Selular',
 ];

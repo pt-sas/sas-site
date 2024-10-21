@@ -28,7 +28,8 @@ class M_Product extends Model
 		'url',
 		'url_toped',
 		'url_shopee',
-		'url_jdid',
+		// 'url_jdid',
+		'url_lazada',
 		'isactive'
 	];
 	protected $useTimestamps = true;
@@ -178,7 +179,8 @@ class M_Product extends Model
 			$this->table . '.description,' .
 				$this->table . '.url_toped,' .
 				$this->table . '.url_shopee,' .
-				$this->table . '.url_jdid,' .
+				// $this->table . '.url_jdid,' .
+				$this->table . '.url_lazada,' .
 				$this->table . '.md_principal_id,' .
 				$this->table . '.md_uom_id,' .
 				$this->table . '.url as path,

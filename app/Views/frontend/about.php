@@ -134,6 +134,12 @@
                     <h6>Email</h6>
                     <p>info@sahabatabadi.com</p>
                   </div>
+                  <?php if (!empty($row->cellular)) : ?>
+                    <div class="half-wrap">
+                      <h6><?= lang("About.AH644"); ?></h6>
+                      <p><?= $row->cellular; ?></p>
+                    </div>
+                  <?php endif; ?>
                 </div>
               <?php endforeach; ?>
             </div>

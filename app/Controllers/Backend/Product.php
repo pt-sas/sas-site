@@ -333,7 +333,7 @@ class Product extends BaseController
 				->setCellValue('H1', 'Url')
 				->setCellValue('I1', 'Url Tokopedia')
 				->setCellValue('J1', 'Url Shopee')
-				->setCellValue('K1', 'Url JD ID');
+				->setCellValue('K1', 'Url Lazada');
 
 			$column = 2;
 			$list = $product->detail(null, null, null, $post)->getResult();
@@ -352,7 +352,7 @@ class Product extends BaseController
 					->setCellValue('H' . $column, $row->path)
 					->setCellValue('I' . $column, $row->url_toped)
 					->setCellValue('J' . $column, $row->url_shopee)
-					->setCellValue('K' . $column, $row->url_jdid);
+					->setCellValue('K' . $column, $row->url_lazada);
 
 				$column++;
 			endforeach;

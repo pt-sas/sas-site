@@ -394,7 +394,7 @@
             html += '<ul class="no-style">' +
               elem.description + '</ul>';
 
-            if (elem.url_toped !== '' || elem.url_jdid !== '' || elem.url_shopee !== '') {
+            if (elem.url_toped !== '' || elem.url_jdid !== '' || elem.url_shopee !== '' || elem.url_lazada !== '') {
               html += '<h6 class="ecom-title">PRODUCT AVAILABLE ON</h6>';
             }
 
@@ -402,12 +402,16 @@
               html += '<a href="' + elem.url_toped + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/tokped.png') ?>" alt=""></a>';
             }
 
-            if (elem.url_jdid !== '') {
-              html += '<a href="' + elem.url_jdid + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/jdid.png') ?>" alt=""></a>';
-            }
+            // if (elem.url_jdid !== '') {
+            //   html += '<a href="' + elem.url_jdid + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/jdid.png') ?>" alt=""></a>';
+            // }
 
             if (elem.url_shopee !== '') {
               html += '<a href="' + elem.url_shopee + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/shopee.png') ?>" alt=""></a>';
+            }
+
+            if (elem.url_lazada !== '') {
+              html += '<a href="' + elem.url_lazada + '" target="_blank" class="ecom"><img src="<?= base_url('adw/assets/images/lazada.png') ?>" alt=""></a>';
             }
 
             html += '</div>';
