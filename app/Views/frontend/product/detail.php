@@ -9,7 +9,7 @@
         <div class="col-auto">
           <input class="form-control search" type="search" placeholder="Search" name="keyword">
         </div>
-        <div class="col-auto">
+        <div class="col-auto category1">
           <select class="form-control" name="category1" id="fix_category1">
             <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 1' : 'All Categories 1' ?></option>
             <?php foreach ($category1 as $row) : ?>
@@ -17,12 +17,12 @@
             <?php endforeach; ?>
           </select>
         </div>
-        <div class="col-auto">
+        <div class="col-auto category2">
           <select class="form-control" name="category2" id="fix_category2">
             <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 2' : 'All Categories 2' ?></option>
           </select>
         </div>
-        <div class="col-auto">
+        <div class="col-auto category3">
           <select class="form-control" name="category3" id="fix_category3">
             <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 3' : 'All Categories 3' ?></option>
           </select>
@@ -55,7 +55,7 @@
             <div class="col-auto">
               <input class="form-control search" type="search" placeholder="Search" name="keyword" id="keyword">
             </div>
-            <div class="col-auto">
+            <div class="col-auto category1">
               <select class="form-control" name="category1">
                 <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 1' : 'All Categories 1' ?></option>
                 <?php foreach ($category1 as $row) : ?>
@@ -63,12 +63,12 @@
                 <?php endforeach; ?>
               </select>
             </div>
-            <div class="col-auto">
+            <div class="col-auto category2">
               <select class="form-control" name="category2">
                 <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 2' : 'All Categories 2' ?></option>
               </select>
             </div>
-            <div class="col-auto">
+            <div class="col-auto category3">
               <select class="form-control" name="category3">
                 <option value=""><?= session()->lang == 'id' ? 'Semua Kategori 3' : 'All Categories 3' ?></option>
               </select>
@@ -101,7 +101,7 @@
         <?php endforeach; ?>
       </div>
       <div class="col-md-12 text-center" id="btn-load">
-        <button class="btn btn-whites mt-3 load_more">More New Items Weekly <img alt="" class="spinning" /></button>
+        <button class="btn btn-whites mt-3 load_more">Load More <img alt="" class="spinning" /></button>
       </div>
     </div>
   </div>
@@ -161,6 +161,9 @@
     offset = 0,
     calcLimit = 0;
 
+  $('.category2').css('display', 'none');
+  $('.category3').css('display', 'none');
+
   $('[name = "category1"]').change(function(evt) {
     let category1 = $(this).val();
     url = '<?= base_url('MainController/getCategory') ?>';
@@ -174,6 +177,8 @@
       },
       dataType: 'JSON',
       success: function(result) {
+        $('.category2').css('display', 'none');
+        $('.category3').css('display', 'none');
         $('[name = "category2"]').empty();
         $('[name = "category3"]').empty();
         $('[name = "category2"]').append('<option selected="selected" value="">' + (sessLang == 'id' ? 'Semua Kategori 2' : 'All Categories 2') + '</option>');
@@ -182,6 +187,8 @@
         if (result[0].success) {
           if (category1 !== '') {
             var data = result[0].message;
+
+            $('.category2').css('display', 'block');
 
             $.each(data, function(idx, elem) {
               var category_id = elem.md_category_id;
@@ -219,12 +226,15 @@
       },
       dataType: 'JSON',
       success: function(result) {
+        $('.category3').css('display', 'none');
         $('[name = "category3"]').empty();
         $('[name = "category3"]').append('<option selected="selected" value="">' + (sessLang == 'id' ? 'Semua Kategori 3' : 'All Categories 3') + '</option>');
 
         if (result[0].success) {
           if (category2 !== '') {
             var data = result[0].message;
+
+            $('.category3').css('display', 'block');
 
             $.each(data, function(idx, elem) {
               var category_id = elem.md_category_id;
@@ -317,7 +327,7 @@
             if (data.length < limit) {
               $('.load_more').css('display', 'none');
             } else {
-              html2 += '<button class="btn btn-whites mt-3 load_more">More New Items Weekly <img alt="" class="spinning" /></button>';
+              html2 += '<button class="btn btn-whites mt-3 load_more">Load More <img alt="" class="spinning" /></button>';
             }
 
           } else {

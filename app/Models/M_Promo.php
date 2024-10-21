@@ -54,6 +54,7 @@ class M_Promo extends Model
 		$builder->select('title, content, title_en, content_en, start_date, end_date, slug, image_url');
 		$builder->join('md_image', 'md_image.md_image_id = trx_promo.md_image_id');
 		$builder->where('trx_promo.isactive', 'Y');
+		$builder->orderBy('trx_promo.created_at', 'DESC');
 		$query = $builder->get()->getResult();
 		return $query;
 	}
