@@ -26,7 +26,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <footer class="white">
+        <footer class="white mb-3">
           <?= $this->include('frontend/_partials/footer'); ?>
         </footer>
       </div>
