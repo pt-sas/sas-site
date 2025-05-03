@@ -80,7 +80,7 @@ class Access
                     // Check submenu is set in menu access
                     $access = $role->detail([
                         'am.sys_submenu_id'     => $sub->sys_submenu_id,
-                        'am.sys_role_id'        => session()->get('sys_role_id')
+                        'am.sys_role_id'        => session()->get('compro.sys_role_id')
                     ])->getRow();
 
                     // submenu set in role and role isactive Y
@@ -92,7 +92,7 @@ class Access
                     // Check menu is set in menu access
                     $access = $role->detail([
                         'am.sys_menu_id'        => $parent->sys_menu_id,
-                        'am.sys_role_id'        => session()->get('sys_role_id')
+                        'am.sys_role_id'        => session()->get('compro.sys_role_id')
                     ])->getRow();
 
                     // menu set in role and role isactive Y
@@ -108,7 +108,7 @@ class Access
                 if ($setmenu === 'parent') {
                     $access = $role->detail([
                         'am.sys_menu_id'        => $menu_id,
-                        'am.sys_role_id'        => session()->get('sys_role_id')
+                        'am.sys_role_id'        => session()->get('compro.sys_role_id')
                     ])->getRow();
 
                     if ($access && $access->isactive === 'Y')
@@ -118,7 +118,7 @@ class Access
                 } else {
                     $access = $role->detail([
                         'am.sys_submenu_id'     => $menu_id,
-                        'am.sys_role_id'        => session()->get('sys_role_id')
+                        'am.sys_role_id'        => session()->get('compro.sys_role_id')
                     ])->getRow();
 
                     // submenu set in role
@@ -138,14 +138,14 @@ class Access
     public function getUser($field)
     {
         $user = new M_User();
-        $row = $user->find(session()->get('sys_user_id'));
+        $row = $user->find(session()->get('compro.sys_user_id'));
         return $row->$field;
     }
 
     public function getRole()
     {
         $role = new M_Role();
-        $row = $role->find(session()->get('sys_role_id'));
+        $row = $role->find(session()->get('compro.sys_role_id'));
         return $row ? $row->name : 'No Role';
     }
 

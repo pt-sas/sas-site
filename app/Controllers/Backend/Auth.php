@@ -43,7 +43,7 @@ class Auth extends BaseController
 				} else {
 					if ($check == 1) {
 						$eUser->datelastlogin = date('Y-m-d H:i:s');
-						$eUser->sys_user_id = session()->get('sys_user_id');
+						$eUser->sys_user_id = session()->get('compro.sys_user_id');
 						$user->save($eUser);
 
 						$msg = 'Login successfully !';
@@ -81,7 +81,7 @@ class Auth extends BaseController
 				$eUser->password = $post['new_password'];
 				$eUser->updated_at = date('Y-m-d H:i:s');
 				$eUser->datepasswordchange = date('Y-m-d H:i:s');
-				$eUser->sys_user_id = session()->get('sys_user_id');
+				$eUser->sys_user_id = session()->get('compro.sys_user_id');
 
 				if (!$validation->run($post, 'change_password')) {
 					$response =	$this->field->errorValidation($this->table, $post);

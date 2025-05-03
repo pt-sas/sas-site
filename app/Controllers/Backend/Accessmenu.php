@@ -33,7 +33,7 @@ class Accessmenu extends BaseController
 					if (isset($sub)) {
 						$access = $role->detail([
 							'am.sys_submenu_id'		=> $sub->sys_submenu_id,
-							'am.sys_role_id'		=> session()->get('sys_role_id')
+							'am.sys_role_id'		=> session()->get('compro.sys_role_id')
 						])->getRow();
 
 						if ($post['action'] === 'create')
@@ -47,7 +47,7 @@ class Accessmenu extends BaseController
 					} else if (isset($parent)) {
 						$access = $role->detail([
 							'am.sys_menu_id'		=> $parent->sys_menu_id,
-							'am.sys_role_id'		=> session()->get('sys_role_id')
+							'am.sys_role_id'		=> session()->get('compro.sys_role_id')
 						])->getRow();
 
 						if ($post['action'] === 'create')

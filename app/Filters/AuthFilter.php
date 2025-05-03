@@ -5,8 +5,8 @@ namespace App\Filters;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-
 use App\Libraries\Access;
+use App\Models\M_User;
 
 class AuthFilter implements FilterInterface
 {
@@ -27,38 +27,65 @@ class AuthFilter implements FilterInterface
 	 */
 	public function before(RequestInterface $request, $arguments = null)
 	{
-		$access = new Access();
-
 		$uri = $request->uri->getSegment(1);
 
-		if ($uri === 'auth' && session()->get('logged_in')) {
-			return redirect()->to(site_url('panel'));
-		} else if ($uri !== 'auth' && !session()->get('logged_in')) {
-			return redirect()->to(site_url('auth'));
-		} else if ($uri === 'panel') {
-			$isView = 'isview';
+        // 1. Cek apakah user sudah login secara global (SSO)
+        if (!session()->get('logged_in')) {
+            return redirect()->to(env("app.appURL"));
+        }
+        
+        // 2. Set session khusus compro jika belum ada
+        if (!session()->has('compro')) {
+            $user = new M_User();
 
-			$uri2 = $request->uri->getSegment(2);
-			$previouse_url = session()->get('previous_url');
-
-			$check = $access->checkCrud($uri2, $isView);
-
-			if (!empty($uri2)) {
-				if ($check) {
-					// same url and access is not Y
-					if ($previouse_url === current_url() && $check !== 'Y') {
-						session()->setFlashdata('error', "You are role don't have permission");
-						return redirect()->to(site_url('panel'));
-					} else if ($previouse_url !== current_url() && $check !== 'Y') {
-						session()->setFlashdata('error', "You are role don't have permission");
-						return redirect()->back();
-					}
-				} else {
-					session()->setFlashdata('error', "Menu has not been set permission");
-					return redirect()->back();
-				}
-			}
-		}
+            // Ambil user compro berdasarkan user_id dari asset
+            $userCompro = $user->detail([
+                'username'    => session()->get('username')
+            ])->getRow();
+    
+            if ($userCompro) {
+                session()->set('compro', [
+                    'sys_user_id'   => $userCompro->sys_user_id,
+                    'username'      => $userCompro->username,
+                    'sys_role_id'   => $userCompro->role,
+                ]);
+            } else {
+                session()->setFlashdata('error', 'User tidak terdaftar di aplikasi compro');
+                return redirect()->to(env("app.appURL"));
+            }
+        }
+        
+        // 3. Redirect jika akses ke /auth padahal sudah login
+        if ($uri === 'auth') {
+            return redirect()->to(site_url('panel'));
+        }
+        
+        // 4. Cek hak akses untuk halaman /panel
+        if ($uri === 'panel') {
+            $access = new Access();
+            $uri2 = $request->uri->getSegment(2);
+            $previouse_url = session()->get('previous_url');
+            $isView = 'isview';
+    
+            $check = $access->checkCrud($uri2, $isView, session('compro.sys_role_id'));
+    
+            if (!empty($uri2)) {
+                if ($check) {
+                    if ($previouse_url === current_url() && $check !== 'Y') {
+                        session()->setFlashdata('error', "You are role don't have permission");
+                        return redirect()->to(site_url('panel'));
+                    } else if ($previouse_url !== current_url() && $check !== 'Y') {
+                        session()->setFlashdata('error', "You are role don't have permission");
+                        return redirect()->back();
+                    }
+                } else {
+                    session()->setFlashdata('error', "Menu has not been set permission");
+                    return redirect()->back();
+                }
+            }
+        }
+    
+        return null; // lanjutkan request
 	}
 
 	/**
