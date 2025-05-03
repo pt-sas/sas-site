@@ -50,8 +50,7 @@ class AuthFilter implements FilterInterface
                     'sys_role_id'   => $userCompro->role,
                 ]);
             } else {
-                session()->setFlashdata('error', 'User tidak terdaftar di aplikasi compro');
-                return redirect()->to(env("app.appURL"));
+                return redirect()->to(env('app.appURL'). 'sas?compro_error=' . urlencode('User is not registered in the Compro application'));
             }
         }
         
