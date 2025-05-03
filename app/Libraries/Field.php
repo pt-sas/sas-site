@@ -11,10 +11,11 @@ class Field
 {
     protected $db;
     protected $validation;
+    protected $DBGroup = 'default';
 
     public function __construct()
     {
-        $this->db = \Config\Database::connect();
+        $this->db = \Config\Database::connect($this->DBGroup);
         $this->validation = \Config\Services::validation();
     }
 
