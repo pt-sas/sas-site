@@ -2,7 +2,7 @@
 <html>
 <?= $this->include('backend/_partials/head') ?>
 
-<body>
+<body data-background-color="bg3">
   <div class="wrapper">
     <div class="main-header">
       <?= $this->include('backend/_partials/logo') ?>
