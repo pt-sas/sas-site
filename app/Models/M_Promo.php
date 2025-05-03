@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Promo extends Model
 {
 	protected $table      = 'trx_promo';
+	protected $DBGroup = 'default';
 	protected $primaryKey = 'trx_promo_id';
 	protected $allowedFields = [
 		'md_image_id',
@@ -24,7 +25,7 @@ class M_Promo extends Model
 
 	public function detail($field, $where = null)
 	{
-		$db = \Config\Database::connect();
+		$db = \Config\Database::connect($this->DBGroup);
 		if (!empty($where)) {
 			return $db->query("SELECT
   						mdp.trx_promo_id ,
@@ -49,7 +50,7 @@ class M_Promo extends Model
 
 	public function showAll()
 	{
-		$db = \Config\Database::connect();
+		$db = \Config\Database::connect($this->DBGroup);
 		$builder = $db->table('trx_promo');
 		$builder->select('title, content, title_en, content_en, start_date, end_date, slug, image_url');
 		$builder->join('md_image', 'md_image.md_image_id = trx_promo.md_image_id');
@@ -61,7 +62,7 @@ class M_Promo extends Model
 
 	public function getDetail($slug)
 	{
-		$db = \Config\Database::connect();
+		$db = \Config\Database::connect($this->DBGroup);
 		$builder = $db->table('trx_promo');
 		$builder->select('title, content, title_en, content_en, image_url, start_date, end_date');
 		$builder->join('md_image', 'md_image.md_image_id = trx_promo.md_image_id');

@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_about extends Model
 {
     protected $table      = 'trx_compro';
+    protected $DBGroup = 'default';
     protected $primaryKey = 'trx_compro_id';
     protected $allowedFields = [
         'tb_cp_overview',

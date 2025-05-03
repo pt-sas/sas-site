@@ -8,6 +8,7 @@ use CodeIgniter\Model;
 class M_Product extends Model
 {
 	protected $table      = 'md_product';
+	protected $DBGroup = 'default';
 	protected $primaryKey = 'md_product_id';
 	protected $allowedFields = [
 		'm_product_id',
@@ -77,7 +78,7 @@ class M_Product extends Model
 	public function __construct(RequestInterface $request)
 	{
 		parent::__construct();
-		$this->db = db_connect();
+		$this->db = db_connect($this->DBGroup);
 		$this->request = $request;
 		$this->builder = $this->db->table($this->table);
 	}
@@ -214,7 +215,7 @@ class M_Product extends Model
 
 	public function showProductBy($param = [], $principal = null, $category1 = null, $category2 = null, $category3 = null, $keyword = null, $limit = 0, $offset = 0)
 	{
-		$db = \Config\Database::connect();
+		$db = \Config\Database::connect($this->DBGroup);
 		$builder = $db->table($this->table);
 		$builder->select(
 			$this->table . '.code,' .

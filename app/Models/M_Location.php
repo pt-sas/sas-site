@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Location extends Model
 {
     protected $table      = 'md_location';
+    protected $DBGroup = 'default';
     protected $primaryKey = 'md_location_id';
     protected $allowedFields = [
         'name',

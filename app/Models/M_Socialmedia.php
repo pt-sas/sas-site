@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Socialmedia extends Model
 {
     protected $table      = 'md_socialmedia';
+    protected $DBGroup = 'default';
     protected $primaryKey = 'md_socialmedia_id';
     protected $allowedFields = [
         'name',

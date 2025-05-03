@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Visit extends Model
 {
   protected $table      = 'sys_visit';
+  protected $DBGroup = 'default';
   protected $primaryKey = 'id';
   protected $allowedFields = [
     'ipaddress',
@@ -20,7 +21,7 @@ class M_Visit extends Model
 
   public function count($ipaddress)
   {
-    $db = \Config\Database::connect();
+    $db = \Config\Database::connect($this->DBGroup);
     $agent = \Config\Services::request()->getUserAgent();
 
     $builder = $db->table('sys_visit');

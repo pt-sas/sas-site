@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Role extends Model
 {
   protected $table      = 'sys_role';
+  protected $DBGroup = 'default';
   protected $primaryKey = 'sys_role_id';
   protected $allowedFields = [
     'name',
@@ -18,7 +19,7 @@ class M_Role extends Model
 
   public function detail($param = [], $field = null, $where = null)
   {
-    $db = \Config\Database::connect();
+    $db = \Config\Database::connect($this->DBGroup);
     $builder = $db->table($this->table);
 
     $builder->select($this->table . '.*,
