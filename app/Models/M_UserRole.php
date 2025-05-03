@@ -8,6 +8,7 @@ use App\Models\M_User;
 class M_UserRole extends Model
 {
   protected $table      = 'sys_user_role';
+  protected $DBGroup = 'default';
   protected $primaryKey = 'sys_user_role_id';
   protected $allowedFields = [
     'sys_role_id',
@@ -21,7 +22,7 @@ class M_UserRole extends Model
   public function __construct()
   {
     parent::__construct();
-    $this->db = db_connect();
+    $this->db = db_connect($this->DBGroup);
   }
 
   public function create($post)

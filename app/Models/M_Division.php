@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Division extends Model
 {
     protected $table      = 'md_division';
+    protected $DBGroup = 'default';
     protected $primaryKey = 'md_division_id';
     protected $allowedFields = [
         'name',

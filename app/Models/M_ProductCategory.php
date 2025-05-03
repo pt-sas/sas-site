@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_ProductCategory extends Model
 {
     protected $table      = 'md_productcategory';
+    protected $DBGroup = 'default';
     protected $primaryKey = 'md_productcategory_id';
     protected $allowedFields = [
         'md_product_id',
@@ -20,7 +21,7 @@ class M_ProductCategory extends Model
 
     public function create($post, $action)
     {
-        $db = \Config\Database::connect();
+        $db = \Config\Database::connect($this->DBGroup);
         $builder = $db->table($this->table);
 
         if ($action == 'insert') {

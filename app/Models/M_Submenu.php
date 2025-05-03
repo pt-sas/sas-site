@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Submenu extends Model
 {
   protected $table      = 'sys_submenu';
+  protected $DBGroup = 'default';
   protected $primaryKey = 'sys_submenu_id';
   protected $allowedFields = [
     'name',
@@ -22,7 +23,7 @@ class M_Submenu extends Model
 
   public function detail($field = null, $where = null)
   {
-    $db = \Config\Database::connect();
+    $db = \Config\Database::connect($this->DBGroup);
     $builder = $db->table($this->table);
     $builder->select($this->table . '.*,
                     m.name as parent');

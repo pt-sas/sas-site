@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_AccessMenu extends Model
 {
   protected $table      = 'sys_access_menu';
+  protected $DBGroup = 'default';
   protected $primaryKey = 'sys_access_menu_id';
   protected $allowedFields = [
     'sys_role_id',
@@ -24,12 +25,12 @@ class M_AccessMenu extends Model
   public function __construct()
   {
     parent::__construct();
-    $this->db = db_connect();
+    $this->db = db_connect($this->DBGroup);
   }
 
   public function create($post)
   {
-    $db = \Config\Database::connect();
+    $db = \Config\Database::connect($this->DBGroup);
     $builder = $db->table($this->table);
 
     foreach (json_decode($post['roles']) as $value) :

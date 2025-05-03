@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Uom extends Model
 {
     protected $table      = 'md_uom';
+    protected $DBGroup = 'default';
     protected $primaryKey = 'md_uom_id';
     protected $allowedFields = [
         'name',

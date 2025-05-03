@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_News extends Model
 {
 	protected $table      = 'trx_news';
+	protected $DBGroup = 'default';
 	protected $primaryKey = 'trx_news_id';
 	protected $allowedFields = [
 		'md_image_id',
@@ -23,7 +24,7 @@ class M_News extends Model
 
 	public function detail($field, $where = null)
 	{
-		$db = \Config\Database::connect();
+		$db = \Config\Database::connect($this->DBGroup);
 		if (!empty($where)) {
 			return $db->query("SELECT
   						mdp.trx_news_id ,
@@ -49,7 +50,7 @@ class M_News extends Model
 
 	public function showAll()
 	{
-		$db = \Config\Database::connect();
+		$db = \Config\Database::connect($this->DBGroup);
 		$builder = $db->table('trx_news');
 		$builder->select('title, content, title_en, content_en, news_date, slug, image_url');
 		$builder->join('md_image', 'md_image.md_image_id = trx_news.md_image_id');
@@ -62,7 +63,7 @@ class M_News extends Model
 	//Untuk Homepage
 	public function show3()
 	{
-		$db = \Config\Database::connect();
+		$db = \Config\Database::connect($this->DBGroup);
 		$builder = $db->table('trx_news');
 		$builder->select('title, content, title_en, content_en, news_date, slug, image_url');
 		$builder->join('md_image', 'md_image.md_image_id = trx_news.md_image_id');
@@ -75,7 +76,7 @@ class M_News extends Model
 
 	public function getDetail($slug)
 	{
-		$db = \Config\Database::connect();
+		$db = \Config\Database::connect($this->DBGroup);
 		$builder = $db->table('trx_news');
 		$builder->select('title, content, title_en, content_en, news_date, image_url');
 		$builder->join('md_image', 'md_image.md_image_id = trx_news.md_image_id');

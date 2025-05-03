@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Category extends Model
 {
     protected $table      = 'md_category';
+    protected $DBGroup = 'default';
     protected $primaryKey = 'md_category_id';
     protected $allowedFields = [
         'md_principal_id',
@@ -21,7 +22,7 @@ class M_Category extends Model
 
     public function getDetail($principal = null, $level = null)
     {
-        $db = \Config\Database::connect();
+        $db = \Config\Database::connect($this->DBGroup);
         $builder = $db->table($this->table);
         $builder->select('md_category_id, category, category_en');
         $builder->where('md_principal_id', $principal);
@@ -37,7 +38,7 @@ class M_Category extends Model
 
     public function showCategoryBy($principal = null, $category1 = null, $category2 = null)
     {
-        $db = \Config\Database::connect();
+        $db = \Config\Database::connect($this->DBGroup);
         $builder = $db->table('md_category cat');
         $builder->select('cat.md_category_id, cat.category, cat.category_en');
         $builder->distinct();

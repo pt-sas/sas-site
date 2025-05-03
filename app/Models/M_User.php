@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_User extends Model
 {
 	protected $table                = 'sys_user';
+	protected $DBGroup = 'default';
 	protected $primaryKey           = 'sys_user_id';
 	protected $allowedFields        = [
 		'username',
@@ -24,7 +25,7 @@ class M_User extends Model
 
 	public function detail($arrParam = [], $field = null, $where = null)
 	{
-		$db = \Config\Database::connect();
+		$db = \Config\Database::connect($this->DBGroup);
 		$builder = $db->table($this->table);
 		$builder->select($this->table . '.*,' .
 			'sur.sys_role_id as role,

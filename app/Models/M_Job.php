@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Job extends Model
 {
   protected $table      = 'trx_job';
+  protected $DBGroup = 'default';
   protected $primaryKey = 'trx_job_id';
   protected $allowedFields = [
     'value',
@@ -28,7 +29,7 @@ class M_Job extends Model
 
   public function showPositionBy($field = null, $where = null, $level = null, $keyword = null)
   {
-    $db = \Config\Database::connect();
+    $db = \Config\Database::connect($this->DBGroup);
     $builder = $db->table($this->table);
     $builder->select($this->table . '.*,
                     d.name as division_name');

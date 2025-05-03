@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Principal extends Model
 {
     protected $table      = 'md_principal';
+    protected $DBGroup = 'default';
     protected $primaryKey = 'md_principal_id';
     protected $allowedFields = [
         'name',
@@ -21,7 +22,7 @@ class M_Principal extends Model
 
     public function detail($field, $where = null)
     {
-        $db = \Config\Database::connect();
+        $db = \Config\Database::connect($this->DBGroup);
         if (!empty($where)) {
             return $db->query("SELECT
 						mdp.md_principal_id,
@@ -43,7 +44,7 @@ class M_Principal extends Model
 
     public function showAll()
     {
-        $db = \Config\Database::connect();
+        $db = \Config\Database::connect($this->DBGroup);
         $builder = $db->table('md_principal');
         $builder->select('md_principal.name as principal_name, md_principal.url, image_url, seqno');
         $builder->join('md_image', 'md_image.md_image_id = md_principal.md_image_id');

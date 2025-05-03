@@ -7,6 +7,7 @@ use CodeIgniter\Model;
 class M_Mailbox extends Model
 {
     protected $table      = 'trx_contact';
+    protected $DBGroup = 'default';
     protected $primaryKey = 'trx_contact_id';
     protected $allowedFields = [
         'name',

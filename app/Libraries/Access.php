@@ -12,10 +12,11 @@ class Access
     protected $request;
     protected $session;
     protected $db;
+    protected $DBGroup = 'default';
 
     public function __construct()
     {
-        $this->db = db_connect();
+        $this->db = db_connect($this->DBGroup);
         $this->session = \Config\Services::session();
         $this->request = \Config\Services::request();
     }
