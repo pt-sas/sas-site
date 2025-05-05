@@ -14,7 +14,7 @@ class Validation
 	//--------------------------------------------------------------------
 	// Setup
 	//--------------------------------------------------------------------
-
+	protected $DBGroup = 'default';
 	/**
 	 * Stores the classes that contain the
 	 * rules that are available.
@@ -269,7 +269,7 @@ class Validation
 
 	public $principal = [
 		'name' => [
-			'rules' 	=>	'required|is_unique[md_principal.name,md_principal_id,{id}]',
+			'rules' 	=>	'required|is_unique[{$this->DBGroup}.md_principal.name,md_principal_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]
@@ -301,20 +301,20 @@ class Validation
 
 	public $product = [
 		'code' => [
-			'rules' 	=>	'required|is_unique[md_product.code,md_product_id,{id}]',
+			'rules' 	=>	'required|is_unique[{$this->DBGroup}.md_product.code,md_product_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]
 		],
 		'name' => [
-			'rules' 	=>	'required|is_unique[md_product.name,md_product_id,{id}]',
+			'rules' 	=>	'required|is_unique[{$this->DBGroup}.md_product.name,md_product_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]
 		],
 		'm_product_id' => [
 			'label'		=> 'iDempiere code',
-			'rules' 	=>	'required|is_unique[md_product.m_product_id,md_product_id,{id}]',
+			'rules' 	=>	'required|is_unique[{$this->DBGroup}.md_product.m_product_id,md_product_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]
@@ -354,7 +354,7 @@ class Validation
 
 	public $menu = [
 		'name' => [
-			'rules' 	=>	'required|is_unique[sys_menu.name,sys_menu_id,{id}]',
+			'rules' 	=>	'required|is_unique[{$this->DBGroup}.sys_menu.name,sys_menu_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]
@@ -372,7 +372,7 @@ class Validation
 
 	public $submenu = [
 		'name' => [
-			'rules' 	=>	'required|is_unique[sys_submenu.name,sys_submenu_id,{id}]',
+			'rules' 	=>	'required|is_unique[{$this->DBGroup}.sys_submenu.name,sys_submenu_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]
@@ -387,7 +387,7 @@ class Validation
 
 	public $role = [
 		'name' => [
-			'rules' 	=>	'required|is_unique[sys_role.name,sys_role_id,{id}]',
+			'rules' 	=>	'required|is_unique[{$this->DBGroup}.sys_role.name,sys_role_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]
@@ -396,13 +396,13 @@ class Validation
 
 	public $user = [
 		'username'	=> [
-			'rules' 	=>	'required|is_unique[sys_user.username,sys_user_id,{id}]',
+			'rules' 	=>	'required|is_unique[{$this->DBGroup}.sys_user.username,sys_user_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]
 		],
 		'name'		=> [
-			'rules' 	=>	'required|is_unique[sys_user.name,sys_user_id,{id}]',
+			'rules' 	=>	'required|is_unique[{$this->DBGroup}.sys_user.name,sys_user_id,{id}]',
 			'errors' 	=> [
 				'is_unique' => 'This {field} already exists.'
 			]

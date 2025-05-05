@@ -40,7 +40,8 @@ class AuthFilter implements FilterInterface
 
             // Ambil user compro berdasarkan user_id dari asset
             $userCompro = $user->detail([
-                'username'    => session()->get('username')
+                'username'    => session()->get('username'),
+                'isactive'    => 'Y'
             ])->getRow();
     
             if ($userCompro) {
