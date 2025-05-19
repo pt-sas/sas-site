@@ -31,6 +31,7 @@ class M_Product extends Model
 		'url_shopee',
 		// 'url_jdid',
 		'url_lazada',
+		'url_tiktok',
 		'isactive'
 	];
 	protected $useTimestamps = true;

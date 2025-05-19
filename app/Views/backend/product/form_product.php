@@ -152,6 +152,12 @@
                     <input type="text" class="form-control" id="url_lazada" name="url_lazada">
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="url_lazada">URL Tiktok </label>
+                    <input type="text" class="form-control" id="url_tiktok" name="url_tiktok">
+                </div>
+            </div>
             <div class="col-md-2">
                 <div class="form-check">
                     <label class="form-check-label">
