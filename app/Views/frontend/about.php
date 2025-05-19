@@ -14,7 +14,7 @@
       <div class="row align-items-center">
         <div class="col-md-6">
           <div class="image-wrap">
-            <div class="image" style="background-image: url('<?= base_url('custom/image/toba.jpg') ?>');width:100%;"></div>
+            <div class="image" style="background-image: url('<?= base_url('custom/image/gedung.jpg') ?>');width:100%;"></div>
           </div>
         </div>
         <div class="col-md-6">
