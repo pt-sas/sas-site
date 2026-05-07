@@ -14,7 +14,7 @@
                 <a class="li-ic" href="https://www.linkedin.com/company/pt-sahabat-abadi-sejahtera">
                     <i class="fa fa-linkedin mr-4"> </i>
                 </a>
-                <a class="ins-ic" href="https://www.instagram.com/sahabat_abadi_sejahtera">
+                <a class="ins-ic" href="https://www.instagram.com/sahabatabadisejahtera">
                     <i class="fa fa-instagram mr-lg-4"> </i>
                 </a>
             </div>
@@ -37,11 +37,11 @@
                         </table>
                     </li>
                     <li>
-                        <td><i class="fa fa-phone fa-fw"></i></td> 
+                        <td><i class="fa fa-phone fa-fw"></i></td>
                         <td><a href="tel:(021) 65831188">(021) 65831188</a></td>
                     </li>
                     <li>
-                        <i class="fa fa-envelope fa-fw"></i> 
+                        <i class="fa fa-envelope fa-fw"></i>
                         <a href="mailto:sales@sahabatabadi.com">sales@sahabatabadi.com</a>
                     </li>
                 </ul>
